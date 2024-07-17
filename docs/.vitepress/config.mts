@@ -37,7 +37,6 @@ export default defineConfig({
       { text: "redis", link: "/redis" },
       { text: "git", link: "/git/git-qiyuan.md" },
       { text: "gongju", link: "/gongju/brew.md" },
-      { text: "Examples", link: "/markdown-examples" },
     ],
 
     sidebar: {
