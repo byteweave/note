@@ -10,6 +10,9 @@ export const java = () => {
       items: [
         { text: "并发", link: path + "/eightpart/concurrency.md" },
         { text: "数据结构", link: path + "/eightpart/datastruct.md" },
+        { text: "distribution", link: path + "/eightpart/distribution.md" },
+        { text: "foundation", link: path + "/eightpart/foundation.md" },
+        { text: "gaint2023", link: path + "/eightpart/gaint2023.md" },
         { text: "mysql", link: path + "/eightpart/mysql.md" },
         { text: "redis", link: path + "/eightpart/redis.md" },
         { text: "spring", link: path + "/eightpart/spring.md" },
