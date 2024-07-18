@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { ai } from "../ai";
 import { back_end_storage } from "../back_end_storage";
+import { cache_pdp } from "../cache_pdp";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
 // https://vitepress.dev/reference/site-config
@@ -41,10 +42,12 @@ export default defineConfig({
       { text: "gongju", link: "/gongju/brew.md" },
       { text: "AI", link: "/ai/" },
       { text: "存储实战", link: "/back_end_storage/" },
+      { text: "亿级流量电商详情页系统实战", link: "/cache_pdp/" },
     ],
 
     sidebar: {
       "/ai/": ai(),
+      "/cache_pdp/": cache_pdp(),
       "/back_end_storage/": back_end_storage(),
       "/": [
         {
