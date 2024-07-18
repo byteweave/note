@@ -5,13 +5,14 @@ category:
   - 前端
 ---
 # React笔记
+
 ## 安装脚手架命令
+
 ### npx
 
 > npx create-react-app my-app  
 
 (npx comes with npm 5.2+ and higher, see instructions for older npm versions)
-
 
 ### npm
 
@@ -25,11 +26,7 @@ npm init `<initializer>` is available in npm 6+
 
 yarn create is available in Yarn 0.25+
 
-
-
 ![image-20220414083224689](./images/image-20220414083224689.webp)
-
-
 
 ## 原生开发
 
@@ -71,7 +68,7 @@ JS改变某个标签的文字
 
 重构上述更改文字的代码，使用React
 
-```react
+```javascript
 let message = "Hello World";
 
 function btnClick() {
@@ -97,7 +94,7 @@ render()
 
 再次重构React代码，使其标准化：
 
-```react
+```javascript
 //封装APP
 class App extends React.Component {
     constructor() {
@@ -138,8 +135,6 @@ ReactDOM.render(<App/>, document.getElementById('app'))
 1. construct中的state带this
 1. render中需要渲染的变量除了带上单胡须'{}'外，还要带上this.state.变量
 1. 注意ReactDOM.render中的render不要拼写错误
-
-
 
 ## JSX语法 & 语法补充
 
@@ -218,7 +213,7 @@ stu.running()
 - 方法一是利用for (element of array)
 - 方法二是用ES6语法中的map实现。注：外边是一个大括号
 
-```react
+```javascript
 class App extends React.Component{
     constructor() {
         super()
@@ -261,7 +256,7 @@ ReactDOM.render(<App/>, document.getElementById('app'));
 
 - 根据目前所学的方法，如果方法中要使用this，必须bind(this)，不然就是undefined
 
-```react
+```javascript
 class App extends React.Component {
     constructor() {
         super()
@@ -305,7 +300,6 @@ ReactDOM.render(<App />, document.getElementById('app'))
 
 > 与Vue不同，Vue使用的是模板语法（v-if、v-for）
 
-
 #### 书写规范
 
 1. 只能有一个根元素
@@ -314,13 +308,9 @@ ReactDOM.render(<App />, document.getElementById('app'))
 
    1. 单标签尾巴必须是'/>' ，如下所示
 
-
-
-
-
 #### 注释书写
 
-```react
+```javascript
 render() {
     return (
         <div>
@@ -339,7 +329,7 @@ render() {
 - {}中不可以显示的内容。为什么？如果非要显示如何使用？
 - JSX对象能用{}显示吗？
 
-```react
+```javascript
 class App extends React.Component {
     constructor() {
         super()
@@ -400,7 +390,7 @@ ReactDOM.render(<App />, document.getElementById('app'))
 - 函数调用
 - 对象解构
 
-```react
+```javascript
 class App extends React.Component {
     constructor() {
         super()
@@ -621,7 +611,7 @@ Part one：
 - _三元运算符_
 - _逻辑与_
 
-```react
+```text
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -689,9 +679,9 @@ Part one：
 
 part two：
 
-- 利用`style={{CSS属性名：属性值}}`进行动态条件判断
+- 利用`style={{CSS属性名:属性值}}`进行动态条件判断
 
-```react
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -985,8 +975,6 @@ part two：
   </body>
 </html>
 ```
-
-
 
 ## React组件化开发
 
