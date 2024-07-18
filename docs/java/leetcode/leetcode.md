@@ -6,7 +6,9 @@ category:
 ---
 
 # 算法模板
+
 光看模板肯定看不懂的，刷几道题就明白了
+
 - 部分参考了[lambdadong的算法小炒](https://github.com/labuladong/fucking-algorithm)
 
 ## 二分查找
@@ -29,12 +31,12 @@ int binarySearch(int[] nums, int target) {
 }
 ```
 
-
 ## ↖️↗️双指针
 
 ### 快慢指针的常见算法
 
 #### 判定链表中是否含有环
+
 ```java
 boolean hasCycle(ListNode head) {
     while (head != null)
@@ -58,6 +60,7 @@ boolean hasCycle(ListNode head) {
 ```
 
 #### 已知链表中含有环，返回这个环的起始位置
+
 ```java
 ListNode detectCycle(ListNode head) {
     ListNode fast, slow;
@@ -83,6 +86,7 @@ ListNode detectCycle(ListNode head) {
 ```
 
 #### 寻找链表的中点
+
 ```java
 while (fast != null && fast.next != null) {
     fast = fast.next.next;
@@ -93,6 +97,7 @@ return slow;
 ```
 
 #### 寻找链表的倒数第 k 个元素
+
 ```java
 ListNode slow, fast;
 slow = fast = head;
@@ -106,10 +111,10 @@ while (fast != null) {
 return slow;
 ```
 
-
 ### 左右指针的常用算法
 
 #### 二分查找
+
 ```java
 int binarySearch(int[] nums, int target) {
     int left = 0; 
@@ -128,6 +133,7 @@ int binarySearch(int[] nums, int target) {
 ```
 
 #### 两数之和
+
 ```java
 int[] twoSum(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
@@ -147,6 +153,7 @@ int[] twoSum(int[] nums, int target) {
 ```
 
 #### 反转数组
+
 ```java
 void reverse(int[] nums) {
     int left = 0;
@@ -162,6 +169,7 @@ void reverse(int[] nums) {
 ```
 
 #### 滑动窗口算法
+
 ```java
 /* 滑动窗口算法框架 */
 void slidingWindow(string s, string t) {
@@ -195,9 +203,10 @@ void slidingWindow(string s, string t) {
 }
 ```
 
-
 ## ↩️ 回溯
+
 回溯的大致模板就是以下，掌握三个核心点就行：
+
 - 递归函数
 - 递归里肯定有一个if（至少一个）
 - 递归里或者外面有一个for循环
@@ -239,11 +248,14 @@ void backtrack(int[] nums, LinkedList<Integer> track) {
 ```
 
 例题：
+
 - [全排列](https://leetcode.cn/problems/permutations/)
 - [单词搜索](https://leetcode.cn/submissions/detail/432257030/)
 
 ## 🔝 贪心
+
 贪心的3个核心点：
+
 - for循环
 - Math.max
 - 数组中的当前元素和前一个元素相关（至于为什么刷完题就知道了）
@@ -261,12 +273,16 @@ bool canJump(vector<int>& nums) {
     return farthest >= n - 1;
 }
 ```
+
 贪心就是通过局部最优求全局最优，最两道题就明白了
+
 - [跳跃游戏](https://leetcode.cn/problems/jump-game/)
 - [买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/)
 
 ## 🛣️ 动态规划
+
 动态规划是我最怕的题目之一，主要是要思考状态转移方程
+
 ```java
 # 初始化 base case
 dp[0][0][...] = base
@@ -276,7 +292,9 @@ for 状态1 in 状态1的所有取值：
         for ...
             dp[状态1][状态2][...] = 求最值(选择1，选择2...)
 ```
+
 推荐两道题去理解动态规划：
+
 - [不同路径](https://leetcode.cn/problems/unique-paths/)
 - [剑指 Offer 13. 机器人的运动范围](https://leetcode.cn/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/)
 
@@ -285,23 +303,25 @@ for 状态1 in 状态1的所有取值：
 - 考虑负数情况：[乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/description/)
 
 ## 🌈 分治
+
 @todo
 
 ## 🔎 并查集
+
 @todo
 
 # 刷题顺序
 
-## 二叉树 
+## 二叉树
 
-* 掌握二叉树递归与非递归遍历
-* 理解 DFS 前序遍历与分治法
-* 理解 BFS 层次遍历
+- 掌握二叉树递归与非递归遍历
+- 理解 DFS 前序遍历与分治法
+- 理解 BFS 层次遍历
 
 精选：
 
 - [ ] [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
-- [ ] [ 平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)
+- [ ] [平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)
 - [ ] [二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
 - [ ] [二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 - [ ] [二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
@@ -312,14 +332,14 @@ for 状态1 in 状态1的所有取值：
 
 ## 链表
 
-* null/nil异常处理
-* dummy node哑巴节点
-* 快慢指针
-* 插入一个节点到排序链表
-* 从一个链表中移除一个节点
-* 翻转链表
-* 合并两个链表
-* 找到链表的中间节点
+- null/nil异常处理
+- dummy node哑巴节点
+- 快慢指针
+- 插入一个节点到排序链表
+- 从一个链表中移除一个节点
+- 翻转链表
+- 合并两个链表
+- 找到链表的中间节点
 
 - [ ] [删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/)
 - [ ] [删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
@@ -334,15 +354,13 @@ for 状态1 in 状态1的所有取值：
 - [ ] [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/)
 - [ ] [复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
 
-
-
 ## 字符串
 
 需要考虑的问题：
 
 1. 要不要使用库函数
 2. 双指针法
-3.  反转系列
+3. 反转系列
 4. KMP
 
 - [ ] [反转字符串](https://leetcode-cn.com/problems/reverse-string/)
@@ -352,8 +370,6 @@ for 状态1 in 状态1的所有取值：
 - [ ] [剑指 Offer 58 - II. 左旋转字符串](https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
 - [ ] [实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
 - [ ] [重复的子字符串](https://leetcode-cn.com/problems/repeated-substring-pattern/)
-
-
 
 ## 动态规划
 
@@ -386,8 +402,6 @@ for 状态1 in 状态1的所有取值：
 - [ ] [背包问题](https://www.lintcode.com/problem/92/)
 - [ ] [背包问题（二）](https://www.lintcode.com/problem/125/)
 
-
-
 ## 回溯
 
 - [ ] [子集](https://leetcode.cn/problems/subsets/)
@@ -399,37 +413,34 @@ for 状态1 in 状态1的所有取值：
 - [ ] [分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
 - [ ] [复原 IP 地址](https://leetcode.cn/problems/restore-ip-addresses/)
 
-
-
 ## 滑动窗口
+
 - [ ] [滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
 - [ ] [无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 - [ ] [字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 
-
 ## 位运算
+
 - [ ] [2的幂](https://leetcode.cn/problems/power-of-two/)
 - [ ] [返回二进制中1的个数](https://leetcode.cn/problems/number-of-1-bits/)
 - [ ] [只出现一次的数字](https://leetcode.cn/problems/single-number/)
 - [ ] [只出现一次的数字Ⅱ](https://leetcode.cn/problems/single-number-ii/)
 - [ ] [缺失数字](https://leetcode.cn/problems/missing-number/)
 
-
 ## 分治
+
 @todo
 
 ## 贪心算法
+
 @todo
-
-
 
 ## 参考刷题顺序的仓库
 
-- 算法模板：https://greyireland.gitbook.io/algorithm-pattern/shu-ju-jie-gou-pian/binary_tree
-- labuladong 的算法：https://labuladong.gitee.io/algo/
-- 代码随想录：https://github.com/youngyangyang04/leetcode-master
-- 小浩算法：https://www.geekxh.com/
-
+- 算法模板：<https://greyireland.gitbook.io/algorithm-pattern/shu-ju-jie-gou-pian/binary_tree>
+- labuladong 的算法：<https://labuladong.gitee.io/algo/>
+- 代码随想录：<https://github.com/youngyangyang04/leetcode-master>
+- 小浩算法：<https://www.geekxh.com/>
 
 # 力扣常用方法封装
 
@@ -445,8 +456,6 @@ private ListNode endOfFirstHalf(ListNode head) {
     return slow;
 }
 ```
-
-
 
 ## 反转链表
 
@@ -466,8 +475,6 @@ private ListNode reverseList(ListNode head) {
 }
 ```
 
-
-
 ## 后序遍历
 
 ```java
@@ -482,6 +489,7 @@ public void postorder(TreeNode root, List<Integer> res) {
 ```
 
 ## 计算最大深度
+
 ```java
 private int dfs(TreeNode node) {
     if (node == null) {
@@ -494,6 +502,7 @@ private int dfs(TreeNode node) {
 ```
 
 ## 判断是否是平衡二叉树
+
 ```java
 public boolean isBalanced(TreeNode root) {
         if (root == null) return true;
@@ -502,6 +511,7 @@ public boolean isBalanced(TreeNode root) {
 ```
 
 ## 如果要用HashMap统计个数
+
 ```java
 HashMap<Integer, Integer> map = new HashMap<>();
 // 遍历数组，统计每个数字出现的次数

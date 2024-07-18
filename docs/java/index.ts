@@ -5,6 +5,19 @@ export const java = () => {
     { text: "基础", link: path + "/basic/basic.md" },
     { text: "并发", link: path + "/concurrent/concurrent.md" },
     {
+      text: "框架",
+      collapsed: true,
+      items: [
+        { text: "mybatis", link: path + "/fm/Mybatis.md" },
+        { text: "Spring", link: path + "/fm/Spring.md" },
+        { text: "SpringBoot", link: path + "/fm/SpringBoot.md" },
+        { text: "SpringCloud", link: path + "/fm/SpringCloud.md" },
+        { text: "SpringDataJpa", link: path + "/fm/SpringDataJpa.md" },
+        { text: "SpringMVC", link: path + "/fm/SpringMVC.md" },
+        { text: "SpringSecurity", link: path + "/fm/SpringSecurity.md" },
+      ],
+    },
+    {
       text: "八股文",
       collapsed: true,
       items: [
@@ -21,5 +34,6 @@ export const java = () => {
         { text: "network", link: path + "/eightpart/network.md" },
       ],
     },
+    { text: "leetcode", link: path + "/leetcode/leetcode.md" },
   ];
 };
