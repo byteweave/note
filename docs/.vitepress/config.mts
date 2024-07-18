@@ -2,6 +2,8 @@ import { defineConfig } from "vitepress";
 import { ai } from "../ai";
 import { back_end_storage } from "../back_end_storage";
 import { cache_pdp } from "../cache_pdp";
+import { git } from "../git";
+import { git_scm } from "../git_scm";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
 // https://vitepress.dev/reference/site-config
@@ -38,15 +40,16 @@ export default defineConfig({
     nav: [
       { text: "java", link: "/java" },
       { text: "redis", link: "/redis" },
-      { text: "git", link: "/git/git-qiyuan.md" },
-      { text: "gongju", link: "/gongju/brew.md" },
-      { text: "AI", link: "/ai/" },
+      { text: "git", link: "/git/" },
       { text: "存储实战", link: "/back_end_storage/" },
       { text: "亿级流量电商详情页系统实战", link: "/cache_pdp/" },
+      { text: "AI", link: "/ai/" },
     ],
 
     sidebar: {
       "/ai/": ai(),
+      "/git/": git(),
+      "/git_scm/": git_scm(),
       "/cache_pdp/": cache_pdp(),
       "/back_end_storage/": back_end_storage(),
       "/": [
@@ -67,14 +70,6 @@ export default defineConfig({
             { text: "choco", link: "/gongju/choco.md" },
             { text: "DBeaver", link: "/gongju/DBeaver.md" },
             { text: "LLM底层技术原理入门指南", link: "/pdf/LLM底层技术原理入门指南.pdf" },
-          ],
-        },
-      ],
-      "/git/": [
-        {
-          items: [
-            { text: "Git教程", link: "/git/git-qiyuan.md" },
-            { text: "Runtime API Examples", link: "/api-examples" },
           ],
         },
       ],
