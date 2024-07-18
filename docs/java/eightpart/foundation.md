@@ -6,6 +6,7 @@ title: Java基础
 category:
   - Java基础
   - 八股文
+outline: deep
 ---
 
 ## 🍂 常见八股文精选集
@@ -34,8 +35,10 @@ category:
 - **Nashorn, JavaScript 引擎** − Java 8提供了一个新的Nashorn javascript引擎，它允许我们在JVM上运行特定的javascript应用。
 
 ### 重载（Overloading）和重写（Overriding）的区别？
+
 1. 重载（Overloading）
 重载是指在同一个类中，方法名相同但参数列表不同（参数的顺序、类型、数量不同）的多个方法。重载允许我们根据不同的输入参数对同一个方法名进行多次定义。
+
 ```java
 class Printer {
     void print(int number) {
@@ -55,6 +58,7 @@ class Printer {
 2. 重写（Overriding）
 
 重写是指子类继承父类时，子类中重新定义了父类中的方法。重写的方法必须与父类方法具有相同的方法名、参数列表和返回类型。重写的目的是为了让子类可以提供与父类相同的方法名，但具有不同的实现，从而实现多态。
+
 ```java
 class Shape {
     double area() {
@@ -91,6 +95,7 @@ class Rectangle extends Shape {
 ```
 
 在面试中介绍这两个概念时，可以按以下步骤进行：
+
 1. 首先定义重载和重写，强调它们之间的区别。
 2. 举例说明重载和重写的应用场景。
 3. 提及重载和重写在代码实现上的规则（方法名、参数列表、返回类型）。
@@ -182,9 +187,9 @@ class Outter {
 
 ### 构造⽅法有哪些特性？
 
-* 名字与类名相同
-* 没有返回值，但不能⽤void声明构造函数
-* ⽣成类的对象时⾃动执⾏，⽆需调⽤
+- 名字与类名相同
+- 没有返回值，但不能⽤void声明构造函数
+- ⽣成类的对象时⾃动执⾏，⽆需调⽤
 
 ### final,static,this,super 关键字总结
 
@@ -262,13 +267,13 @@ public class Sub extends Super {
 
 ### this与super的区别
 
-* super:它引⽤当前对象的直接⽗类中的成员（⽤来访问直接⽗类中被隐藏的⽗类中成员数据或函数，基类与派⽣类中有相同成员定义时如：super.变量名super.成员函数据名（实参）
-* this：它代表当前对象名（在程序中易产⽣⼆义性之处，应使⽤this来指明当前对象；如果函数的形参与类中的成员数据同名，这时需⽤this来指明成员变量名）
-* 👻super()和this()类似，区别是：super()在⼦类中调⽤⽗类的构造⽅法，this()在本类内调⽤本类的其它构造⽅法。
-* 👻super()和this()均需放在构造⽅法内第⼀⾏。
-* 👻this和super不能同时出现在⼀个构造函数⾥⾯，因为this必然会调⽤其它的构造函数，其它的构造函数必然也会有super语句的存在，所以在同⼀个构造函数⾥⾯有相同的语句，就失去了语句的意义，编译器也不会通过。
-* this()和super()都指的是对象，所以，均不可以在static环境中使⽤。包括：static变量,static⽅法，static语句块。
-* 👻从本质上讲，this是⼀个指向本对象的指针,然⽽super是⼀个Java关键字。
+- super:它引⽤当前对象的直接⽗类中的成员（⽤来访问直接⽗类中被隐藏的⽗类中成员数据或函数，基类与派⽣类中有相同成员定义时如：super.变量名super.成员函数据名（实参）
+- this：它代表当前对象名（在程序中易产⽣⼆义性之处，应使⽤this来指明当前对象；如果函数的形参与类中的成员数据同名，这时需⽤this来指明成员变量名）
+- 👻super()和this()类似，区别是：super()在⼦类中调⽤⽗类的构造⽅法，this()在本类内调⽤本类的其它构造⽅法。
+- 👻super()和this()均需放在构造⽅法内第⼀⾏。
+- 👻this和super不能同时出现在⼀个构造函数⾥⾯，因为this必然会调⽤其它的构造函数，其它的构造函数必然也会有super语句的存在，所以在同⼀个构造函数⾥⾯有相同的语句，就失去了语句的意义，编译器也不会通过。
+- this()和super()都指的是对象，所以，均不可以在static环境中使⽤。包括：static变量,static⽅法，static语句块。
+- 👻从本质上讲，this是⼀个指向本对象的指针,然⽽super是⼀个Java关键字。
 
 ### 静态代理和动态代理
 
@@ -382,8 +387,6 @@ after method send()
 
 当然，从上述代码我们也能看出来，静态代理存在一定的弊端。假如说我们现在新增了一个委托类实现了 `SmsService` 接口，如果我们想要对这个委托类进行增强，就需要重新写一个代理类，然后注入这个新的委托类，非常不灵活。也就是说静态代理是一个委托了对应一个代理类，能不能**将代理类做成一个通用的**呢？为此，动态代理应用而生。
 
-
-
 #### Java 字节码生成框架
 
 在讲解动态之前，我们有必要详细说一下 `.class` 字节码文件这个东西。动态代理机制和 Java 字节码生成框架息息相关。
@@ -457,8 +460,6 @@ public class MyGenerator {
 
 ![image-20220723003032359](./personal_images/image-20220723003032359.webp)
 
-
-
 #### 动态代理
 
 了解了 Java 字节码生成框架，可以开始学习动态代理（Dynamic Proxy）了。
@@ -520,8 +521,6 @@ public class MyGenerator {
 - 调用的 `InvocationHandler` 实例处理接口方法（也就是第 3 步我们创建的类的实例）
 
 也就是说：我们在通过 `Proxy` 类的 `newProxyInstance()` 创建的代理对象在调用方法的时候，实际会调用到实现了 `InvocationHandler` 接口的处理类的 `invoke()`方法，可以在 `invoke()` 方法中自定义处理逻辑，比如在方法执行前后做什么事情。
-
-
 
 1）定义一个接口（Subject）
 
@@ -767,8 +766,6 @@ CGLIB 动态代理：
 - Proxy：代理类
 - **MethodInterceptor**：方法拦截器，统一调用方法
 
-
-
 ### static{}静态代码块与{}非静态代码块(构造代码块)
 
 **相同点**： 都是在 JVM 加载类时且在构造方法执行之前执行，在类中都可以定义多个，定义多个时按定义的顺序执行，一般在代码块中对一些 static 变量进行赋值。
@@ -1002,7 +999,7 @@ class Circle extends Shape {
 ```java
 class Shape {
     public Shape draw() {
-    	......
+     ......
     }
 }
 ```
@@ -1054,12 +1051,12 @@ IBM 早些年出过这方面的题，考倒了一片人。首先，答案是肯�
 
 ```java
 class Test {
-	public static void main(String[] args) {
-		main(1);
-	}
-	public static void main(int i) {
-		System.out.println("重载的 main 方法");
-	}
+ public static void main(String[] args) {
+  main(1);
+ }
+ public static void main(int i) {
+  System.out.println("重载的 main 方法");
+ }
 }
 ```
 
@@ -1116,14 +1113,14 @@ class Test {
 
 ### final finally finalize的区别
 
-* final可以修饰类、变量、⽅法，修饰类表示该类不能被继承、修饰⽅法表示该⽅法不能被重写、修饰变量表示该变量是⼀个常量不能被重新赋值。
-* finally⼀般作⽤在try-catch代码块中，在处理异常的时候，通常我们将⼀定要执⾏的代码⽅法finally代码块中，表示不管是否出现异常，该代码块都会执⾏，⼀般⽤来存放⼀些关闭资源的代码。
+- final可以修饰类、变量、⽅法，修饰类表示该类不能被继承、修饰⽅法表示该⽅法不能被重写、修饰变量表示该变量是⼀个常量不能被重新赋值。
+- finally⼀般作⽤在try-catch代码块中，在处理异常的时候，通常我们将⼀定要执⾏的代码⽅法finally代码块中，表示不管是否出现异常，该代码块都会执⾏，⼀般⽤来存放⼀些关闭资源的代码。
 
 > ⚠️特殊情况：当finally中包含return
 >
 > ![image-20220619143704353](./personal_images/image-20220619143704353.webp)
 
-* finalize是⼀个⽅法，属于Object类的⼀个⽅法，⽽Object类是所有类的⽗类，该⽅法⼀般由垃圾回收器来调⽤，当我们调⽤System.gc()⽅法的时候，由垃圾回收器调⽤finalize()，回收垃圾，⼀个对象是否可回收的最后判断。
+- finalize是⼀个⽅法，属于Object类的⼀个⽅法，⽽Object类是所有类的⽗类，该⽅法⼀般由垃圾回收器来调⽤，当我们调⽤System.gc()⽅法的时候，由垃圾回收器调⽤finalize()，回收垃圾，⼀个对象是否可回收的最后判断。
 
 > ⚠️注：
 >
@@ -1139,10 +1136,10 @@ class Test {
 
 ### ⭐Java有哪些数据类型
 
-* 🔢 数值：byte，short，int，long
-* 🧿 浮点：float，double
-* 🔣 字符：char
-* ☑️ 布尔：boolean
+- 🔢 数值：byte，short，int，long
+- 🧿 浮点：float，double
+- 🔣 字符：char
+- ☑️ 布尔：boolean
 
 这八种基本类型都有对应的包装类分别为：Byte、Short、Integer、Long、Float、Double、Character、Boolean
 
@@ -1188,11 +1185,9 @@ Java 基本数据类型的包装类型的大部分都用到了缓存机制来提
 
 另外，对于 boolean，官方文档未明确定义，它依赖于 JVM 厂商的具体实现。逻辑上理解是占用 1 位，但是实际中会考虑计算机高效存储因素。
 
-
-
 #### Java 中 boolean 占多少字节？
 
-Oracle 官方文档地址在此：https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
+Oracle 官方文档地址在此：<https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html>
 
 ![img](./personal_images/image-20220706230119388.webp)
 
@@ -1206,7 +1201,7 @@ Oracle 官方文档地址在此：https://docs.oracle.com/javase/tutorial/java/n
 
 不过显然 boolean 是肯定不可能只占用 1 个 bit 的，最起码也是 1 个 Bytes（字节），因为计算机处理数据的最小单位是 1 个字节
 
-《Java 虚拟机规范》对于 boolean 到底占用多少空间提供了一定的建议（只是建议，具体的实现仍然取决于每个虚拟机是否按照规范来），官方文档在这里：https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.4
+《Java 虚拟机规范》对于 boolean 到底占用多少空间提供了一定的建议（只是建议，具体的实现仍然取决于每个虚拟机是否按照规范来），官方文档在这里：<https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.4>
 
 > Although the Java Virtual Machine defines a `boolean` type, it only provides very limited support for it. There are no Java Virtual Machine instructions solely dedicated to operations on `boolean` values. Instead, expressions in the Java programming language that operate on `boolean` values are compiled to use values of the Java Virtual Machine `int` data type.
 
@@ -1228,8 +1223,6 @@ Oracle 官方文档地址在此：https://docs.oracle.com/javase/tutorial/java/n
 
 - 如果 boolean 是 “单独使用”：boolean 被编译为 int 类型，占 **4** 个字节
 - 如果boolean 是以 “boolean 数组” 的形式使用：boolean 占 **1** 个字节，Java 虚拟机直接支持 boolean 数组，通过 `newarray` 指令创建 boolean 数组，然后通过 byte 数组指令 `baload` 和 `bastore` 来访问和修改 boolean 数组
-
-
 
 ### float f=3.4;是否正确？
 
@@ -1319,7 +1312,7 @@ Java泛型的实现采取了“伪泛型”的策略，即Java在语法上支持
 
 #### 桥接方法和泛型的多态
 
-http://softlab.sdut.edu.cn/blog/subaochen/2017/01/generics-type-erasure/
+<http://softlab.sdut.edu.cn/blog/subaochen/2017/01/generics-type-erasure/>
 
 由于原文的篇幅过长，进行以下总结：
 
@@ -1367,8 +1360,6 @@ public void setData(Object data) {
 
 所以，你并不需要手动写出桥方法，它是由编译器自动插入的。并且，桥方法只有在需要解决泛型类型擦除导致的方法覆盖问题时才会被生成。
 
-
-
 小结一下：
 
 在Java中，因为泛型信息在编译后会被擦除，所以运行时所有的泛型类型都会变成它们的上界，对于没有明确指定上界的泛型参数，它的上界默认是 `Object`。
@@ -1377,11 +1368,9 @@ public void setData(Object data) {
 
 为了解决这个问题，编译器会自动在 `Child` 类中生成一个桥方法，这个方法的参数类型是 `Object`，它覆盖了 `Parent` 类中的 `setData` 方法。这个桥方法内部会将参数强制转换为 `Integer` 类型，然后调用 `Child` 类中的 `setData(Integer)` 方法。这样，我们就可以通过 `Parent` 类的引用来调用 `Child` 类中的方法了，而不会出现类型不匹配的问题。
 
-
-
 #### 为了更深层次的理解类型擦除，选取了Stackoverflow的高赞回答
 
-原帖：https://stackoverflow.com/questions/339699/java-generics-type-erasure-when-and-what-happens
+原帖：<https://stackoverflow.com/questions/339699/java-generics-type-erasure-when-and-what-happens>
 
 > 😣问题是：**When does type erasure occur?** At compile time or runtime? When the class is loaded? When the class is instantiated?
 >
@@ -1405,7 +1394,7 @@ String x = (String) list.get(0);
 
 在执行时，没有办法找出列表对象的 T = String 这个信息已经消失了。但是 List < T > 界面本身仍然宣称自己是通用的。
 
-原帖：https://stackoverflow.com/questions/313584/what-is-the-concept-of-erasure-in-generics-in-java
+原帖：<https://stackoverflow.com/questions/313584/what-is-the-concept-of-erasure-in-generics-in-java>
 
 > 😣What is the concept of erasure in generics in Java?
 >
@@ -1488,11 +1477,12 @@ equals ：用来比较两个对象的内容是否相等。注意：equals 方法
 > HashMap不保证键或值的任何顺序，而TreeMap根据键的自然顺序或自定义比较器对键进行排序。
 > 对于大多数操作，如插入、删除和检索，HashMap比TreeMap更快，因为散列比树遍历更有效。 但是，TreeMap在某些操作上比HashMap更快，比如查找最小或最大键，因为它不需要扫描整个映射。
 > 参考资料：
-> 1. https://www.geeksforgeeks.org/hashmap-treemap-java/
-> 2. https://howtodoinjava.com/java/collections/java-treemap-vs-hashmap/
-> 3. https://stackoverflow.com/questions/2444359/what-is-the-difference-between-a-hashmap-and-a-treemap
-> 4. https://www.javatpoint.com/difference-between-hashmap-and-treemap
-> 5. https://www.baeldung.com/java-treemap-vs-hashmap
+>
+> 1. <https://www.geeksforgeeks.org/hashmap-treemap-java/>
+> 2. <https://howtodoinjava.com/java/collections/java-treemap-vs-hashmap/>
+> 3. <https://stackoverflow.com/questions/2444359/what-is-the-difference-between-a-hashmap-and-a-treemap>
+> 4. <https://www.javatpoint.com/difference-between-hashmap-and-treemap>
+> 5. <https://www.baeldung.com/java-treemap-vs-hashmap>
 
 TreeMap 和HashMap 都继承自AbstractMap ，但是需要注意的是TreeMap它还实现了NavigableMap接口和SortedMap 接口。
 
@@ -1538,6 +1528,7 @@ public class Person {
 // person3
 
 ```
+
 可以看出，TreeMap 中的元素已经是按照 Person 的 age 字段的升序来排列了。
 
 上面，我们是通过传入匿名内部类的方式实现的，你可以将代码替换成 Lambda 表达式实现的方式：
@@ -1549,7 +1540,6 @@ TreeMap<Person, String> treeMap = new TreeMap<>((person1, person2) -> {
 });
 
 ```
-
 
 **结论**
 如果你需要得到一个有序的结果时就应该使用TreeMap（因为HashMap中元素的排列顺序是不固定的）。除此之外，由于HashMap有更好的性能，所以大多不需要排序的时候我们会使用HashMap。另外，相比于HashMap来说 TreeMap 主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力。
@@ -1608,18 +1598,21 @@ static int hash(int h) {
 > 出的 hash 值相同时，我们称之为 hash 冲突，HashMap 的做法是用链表和红黑树存储相同 hash 值的value。当 hash 冲突的个数少于等于8个时，使用链表否则使用红黑树。
 
 ### ⭐HashMap源码分析
+>
 > 这里提供的是open jdk11的源码，但是图没变还是entry（没找到合适的），但是原理都差不多，暂时先用着这个图！
 
-
 #### 计算哈希值：hash
+
 ```java
 static final int hash(Object key) {
-	int h;
-	return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+ int h;
+ return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
 ```
-`(h = key.hashCode()) ^ (h >>> 16) `是Java中的一种哈希值计算策略，目的是减少哈希碰撞并更好地分布数据。
+
+`(h = key.hashCode()) ^ (h >>> 16)`是Java中的一种哈希值计算策略，目的是减少哈希碰撞并更好地分布数据。
 具体来说：
+
 - `(h = key.hashCode())`：这一步调用键（key）的hashCode方法以获取原始的哈希值。
 - `(h >>> 16)`：这是一个无符号右移操作，将哈希值的二进制表示形式向右移动16位。由于Java的int类型是32位的，这实际上是将哈希值的高16位移动到低16位。
 - `(h = key.hashCode()) ^ (h >>> 16)`：这是一个异或操作，它将原始的哈希值和右移16位后的哈希值进行异或操作。这样可以保证原哈希值的高位和低位都能参与到最终的哈希值计算中
@@ -1657,8 +1650,6 @@ static final int hash(Object key) {
 
 这是一个非常巧妙的设计，既利用到了原始的hashCode信息，也改善了哈希分布。
 
-
-
 #### getNode()
 
 `get(Object key)`方法根据指定的 `key`值返回对应的 `value`，该方法调用了 `getEntry(Object key)`得到相应的 `entry`，然后返回 `entry.getValue()`。因此 `getEntry()`是算法的核心。 **算法思想**是首先通过 `hash()`函数得到对应 `bucket`的下标，然后依次遍历冲突链表，通过 `key.equals(k)`方法来判断是否是要找的那个 `entry`。
@@ -1666,6 +1657,7 @@ static final int hash(Object key) {
 > getNode方法的算法思想和getEntry类似，它们都是根据键来寻找对应的节点。主要区别在于，Java 8及以后的版本中，如果一个桶位中的节点数目超过了一定的阈值，那么这个桶位的存储结构会从链表转变为红黑树，以提高查找的效率。这就是为什么在Java 11中，这个方法被命名为getNode，而不再是getEntry，因为现在不仅有Entry，还可能是TreeNode。
 
 总结一下：
+
 1. 根据键的哈希值找到对应的桶位。这个过程和getEntry方法是一样的，都是通过(n - 1) & hash计算索引，其中n是哈希表的长度，hash是键的哈希值。
 2. 在找到的桶位中查找节点。如果这个桶位的存储结构是链表，那么会像getEntry方法一样，通过遍历链表的方式找到对应的节点。如果桶位的存储结构是红黑树，那么会通过红黑树的查找算法找到对应的节点。
 3. 对于找到的节点，检查节点的键是否与输入的键相同。如果相同，那么就找到了对应的节点，将其返回。
@@ -1675,11 +1667,13 @@ static final int hash(Object key) {
 ![image-20220616161400630](./personal_images/image-20220616161400630.webp)
 
 **定位桶位：**
+
 ```java
 Node<K,V> p;
 if ((p = tab[i = (n - 1) & hash]) == null)
     tab[i] = newNode(hash, key, value, null);
 ```
+
 `n`是哈希表的长度，它总是2的幂。`(n - 1) & hash` 是计算**键值应该存放在哪个桶（即数组的索引）** 的公式。这里利用了哈希表长度是2的幂的特性，将哈希值与`n-1`进行位与运算，等价于对哈希表长度取模，结果就是该键值应该放在的位置
 
 在此，`(n - 1) & hash` 这个操作可以看作是将哈希值映射到哈希表的长度范围内。由于`n` 是2的幂，`n - 1` 的二进制表示形式中所有的位都是1（比如，假设table.length为8（即1000 in binary），那么table.length - 1就是7，即111 in binary）。因此，`(n - 1) & hash` 的结果就相当于保留了哈希值的低位，这样可以将哈希值均匀地分布在数组的长度范围内，也就是说，哈希值的每个可能值都有均等的机会被映射到数组的任何位置。
@@ -1691,14 +1685,16 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 ---
 
 这部分检查桶位的第一个节点（Node）的哈希值是否与输入的哈希值相同，同时比较节点的键是否与输入的键相等。如果都相同，那么它就找到了对应的节点，并将其返回
+
 ```java
 if (first.hash == hash && ((k = first.key) == key || (key != null && key.equals(k))))
-	return first;
+ return first;
 ```
 
 ---
 
 这部分首先检查第一个节点的下一个节点（next）是否存在。如果存在，再检查第一个节点是否是一个树节点（TreeNode），也就是检查这个桶位是否是红黑树的结构。如果是，那么它将通过红黑树的方式获取对应的节点。
+
 ```java
 if ((e = first.next) != null) {
     if (first instanceof TreeNode)
@@ -1708,6 +1704,7 @@ if ((e = first.next) != null) {
 ---
 
 这部分是对链表进行遍历。如果桶位是链表的结构，那么会通过循环遍历链表中的每个节点，检查每个节点的哈希值和键是否与输入的相同。如果找到相同的，那么就返回对应的节点。如果遍历完链表都没有找到相同的，那么就意味着HashMap中不存在对应的节点。
+
 ```java
 do {
     if (e.hash == hash &&
@@ -1719,25 +1716,26 @@ do {
 ---
 
 **代码总览**：
+
 ```java
 final Node<K,V> getNode(int hash, Object key) {
-	Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
-	if ((tab = table) != null && (n = tab.length) > 0 &&
-		(first = tab[(n - 1) & hash]) != null) {
-		if (first.hash == hash && // always check first node
-			((k = first.key) == key || (key != null && key.equals(k))))
-			return first;
-		if ((e = first.next) != null) {
-			if (first instanceof TreeNode)
-				return ((TreeNode<K,V>)first).getTreeNode(hash, key);
-			do {
-				if (e.hash == hash &&
-					((k = e.key) == key || (key != null && key.equals(k))))
-					return e;
-			} while ((e = e.next) != null);
-		}
-	}
-	return null;
+ Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+ if ((tab = table) != null && (n = tab.length) > 0 &&
+  (first = tab[(n - 1) & hash]) != null) {
+  if (first.hash == hash && // always check first node
+   ((k = first.key) == key || (key != null && key.equals(k))))
+   return first;
+  if ((e = first.next) != null) {
+   if (first instanceof TreeNode)
+    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+   do {
+    if (e.hash == hash &&
+     ((k = e.key) == key || (key != null && key.equals(k))))
+     return e;
+   } while ((e = e.next) != null);
+  }
+ }
+ return null;
 }
 ```
 
@@ -1746,16 +1744,18 @@ final Node<K,V> getNode(int hash, Object key) {
 `put(K key, V value)`方法是将指定的 `key, value`对添加到 `map`里。该方法首先会对 `map`做一次查找，看是否包含该元组，如果已经包含则直接返回，查找过程类似于 `getEntry()`方法；如果没有找到，则会通过 `addEntry(int hash, K key, V value, int bucketIndex)`方法插入新的 `entry`，插入方式为**头插法**。
 
 算法思路：
+
 1. **哈希计算与定位桶位**： 首先，计算键（key）的哈希值，然后根据哈希值在哈希表中找到对应的桶位。计算桶位的索引是通过 (n - 1) & hash，这样可以使得哈希值均匀地分布在数组的长度范围内。
 2. **处理桶位为空的情况**： 如果找到的桶位是空的，那么就直接在这个位置上创建一个新的节点来存储键值对。
 3. **处理桶位不为空的情况**： 如果桶位不为空，那么需要处理哈希冲突。根据该桶位的数据结构（链表或者红黑树）采用不同的处理方式。
-	1. **链表**： 遍历链表，如果找到了键值相同的节点，则替换其值。如果遍历完链表没有找到相同的键，那么就在链表的尾部添加一个新的节点。
-	2. **红黑树**： 在红黑树中找到正确的位置，如果找到了键值相同的节点，则替换其值。如果没有找到相同的键，那么就在正确的位置添加一个新的节点。
+ 1. **链表**： 遍历链表，如果找到了键值相同的节点，则替换其值。如果遍历完链表没有找到相同的键，那么就在链表的尾部添加一个新的节点。
+ 2. **红黑树**： 在红黑树中找到正确的位置，如果找到了键值相同的节点，则替换其值。如果没有找到相同的键，那么就在正确的位置添加一个新的节点。
 4. **处理扩容**： 插入键值对之后，需要检查哈希表是否需要扩容。如果当前的节点数量超过了阈值，那么就需要将哈希表的容量扩大一倍，并重新计算每个键值对在哈希表中的位置。
 
 ![image-20220616161439305](./personal_images/image-20220616161439305.webp)
 
 **插入或更新节点**：该部分有点复杂，处理各种情况，如链表和红黑树。例如，如果存在相同的键，那么它将替换旧值。
+
 ```java
 Node<K,V> e; K k;
 if (p.hash == hash &&
@@ -1764,6 +1764,7 @@ if (p.hash == hash &&
 ```
 
 **处理不同情况：**
+
 - else if (p instanceof TreeNode)这段代码是处理当前桶位数据已经转变为红黑树的情况。在这种情况下，使用红黑树的方式将键值对插入到树中。
 - 而else后面的代码则处理链表的情况。它会遍历链表，查找是否存在和当前插入键相同的节点。如果存在，那么就直接替换节点的值。如果不存在，那么就在链表的尾部添加新的节点。
 - 在添加新节点的过程中，会检查当前的链表长度是否达到了树化阈值（TREEIFY_THRESHOLD）。如果达到了，那么会将链表转化为红黑树，这是为了提高后续的查找效率。因为链表的查找效率是O(n)，而红黑树的查找效率是O(log n)。在元素数量较多的情况下，红黑树的效率会比链表更高。
@@ -1792,6 +1793,7 @@ else {
 ```
 
 **扩容**：在添加元素后，如果HashMap的大小超过了阈值，那么HashMap会进行扩容
+
 ```java
 if (++size > threshold)
     resize();
@@ -1805,48 +1807,49 @@ if (++size > threshold)
 4. **链表转红黑树更合适**：HashMap的链表转红黑树的阈值是8，如果扩容为2倍，那么原来的键值对迁移到新的table后，在原索引位置和原索引+oldCap位置的链表个数之和就已经达到8个，这样就可以在迁移过程中进行树化。如果扩容倍数更大，达到树化阈值就要更长的链表，影响性能。
 
 **代码总览**：
+
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
-	Node<K,V>[] tab; Node<K,V> p; int n, i;
-	if ((tab = table) == null || (n = tab.length) == 0)
-		n = (tab = resize()).length;
-	if ((p = tab[i = (n - 1) & hash]) == null)
-		tab[i] = newNode(hash, key, value, null);
-	else {
-		Node<K,V> e; K k;
-		if (p.hash == hash &&
-			((k = p.key) == key || (key != null && key.equals(k))))
-			e = p;
-		else if (p instanceof TreeNode)
-			e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
-		else {
-			for (int binCount = 0; ; ++binCount) {
-				if ((e = p.next) == null) {
-					p.next = newNode(hash, key, value, null);
-					if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-						treeifyBin(tab, hash);
-					break;
-				}
-				if (e.hash == hash &&
-					((k = e.key) == key || (key != null && key.equals(k))))
-					break;
-				p = e;
-			}
-		}
-		if (e != null) { // existing mapping for key
-			V oldValue = e.value;
-			if (!onlyIfAbsent || oldValue == null)
-				e.value = value;
-			afterNodeAccess(e);
-			return oldValue;
-		}
-	}
-	++modCount;
-	if (++size > threshold)
-		resize();
-	afterNodeInsertion(evict);
-	return null;
+ Node<K,V>[] tab; Node<K,V> p; int n, i;
+ if ((tab = table) == null || (n = tab.length) == 0)
+  n = (tab = resize()).length;
+ if ((p = tab[i = (n - 1) & hash]) == null)
+  tab[i] = newNode(hash, key, value, null);
+ else {
+  Node<K,V> e; K k;
+  if (p.hash == hash &&
+   ((k = p.key) == key || (key != null && key.equals(k))))
+   e = p;
+  else if (p instanceof TreeNode)
+   e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+  else {
+   for (int binCount = 0; ; ++binCount) {
+    if ((e = p.next) == null) {
+     p.next = newNode(hash, key, value, null);
+     if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+      treeifyBin(tab, hash);
+     break;
+    }
+    if (e.hash == hash &&
+     ((k = e.key) == key || (key != null && key.equals(k))))
+     break;
+    p = e;
+   }
+  }
+  if (e != null) { // existing mapping for key
+   V oldValue = e.value;
+   if (!onlyIfAbsent || oldValue == null)
+    e.value = value;
+   afterNodeAccess(e);
+   return oldValue;
+  }
+ }
+ ++modCount;
+ if (++size > threshold)
+  resize();
+ afterNodeInsertion(evict);
+ return null;
 }
 ```
 
@@ -1857,46 +1860,47 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 ![image-20220616161551183](./personal_images/image-20220616161551183.webp)
 
 **代码总览**：
+
 ```java
 final Node<K,V> removeNode(int hash, Object key, Object value,
                                boolean matchValue, boolean movable) {
-	Node<K,V>[] tab; Node<K,V> p; int n, index;
-	if ((tab = table) != null && (n = tab.length) > 0 &&
-		(p = tab[index = (n - 1) & hash]) != null) {
-		Node<K,V> node = null, e; K k; V v;
-		if (p.hash == hash &&
-			((k = p.key) == key || (key != null && key.equals(k))))
-			node = p;
-		else if ((e = p.next) != null) {
-			if (p instanceof TreeNode)
-				node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
-			else {
-				do {
-					if (e.hash == hash &&
-						((k = e.key) == key ||
-						 (key != null && key.equals(k)))) {
-						node = e;
-						break;
-					}
-					p = e;
-				} while ((e = e.next) != null);
-			}
-		}
-		if (node != null && (!matchValue || (v = node.value) == value ||
-							 (value != null && value.equals(v)))) {
-			if (node instanceof TreeNode)
-				((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
-			else if (node == p)
-				tab[index] = node.next;
-			else
-				p.next = node.next;
-			++modCount;
-			--size;
-			afterNodeRemoval(node);
-			return node;
-		}
-	}
-	return null;
+ Node<K,V>[] tab; Node<K,V> p; int n, index;
+ if ((tab = table) != null && (n = tab.length) > 0 &&
+  (p = tab[index = (n - 1) & hash]) != null) {
+  Node<K,V> node = null, e; K k; V v;
+  if (p.hash == hash &&
+   ((k = p.key) == key || (key != null && key.equals(k))))
+   node = p;
+  else if ((e = p.next) != null) {
+   if (p instanceof TreeNode)
+    node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+   else {
+    do {
+     if (e.hash == hash &&
+      ((k = e.key) == key ||
+       (key != null && key.equals(k)))) {
+      node = e;
+      break;
+     }
+     p = e;
+    } while ((e = e.next) != null);
+   }
+  }
+  if (node != null && (!matchValue || (v = node.value) == value ||
+        (value != null && value.equals(v)))) {
+   if (node instanceof TreeNode)
+    ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+   else if (node == p)
+    tab[index] = node.next;
+   else
+    p.next = node.next;
+   ++modCount;
+   --size;
+   afterNodeRemoval(node);
+   return node;
+  }
+ }
+ return null;
 }
 ```
 
@@ -1910,7 +1914,7 @@ final Node<K,V> removeNode(int hash, Object key, Object value,
 
 🙋‍♂️我认为Guide写的这个摸棱两可，所以找了一个StackOverFlow中描述更为清楚的翻译为下：
 
-> 🧚‍♂️原帖：https://stackoverflow.com/questions/53526790/why-are-hashmaps-implemented-using-powers-of-two
+> 🧚‍♂️原帖：<https://stackoverflow.com/questions/53526790/why-are-hashmaps-implemented-using-powers-of-two>
 >
 > 当你从一个幂为2的数字中减去1得到的是一个二进制表示都是1的数字。例如16是2的幂。如果从中减去1，得到15，它的二进制表示是1111。现在，如果你用1111对任何一个数字进行位 AND 运算，你将得到这个数字的最后4位，换句话说，它等于这个数字乘以16的模(除法运算通常是一个昂贵的运算。因此，位操作通常比除法更受欢迎)。最后的4位将计算为0到15之间的任意数字，这些数字是基础数组的索引。
 >
@@ -1936,16 +1940,14 @@ Hash 值的范围值比较大，使用之前需要先对数组的长度取模运
 
 0.75是对**空间和时间效率**的一个平衡选择，根据泊松分布，loadFactor 取0.75碰撞最小。一般不会修改，除非在时间和空间比较特殊的情况下 ：
 
-* 如果内存空间很多而又对时间效率要求很高，可以降低负载因子Load factor的值 。
-* 如果内存空间紧张而对时间效率要求不高，可以增加负载因子loadFactor的值，这个值可以大于1。
-
-
+- 如果内存空间很多而又对时间效率要求很高，可以降低负载因子Load factor的值 。
+- 如果内存空间紧张而对时间效率要求不高，可以增加负载因子loadFactor的值，这个值可以大于1。
 
 ### HashMap 多线程操作导致死循环问题
 
 主要原因在于并发下的 Rehash 会造成元素之间会形成一个循环链表。不过，jdk 1.8 后解决了这个问题，但是还是不建议在多线程下使用  HashMap,因为多线程下使用 HashMap 还是会存在其他问题比如数据丢失。并发环境下推荐使用 ConcurrentHashMap 。
 
-详情请查看：https://coolshell.cn/articles/9606.html
+详情请查看：<https://coolshell.cn/articles/9606.html>
 
 #### 为什么HashMap线程不安全
 
@@ -1956,8 +1958,6 @@ Hash 值的范围值比较大，使用之前需要先对数组的长度取模运
 ##### get操作可能因为resize而引起死循环
 
 见上一个问题的回答
-
-
 
 ### 为什么Java只有值传递
 
@@ -2036,8 +2036,6 @@ public class MemoryLeakExample {
 
 要避免内存泄漏，我们需要确保及时释放不再需要的对象的引用，以便垃圾回收器可以回收它们。在上述示例中，一种可能的解决方案是在使用完大对象后从 `leakStorage` 列表中删除它们，或者使用弱引用（`java.lang.ref.WeakReference` 类）来存储列表中的对象。
 
-
-
 在 Java 中，您不能像在 C 或 C++ 中那样手动释放对象。相反，Java 使用垃圾回收器（Garbage Collector，GC）机制自动回收不再需要的对象。要确保对象能被垃圾回收器回收，您需要确保没有活动的引用指向该对象。换句话说，您需要将所有指向该对象的引用设置为 `null`，或者让引用超出其作用域。
 
 对于前面提到的内存泄漏示例，一种简单的方法是在使用完大对象后将其从 `leakStorage` 列表中删除。例如，您可以使用一个定时器定期清除列表中的对象：
@@ -2066,10 +2064,6 @@ public static void main(String[] args) {
 // ... 其他代码 ...
 ```
 
-
-
-
-
 ### 异常处理总结
 
 finally 块不会被执行：
@@ -2080,7 +2074,7 @@ finally 块不会被执行：
 3. 关闭 CPU。
 4. 如果 JVM 发生内部错误，使得程序被迫终止，那么 `finally` 块可能不会执行。
 
-下面这部分内容来自 issue:https://github.com/Snailclimb/JavaGuide/issues/190。
+下面这部分内容来自 issue:<https://github.com/Snailclimb/JavaGuide/issues/190。>
 **注意：** 当 try 语句和 finally 语句中都有 return 语句时，在方法返回之前，finally 语句的内容将被执行，并且 finally 语句的返回值将会覆盖原始的返回值。如下：
 
 ```java
@@ -2097,13 +2091,12 @@ public static int f(int value) {
 
 《java核心技术卷一》中提到过：当finally子句包含return 语句时（当然在设计原则上是不允许在finally块中抛出异常或者 执行return语句的），将会出现一种意想不到的结果。假设利用return语句从try 语句块中退出。在方法返回前，finally子句的内容将被执行。如果finally子句中也有一个return语句，这个返回值将会覆盖原始的返回值
 
-
-
 ### 有哪些常见的 IO 模型?
 
 UNIX 系统下， IO 模型一共有 5 种： 同步阻塞 I/O、同步非阻塞 I/O、I/O 多路复用、信号驱动 I/O 和异步 I/O。
 
 > 这里进行一些区分，方便理解：
+>
 > 1. **同步阻塞 I/O**：要一个一个处理
 > 2. **同步非阻塞 I/O**：进程需要不断地**轮询（polling）查询 I/O** 是否完成
 > 3. **I/O 多路复用**：同时监视多个 I/O 请求，会被**挂起**，当任何一个 I/O 请求就绪（即数据已准备好），进程会被**唤醒**开始处理就绪的 I/O 请求
@@ -2167,12 +2160,14 @@ BIO 全称Block-IO 是一种同步且阻塞的通信模式。是一个比较传�
 可以看美团技术团队2016年写的文章：[Java NIO浅析](https://tech.meituan.com/2016/11/04/nio.html)
 
 Java 中的 NIO 于 Java 1.4 中引入，对应 `java.nio` 包，提供了Java NIO的实现主要涉及三大核心内容： `Channel` , `Selector`，`Buffer` 等抽象。
+
 - **通道（Channel）**：通道代表了输入/输出源和目标。它们可以双向地进行数据读取和写入，支持异步操作，允许单个线程同时监听多个通道的事件。这与流（Stream）不同，因为流只能单向传输数据。
 - **缓冲区（Buffer）**：缓冲区是通道读写数据的中转地。发送端通过通道往缓冲区写数据，接收端通过通道从缓冲区读数据。实际上，缓冲区是一个用于存储数据的数组。
 - **选择器（Selector）**：选择器用于监听多个通道的事件，例如连接打开、数据到达等。这使得单个线程可以监听多个通道。当通道上发生事件时，线程可以获取该事件并进行后续操作。这实现了I/O多路复用，即通过一个线程管理多个通道。
 
 组件代码示例：
 Server
+
 ```java
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -2244,6 +2239,7 @@ public class NIOServer {
 ```
 
 Client
+
 ```java
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -2296,6 +2292,7 @@ IO 多路复用模型中，线程**首先发起 select 调用，询问内核数�
 ![image-20220615204212255](./personal_images/image-20220615204212255.webp)
 
 NIO和IO多路复用的区别是：
+
 - 在NIO中，使用选择器（Selector）来监听多个通道（Channel）上的事件。选择器通过轮询的方式来检查通道上是否有事件发生。当调用selector.select()方法时，选择器会阻塞并等待事件发生；一旦有事件发生，select()方法就会返回，此时可以获取已发生事件的通道并处理事件。这种轮询检查事件的方式使得单个线程可以同时监听多个通道上的事件。
 - IO 多路复用是一种在单个线程中管理多个通道的技术。在NIO中，选择器（Selector）实现了多路复用。多路复用允许单个线程监听多个通道上的事件，当某个通道上的事件发生时（例如，连接建立、数据到达等），选择器会唤醒相应的线程来处理这些事件。因此，多路复用可以提高I/O操作的效率，避免了线程阻塞等待单个I/O操作的问题。
 
@@ -2308,6 +2305,7 @@ AIO 也就是 NIO 2。Java 7 中引入了 NIO 的改进版 NIO 2,它是异步 IO
 异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。
 
 与NIO的区别：
+
 - **I/O模式**：NIO采用的是非阻塞I/O模式，它允许线程在等待I/O操作时处理其他任务。而AIO采用的是异步I/O模式，它允许I/O操作在后台完成，应用程序不需要等待I/O操作的结果。
 - **通知机制**：NIO使用选择器（Selector）来监听多个通道的事件，当事件发生时，选择器会通知线程。AIO则使用**回调方法来通知事件发生**，当I/O操作完成时，会自动调用指定的回调方法。
 
@@ -2316,6 +2314,7 @@ AIO 也就是 NIO 2。Java 7 中引入了 NIO 的改进版 NIO 2,它是异步 IO
 目前来说 AIO 的应用还不是很广泛。Netty 之前也尝试使用过 AIO，不过又放弃了。这是因为，Netty 使用了 AIO 之后，在 Linux 系统上的性能并没有多少提升。
 
 服务器端：
+
 ```java
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -2354,6 +2353,7 @@ public class AIOServer {
 ```
 
 客户端：
+
 ```java
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -2386,8 +2386,6 @@ public class AIOClient {
 
 ![image-20220615205148242](./personal_images/image-20220615205148242.webp)
 
-
-
 ### ⭐Java集合类框架的基本接口有哪些？
 
 Java中的集合分为value（Conllection），key-value(Map)两种存储结构
@@ -2416,10 +2414,10 @@ Queue：队列
 4. **是否支持快速随机访问**：LinkedList不支持高效的随机元素访问，而ArrayList支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(intindex)方法)。
 5. **内存空间占用**：ArrayList的空间浪费主要体现在在list列表的结尾会预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗比ArrayList更多的空间（因为要存放直接后继和直接前驱以及数据）。
 
-
-
 ### HashMap和HashTable有什么区别
-> 参考：https://www.javatpoint.com/difference-between-hashmap-and-hashtable
+>
+> 参考：<https://www.javatpoint.com/difference-between-hashmap-and-hashtable>
+
 - **线程是否安全**： HashMap 是非线程安全的，Hashtable 是线程安全的,因为 Hashtable 内部的方法基本都经过synchronized 修饰。（如果你要保证线程安全的话就使用 ConcurrentHashMap 吧！）；
 - **效率**： 因为线程安全的问题，HashMap 要比 Hashtable 效率高一点。另外，Hashtable 基本被淘汰，不要在代码中使用它；
 - **对 Null key 和 Null value 的支持**： HashMap 可以存储 null 的 key 和 value，但 null 作为键只能有一个，null 作为值可以有多个；Hashtable 不允许有 null 键和 null 值，否则会抛出 NullPointerException。初始容量大小和每次扩充容量大小的不同 ： ① 创建时如果不指定容量初始值，Hashtable 默认的初始大小为 11，之后每次扩充，容量变为原来的 2n+1。HashMap 默认的初始化大小为 16。之后每次扩充，容量变为原来的 2 倍。② 创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 HashMap 会将其扩充为 2 的幂次方大小（HashMap 中的tableSizeFor()方法保证，下面给出了源代码）。也就是说 HashMap 总是使用 2 的幂作为哈希表的大小,后面会介绍到为什么是 2 的幂次方。
@@ -2466,8 +2464,6 @@ HashMap 中带有初始容量的构造函数：
 
 ```
 
-
-
 ### ConcurrentHashMap 和 Hashtable 的区别
 
 `ConcurrentHashMap` 和 `Hashtable` 的区别主要体现在实现线程安全的方式上不同。
@@ -2497,7 +2493,7 @@ JDK1.8 的 ConcurrentHashMap 不在是 Segment 数组 + HashEntry 数组 + 链�
 
 首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。
 
-`ConcurrentHashMap` 是由 `Segment `数组结构和 `HashEntry` 数组结构组成。
+`ConcurrentHashMap` 是由 `Segment`数组结构和 `HashEntry` 数组结构组成。
 
 Segment实现了ReentrantLock,所以Segment是一种可重入锁，扮演锁的⻆色。HashEntry用于存储键值对数据。
 
@@ -2525,8 +2521,6 @@ static class Segment<K,V> extends ReentrantLock implements Serializable {
 3. 通过类的全名获取，例如`Class clazz = Class.forName("java.lang.String");`
 
 通过反射，我们可以获取类的所有信息，包括构造器、方法、字段等。
-
-
 
 **获取类的所有方法（包括继承和实现的）：**
 
@@ -2581,8 +2575,6 @@ field.set(obj, value); // 修改字段值
 
 反射的确有性能损耗和安全性问题，需要在适当的地方使用。例如，框架的开发者会使用反射来解析注解和生成代理类，但是在日常的业务代码中，反射并不常用。
 
-
-
 #### 底层问题
 
 反射的底层原理主要依赖于Java的类加载机制和类的元数据。当Java运行程序时，会加载需要的类，并生成类的元数据（MetaData），保存在方法区中。元数据中包含了类的所有信息，包括类的名称、字段、方法、构造器等。`java.lang.Class`对象就是对元数据的一种封装，每个`Class`对象都对应一份元数据。
@@ -2595,4 +2587,3 @@ field.set(obj, value); // 修改字段值
 另外，反射API的实现主要依赖于Java的本地方法（Native Method）。本地方法是用C或C++等本地语言实现的方法，可以直接访问操作系统的资源和底层硬件，从而实现一些Java自身难以实现的功能。例如，`java.lang.Class`的`forName()`方法和`newInstance()`方法，`java.lang.reflect.Field`的`set()`和`get()`方法，`java.lang.reflect.Method`的`invoke()`方法等，都是通过调用本地方法来实现的。
 
 因此，Java的反射机制的实现需要依赖于类加载机制、元数据和本地方法等多个因素。反射机制使得Java可以在运行时动态地操作对象，增加了Java的灵活性和动态性，但同时也带来了一定的性能损耗和安全隐患。
-

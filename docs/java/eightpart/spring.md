@@ -6,6 +6,7 @@ title: Spring系列
 category:
   - Spring
   - 八股文
+outline: deep
 ---
 
 ## 🍃 Spring系列
@@ -35,8 +36,6 @@ public ModelAndView handle(HttpServletRequest request, HttpServletResponse respo
 
 7、**模板模式**： Spring 中 `jdbcTemplate`、`hibernateTemplate` 等，就使用到了模板模式。
 
-
-
 > 详细
 
 #### 工厂设计模式
@@ -46,7 +45,7 @@ Spring使用工厂模式可以通过 `BeanFactory` 或 `ApplicationContext` 创�
 **两者对比：**
 
 - `BeanFactory` ：延迟注入(使用到某个 bean 的时候才会注入),相比于 `ApplicationContext` 来说会占用更少的内存，程序启动速度更快。
-- `ApplicationContext` ：容器启动的时候，不管你用没用到，一次性创建所有 bean 。`BeanFactory` 仅提供了最基本的依赖注入支持，` ApplicationContext` 扩展了 `BeanFactory` ,除了有 `BeanFactory`的功能还有额外更多功能，所以一般开发人员使用 ` ApplicationContext`会更多。
+- `ApplicationContext` ：容器启动的时候，不管你用没用到，一次性创建所有 bean 。`BeanFactory` 仅提供了最基本的依赖注入支持，`ApplicationContext` 扩展了 `BeanFactory` ,除了有 `BeanFactory`的功能还有额外更多功能，所以一般开发人员使用 `ApplicationContext`会更多。
 
 ApplicationContext的三个实现类：
 
@@ -61,13 +60,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
  
 public class App {
-	public static void main(String[] args) {
-		ApplicationContext context = new FileSystemXmlApplicationContext(
-				"C:/work/IOC Containers/springframework.applicationcontext/src/main/resources/bean-factory-config.xml");
+ public static void main(String[] args) {
+  ApplicationContext context = new FileSystemXmlApplicationContext(
+    "C:/work/IOC Containers/springframework.applicationcontext/src/main/resources/bean-factory-config.xml");
  
-		HelloApplicationContext obj = (HelloApplicationContext) context.getBean("helloApplicationContext");
-		obj.getMsg();
-	}
+  HelloApplicationContext obj = (HelloApplicationContext) context.getBean("helloApplicationContext");
+  obj.getMsg();
+ }
 }
 ```
 
@@ -182,6 +181,7 @@ Spring 中 `jdbcTemplate`、`hibernateTemplate` 等以 Template 结尾的对数�
 Spring框架中的观察者模式主要体现在事件监听和发布机制上。Spring提供了ApplicationEvent和ApplicationListener接口，通过这些接口，我们可以在Spring容器中实现观察者模式
 
 1. 首先，我们创建一个自定义的事件，继承自ApplicationEvent：
+
 ```java
 import org.springframework.context.ApplicationEvent;
 
@@ -200,6 +200,7 @@ public class CustomEvent extends ApplicationEvent {
 ```
 
 2. 然后，我们创建一个事件监听器，实现ApplicationListener接口，并指定监听的事件类型为CustomEvent：
+
 ```java
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -214,6 +215,7 @@ public class CustomEventListener implements ApplicationListener<CustomEvent> {
 ```
 
 3. 接下来，我们需要在Spring容器中发布这个事件。为了实现这一点，我们可以使用ApplicationEventPublisher：
+
 ```java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -232,6 +234,7 @@ public class CustomEventPublisher {
 ```
 
 4. 最后，我们在主程序中使用CustomEventPublisher发布一个自定义事件：
+
 ```java
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -247,6 +250,7 @@ public class ObserverPatternExampleApplication {
     }
 }
 ```
+
 运行这个程序，你会看到在控制台输出 Received custom event: Hello, Observer Pattern in Spring!，这说明观察者模式在Spring中已经成功实现了。
 
 ##### Spring 事件驱动模型中的三种角色
@@ -300,7 +304,7 @@ public interface ApplicationEventPublisher {
 
 ##### spring AOP中的适配器模式
 
-我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是 `AdvisorAdapter ` 。Advice 常用的类型有：`BeforeAdvice`（目标方法调用前,前置通知）、`AfterAdvice`（目标方法调用后,后置通知）、`AfterReturningAdvice`(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:`MethodBeforeAdviceInterceptor`、`AfterReturningAdviceAdapter`、`AfterReturningAdviceInterceptor`。Spring预定义的通知要通过对应的适配器，适配成 `MethodInterceptor`接口(方法拦截器)类型的对象（如：`MethodBeforeAdviceInterceptor` 负责适配 `MethodBeforeAdvice`）。
+我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是 `AdvisorAdapter` 。Advice 常用的类型有：`BeforeAdvice`（目标方法调用前,前置通知）、`AfterAdvice`（目标方法调用后,后置通知）、`AfterReturningAdvice`(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:`MethodBeforeAdviceInterceptor`、`AfterReturningAdviceAdapter`、`AfterReturningAdviceInterceptor`。Spring预定义的通知要通过对应的适配器，适配成 `MethodInterceptor`接口(方法拦截器)类型的对象（如：`MethodBeforeAdviceInterceptor` 负责适配 `MethodBeforeAdvice`）。
 
 ##### spring MVC中的适配器模式
 
@@ -330,7 +334,7 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 
 ### Spring IOC 的底层原理
 
-建议阅读大佬的文章：https://www.javadoop.com/post/spring-ioc
+建议阅读大佬的文章：<https://www.javadoop.com/post/spring-ioc>
 
 下面进行面试的时候快速诉说：
 
@@ -343,8 +347,6 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 7. 注册完成后进行后续BeanFactoryPostProcessor的执行和容器后置处理工作。
 8. 最后调用finishBeanFactoryInitialization(),初始化剩余的单例Bean。
 
-
-
 🤔可能进一步思考的问题：
 
 1. 可能需要解释一下什么是`BeanDefinition`，以及它如何用于描述一个Bean。
@@ -353,8 +355,6 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 4. 对于`finishBeanFactoryInitialization()`方法，可进一步解释其作用，以及它如何与懒加载和非懒加载的Bean有关。
 5. 如果可能，提一下Spring如何处理依赖注入，因为这也是IOC容器一个非常重要的功能。
 6. 最后，如果面试官特别对性能或者高级特性感兴趣，你也可以提到Spring如何优化Bean的创建和管理，比如单例模式下Bean的缓存等。
-
-
 
 关于问题可能的回答：
 
@@ -374,8 +374,6 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 
 在容器初始化过程中，这些`BeanDefinition`会被解析并注册到`BeanFactory`（通常是`DefaultListableBeanFactory`实现）中，之后就可以用来创建和管理实际的Bean实例。
 
-
-
 2. 你可以解释一下BeanFactoryPostProcessor的角色和用途。它们在Spring初始化过程中起到了什么样的作用？
 
 `BeanFactoryPostProcessor`是一个Spring框架的扩展点，用于修改或者自定义Bean定义的元数据。在Spring容器启动并完成Bean定义的注册，但在Bean实例被创建之前，`BeanFactoryPostProcessor`会被调用。
@@ -392,8 +390,6 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 在Spring容器的生命周期中，`BeanFactoryPostProcessor`通常在加载Bean定义之后、初始化Bean之前的阶段执行。由于它能改变Bean定义，这个特点使得`BeanFactoryPostProcessor`成为一个非常强大但需要谨慎使用的工具。
 
 总的来说，`BeanFactoryPostProcessor`提供了一种机制，允许我们在Spring容器完成Bean定义的加载和注册后，但在Bean被实例化和初始化前，对Bean的定义进行自定义或修改。
-
-
 
 3. 你提到了“容器后置处理工作”，这里可以稍微具体一点，比如涉及到什么类型的后置处理，以及这一步为什么是必要的。
 
@@ -415,8 +411,6 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 - **依赖解析**: 它是进行依赖注入的关键步骤，确保所有Bean都能得到它们所需的依赖。
 - **完整性与验证**: 在所有Bean都准备好之前，你可能需要进行一些完整性检查或配置验证。
 
-
-
 4. 对于`finishBeanFactoryInitialization()`方法，可进一步解释其作用，以及它如何与懒加载和非懒加载的Bean有关。
 
 该方法是Spring容器初始化过程中的一个关键步骤，它主要负责：
@@ -425,16 +419,12 @@ Spring 中配置 DataSource 的时候，DataSource  可能是不同的数据库�
 2. **处理`FactoryBean`**: 如果容器中有`FactoryBean`，`finishBeanFactoryInitialization()`会确保它们被正确地初始化，并且会从这些`FactoryBean`中获取相应的Bean实例。
 3. **触发`BeanPostProcessor`**: 在Bean初始化的各个阶段，例如属性注入后或自定义初始化方法（如`@PostConstruct`方法）调用后，所有注册的`BeanPostProcessor`都会被触发。
 
-
-
 - **非懒加载的Bean**: 在`finishBeanFactoryInitialization()`方法执行时，所有标记为非懒加载（`lazy-init="false"`或者没有设置`lazy-init`属性）的单例Bean都会被立即初始化。
 - **懒加载的Bean**: 相反，标记为懒加载（`lazy-init="true"`）的Bean不会在这一步被初始化。它们只会在被实际需要（例如，通过依赖注入或者手动调用`getBean()`方法）时才会被初始化。
 
 这种方式给了开发者更多的控制权，允许他们优化应用的启动性能和资源使用。对于那些初始化代价很高或者很少使用的Bean，开发者通常会选择懒加载。
 
 总体而言，`finishBeanFactoryInitialization()`是Spring容器初始化流程中非常关键的一步，它确保所有必要的Bean都被正确地初始化，同时也处理了懒加载和非懒加载Bean的逻辑。
-
-
 
 5. pass
 6. 如果面试官特别对性能或者高级特性感兴趣，你也可以提到Spring如何优化Bean的创建和管理，比如单例模式下Bean的缓存等。
@@ -471,11 +461,9 @@ Event Listener的有选择性触发
 
 - Spring内部维护了依赖关系的索引，当进行依赖注入时，可以更快地找到相应的Bean。
 
-
-
 ### Spring AOP 的底层原理
 
-同样是阅读大佬的文章：https://www.javadoop.com/post/spring-aop-intro、https://www.javadoop.com/post/spring-aop-source
+同样是阅读大佬的文章：<https://www.javadoop.com/post/spring-aop-intro、https://www.javadoop.com/post/spring-aop-source>
 
 1. 当调用ApplicationContext的getBean()方法时,会调用AbstractAutowireCapableBeanFactory的doCreateBean()方法创建Bean实例。
 2. 在初始化Bean的过程中,会调用initializeBean()方法。
@@ -491,8 +479,6 @@ Event Listener的有选择性触发
 6. 如果满足条件会使用JDK动态代理,否则使用CGLIB代理。代理类实现对应的接口和父类方法拦截功能。
 7. 当请求代理类方法时,会委派给对应通知组成的MethodInterceptor链进行拦截增强处理。
 8. 最终返回增强后的结果,完成一个简单的AOP代理流程,而无需考虑配置方式的具体差异。
-
-
 
 ### Spring Boot 自动装配
 
@@ -513,6 +499,7 @@ Event Listener的有选择性触发
 在我看来，自动装配可以简单理解为：通过注解或者一些简单的配置就能在 Spring Boot 的帮助下实现某块功能。
 
 我们先看一下 SpringBoot 的核心注解 `SpringBootApplication` （当前代码spring boot版本：`2.5.6`）。
+
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -531,13 +518,16 @@ Event Listener的有选择性触发
 )
 public @interface SpringBootApplication {
 ```
+
 大概可以把 @SpringBootApplication看作是 @Configuration、@EnableAutoConfiguration、@ComponentScan 注解的集合。根据 SpringBoot 官网，这三个注解的作用分别是：
+
 - @EnableAutoConfiguration：启用 SpringBoot 的自动配置机制
 - @Configuration：允许在上下文中注册额外的 bean 或导入其他配置类
 - @ComponentScan：扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描启动类所在的包下所有的类 ，可以自定义不扫描某些 bean。如下图所示，容器中将排除TypeExcludeFilter和AutoConfigurationExcludeFilter。
 - @EnableAutoConfiguration 是实现自动装配的重要注解，我们以这个注解入手。
 
 EnableAutoConfiguration 只是一个简单地注解，自动装配核心功能的实现实际是通过 AutoConfigurationImportSelector类。
+
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -558,6 +548,7 @@ public @interface EnableAutoConfiguration {
 AutoConfigurationImportSelector类的继承体系如下：
 ![](./personal_images/QQ截图20230626164313.webp)
 可以看出，AutoConfigurationImportSelector 类实现了 ImportSelector接口，也就实现了这个接口中的 selectImports方法，该方法主要用于获取所有符合条件的类的全限定类名，这些类需要被加载到 IoC 容器中。
+
 ```java
 public interface ImportSelector {
     String[] selectImports(AnnotationMetadata importingClassMetadata);
@@ -568,7 +559,9 @@ public interface ImportSelector {
     }
 }
 ```
+
 AutoConfigurationImportSelector的实现如下：
+
 ```java
 public String[] selectImports(AnnotationMetadata annotationMetadata) {
         if (!this.isEnabled(annotationMetadata)) {
@@ -579,40 +572,47 @@ public String[] selectImports(AnnotationMetadata annotationMetadata) {
         }
     }
 ```
+
 现在我们结合getAutoConfigurationEntry()的源码来详细分析一下：
+
 ```java
 protected AutoConfigurationEntry getAutoConfigurationEntry(AnnotationMetadata annotationMetadata) {
-	if (!this.isEnabled(annotationMetadata)) {
-		return EMPTY_ENTRY;
-	} else {
-		AnnotationAttributes attributes = this.getAttributes(annotationMetadata);
-		List<String> configurations = this.getCandidateConfigurations(annotationMetadata, attributes);
-		configurations = this.removeDuplicates(configurations);
-		Set<String> exclusions = this.getExclusions(annotationMetadata, attributes);
-		this.checkExcludedClasses(configurations, exclusions);
-		configurations.removeAll(exclusions);
-		configurations = this.getConfigurationClassFilter().filter(configurations);
-		this.fireAutoConfigurationImportEvents(configurations, exclusions);
-		return new AutoConfigurationEntry(configurations, exclusions);
-	}
+ if (!this.isEnabled(annotationMetadata)) {
+  return EMPTY_ENTRY;
+ } else {
+  AnnotationAttributes attributes = this.getAttributes(annotationMetadata);
+  List<String> configurations = this.getCandidateConfigurations(annotationMetadata, attributes);
+  configurations = this.removeDuplicates(configurations);
+  Set<String> exclusions = this.getExclusions(annotationMetadata, attributes);
+  this.checkExcludedClasses(configurations, exclusions);
+  configurations.removeAll(exclusions);
+  configurations = this.getConfigurationClassFilter().filter(configurations);
+  this.fireAutoConfigurationImportEvents(configurations, exclusions);
+  return new AutoConfigurationEntry(configurations, exclusions);
+ }
 }
 ```
 
 首先是第一句：
+
 ```java
 if (!this.isEnabled(annotationMetadata)) {
-	return EMPTY_ENTRY;
+ return EMPTY_ENTRY;
 } 
 ```
+
 这里的`this.isEnabled(annotationMetadata)`内容（AutoConfigurationImportSelector 99行）是：
+
 ```java
 protected boolean isEnabled(AnnotationMetadata metadata) {
-	return this.getClass() == AutoConfigurationImportSelector.class ? (Boolean)this.getEnvironment().getProperty("spring.boot.enableautoconfiguration", Boolean.class, true) : true;
+ return this.getClass() == AutoConfigurationImportSelector.class ? (Boolean)this.getEnvironment().getProperty("spring.boot.enableautoconfiguration", Boolean.class, true) : true;
 }
 ```
+
 这段代码会判断当前类是否为AutoConfigurationImportSelector类，如果是，则会从Spring环境中获取名为spring.boot.enableautoconfiguration的属性值，如果该属性存在且为false，则不启用自动配置，否则启用自动配置。如果当前类不是AutoConfigurationImportSelector类，则始终返回true，表示启用自动配置。
 
 1. 在getAutoConfigurationEntry()的源码中的一段第一段逻辑是：
+
 ```java
 AnnotationAttributes attributes = this.getAttributes(annotationMetadata);
 ```
@@ -627,16 +627,17 @@ AnnotationAttributes attributes = this.getAttributes(annotationMetadata);
 ![](./personal_images/Snipaste_2023-06-26_17-29-34.webp)
 
 3. 第3个逻辑是：`configurations = this.removeDuplicates(configurations);` 去除重复的自动配置类。
+
 ```java
 protected Set<String> getExclusions(AnnotationMetadata metadata, AnnotationAttributes attributes) {
-	Set<String> excluded = new LinkedHashSet();
-	// 从 attributes 参数中的 "exclude" 键获取排除的自动配置类。这些类通常在 @EnableAutoConfiguration 注解中通过 exclude 属性指定。
-	excluded.addAll(this.asList(attributes, "exclude"));
-	// 从 attributes 参数中的 "excludeName" 键获取排除的自动配置类名称。这些类名通常在 @EnableAutoConfiguration 注解中通过 excludeName 属性指定。
-	excluded.addAll(Arrays.asList(attributes.getStringArray("excludeName")));
-	// 通过调用 getExcludeAutoConfigurationsProperty() 方法获取 spring.autoconfigure.exclude 属性定义的自动配置类。这个属性通常在 application.properties 或 application.yml 文件中设置。
-	excluded.addAll(this.getExcludeAutoConfigurationsProperty());
-	return excluded;
+ Set<String> excluded = new LinkedHashSet();
+ // 从 attributes 参数中的 "exclude" 键获取排除的自动配置类。这些类通常在 @EnableAutoConfiguration 注解中通过 exclude 属性指定。
+ excluded.addAll(this.asList(attributes, "exclude"));
+ // 从 attributes 参数中的 "excludeName" 键获取排除的自动配置类名称。这些类名通常在 @EnableAutoConfiguration 注解中通过 excludeName 属性指定。
+ excluded.addAll(Arrays.asList(attributes.getStringArray("excludeName")));
+ // 通过调用 getExcludeAutoConfigurationsProperty() 方法获取 spring.autoconfigure.exclude 属性定义的自动配置类。这个属性通常在 application.properties 或 application.yml 文件中设置。
+ excluded.addAll(this.getExcludeAutoConfigurationsProperty());
+ return excluded;
 }
 ```
 
@@ -646,36 +647,37 @@ protected Set<String> getExclusions(AnnotationMetadata metadata, AnnotationAttri
 ![](./personal_images/Snipaste_2023-06-26_17-40-39.webp)
 
 7. 第6个逻辑是`this.fireAutoConfigurationImportEvents(configurations, exclusions);`触发自动配置导入事件。fireAutoConfigurationImportEvents 方法负责触发自动配置导入事件。这个方法的主要目的是通知所有注册的 AutoConfigurationImportListener 实例关于自动配置类的导入情况。这可以让开发者在导入自动配置类时执行一些自定义操作，例如记录日志、处理依赖关系等。
+
 ```java
 private void fireAutoConfigurationImportEvents(List<String> configurations, Set<String> exclusions) {
-	// 调用 getAutoConfigurationImportListeners() 获取所有注册的 AutoConfigurationImportListener 实例。AutoConfigurationImportListener 是一个接口，用于监听自动配置导入事件。
-	List<AutoConfigurationImportListener> listeners = this.getAutoConfigurationImportListeners();
-	// 检查获取到的监听器列表是否为空。如果为空，则不执行后续步骤，因为没有监听器需要通知。
-	if (!listeners.isEmpty()) {
-		// 创建一个新的 AutoConfigurationImportEvent 实例，将当前的自动配置类列表（configurations）和排除的自动配置类集合（exclusions）作为参数传递。AutoConfigurationImportEvent 类包含了自动配置导入过程中的相关信息，供监听器处理。
-		AutoConfigurationImportEvent event = new AutoConfigurationImportEvent(this, configurations, exclusions);
-		Iterator var5 = listeners.iterator();
-		// 遍历所有 AutoConfigurationImportListener 实例。对于每个监听器：
-		while(var5.hasNext()) {
-			AutoConfigurationImportListener listener = (AutoConfigurationImportListener)var5.next();
-			// 调用 invokeAwareMethods(listener) 方法，确保监听器实现了 Aware 接口的任何方法（例如 ApplicationContextAware、BeanFactoryAware 等）。
-			this.invokeAwareMethods(listener);
-			// 调用监听器的 onAutoConfigurationImportEvent(event) 方法，将 AutoConfigurationImportEvent 实例传递给监听器。此时监听器可以处理事件，根据需要执行自定义操作。
-			listener.onAutoConfigurationImportEvent(event);
-		}
-	}
+ // 调用 getAutoConfigurationImportListeners() 获取所有注册的 AutoConfigurationImportListener 实例。AutoConfigurationImportListener 是一个接口，用于监听自动配置导入事件。
+ List<AutoConfigurationImportListener> listeners = this.getAutoConfigurationImportListeners();
+ // 检查获取到的监听器列表是否为空。如果为空，则不执行后续步骤，因为没有监听器需要通知。
+ if (!listeners.isEmpty()) {
+  // 创建一个新的 AutoConfigurationImportEvent 实例，将当前的自动配置类列表（configurations）和排除的自动配置类集合（exclusions）作为参数传递。AutoConfigurationImportEvent 类包含了自动配置导入过程中的相关信息，供监听器处理。
+  AutoConfigurationImportEvent event = new AutoConfigurationImportEvent(this, configurations, exclusions);
+  Iterator var5 = listeners.iterator();
+  // 遍历所有 AutoConfigurationImportListener 实例。对于每个监听器：
+  while(var5.hasNext()) {
+   AutoConfigurationImportListener listener = (AutoConfigurationImportListener)var5.next();
+   // 调用 invokeAwareMethods(listener) 方法，确保监听器实现了 Aware 接口的任何方法（例如 ApplicationContextAware、BeanFactoryAware 等）。
+   this.invokeAwareMethods(listener);
+   // 调用监听器的 onAutoConfigurationImportEvent(event) 方法，将 AutoConfigurationImportEvent 实例传递给监听器。此时监听器可以处理事件，根据需要执行自定义操作。
+   listener.onAutoConfigurationImportEvent(event);
+  }
+ }
 
 }
 ```
+
 8. 最后返回一个包含自动配置类和排除的自动配置类的 AutoConfigurationEntry 对象：`return new AutoConfigurationEntry(configurations, exclusions);`
+
 ```java
 AutoConfigurationEntry(Collection<String> configurations, Collection<String> exclusions) {
-	this.configurations = new ArrayList(configurations);
-	this.exclusions = new HashSet(exclusions);
+ this.configurations = new ArrayList(configurations);
+ this.exclusions = new HashSet(exclusions);
 }
 ```
-
-
 
 **总结**
 
@@ -697,8 +699,6 @@ AutoConfigurationEntry(Collection<String> configurations, Collection<String> exc
 5. **通知监听者**：
    - **通知应用启动完成**：使用`SpringApplicationRunListener`通知所有监听者，表明应用启动完成。
 
-
-
 ### Spring Boot 启动流程
 
 1. 从spring.factories配置文件中加载EventPublishingRunListener对象，该对象拥有SimpleApplicationEventMulticaster属性，即在SpringBoot启动过程的不同阶段用来发射内置的生命周期事件;
@@ -712,8 +712,6 @@ AutoConfigurationEntry(Collection<String> configurations, Collection<String> exc
 9. 调用ApplicationRunner和CommandLineRunner的run方法，我们实现这两个接口可以在spring容器启动后需要的一些东西比如加载一些业务数据等;
 10. 报告启动异常，即若启动过程中抛出异常，此时用FailureAnalyzers来报告异常;
 11. 最终返回容器对象，这里调用方法没有声明对象来接收。
-
-
 
 帮助记忆：
 
@@ -729,8 +727,6 @@ AutoConfigurationEntry(Collection<String> configurations, Collection<String> exc
 10. **异常报告** - 使用FailureAnalyzers报告启动过程中的异常。
 11. **返回容器对象** - 完成启动，返回ApplicationContext对象。
 
-
-
 ### 🌟 Spring Bean 生命周期
 
 ![img](./personal_images/20220709213529.webp)
@@ -740,18 +736,19 @@ AutoConfigurationEntry(Collection<String> configurations, Collection<String> exc
 Spring Bean 是 Spring 框架中的一个基本组成部分，它们是由 Spring IoC 容器管理的 Java 对象。Spring Bean 生命周期描述了从对象创建到销毁的整个过程，这个过程由容器管理并通过各种回调方法来执行。
 
 **生命周期阶段**：详细介绍 Spring Bean 生命周期的各个阶段。
+
 - 实例化（Instantiation）：Spring IoC 容器创建 Bean 实例。
 - 属性赋值（Populate properties）：容器根据 Bean 定义的依赖关系，为 Bean 的属性赋值。
 - 初始化（Initialization）：Bean 初始化的几个步骤：
-	- 如果 Bean 实现了 `BeanNameAware` 接口，容器会调用 `setBeanName()` 方法传入 Bean 的名称。
-	- 如果 Bean 实现了 `BeanFactoryAware` 接口，容器会调用 `setBeanFactory()` 方法传入 Bean 工厂。
-	- 如果 Bean 实现了 `ApplicationContextAware` 接口，容器会调用 `setApplicationContext()` 方法传入应用上下文。
-	- 如果 Bean 配置了 `BeanPostProcessor`，则在初始化前后调用 `postProcessBeforeInitialization()` 和 `postProcessAfterInitialization()` 方法。
-	- 如果 Bean 实现了 `InitializingBean` 接口，容器会调用 `afterPropertiesSet()` 方法。
-	- 如果 Bean 配置了自定义的初始化方法，容器会调用该方法。
+ 	- 如果 Bean 实现了 `BeanNameAware` 接口，容器会调用 `setBeanName()` 方法传入 Bean 的名称。
+ 	- 如果 Bean 实现了 `BeanFactoryAware` 接口，容器会调用 `setBeanFactory()` 方法传入 Bean 工厂。
+ 	- 如果 Bean 实现了 `ApplicationContextAware` 接口，容器会调用 `setApplicationContext()` 方法传入应用上下文。
+ 	- 如果 Bean 配置了 `BeanPostProcessor`，则在初始化前后调用 `postProcessBeforeInitialization()` 和 `postProcessAfterInitialization()` 方法。
+ 	- 如果 Bean 实现了 `InitializingBean` 接口，容器会调用 `afterPropertiesSet()` 方法。
+ 	- 如果 Bean 配置了自定义的初始化方法，容器会调用该方法。
 - 销毁（Destruction）：Bean 销毁的几个步骤：
-	- 如果 Bean 实现了 `DisposableBean` 接口，容器会调用 `destroy()` 方法。
-	- 如果 Bean 配置了自定义的销毁方法，容器会调用该方法。
+ 	- 如果 Bean 实现了 `DisposableBean` 接口，容器会调用 `destroy()` 方法。
+ 	- 如果 Bean 配置了自定义的销毁方法，容器会调用该方法。
 
 ### @Autowired 和 @Resource 的区别是什么？
 
@@ -782,14 +779,17 @@ Spring 内置的 `@Autowired` 以及 JDK 内置的 `@Resource` 和 `@Inject` 都
 使用 @Autowired注解，并且你的Spring上下文中存在多个相同类型的bean，那么Spring在尝试注入时会抛出异常，因为它不知道应该注入哪一个。
 
 在这种情况下，你可以使用 @Qualifier 注解来指定你想要注入的具体的bean。@Qualifier 注解接受一个字符串参数，这个参数是你想要注入的bean的名称。例如，你可以这样做：
+
 ```java
 @Autowired
 @Qualifier("myService1")
 private MyService myService;
 ```
+
 在这个例子中，Spring会注入名称为 "myService1" 的 MyService bean。
 
 另一方面，@Resource 注解的默认行为是按名称（byName）注入。你可以通过设置它的 name 属性来指定你想要注入的bean的名称。例如，你可以这样做：
+
 ```java
 @Resource(name="myService1")
 private MyService myService;
@@ -812,6 +812,7 @@ Spring Boot允许你在其他服务中注入已经创建的服务，这是Spring
 这就是为什么你可能需要使用@Qualifier来显式地告诉Spring你希望注入哪个特定的bean。
 
 例如：
+
 ```java
 @Service
 public class MyServiceImpl1 implements MyService {
@@ -838,10 +839,10 @@ public class MyComponent {
 
 @Qualifier注解的参数应该是你想要注入的bean的名称。在我的例子中，myServiceImpl1和myServiceImpl2就是bean的名称，这些名称默认是类名的首字母小写的形式。当然，你也可以在@Service注解中指定自定义的bean名称，如@Service("myCustomName")，然后你可以在@Qualifier注解中使用这个自定义的名称
 
-
-
 ### 🌟 请描述Spring MVC的工作流程？描述一下 DispatcherServlet 的工作流程？
+
 ![](./personal_images/de6d2b213f112297298f3e223bf08f28.webp)
+
 1. 客户端（浏览器）发送请求， `DispatcherServlet`拦截请求。
 2. `DispatcherServlet` 根据请求信息调用 `HandlerMapping` 。`HandlerMapping` 根据 uri 去匹配查找能处理的 `Handler`（也就是我们平常说的 `Controller` 控制器） ，并会将请求涉及到的拦截器和 `Handler` 一起封装。
 3. `DispatcherServlet` 调用 `HandlerAdapter`适配器执行 `Handler` 。
@@ -850,13 +851,14 @@ public class MyComponent {
 6. `DispaterServlet` 把返回的 `Model` 传给 `View`（视图渲染）。
 7. 把 `View` 返回给请求者（浏览器）
 
-
 ### 用户提交一个空字段，返回一个错误，在mvc哪里处理
+
 在Spring MVC中，你可以在控制器（Controller）中处理用户提交的空字段。通常来说，我们会使用表单验证（Form Validation）来处理这类问题。Spring MVC内置了很多对于表单验证的支持，如Hibernate Validator。
 
 下面是一个简单的例子来说明如何在Spring MVC中处理用户提交的空字段：
 
 首先，你需要在你的模型（Model）类中使用注解（Annotations）来指定验证规则。例如，假设你有一个User类，你可以这样做：
+
 ```java
 public class User {
 
@@ -866,9 +868,11 @@ public class User {
     // getters and setters
 }
 ```
+
 在上面的例子中，@NotBlank注解指定了"name"字段不得为空，如果为空，将返回指定的错误消息。
 
 然后，在你的控制器中，你需要对你的模型进行验证：
+
 ```java
 @PostMapping("/addUser")
 public String addUser(@Valid User user, BindingResult result) {
@@ -882,6 +886,7 @@ public String addUser(@Valid User user, BindingResult result) {
     return "successView";
 }
 ```
+
 在上面的例子中，@Valid注解告诉Spring MVC去验证user对象，**如果验证失败（比如"name"字段为空），错误信息会被添加到BindingResult对象中。然后你可以检查BindingResult来看是否有错误，并按需要进行处理。**
 
 注意，为了使表单验证工作，你需要在你的Spring MVC配置中启用对应的注解驱动的验证。如果你使用Java Config，你可以添加@EnableWebMvc注解。如果你使用XML配置，你需要包含<mvc:annotation-driven />。
@@ -929,10 +934,10 @@ public class Role {
 }
 ```
 
-
-
 ### ✨ Spring怎么解决循环依赖的问题？
+>
 >《概览》
+>
 >1. 通过三级缓存解决。Spring的三级缓存分别是 singletonObjects、earlySingletonObjects 和 singletonFactories。当BeanA依赖于BeanB,而BeanB又依赖于BeanC时，Spring会先创建BeanA并将其放入singletonObjects中，然后创建BeanB并将其放入singletonFactories中，最后再创建BeanC。这样就避免了循环引用的问题。
 >2. 通过使用延迟加载解决。这种方法是将一个Bean使用延时加载，也就是说这个Bean并没有完全初始化完，实际上它注入的是一个代理，只有当它首次被使用的时候才会被完全初始化。
 >3. 通过使用构造函数注入解决。这种方法是将一个Bean的属性通过构造函数注入到另一个Bean中，从而避免了循环引用的问题。
@@ -987,9 +992,9 @@ private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<Str
     
 ```
 
-* **第一层缓存（singletonObjects）**：单例对象缓存池，已经实例化并且属性赋值，这里的对象是**成熟对象**，具体而言这个缓存用于存储已经完全初始化好的单例bean；
-* **第二层缓存（earlySingletonObjects）**：单例对象缓存池，已经实例化但尚未属性赋值，这里的对象是**半成品对象**，这个缓存用于存储已经实例化但尚未完全初始化的bean。这个缓存主要用于解决循环依赖的问题；
-* **第三层缓存（singletonFactories）**: 单例工厂的缓存，这个缓存用于存储用于创建bean的工厂对象。当一个bean需要被提前暴露（即尚未完全初始化）时，可以通过这个缓存获取对应的工厂对象，然后调用工厂对象的方法获取bean实例。
+- **第一层缓存（singletonObjects）**：单例对象缓存池，已经实例化并且属性赋值，这里的对象是**成熟对象**，具体而言这个缓存用于存储已经完全初始化好的单例bean；
+- **第二层缓存（earlySingletonObjects）**：单例对象缓存池，已经实例化但尚未属性赋值，这里的对象是**半成品对象**，这个缓存用于存储已经实例化但尚未完全初始化的bean。这个缓存主要用于解决循环依赖的问题；
+- **第三层缓存（singletonFactories）**: 单例工厂的缓存，这个缓存用于存储用于创建bean的工厂对象。当一个bean需要被提前暴露（即尚未完全初始化）时，可以通过这个缓存获取对应的工厂对象，然后调用工厂对象的方法获取bean实例。
 
 现在让我们详细了解一下在解决循环依赖时，这三个缓存是如何发挥作用的：
 
@@ -1006,7 +1011,9 @@ private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<Str
 > 这个解决方案只适用于单例作用域的bean（默认作用域）。对于其他作用域的bean，例如原型作用域，Spring不会解决循环依赖问题。
 
 #### 使用@Lazy
+
 使用一个简单的例子进行说明：
+
 ```java
 @Component
 public class CircularDependencyA {
@@ -1019,6 +1026,7 @@ public class CircularDependencyA {
     }
 }
 ```
+
 ```java
 @Component
 public class CircularDependencyB {
@@ -1033,6 +1041,7 @@ public class CircularDependencyB {
 ```
 
 使用@Lazy
+
 ```java
 @Component
 public class CircularDependencyA {
@@ -1047,6 +1056,7 @@ public class CircularDependencyA {
 ```
 
 #### 使用Setter/字段注入
+
 简而言之，我们可以通过改变bean的连接方式来解决这个问题——使用setter注入（或字段注入）而不是构造函数注入。这样，Spring创建bean，但依赖项在需要之前不会注入。
 
 ```java
@@ -1110,13 +1120,13 @@ public class CircularDependencyA {
 public class CircularDependencyB {
 
     private CircularDependencyA circA;
-	
+ 
     private String message = "Hi!";
 
     public void setCircA(CircularDependencyA circA) {
         this.circA = circA;
     }
-	
+ 
     public String getMessage() {
         return message;
     }
@@ -1167,8 +1177,6 @@ public class CircularDependencyB {
     }
 }
 ```
-
-
 
 ### Transactional失效场景
 
@@ -1229,7 +1237,7 @@ return getDepth(exceptionClass.getSuperclass(), depth + 1);
 
 开发中避免不了会对同一个类里面的方法调用，比如有一个类Test，它的一个方法A，A再调用本类的方法B（不论方法B是用public还是private修饰），但方法A没有声明注解事务，而B方法有。则**外部调用方法A**之后，方法B的事务是不会起作用的。这也是经常犯错误的一个地方。
 
-那为啥会出现这种情况？其实这还是由于使用 `Spring AOP `代理造成的，因为 **只有当事务方法被 当前类以外的代码 调用时，才会由`Spring`生成的代理对象来管理。**
+那为啥会出现这种情况？其实这还是由于使用 `Spring AOP`代理造成的，因为 **只有当事务方法被 当前类以外的代码 调用时，才会由`Spring`生成的代理对象来管理。**
 
 ```java
 //@Transactional
@@ -1302,4 +1310,3 @@ org.springframework.transaction.UnexpectedRollbackException: Transaction rolled 
 #### 数据库引擎不支持事务
 
 这种情况出现的概率并不高，事务能否生效数据库引擎是否支持事务是关键。常用的MySQL数据库默认使用支持事务的`innodb`引擎。一旦数据库引擎切换成不支持事务的`myisam`，那事务就从根本上失效了。
-

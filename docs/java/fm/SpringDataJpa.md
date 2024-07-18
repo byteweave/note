@@ -4,8 +4,10 @@ title: SpringDataJpa
 category:
   - Spring
   - 数据库
+outline: deep
 ---
 # Spring Data JPA ALL IN ONE
+
 - [Spring Data JPA ALL IN ONE](#spring-data-jpa-all-in-one)
   - [概述](#概述)
   - [Hibernate JPA](#hibernate-jpa)
@@ -45,6 +47,7 @@ category:
   - [对象导航查询](#对象导航查询)
   - [解决中文乱码问题](#解决中文乱码问题)
     - [数据库检测](#数据库检测)
+
 ## 概述
 
 描述：Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.
@@ -123,29 +126,29 @@ category:
 
 ![](./JpaImg/60.webp)
 
-
-
 ### 注解实现
 
 1. 实体类和表的映射关系
+
 * @Entity: 声明实体类
-* @Table: 配置实体类和表的映射关系
-*      name: 配置数据库表的名称
+- @Table: 配置实体类和表的映射关系
+-      name: 配置数据库表的名称
 
 ![](./JpaImg/61.webp)
 
 2. 实体类中属性和表中字段的映射关系
- * @Id 声明主键的配置
- * @GeneratedValue 配置主键生成策略
-   * strategy
-     * GenerationType.IDENTITY：自增 MySQL
-       * 底层数据库必须支持自动增长（底层数据库支持的自动增长方式，对id自增）
-     * GenerationType.SEQUENCE： 序列，Oracle
-       * 底层数据库必须支持序列
-     * GenerationType.TABLE：JPA提供的一种机制，通过一张数据库的形式帮助我们主键完成自增
-     * GenerationType.AUTO：由程序自动帮助我们选择主键生成策略
- * @Column 配置属性和字段的映射关系
-   * name：数据库表中字段的名称
+
+- @Id 声明主键的配置
+- @GeneratedValue 配置主键生成策略
+  - strategy
+    - GenerationType.IDENTITY：自增 MySQL
+      - 底层数据库必须支持自动增长（底层数据库支持的自动增长方式，对id自增）
+    - GenerationType.SEQUENCE： 序列，Oracle
+      - 底层数据库必须支持序列
+    - GenerationType.TABLE：JPA提供的一种机制，通过一张数据库的形式帮助我们主键完成自增
+    - GenerationType.AUTO：由程序自动帮助我们选择主键生成策略
+- @Column 配置属性和字段的映射关系
+  - name：数据库表中字段的名称
 
 ![](./JpaImg/62.webp)
 
@@ -153,39 +156,39 @@ category:
 
 1. 加载配置文件创建工厂（实体管理器工厂）对象
 
-* Persisitence：静态方法（根据持久化单元名称创建实体管理器工厂）
-* createEntityMnagerFactory（持久化单元名称）
+- Persisitence：静态方法（根据持久化单元名称创建实体管理器工厂）
+- createEntityMnagerFactory（持久化单元名称）
 
 作用：创建实体管理器工厂
 
 2. 通过实体管理器工厂实体管理器
 
-* EntityManagerFactory ：获取EntityManager对象
-  * 方法：createEntityManager
-  * 内部维护的很多的内容
-    * 内部维护了数据库信息，
-  * 维护了缓存信息
-  * 维护了所有的实体管理器对象
-  * 再创建EntityManagerFactory的过程中会根据配置创建数据库表
-* EntityManagerFactory的创建过程比较浪费资源
-  * 特点：线程安全的对象
-  * 多个线程访问同一个EntityManagerFactory不会有线程安全问题
-  * *如何解决EntityManagerFactory的创建过程浪费资源（耗时）的问题？*
-    * 思路：创建一个公共的EntityManagerFactory的对象
-    * **静态代码块的形式创建EntityManagerFactory**
+- EntityManagerFactory ：获取EntityManager对象
+  - 方法：createEntityManager
+  - 内部维护的很多的内容
+    - 内部维护了数据库信息，
+  - 维护了缓存信息
+  - 维护了所有的实体管理器对象
+  - 再创建EntityManagerFactory的过程中会根据配置创建数据库表
+- EntityManagerFactory的创建过程比较浪费资源
+  - 特点：线程安全的对象
+  - 多个线程访问同一个EntityManagerFactory不会有线程安全问题
+  - *如何解决EntityManagerFactory的创建过程浪费资源（耗时）的问题？*
+    - 思路：创建一个公共的EntityManagerFactory的对象
+    - **静态代码块的形式创建EntityManagerFactory**
 
 3. 获取事务对象，开启事务
 
-* EntityManager对象：实体类管理器
-  * beginTransaction : 创建事务对象
-  * presist ： 保存
-  * merge  ： 更新
-  * remove ： 删除
-  * find/getRefrence ： 根据id查询
-* Transaction 对象 ： 事务
-  * begin：开启事务
-  * commit：提交事务
-  * rollback：回滚
+- EntityManager对象：实体类管理器
+  - beginTransaction : 创建事务对象
+  - presist ： 保存
+  - merge  ： 更新
+  - remove ： 删除
+  - find/getRefrence ： 根据id查询
+- Transaction 对象 ： 事务
+  - begin：开启事务
+  - commit：提交事务
+  - rollback：回滚
 
 4. 完成CRUD操作
 
@@ -221,9 +224,9 @@ category:
 
 *1.* *创建**query**查询对象**
 
-* **getResultList:** 直接将查询封装为List集合
+- **getResultList:** 直接将查询封装为List集合
 
-* **getSingleResult:** 得到唯一的结果集
+- **getSingleResult:** 得到唯一的结果集
 
 *2.* *对参数进行赋值*
 
@@ -250,8 +253,6 @@ category:
 ##### 条件查询
 
 ![](./JpaImg/73.webp)
-
-
 
 ## 环境搭建
 
@@ -404,10 +405,6 @@ pom.xml
 </dependencies>
 ```
 
-
-
-
-
 ## 入门编写JPA实现
 
 创建一个Spring和JPA的配置：
@@ -489,11 +486,11 @@ pom.xml
 
 ![](./JpaImg/49.webp)
 
-* 符合SpringJpa的dao层接口规范
-  * JpaRepository <操作的实体类类型, 实体类的主键属性的类型>
-    * 封装了基本CRUD操作
-  * JpaSpecificationExecutor <操作的实体类类型>
-    * 封装了复杂查询（分页）
+- 符合SpringJpa的dao层接口规范
+  - JpaRepository <操作的实体类类型, 实体类的主键属性的类型>
+    - 封装了基本CRUD操作
+  - JpaSpecificationExecutor <操作的实体类类型>
+    - 封装了复杂查询（分页）
 
 ```java
 public interface CustomerDao extends JpaRepository<Customer, Long>, JpaSpecificationExecutor<Customer> {
@@ -512,9 +509,9 @@ public interface CustomerDao extends JpaRepository<Customer, Long>, JpaSpecifica
 
 **save保存或更新**
 
-* 根据传递的对象是否存在主键id
-* 如果没有id主键属性，保存
-* 存在id主键属性，根据id查询数据，更新数据
+- 根据传递的对象是否存在主键id
+- 如果没有id主键属性，保存
+- 存在id主键属性，根据id查询数据，更新数据
 
 ![](./JpaImg/53.webp)
 
@@ -538,14 +535,10 @@ public interface CustomerDao extends JpaRepository<Customer, Long>, JpaSpecifica
       1. 需要继承两个接口（JpaRepository，JpaSpecificationExecutor）
       2. 需要提供响应的泛型
 
-
-
-* findOne（id） ：根据id查询
-* save(customer):保存或者更新（依据：传递的实体类对象中，是否包含id属性）
-* delete（id） ：根据id删除
-* findAll() : 查询全部
-
-
+- findOne（id） ：根据id查询
+- save(customer):保存或者更新（依据：传递的实体类对象中，是否包含id属性）
+- delete（id） ：根据id删除
+- findAll() : 查询全部
 
 ## 源码分析
 
@@ -576,8 +569,6 @@ basepackage：对此包下的DAO接口进行动态代理增强
 2. SimpleJpaRepository当中封装了JPA的操作（借助JPA的api完成数据库的CRUD）
 3. 通过hibernate完成数据库操作（封装了jdbc）
 
-
-
 ## 复杂查询
 
 统计查询：
@@ -594,11 +585,9 @@ basepackage：对此包下的DAO接口进行动态代理增强
 
 ![](./JpaImg/43.webp)
 
-
-
 ## JPQL查询
 
-* 需要将JPQL语句配置到接口方法上
+- 需要将JPQL语句配置到接口方法上
 
 1. 特有的查询：需要在dao接口上配置方法
 
@@ -614,14 +603,12 @@ basepackage：对此包下的DAO接口进行动态代理增强
 
 注意：
 
-* 需要手动添加事务的支持
-* 默认执行之后会回滚事务
-* **@Rollback** *设置自动回滚*
-  * true | false
+- 需要手动添加事务的支持
+- 默认执行之后会回滚事务
+- **@Rollback** *设置自动回滚*
+  - true | false
 
 ![](./JpaImg/40.webp)
-
-
 
 ## SQL查询
 
@@ -639,16 +626,14 @@ basepackage：对此包下的DAO接口进行动态代理增强
 
 ![](./JpaImg/36.webp)
 
-
-
 ## 方法名称规则查询
 
 findBy+对象中属性的名称（首字母大写）：代表查询
 含义：根据属性名称进行查询
 例如： custName -> CustName
 
-*      findByCustName -> 根据客户名称查询
-*      在SpingDataJPA的运行阶段：会根据名称进行解析: find from xxx(实体类) 属性名称 where custName = ？
+-      findByCustName -> 根据客户名称查询
+-      在SpingDataJPA的运行阶段：会根据名称进行解析: find from xxx(实体类) 属性名称 where custName = ？
 
 ![](./JpaImg/30.webp)
 
@@ -663,31 +648,23 @@ findByCustNameLike
 
 ![](./JpaImg/33.webp)
 
-
-
 ## JpaSpecificationExecutor方法
 
 **Specification**  查询条件
 
 1. 自定义我们自己的 *Specification* 实现类
-2. 需要实现的方法：toPredicate 
+2. 需要实现的方法：toPredicate
    1. *Root*：查询的根对象（查询的任何属性都可以从根对象获取）
    2. *CriteriaQuery*：顶层查询对象，自定义查询方式
    3. *CriteriaBuilder* ：查询的构造器，封装了很多的查询条件
-
-
 
 查询单个对象：
 
 T findOne(*Specification*``<T>`` spec);
 
-
-
 查询列表：
 
 *List*`<T>` findAll(*Specification*`<T>` spec);
-
-
 
 查询全部，分页
 
@@ -696,21 +673,15 @@ T findOne(*Specification*``<T>`` spec);
 
 *Page*`<T>` findAll(*Specification*`<T>` spec, *Pageable* pageable);
 
-
-
 查询列表，排序
 
 - Sort 排序参数
 
 *List*`<T>` findAll(*Specification*`<T>` spec, Sort sort);
 
-
-
 统计查询：
 
 *long* count(*Specification*`<T>` spec);
-
-
 
 ### 自定义查询条件 / 动态查询
 
@@ -736,14 +707,12 @@ Customer customer = customerDao.findOne(spec);
 System.out.println(customer);
 ```
 
-
-
 ### 多条件查询
 
 root： 用来获取属性
 
-* 客户名称
-* 所属行业
+- 客户名称
+- 所属行业
 
 cb: 构造查询
 
@@ -770,13 +739,11 @@ Customer customer = customerDao.findOne(spec);
 System.out.println(customer);
 ```
 
-
-
 ### 模糊查询
 
-* equal: 直接得到path对象（属性）,然后进行比较即可
-*  gt, lt, ge, le, like, 得到path对象,根据path指定比较的参数类型,再去进行比较
-  * 指定方式：path.as(类型的字节码对象)
+- equal: 直接得到path对象（属性）,然后进行比较即可
+- gt, lt, ge, le, like, 得到path对象,根据path指定比较的参数类型,再去进行比较
+- 指定方式：path.as(类型的字节码对象)
 
 ```java
 Specification<Customer> spec = new Specification<Customer>() {
@@ -790,14 +757,12 @@ List<Customer> list = customerDao.findAll(spec);
 list.forEach(System.out::println);
 ```
 
-
-
 ### 排序
 
 创建排序对象,需要调用构造方法实例化sort对象
 
-* 参数一： 排序的顺序 Sort.Direction.ASC(DESC)
-* 参数二： 排序的属性名
+- 参数一： 排序的顺序 Sort.Direction.ASC(DESC)
+- 参数二： 排序的属性名
 
 ```java
 Sort sort = new Sort(Sort.Direction.DESC, "custId");
@@ -805,15 +770,11 @@ List<Customer> list1 = customerDao.findAll(spec, sort);
 list1.forEach(System.out::println);
 ```
 
-
-
 ### 分页查询
 
 用法及三个比较重要的方法：
 
 ![](./JpaImg/29.webp)
-
-
 
 ## 多表查询
 
@@ -839,13 +800,11 @@ list1.forEach(System.out::println);
 3. 编写实体类，在实体类中描述表关系（包含关系）
 4. 配置映射关系
 
-
-
 ### 一对多案例
 
 客户和联系人的案例（一对多关系）
-	客户：一家公司
-	联系人：这家公司的员工
+ 客户：一家公司
+ 联系人：这家公司的员工
 
 一个客户可以具有多个联系人
 一个联系人从属于一家公司
@@ -856,27 +815,25 @@ list1.forEach(System.out::println);
 
 声明关系
 
- *    @OneToMany : 配置一对多关系
- *    targetEntity:对方对象的字节码
+- @OneToMany : 配置一对多关系
+- targetEntity:对方对象的字节码
 
 配置外键（中间表）
 
- *    @JoinColumn 配置外键
- *    name: 外键字段名称
- *    referencedColumnName：参照的主表的主键字段名称（在主表配置）
+- @JoinColumn 配置外键
+- name: 外键字段名称
+- referencedColumnName：参照的主表的主键字段名称（在主表配置）
 
 在客户实体类上（一的一方）添加了外键配置,所以对于客户而言,也具备了维护外键的作用
 
 ![](./JpaImg/12.webp)
 
-
-
 **配置联系人到客户的多对一的关系**
 
 使用注解的形式配置多对一关系
 
-* @ManyToOne： 配置多对一关系
-* targetEntity:对方的实体类字节码
+- @ManyToOne： 配置多对一关系
+- targetEntity:对方的实体类字节码
 
 配置外键（中间表）
 
@@ -886,15 +843,13 @@ list1.forEach(System.out::println);
 
 (**注**：设置getter和setter)
 
-
-
  **注入JPA的配置信息**
 
 加载JPA的基本配置信息和JPA实现方式的配置信息
 
-* hibernate.hbm2ddl.auto:自动创建数据库表
-  * create:每次都会创建数据库表
-  * pdate:有表不会重新创建,没有表才会重新创建
+- hibernate.hbm2ddl.auto:自动创建数据库表
+  - create:每次都会创建数据库表
+  - pdate:有表不会重新创建,没有表才会重新创建
 
 ![](./JpaImg/14.webp)
 
@@ -912,9 +867,9 @@ list1.forEach(System.out::println);
 
 多了一条update语句：
 
-* 由于一的一方可以维护外键，会发送update语句
+- 由于一的一方可以维护外键，会发送update语句
 
-* 解决：只需要在一的一方放弃维护权即可
+- 解决：只需要在一的一方放弃维护权即可
 
 ![](./JpaImg/18.webp)
 
@@ -929,9 +884,9 @@ list1.forEach(System.out::println);
 ### 多对多案例
 
 案例：用户和角色（多对多关系）
-			用户：
-			角色：
-		分析步骤
+   用户：
+   角色：
+  分析步骤
 
 1. 明确表关系
    1. 多对多关系
@@ -982,23 +937,21 @@ list1.forEach(System.out::println);
 
 ![](./JpaImg/28.webp)
 
-
-
 ## 对象导航查询
 
 1.对象导航查询
 
-​	查询一个对象的同时，通过此对象查询他的关联对象
+​ 查询一个对象的同时，通过此对象查询他的关联对象
 
-​	案例：客户和联系人
+​ 案例：客户和联系人
 
-​	从一方查询多方
+​ 从一方查询多方
 
-​		* 默认：使用延迟加载（****）	
+​  * 默认：使用延迟加载（****） 
 
-​	从多方查询一方
+​ 从多方查询一方
 
-​		* 默认：使用立即加载
+​  * 默认：使用立即加载
 
 一方查多方：默认延迟加载
 
@@ -1013,8 +966,6 @@ list1.forEach(System.out::println);
 **从多方查询一方（默认立即加载）**
 
 ![](./JpaImg/11.webp)
-
-
 
 ## 解决中文乱码问题
 
@@ -1042,6 +993,3 @@ list1.forEach(System.out::println);
 更改完后：
 
 ![](./JpaImg/7.webp)
-
-
-

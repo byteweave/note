@@ -6,6 +6,7 @@ title: 智力题
 category:
   - 智力题
   - 八股文
+outline: deep
 ---
 
 
@@ -21,7 +22,7 @@ category:
 
 25匹马5条跑道找最快的5匹马，需要跑几次？参考回答：最少8次最多9次
 
-建议画图表来看，将问题简单化一点，将大问题化成小问题即可，同时B站有个讲解视频还不错：https://www.bilibili.com/video/BV1KJ411g78y
+建议画图表来看，将问题简单化一点，将大问题化成小问题即可，同时B站有个讲解视频还不错：<https://www.bilibili.com/video/BV1KJ411g78y>
 
 详细解法：
 

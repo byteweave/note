@@ -3,6 +3,7 @@ sidebar_position: 2
 title: 并发编程
 category:
   - 并发
+outline: deep
 ---
 ## 前言
 
@@ -24,13 +25,9 @@ category:
 
 ![image-20220719130809116](./images/image-20220719130809116.webp)
 
-
-
 ## 锁的分类
 
 ![image-20220712165546522](./images/image-20220712165546522.webp)
-
-
 
 ## 详细内容
 

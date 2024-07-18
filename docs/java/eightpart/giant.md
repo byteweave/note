@@ -5,6 +5,7 @@ title: 2022大厂八股文
 category:
   - 八股文
   - 大厂
+outline: deep
 ---
 ## 🍤八股文经验&面经精选  
 
@@ -95,7 +96,7 @@ Java 异常的顶层父类是 `Throwable`，它生了两个儿子，大儿子叫
 
 **在 Java 动态代理机制中 `InvocationHandler` 接口和 `Proxy` 类是核心。**
 
- 当需要创建一个代理对象时，程序通过Proxy类的静态方法newProxyInstance()来创建一个代理对象，该方法需要传入一个类加载器、一组接口以及一个InvocationHandler对象。 
+ 当需要创建一个代理对象时，程序通过Proxy类的静态方法newProxyInstance()来创建一个代理对象，该方法需要传入一个类加载器、一组接口以及一个InvocationHandler对象。
 
 ```java
     public static Object newProxyInstance(ClassLoader loader,
@@ -113,9 +114,9 @@ Java 异常的顶层父类是 `Throwable`，它生了两个儿子，大儿子叫
 2. **interfaces** : 被代理类实现的一些接口；
 3. **h** : 实现了 `InvocationHandler` 接口的对象；
 
- 代理对象实现了这些接口，并将所有方法的调用委托给InvocationHandler对象进行处理。 
+ 代理对象实现了这些接口，并将所有方法的调用委托给InvocationHandler对象进行处理。
 
-要实现动态代理的话，还必须需要实现 `InvocationHandler` 来自定义处理逻辑。 当我们的动态代理对象调用一个方法时，这个方法的调用就会被转发到实现 `InvocationHandler` 接口类的 `invoke` 方法来调用。 在该方法中，可以执行一些额外的操作，例如记录日志、检查权限、修改参数等，然后将结果返回给代理对象。 
+要实现动态代理的话，还必须需要实现 `InvocationHandler` 来自定义处理逻辑。 当我们的动态代理对象调用一个方法时，这个方法的调用就会被转发到实现 `InvocationHandler` 接口类的 `invoke` 方法来调用。 在该方法中，可以执行一些额外的操作，例如记录日志、检查权限、修改参数等，然后将结果返回给代理对象。
 
 ```java
 public interface InvocationHandler {
@@ -554,15 +555,15 @@ Java 异常类层次结构图：
 2. 定义code和message参数，以便调用时传入对应状态码和错误信息
 3. 使用自定义异常
 
- **throw指抛出异常，并且该方法以及调用该方法的一切方法将不会向下执行。** 
+ **throw指抛出异常，并且该方法以及调用该方法的一切方法将不会向下执行。**
 
- ***return的作用很简单，意思是方法直接返回了，该方法不在向下执行。但是调用该方法的方法继续执行。*** 
+ ***return的作用很简单，意思是方法直接返回了，该方法不在向下执行。但是调用该方法的方法继续执行。***
 
- Java 中的异常处理除了包括捕获异常和处理异常之外，还包括声明异常和拋出异常，可以通过 throws 关键字在方法上声明该方法要拋出的异常，然后在方法内部通过 throw 拋出异常对象 
+ Java 中的异常处理除了包括捕获异常和处理异常之外，还包括声明异常和拋出异常，可以通过 throws 关键字在方法上声明该方法要拋出的异常，然后在方法内部通过 throw 拋出异常对象
 
 ### 类的生命周期，什么时候回收
 
-其中类加载的过程包括了 `加载`、`验证`、`准备`、`解析`、`初始化`五个阶段。在这五个阶段中，`加载`、`验证`、`准备`和 `初始化`这四个阶段发生的顺序是确定的，_而 `解析`阶段则不一定，它在某些情况下可以在初始化阶段之后开始，这是为了支持 Java 语言的运行时绑定(也称为动态绑定或晚期绑定)_。另外注意这里的几个阶段是按顺序开始，而不是按顺序进行或完成，因为这些阶段通常都是互相交叉地混合进行的，通常在一个阶段执行的过程中调用或激活另一个阶段。
+其中类加载的过程包括了 `加载`、`验证`、`准备`、`解析`、`初始化`五个阶段。在这五个阶段中，`加载`、`验证`、`准备`和 `初始化`这四个阶段发生的顺序是确定的，*而 `解析`阶段则不一定，它在某些情况下可以在初始化阶段之后开始，这是为了支持 Java 语言的运行时绑定(也称为动态绑定或晚期绑定)*。另外注意这里的几个阶段是按顺序开始，而不是按顺序进行或完成，因为这些阶段通常都是互相交叉地混合进行的，通常在一个阶段执行的过程中调用或激活另一个阶段。
 
 ![image-20220404155241287](./giant_images/image-20220404155241287.webp)
 
@@ -641,7 +642,7 @@ AIO 也就是 NIO 2。Java 7 中引入了 NIO 的改进版 NIO 2,它是异步 IO
 - 覆盖(重写)
 - 向上转型
 
- Java中的多态（Polymorphism）是指同一个方法在不同情况下的多种实现方式，也就是同一个方法可以根据不同的参数类型、个数或者对象类型而有不同的表现形式。Java中实现多态的方式有两种：方法重载（Overloading）和方法重写（Overriding）。 
+ Java中的多态（Polymorphism）是指同一个方法在不同情况下的多种实现方式，也就是同一个方法可以根据不同的参数类型、个数或者对象类型而有不同的表现形式。Java中实现多态的方式有两种：方法重载（Overloading）和方法重写（Overriding）。
 
 1. 方法重载 方法重载是指在同一个类中定义多个方法名相同但是参数类型、个数或者顺序不同的方法。Java编译器根据方法的参数类型、个数或者顺序来确定调用哪个方法，从而实现多态。
 2. 方法重写 方法重写是指子类重写了父类中的同名同参数的方法，从而实现多态。在方法重写时，子类必须保证重写方法的返回值类型、方法名和参数类型与父类中的方法相同或者是其子类。
@@ -677,7 +678,7 @@ Buffer 有两种工作模式: 写模式和读模式。在读模式下，应用�
 
 泛型擦除：
 
- Java语言中的泛型被称为伪泛型，因为这种泛型它只在编写的源码中存在，在经过编译器编译后的字节码文件中不会包含泛型中的类型信息了，泛型信息在编译的时候被擦除了，并且会在相应的地方插入强制类型转换的代码，这个过程就是泛型擦除。例如`new ArrayList<String>()`，泛型擦除后就是`new ArrayList()`，对其元素的操作也会加上(String)强制类型转换。 
+ Java语言中的泛型被称为伪泛型，因为这种泛型它只在编写的源码中存在，在经过编译器编译后的字节码文件中不会包含泛型中的类型信息了，泛型信息在编译的时候被擦除了，并且会在相应的地方插入强制类型转换的代码，这个过程就是泛型擦除。例如`new ArrayList<String>()`，泛型擦除后就是`new ArrayList()`，对其元素的操作也会加上(String)强制类型转换。
 
 ### 常见的索引结构有？哈希表结构属于哪种场景？（2022OPPO）
 
@@ -700,7 +701,7 @@ Buffer 有两种工作模式: 写模式和读模式。在读模式下，应用�
 
  基于多个字段创建的索引我们称为联合索引，比如我们创建索引**create index idx on table(A,B,C)** 我们称在字段A,B,C上创建了一个联合索引
 
- 我们知道，索引存储底层是B+树，在InnoDB存储引擎下，主键索引叶子节点存储的是数据，非主键索引上存储的是主键id，在联合索引下，这个B+树是如何组织的呢，我们通过一个具体的例子来看一下，首先我们先建立一个表，向表里添加一些数据。 
+ 我们知道，索引存储底层是B+树，在InnoDB存储引擎下，主键索引叶子节点存储的是数据，非主键索引上存储的是主键id，在联合索引下，这个B+树是如何组织的呢，我们通过一个具体的例子来看一下，首先我们先建立一个表，向表里添加一些数据。
 
 ```sql
 CREATE TABLE `user`  (
@@ -714,26 +715,26 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 ```
 
-联合索引和单个索引对比来讲，联合索引的所有索引项都会出现在索引上，存储引擎会先根据第一个索引项排序，如果第一个索引项相同的话才会去看第二个，所有我们在查询的时候，如果头索引不带的话，联合索引就会失效，因为在根节点他就不知道怎么往下走。比如我们现在**select \* from USER us where us.age=20 and us.money=30**这个sql去查的，首先在根节点上age>1并且<60,那么读下一个节点，依次类推读到叶子节点上取出主键id回表查询所有的字段值。 
+联合索引和单个索引对比来讲，联合索引的所有索引项都会出现在索引上，存储引擎会先根据第一个索引项排序，如果第一个索引项相同的话才会去看第二个，所有我们在查询的时候，如果头索引不带的话，联合索引就会失效，因为在根节点他就不知道怎么往下走。比如我们现在**select \* from USER us where us.age=20 and us.money=30**这个sql去查的，首先在根节点上age>1并且<60,那么读下一个节点，依次类推读到叶子节点上取出主键id回表查询所有的字段值。
 
- [Mysql系列-联合索引 - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000040866035) 
+ [Mysql系列-联合索引 - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000040866035)
 
 ### Java BIO NIO AIO 三者的区别？
 
 ![image-20220614175742196](./giant_images/image-20220614175742196.webp)
 
-* Java BIO[Blocking I/O] | 同步阻塞I/O模式
+- Java BIO[Blocking I/O] | 同步阻塞I/O模式
 
-  * BIO 全称Block-IO 是一种同步且阻塞的通信模式。是一个比较传统的通信方式，模式简单，使用方便。但并发处理能力低，通信耗时，依赖网速。
-* Java NIO[New I/O] | 同步非阻塞模式(也可以称为IO多路复用模型)
+  - BIO 全称Block-IO 是一种同步且阻塞的通信模式。是一个比较传统的通信方式，模式简单，使用方便。但并发处理能力低，通信耗时，依赖网速。
+- Java NIO[New I/O] | 同步非阻塞模式(也可以称为IO多路复用模型)
 
   - Java NIO，全程 Non-Block IO ，是Java SE 1.4版以后，针对网络传输效能优化的新功能。是一种非阻塞同步的通信模式。
   - NIO 与原来的 I/O 有同样的作用和目的, 他们之间最重要的区别是数据打包和传输的方式。原来的 I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。
   - 面向流的 I/O 系统一次一个字节地处理数据。一个输入流产生一个字节的数据，一个输出流消费一个字节的数据。
   - 面向块的 I/O 系统以块的形式处理数据。每一个操作都在一步中产生或者消费一个数据块。按块处理数据比按(流式的)字节处理数据要快得多。但是面向块的 I/O  - 缺少一些面向流的 I/O 所具有的优雅性和简单性。
-* Java AIO[Asynchronous I/O] | 异步非阻塞I/O模型
+- Java AIO[Asynchronous I/O] | 异步非阻塞I/O模型
 
-  * Java AIO，全程 Asynchronous IO，是异步非阻塞的IO。是一种非阻塞异步的通信模式。在NIO的基础上引入了新的异步通道的概念，并提供了异步文件通道和异步套接字通道的实现。
+  - Java AIO，全程 Asynchronous IO，是异步非阻塞的IO。是一种非阻塞异步的通信模式。在NIO的基础上引入了新的异步通道的概念，并提供了异步文件通道和异步套接字通道的实现。
 
 ### hashmap put() 工作流程（2022飞书）
 
@@ -762,14 +763,13 @@ void addEntry(int hash, K key, V value, int bucketIndex) {
 
 ![image-20220616155140634](./giant_images/image-20220616155140634.webp)
 
-
 上图中 `hash(k)&(table.length-1)`等价于 `hash(k)%table.length`，原因是*HashMap*要求 `table.length`必须是2的指数，因此 `table.length-1`就是二进制低位全是1，跟 `hash(k)`相与会将哈希值的高位全抹掉，剩下的就是余数了。
 
 ```java
 //getEntry()方法
 final Entry<K,V> getEntry(Object key) {
-	......
-	int hash = (key == null) ? 0 : hash(key);
+ ......
+ int hash = (key == null) ? 0 : hash(key);
     for (Entry<K,V> e = table[hash&(table.length-1)];//得到冲突链表
          e != null; e = e.next) {//依次遍历冲突链表中的每个entry
         Object k;
@@ -791,8 +791,8 @@ final Entry<K,V> getEntry(Object key) {
 ```java
 //removeEntryForKey()
 final Entry<K,V> removeEntryForKey(Object key) {
-	......
-	int hash = (key == null) ? 0 : hash(key);
+ ......
+ int hash = (key == null) ? 0 : hash(key);
     int i = indexFor(hash, table.length);//hash&(table.length-1)
     Entry<K,V> prev = table[i];//得到冲突链表
     Entry<K,V> e = prev;
@@ -956,7 +956,7 @@ public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
 
 #### Spring bean 启动流程和生命周期
 
-长字版本启动流程：https://mp.weixin.qq.com/s/ut3mRwhfqXNjrBtTmI0oWg
+长字版本启动流程：<https://mp.weixin.qq.com/s/ut3mRwhfqXNjrBtTmI0oWg>
 
 1、实例化一个Bean－－也就是我们常说的new；
 
@@ -1224,7 +1224,7 @@ The NIO selector wakes up infinitely in this situation..
 
 ![image-20220603195954495](./giant_images/image-20220603195954495.webp)
 
-具体理解可以看：https://www.pdai.tech/md/arch/arch-z-transection.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1
+具体理解可以看：<https://www.pdai.tech/md/arch/arch-z-transection.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1>
 
 以及后续可能会问到：说一下怎么实现的分布式事务？还有没有其他的解决方案？RocketMQ 能做分布式事务吗？
 
@@ -1303,7 +1303,7 @@ RPC 能帮助我们做什么呢？ 简单来说，通过 RPC 可以帮助我们�
 
 参考：
 
-* https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/
+- <https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/>
 
 服务发现：
 
@@ -1379,14 +1379,14 @@ Zuul 主要通过过滤器（类似于 AOP）来过滤请求，从而实现网�
 
 Zuul 1.x 基于同步 IO，性能较差。Zuul 2.x 基于 Netty 实现了异步 IO，性能得到了大幅改进。
 
-- Github 地址 ： https://github.com/Netflix/zuul
-- 官方 Wiki ： https://github.com/Netflix/zuul/wiki
+- Github 地址 ： <https://github.com/Netflix/zuul>
+- 官方 Wiki ： <https://github.com/Netflix/zuul/wiki>
 
 Spring Cloud Gateway
 
 ---
 
-SpringCloud Gateway 属于 Spring Cloud 生态系统中的网关，其诞生的目标是为了替代老牌网关 **Zuul **。准确点来说，应该是 Zuul 1.x。SpringCloud Gateway 起步要比 Zuul 2.x 更早。
+SpringCloud Gateway 属于 Spring Cloud 生态系统中的网关，其诞生的目标是为了替代老牌网关 **Zuul**。准确点来说，应该是 Zuul 1.x。SpringCloud Gateway 起步要比 Zuul 2.x 更早。
 
 为了提升网关的性能，SpringCloud Gateway 基于 Spring WebFlux 。Spring WebFlux 使用 Reactor 库来实现响应式编程模型，底层基于 Netty 实现异步 IO。
 
@@ -1394,8 +1394,8 @@ Spring Cloud Gateway 的目标，不仅提供统一的路由方式，并且基�
 
 Spring Cloud Gateway 和 Zuul 2.x 的差别不大，也是通过过滤器来处理请求。不过，目前更加推荐使用 Spring Cloud Gateway 而非 Zuul，Spring Cloud 生态对其支持更加友好。
 
-- Github 地址 ： https://github.com/spring-cloud/spring-cloud-gateway
-- 官网 ： https://spring.io/projects/spring-cloud-gateway
+- Github 地址 ： <https://github.com/spring-cloud/spring-cloud-gateway>
+- 官网 ： <https://spring.io/projects/spring-cloud-gateway>
 
 Kong
 
@@ -1416,8 +1416,8 @@ $ curl -X POST http://kong:8001/services/{service}/plugins \
     --data "config.sample_ratio=0.001"
 ```
 
-- Github 地址： https://github.com/Kong/kong
-- 官网地址 ： https://konghq.com/kong
+- Github 地址： <https://github.com/Kong/kong>
+- 官网地址 ： <https://konghq.com/kong>
 
 APISIX
 
@@ -1435,8 +1435,8 @@ APISIX 是一款基于 Nginx 和 etcd 的高性能、云原生、可扩展的网
 
 根据官网介绍：“APISIX 已经生产可用，功能、性能、架构全面优于 Kong”。
 
-- Github 地址 ：https://github.com/apache/apisix
-- 官网地址： https://apisix.apache.org/zh/
+- Github 地址 ：<https://github.com/apache/apisix>
+- 官网地址： <https://apisix.apache.org/zh/>
 
 Shenyu
 
@@ -1446,8 +1446,8 @@ Shenyu 是一款基于 WebFlux 的可扩展、高性能、响应式网关，Apac
 
 Shenyu 通过插件扩展功能，插件是 ShenYu 的灵魂，并且插件也是可扩展和热插拔的。不同的插件实现不同的功能。Shenyu 自带了诸如限流、熔断、转发 、重写、重定向、和路由监控等插件。
 
-- Github 地址： https://github.com/apache/incubator-shenyu
-- 官网地址 ： https://shenyu.apache.org/
+- Github 地址： <https://github.com/apache/incubator-shenyu>
+- 官网地址 ： <https://shenyu.apache.org/>
 
 ### dubbo了解吗？
 
@@ -1739,9 +1739,9 @@ CAP 理论的提出者布鲁尔在提出 CAP 猜想的时候，并没有详细�
 
 ### 分布式登录怎么保持状态 （简而言之：单点登录怎么实现？）
 
-什么是单点登录：https://zhuanlan.zhihu.com/p/66037342
+什么是单点登录：<https://zhuanlan.zhihu.com/p/66037342>
 
-怎么实现单点登录：https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&mid=2247489168&idx=1&sn=194ade3bfe3ae19436fd80853c135f54&source=41#wechat_redirect
+怎么实现单点登录：<https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&mid=2247489168&idx=1&sn=194ade3bfe3ae19436fd80853c135f54&source=41#wechat_redirect>
 
 ### 分布式系统中，本地缓存和 Redis 中的数据是否是每台服务器上都备份同样的数据（暂时理解为分布式缓存一致性）
 
@@ -1753,15 +1753,15 @@ Memcached 是分布式缓存最开始兴起的那会，比较常用的。后来�
 
 具体方案：
 
-https://blog.csdn.net/alionsss/article/details/107451485
+<https://blog.csdn.net/alionsss/article/details/107451485>
 
 ### 分布式系统相关概念，序列化在分布式系统中的应用，讲一下 thrift
 
-https://thrift.apache.org/
+<https://thrift.apache.org/>
 
 ### nacos作为配置中心是基于推还是拉取更新配置？这个过程用长轮询会有什么问题？
 
-答案选自：https://developer.aliyun.com/article/785050
+答案选自：<https://developer.aliyun.com/article/785050>
 
 客户端主动拉的：客户端与服务端建立 `TCP`长连接，当服务端配置数据有变动，立刻通过建立的长连接将数据推送给客户端
 
@@ -1796,7 +1796,7 @@ Hystrix 工作流程图如下:
 
 如果启用了 Hystrix缓存，任务执行前将先判断是否有相同命令执行的缓存。如果有则直接返回包含缓存响应的Observable；如果没有缓存的结果，但启动了缓存，将缓存本次执行结果以供后续使用。
 
-* 检查回路器是否打开 回路器(circuit-breaker)和保险丝类似，保险丝在发生危险时将会烧断以保护电路，而回路器可以在达到我们设定的阀值时触发短路(比如请求失败率达到50%)，拒绝执行任何请求。
+- 检查回路器是否打开 回路器(circuit-breaker)和保险丝类似，保险丝在发生危险时将会烧断以保护电路，而回路器可以在达到我们设定的阀值时触发短路(比如请求失败率达到50%)，拒绝执行任何请求。
 
 如果回路器被打开，Hystrix将不会执行命令，直接进入Fallback处理逻辑。
 
@@ -1841,11 +1841,11 @@ Hystrix 工作流程图如下:
 
 ```sql
 CREATE TABLE database_lock (
-	`id` BIGINT NOT NULL AUTO_INCREMENT,
-	`resource` int NOT NULL COMMENT '锁定的资源',
-	`description` varchar(1024) NOT NULL DEFAULT "" COMMENT '描述',
-	PRIMARY KEY (id),
-	UNIQUE KEY uiq_idx_resource (resource)
+ `id` BIGINT NOT NULL AUTO_INCREMENT,
+ `resource` int NOT NULL COMMENT '锁定的资源',
+ `description` varchar(1024) NOT NULL DEFAULT "" COMMENT '描述',
+ PRIMARY KEY (id),
+ UNIQUE KEY uiq_idx_resource (resource)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据库分布式锁表';
 ```
 
@@ -1870,8 +1870,6 @@ DELETE FROM database_lock WHERE resource=1;
 如果成功加锁，那么就可以对记录做修改，事务完成后就会解锁了。
 
 其间如果有其他对该记录做修改或加排他锁的操作，都会等待我们解锁或直接抛出异常。
-
-
 
 要使用悲观锁，我们必须关闭mysql数据库的自动提交属性，因为MySQL默认使用autocommit模式，也就是说，当你执行一个更新操作后，MySQL会立刻将结果进行提交。set autocommit=0;
 
@@ -1963,9 +1961,9 @@ private boolean setRedis(String key, long expire) {
 
 ```lua
 if redis.call("get", KEYS[1])==ARGV[1] then
-	return redis.call("del", KEYS[1])
+ return redis.call("del", KEYS[1])
 else
-	return 0
+ return 0
 end
 ```
 
@@ -2082,8 +2080,6 @@ end
 这一次我选择了`xxl-job`作为`austin`的分布式任务调度框架。`xxl-job`已经有很多公司都已经接入了（说明他的**开箱即用**还是很到位的）。不过最新的一个版本在`2021-02`，近一年没有比较大的更新了。
 
 [分布式任务调度平台XXL-JOB (xuxueli.com)](https://www.xuxueli.com/xxl-job/#二、快速入门)
-
-
 
 ## ♻️虚拟机
 
@@ -2775,11 +2771,11 @@ JDK1.8 （上面有示意图）
 
 ### hashmap 为什么多线程不安全，能举出例子来吗
 
- 一般来说，Hash表这个容器当有数据要插入时，都会检查容量有没有超过设定的thredhold，如果超过，需要增大Hash表的尺寸，但是这样一来，整个Hash表里的无素都需要被重算一遍。这叫rehash，这个成本相当的大 
+ 一般来说，Hash表这个容器当有数据要插入时，都会检查容量有没有超过设定的thredhold，如果超过，需要增大Hash表的尺寸，但是这样一来，整个Hash表里的无素都需要被重算一遍。这叫rehash，这个成本相当的大
 
 主要原因在于并发下的 Rehash 会造成元素之间会形成一个循环链表。不过，jdk 1.8 后解决了这个问题，但是还是不建议在多线程下使用 HashMap,因为多线程下使用 HashMap 还是会存在其他问题比如数据丢失。并发环境下推荐使用 ConcurrentHashMap 。
 
-详情请查看：https://coolshell.cn/articles/9606.html
+详情请查看：<https://coolshell.cn/articles/9606.html>
 
 ### 怎么保证线程安全
 
@@ -2948,7 +2944,7 @@ ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因�
 
 `synchronized` 关键字和 `volatile` 关键字是两个互补的存在，而不是对立的存在！
 
-- **`volatile` 关键字**是线程同步的**轻量级实现**，所以 **`volatile `性能肯定比 `synchronized`关键字要好** 。但是 **`volatile` 关键字只能用于变量而 `synchronized` 关键字可以修饰方法以及代码块** 。
+- **`volatile` 关键字**是线程同步的**轻量级实现**，所以 **`volatile`性能肯定比 `synchronized`关键字要好** 。但是 **`volatile` 关键字只能用于变量而 `synchronized` 关键字可以修饰方法以及代码块** 。
 - **`volatile` 关键字能保证数据的可见性，但不能保证数据的原子性。`synchronized` 关键字两者都能保证。**
 - **`volatile`关键字主要用于解决变量在多个线程之间的可见性，而 `synchronized` 关键字解决的是多个线程之间访问资源的同步性**
 
@@ -3271,7 +3267,7 @@ Java 中的锁可以分为多个层次，从 JVM 层面和 JDK 层面来介绍�
 3. ReentrantLock 优点：支持可重入、可中断、可限时、可公平或非公平获取锁，相对于内置锁具有更好的灵活性和可控性。 缺点：使用复杂，需要手动释放锁，使用不当容易出现死锁或者饥饿问题，性能稍差于内置锁。
 4. ReadWriteLock 优点：允许多个线程同时读取共享资源，提高了并发性能。 缺点：写入操作需要排他访问，可能出现饥饿问题，读写锁的实现相对复杂，性能开销较大。
 
- 在一些低并发、无需灵活控制的场景下，内置锁是最简单和高效的选择；在一些需要灵活控制并发、实现高级特性的场景下，ReentrantLock 是更好的选择；在读多写少的场景下，ReadWriteLock 可以提高并发性能。 
+ 在一些低并发、无需灵活控制的场景下，内置锁是最简单和高效的选择；在一些需要灵活控制并发、实现高级特性的场景下，ReentrantLock 是更好的选择；在读多写少的场景下，ReadWriteLock 可以提高并发性能。
 
 ### synchronized 有了为什么还要 ReentranLock ，有啥不一样？（shopline）
 
@@ -3297,7 +3293,7 @@ ReentrantLock 比 synchronized 增加了一些高级功能
 
 ### synchronized实现等待唤醒机制(shopline)
 
-https://blog.csdn.net/it_lihongmin/article/details/109230696
+<https://blog.csdn.net/it_lihongmin/article/details/109230696>
 
 >等待唤醒机制使用场景比较多，`一个完整的等待唤醒机制过程：线程首先获取互斥锁，当线程要求的条件不满足时释放互斥锁，进入等待状态；当要求的条件满足时，通知等待的线程，重新获取互斥锁`。直接在并发编程模式 - Guarded Suspension设计模式中使用ReentrantLock+Condition实现了一个版本，并且也分析了 Dubbo的异步请求Api的异步转同步的过程。`Object的 wait、notify、notifyAll`方法需要配合synchronized使用，即在其内部使用，并且写法基本固定。如果在synchronized外部调用 wait方法等，则会报 java.lang.IllegalMonitorStateException。
 
@@ -3426,7 +3422,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 
 #### Redis 基本的数据结构都有哪些？具体操作命令是什么？
 
-* String字符串
+- String字符串
 
 | 命令   | 简述                   | 使用              |
 | ------ | ---------------------- | ----------------- |
@@ -3438,7 +3434,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 | INCRBY | 将键存储的值加上整数   | INCRBY key amount |
 | DECRBY | 将键存储的值减去整数   | DECRBY key amount |
 
-* List列表
+- List列表
 
 | 命令   | 简述                                                                                                                   | 使用             |
 | ------ | ---------------------------------------------------------------------------------------------------------------------- | ---------------- |
@@ -3449,7 +3445,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 | LRANGE | 获取列表在给定范围上的所有值                                                                                           | LRANGE key 0 -1  |
 | LINDEX | 通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推。 | LINDEX key index |
 
-* Set集合
+- Set集合
 
 | 命令      | 简述                                  | 使用                 |
 | --------- | ------------------------------------- | -------------------- |
@@ -3458,7 +3454,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 | SMEMBERS  | 返回集合中的所有成员                  | SMEMBERS key member  |
 | SISMEMBER | 判断 member 元素是否是集合 key 的成员 | SISMEMBER key member |
 
-* Hash散列
+- Hash散列
 
 | 命令    | 简述                                     | 使用                          |
 | ------- | ---------------------------------------- | ----------------------------- |
@@ -3467,7 +3463,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 | HGETALL | 获取散列中包含的所有键值对               | HGETALL hash-key              |
 | HDEL    | 如果给定键存在于散列中，那么就移除这个键 | HDEL hash-key sub-key1        |
 
-* Zset有序集合
+- Zset有序集合
 
 | 命令   | 简述                                                     | 使用                           |
 | ------ | -------------------------------------------------------- | ------------------------------ |
@@ -3479,7 +3475,7 @@ Mark Word 是用于存储对象自身的运行时数据，如哈希码（HashCod
 
 ![image-20220614142936584](./giant_images/image-20220614142936584.webp)
 
-https://www.pdai.tech/md/db/nosql-redis/db-redis-x-redis-ds.html
+<https://www.pdai.tech/md/db/nosql-redis/db-redis-x-redis-ds.html>
 
 #### Redis 为什么不直接使用 C 字符串，而要自己构建一种字符串抽象类型 SDS(simple dynamic string)？
 
@@ -3534,9 +3530,9 @@ C语言由于不记录字符串的长度，所以如果要修改字符串，必�
 
 #### Redis 的持久化方式有了解吗？能大概说一下吗？
 
-从严格意义上说，Redis服务提供四种持久化存储方案：RDB、AOF、虚拟内存（VM）和　DISKSTORE。虚拟内存（VM）方式，从Redis Version 2.4开始就被官方明确表示不再建议使用，Version 3.2版本中更找不到关于虚拟内存（VM）的任何配置范例，Redis的主要作者Salvatore Sanfilippo还专门写了一篇论文，来反思Redis对虚拟内存（VM）存储技术的支持问题。 至于DISKSTORE方式，是从Redis Version 2.8版本开始提出的一个存储设想，到目前为止Redis官方也没有在任何stable版本中明确建议使用这用方式。在Version 3.2版本中同样找不到对于这种存储方式的明确支持。从网络上能够收集到的各种资料来看，DISKSTORE方式和RDB方式还有着一些千丝万缕的联系，不过各位读者也知道，除了官方文档以外网络资料很多就是大抄。 最关键的是目前官方文档上能够看到的Redis对持久化存储的支持明确的就只有两种方案（https://redis.io/topics/persistence）：RDB和AOF。
+从严格意义上说，Redis服务提供四种持久化存储方案：RDB、AOF、虚拟内存（VM）和　DISKSTORE。虚拟内存（VM）方式，从Redis Version 2.4开始就被官方明确表示不再建议使用，Version 3.2版本中更找不到关于虚拟内存（VM）的任何配置范例，Redis的主要作者Salvatore Sanfilippo还专门写了一篇论文，来反思Redis对虚拟内存（VM）存储技术的支持问题。 至于DISKSTORE方式，是从Redis Version 2.8版本开始提出的一个存储设想，到目前为止Redis官方也没有在任何stable版本中明确建议使用这用方式。在Version 3.2版本中同样找不到对于这种存储方式的明确支持。从网络上能够收集到的各种资料来看，DISKSTORE方式和RDB方式还有着一些千丝万缕的联系，不过各位读者也知道，除了官方文档以外网络资料很多就是大抄。 最关键的是目前官方文档上能够看到的Redis对持久化存储的支持明确的就只有两种方案（<https://redis.io/topics/persistence）：RDB和AOF。>
 
-具体介绍见：https://www.pdai.tech/md/db/nosql-redis/db-redis-x-rdb-aof.html#redis%E6%8C%81%E4%B9%85%E5%8C%96%E7%AE%80%E4%BB%8B
+具体介绍见：<https://www.pdai.tech/md/db/nosql-redis/db-redis-x-rdb-aof.html#redis%E6%8C%81%E4%B9%85%E5%8C%96%E7%AE%80%E4%BB%8B>
 
 #### Redis 怎么统计在线用户
 
@@ -3857,7 +3853,7 @@ T2 读取一个数据，T1 对该数据做了修改。如果 T2 再次读取这�
 
 ![image-20220610203922954](./giant_images/image-20220610203922954.webp)
 
-具体可以看：https://www.pdai.tech/md/db/nosql-redis/db-redis-x-copy.html#redis%E8%BF%9B%E9%98%B6---%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%AF%A6%E8%A7%A3
+具体可以看：<https://www.pdai.tech/md/db/nosql-redis/db-redis-x-copy.html#redis%E8%BF%9B%E9%98%B6---%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E8%AF%A6%E8%A7%A3>
 
 > 主从复制，是指将一台 Redis 服务器的数据，复制到其他的 Redis 服务器。前者称为主节点(master)，后者称为从节点(slave)；数据的复制是单向的，只能由主节点到从节点。
 
@@ -3903,7 +3899,6 @@ replicaof 172.16.19.3 6379
 你可以先看一下下面这张图，有个整体感知，接下来我再具体介绍
 
 ![image-20220404205423809](./giant_images/image-20220404205423809.webp)
-
 
 **第一阶段是主从库间建立连接、协商同步的过程**，主要是为全量复制做准备。在这一步，从库和主库建立起连接，并告诉主库即将进行同步，主库确认回复后，主从库间就可以开始同步了。
 
@@ -4100,7 +4095,7 @@ Redisson是一个高级的分布式协调Redis客服端，能帮助用户在分�
   1. 内存占用过高：通过删除不必要的数据或者使用Redis的过期机制来释放内存，或者使用Redis的内存淘汰策略来自动释放内存。
   2. Redis响应延迟过高：可以通过优化Redis的配置、扩容Redis实例、使用Redis集群等方式来提高Redis的性能。
   3. CPU 负载高：可以通过将Redis的负载分散到多个Redis实例中，或者使用多线程的Redis实现来解决单线程模型带来的性能问题。
-  4. IO 负载过高： 可以根据实际需求选择适当的持久化方式，如使用RDB或者AOF，或者使用Redis的快照备份功能来进行数据备份或者数据恢复。 
+  4. IO 负载过高： 可以根据实际需求选择适当的持久化方式，如使用RDB或者AOF，或者使用Redis的快照备份功能来进行数据备份或者数据恢复。
 
   在分析Redis性能问题时，可以使用Redis自带的性能监控工具或者第三方的性能监控工具来进行定位和解决。常见的工具包括：
 
@@ -4310,9 +4305,9 @@ Redission的可重入锁机制是一种允许同一个线程多次获取同一�
 
 #### redo log，undo log，bin log
 
-* binlog 主要用于数据库还原，属于数据级别的数据恢复，主从复制是 binlog 最常见的一个应用场景。
-* redolog 主要用于保证事务的持久性，属于事务级别的数据恢复。
-* 如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行**回滚**，在 MySQL 中，恢复机制是通过 **回滚日志（undo log）** 实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。
+- binlog 主要用于数据库还原，属于数据级别的数据恢复，主从复制是 binlog 最常见的一个应用场景。
+- redolog 主要用于保证事务的持久性，属于事务级别的数据恢复。
+- 如果想要保证事务的原子性，就需要在异常发生时，对已经执行的操作进行**回滚**，在 MySQL 中，恢复机制是通过 **回滚日志（undo log）** 实现的，所有事务进行的修改都会先记录到这个回滚日志中，然后再执行相关的操作。
 
 #### redolog 和 binlog 的区别
 
@@ -4525,9 +4520,9 @@ InnoDB 引入新的锁，也就是间隙锁(Gap Lock)。在一行行扫描的过
 SET GLOBAL slow_query_log=ON
 ```
 
-加了索引页很慢，参考：https://mp.weixin.qq.com/s/pJQwnNOwRKw1MvcDTOrjqQ
+加了索引页很慢，参考：<https://mp.weixin.qq.com/s/pJQwnNOwRKw1MvcDTOrjqQ>
 
-没有索引怎么办：https://mp.weixin.qq.com/s/WnO_4SoEL6jugkxPHW4KCg
+没有索引怎么办：<https://mp.weixin.qq.com/s/WnO_4SoEL6jugkxPHW4KCg>
 
 #### 什么是事务？事务 ACID 特性，隔离级别，隔离级别对应问题对其描述
 
@@ -4689,11 +4684,11 @@ CREATE TABLE t (
 
 - 提升并发
 
-RC 在加锁的过程中，不需要添加 `Gap Lock`和 `Next-Key Lock `的，只对要修改的记录添加行级锁就行了。因此RC的支持的并发度比RR高得多，
+RC 在加锁的过程中，不需要添加 `Gap Lock`和 `Next-Key Lock`的，只对要修改的记录添加行级锁就行了。因此RC的支持的并发度比RR高得多，
 
 - 减少死锁
 
-正是因为RR隔离级别增加了 `Gap Lock`和 `Next-Key Lock `锁，因此它相对于RC，更容易产生死锁。
+正是因为RR隔离级别增加了 `Gap Lock`和 `Next-Key Lock`锁，因此它相对于RC，更容易产生死锁。
 
 #### RR隔离级别实现原理，它是如何解决不可重复读的？（OPPO）
 
@@ -4734,9 +4729,9 @@ Read view 可见性规则如下：
 2. 如果 `trx_id>= max_limit_id`，表明生成该版本的事务在生成Read View后才生成，所以该版本不可以被当前事务访问。
 3. 如果 `min_limit_id =<trx_id< max_limit_id`,需要分3种情况讨论
 
-* 3.1 如果 `m_ids`包含 `trx_id`,则代表Read View生成时刻，这个事务还未提交，但是如果数据的 `trx_id`等于 `creator_trx_id`的话，表明数据是自己生成的，因此是可见的。
-* 3.2 如果 `m_ids`包含 `trx_id`，并且 `trx_id`不等于 `creator_trx_id`，则Read View生成时，事务未提交，并且不是自己生产的，所以当前事务也是看不见的；
-* 3.3 如果 `m_ids`不包含 `trx_id`，则说明你这个事务在Read View生成之前就已经提交了，修改的结果，当前事务是能看见的。
+- 3.1 如果 `m_ids`包含 `trx_id`,则代表Read View生成时刻，这个事务还未提交，但是如果数据的 `trx_id`等于 `creator_trx_id`的话，表明数据是自己生成的，因此是可见的。
+- 3.2 如果 `m_ids`包含 `trx_id`，并且 `trx_id`不等于 `creator_trx_id`，则Read View生成时，事务未提交，并且不是自己生产的，所以当前事务也是看不见的；
+- 3.3 如果 `m_ids`不包含 `trx_id`，则说明你这个事务在Read View生成之前就已经提交了，修改的结果，当前事务是能看见的。
 
 RR 如何解决不可重复读
 
@@ -4876,8 +4871,8 @@ MySQL 5.5.5 之前，MyISAM 是 MySQL 的默认存储引擎。5.5.5 版本之后
 
 如果你想要深入了解每个存储引擎以及它们之间的区别，推荐你去阅读以下 MySQL 官方文档对应的介绍(面试不会问这么细，了解即可)：
 
-- InnoDB 存储引擎详细介绍：https://dev.mysql.com/doc/refman/8.0/en/innodb-storage-engine.html 。
-- 其他存储引擎详细介绍：https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html 。
+- InnoDB 存储引擎详细介绍：<https://dev.mysql.com/doc/refman/8.0/en/innodb-storage-engine.html> 。
+- 其他存储引擎详细介绍：<https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html> 。
 
 ![image-20220717151028612](./giant_images/image-20220717151028612.webp)
 
@@ -4944,11 +4939,11 @@ myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、�
 
 #### 怎么同步mysql数据库到ES？（滴滴）
 
-具体参考：https://developer.aliyun.com/article/761356
+具体参考：<https://developer.aliyun.com/article/761356>
 
-* 方案1：阿里云数据传输DTS
-* 方案2：Logstash将MySQL数据同步到ElasticSearch
-* 方案3：使用阿里云开源工具Canal
+- 方案1：阿里云数据传输DTS
+- 方案2：Logstash将MySQL数据同步到ElasticSearch
+- 方案3：使用阿里云开源工具Canal
 
 #### Mysql的锁（行锁，间隙锁，临键锁，共享锁/排他锁等）
 
@@ -5190,7 +5185,7 @@ if (sendResult.getRecordMetadata() != null) {
 
 如果消息发送失败的话，我们检查失败的原因之后重新发送即可！
 
-**另外这里推荐为 Producer 的 `retries `（重试次数）设置一个比较合理的值，一般是 3  ，但是为了保证消息不丢失的话一般会设置比较大一点。设置完成之后，当出现网络问题之后能够自动重试消息发送，避免消息丢失。另外，建议还要设置重试间隔，因为间隔太小的话重试的效果就不明显了，网络波动一次你3次一下子就重试完了**
+**另外这里推荐为 Producer 的 `retries`（重试次数）设置一个比较合理的值，一般是 3  ，但是为了保证消息不丢失的话一般会设置比较大一点。设置完成之后，当出现网络问题之后能够自动重试消息发送，避免消息丢失。另外，建议还要设置重试间隔，因为间隔太小的话重试的效果就不明显了，网络波动一次你3次一下子就重试完了**
 
 消费者丢失消息的情况：
 
@@ -5437,21 +5432,17 @@ for (Map.Entry e : m.entrySet()) {
 
 常见的有
 
-* 深度优先搜索
+- 深度优先搜索
 
-* 广度优先搜索
+- 广度优先搜索
 
-* 回溯
-
-  
+- 回溯
 
 ### 什么是剪枝（2022蔚来）
 
 剪枝顾名思义，就是删去一些不重要的节点，来减小计算或搜索的复杂度。剪枝在很多算法中都有很好的应用，如：决策树，神经网络，搜索算法,数据库的设计等。在决策树和神经网络中，剪枝可以有效缓解过拟合问题并减小计算复杂度；在搜索算法中，可以减小搜索范围，提高搜索效率。
 
 ### 什么排序的时间复杂度下限可以突破O(nlogn)（2022蔚来）
-
-
 
 ### 排序的时间复杂度（2022蔚来）
 
@@ -5489,7 +5480,7 @@ I/O多路复用的本质是使用select,poll或者epoll函数，挂起进程，�
 
 > 推荐yue'du
 
-[ I/O 多路复用：select/poll/epoll](https://xiaolincoding.com/os/8_network_system/selete_poll_epoll.html)
+[I/O 多路复用：select/poll/epoll](https://xiaolincoding.com/os/8_network_system/selete_poll_epoll.html)
 
 最基础的 TCP 的 Socket 编程，它是阻塞 I/O 模型，基本上只能一对一通信，那为了服务更多的客户端，我们需要改进网络 I/O 模型。
 
@@ -6195,9 +6186,6 @@ $$
 - Linux 中的扇区、块和页都有什么区别和联系？
 - Linux 中的块大小是如何决定的？常见的大小有哪些？
 
-
-
-
 ## 🌐计算机网络
 
 ### 计算机网络输入 URL 到看到网页
@@ -6221,7 +6209,7 @@ $$
 5. 浏览器解析渲染页面
 6. 连接结束
 
-详细：https://segmentfault.com/a/1190000006879700
+详细：<https://segmentfault.com/a/1190000006879700>
 
 ### 三次握手四次挥手
 
@@ -7127,7 +7115,7 @@ Header压缩就是压缩老板和员工之间的对话。
 
 目前，主流的HTTP协议还是HTTP/1.1 和 HTTP/2。并且各大网站的HTTP/2的使用率也在逐年增加。
 
-* [HTTP3](https://xiaolincoding.com/network/2_http/http3.html)
+- [HTTP3](https://xiaolincoding.com/network/2_http/http3.html)
 
 ### HTTP2.0之前怎么实现服务器推送机制（2022蔚来）
 
@@ -7167,9 +7155,9 @@ location /test.html {
 
 #### 黏包是怎么产生的？
 
-* 发送方产生粘包
+- 发送方产生粘包
   采用 TCP 协议传输数据的客户端与服务器经常是保持一个长连接的状态（一次连接发一次数据不存在粘包），双方在连接不断开的情况下，可以一直传输数据。但当发送的数据包过于的小时，那么 TCP 协议默认的会启用 Nagle 算法，将这些较小的数据包进行合并发送（缓冲区数据发送是一个堆压的过程）；这个合并过程就是在发送缓冲区中进行的，也就是说数据发送出来它已经是粘包的状态了。
-* 接收方产生粘包
+- 接收方产生粘包
   接收方采用 TCP 协议接收数据时的过程是这样的：数据到接收方，从网络模型的下方传递至传输层，传输层的 TCP 协议处理是将其放置接收缓冲区，然后由应用层来主动获取（C 语言用 recv、read 等函数）；这时会出现一个问题，就是我们在程序中调用的读取数据函数不能及时的把缓冲区中的数据拿出来，而下一个数据又到来并有一部分放入的缓冲区末尾，等我们读取数据时就是一个粘包。（放数据的速度 > 应用层拿数据速度）
 
 #### 如何解决
@@ -7203,7 +7191,8 @@ HTTP 通过设置回车符、换行符作为 HTTP 报文协议的边界。
 ## 🖼️场景题
 
 ### 很多短任务线程，选择 synchronized 还是 lock（2022-04-11 携程）
-> 参考资料：https://stackoverflow.com/questions/4201713/synchronization-vs-lock、https://www.geeksforgeeks.org/lock-framework-vs-thread-synchronization-in-java/、https://www.baeldung.com/java-concurrent-locks
+>
+> 参考资料：<https://stackoverflow.com/questions/4201713/synchronization-vs-lock、https://www.geeksforgeeks.org/lock-framework-vs-thread-synchronization-in-java/、https://www.baeldung.com/java-concurrent-locks>
 
 synchronized 和 lock 是两种不同的 Java 线程同步机制。synchronized 是基于隐式的监视器锁，而 lock 是基于显式的锁接口。
 synchronized 和 lock 之间的选择取决于你的具体需求和场景。一般来说，lock 比 synchronized 更灵活和复杂，可以支持更细粒度的锁控制和更多的功能。
@@ -7220,7 +7209,6 @@ synchronized 和 lock 之间的选择取决于你的具体需求和场景。一�
 根据以上比较，你可以根据你的具体需求和场景选择 synchronized 或 lock。一般来说，如果你需要更简单和快速的同步机制，你可以选择 synchronized；如果你需要更灵活和复杂的同步机制，你可以选择 lock。
 
 ### 多个人给一个主播打赏怎么设计？我说是一个高并发写的操作，对一个记录频繁写，分批操作，比如 10 个记录 操作一次。他说这个方案可以 但是有 100 个记录 怎么去做一个一个操作呢？我说如果在一个进程可以 分多个线程分批。他说还是不够快 我们是用的 MQ 多个消费者 一个打赏就发一个消息 （2022-6-3   58同城）
-
 
 ### 怎么实现一个点赞功能？
 
@@ -7282,7 +7270,7 @@ zadd key score member [score member ...]，zrank key member
 
 负载均衡层，支持切换机房
 写数据的时候，中间件（db/redis/es）都要进行双写。
-kafka容灾，mirror maker: https://cloud.tencent.com/developer/article/1358933
+kafka容灾，mirror maker: <https://cloud.tencent.com/developer/article/1358933>
 
 ### 主从机房同步有什么问题呢？ （2022 虾皮）
 
@@ -7296,7 +7284,7 @@ kafka容灾，mirror maker: https://cloud.tencent.com/developer/article/1358933
 - 这里还有一种情况，是无法做数据分片的：全局数据。例如系统配置、商品库存这类需要强一致的数据，这类服务依旧只能采用写主机房，读从机房的方案，不做双活。
 - 双活的重点，是要优先保证「核心」业务先实现双活，并不是「全部」业务实现双活。
 
-https://mp.weixin.qq.com/s/hWCmnsa3rdtMFTE_BSyg2w
+<https://mp.weixin.qq.com/s/hWCmnsa3rdtMFTE_BSyg2w>
 
 ### 冷机房新请求过来，发现缓存没有，会把数据库打挂，这个怎么解决？（2022 虾皮）
 
@@ -7312,8 +7300,8 @@ https://mp.weixin.qq.com/s/hWCmnsa3rdtMFTE_BSyg2w
 
 ### 自由发挥题目
 
-* 怎么学习的linux (2022蔚来)
-* Linux知道哪些命令?（2022美团）
+- 怎么学习的linux (2022蔚来)
+- Linux知道哪些命令?（2022美团）
 
 ### 查看系统里CPU和内存使用情况，用哪些命令执行？
 
@@ -7398,9 +7386,9 @@ free -s 10 # 周期性的查询内存使用信息，每10s 执行一次命令
 
 举个🌰命令是 `tail -f info.log | grep RecommendServiceImpl | cut -f1 -d'.' | uniq -c` 每个打的日志格式不一样，所以需要理解一下里面的意思
 
-* `grep RecommendServiceImpl`是过滤出要测的接口
-* `cut`是截取一下时间，其中 `-d‘.’`表示字符串风格表示符号，单引号里面的就是分割符，例如因为我日志是有打毫秒值的，所以我根据 `.`来分段，`-f1`表示我要取分段以后的第一段(从1开始数)，同理 `-f2`就是第二段也就是 `.`后面这部分，
-* `uniq`显示或者忽略重复的行，但是加上-c就可以累计相同行数，所以我们这边累加起来
+- `grep RecommendServiceImpl`是过滤出要测的接口
+- `cut`是截取一下时间，其中 `-d‘.’`表示字符串风格表示符号，单引号里面的就是分割符，例如因为我日志是有打毫秒值的，所以我根据 `.`来分段，`-f1`表示我要取分段以后的第一段(从1开始数)，同理 `-f2`就是第二段也就是 `.`后面这部分，
+- `uniq`显示或者忽略重复的行，但是加上-c就可以累计相同行数，所以我们这边累加起来
 
 ![image-20220718141022014](./giant_images/image-20220718141022014.webp)
 
@@ -7440,8 +7428,6 @@ netstat -tunlp | grep 80
 4. 用户主动触发刷盘或者达到特定条件内核触发刷盘，唤醒pdflush线程将内核缓冲区的数据刷入磁盘；
 
 ![在这里插入图片描述](./giant_images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lhbmdndW9zYg==,size_16,color_FFFFFF,t_70.webp)
-
-
 
 【拓展】读流程
 
@@ -7563,18 +7549,20 @@ RBAC 模型中的权限是由模块和行为合并在一起而产生的，在 My
 ### 为什么设计模式更好，你能说说用和不用的区别吗
 
 设计模式是软件开发中经常出现的问题的常见解决方案。 它们可以帮助您编写更干净、更可重用、更易维护的代码2。 使用设计模式的一些好处是：
+
 - 为开发人员提供了一个共享的词汇表，以便更有效地进行交流。
 - 包含了最佳实践，避免重新发明车轮。
 - 它们适应不断变化的需求并促进代码重用。
 
 使用设计模式的一些缺点是：
+
 - 可能在不需要或应用不正确时被过度使用或误用。
 - 可能会引入额外的复杂性和抽象，而这可能是不必要的。
 - 对于初学者或不熟悉的开发人员来说，它们可能很难学习和理解。
 
 使用和不使用设计模式之间的区别取决于上下文和您试图解决的问题。 在某些情况下，使用设计模式可以使您的代码更加优雅和健壮。 在其他情况下，不使用设计模式可以使您的代码更简单，更直接。 关键是明智而恰当地使用设计模式，而不是盲目地将其作为规则。
 
-> 其余参考：https://www.javatpoint.com/design-patterns-in-java、https://java-design-patterns.com/
+> 其余参考：<https://www.javatpoint.com/design-patterns-in-java、https://java-design-patterns.com/>
 
 ### 会什么设计模式，讲一下模板方法设计模式，应用 | 对于模版模式的理解，应用场景，你在项目中是怎么使用的（2022美团）
 
@@ -7888,7 +7876,7 @@ public class TextAreaConvertor extends FormItemConverter {
 }
 ```
 
-* **制作简单工厂**
+- **制作简单工厂**
 
 ```java
 @Component
@@ -8101,10 +8089,6 @@ public class Sun {
 
 ![img](./giant_images/759200-20160806092734215-279978821.webp)
 
-
-
-
-
 ### 单例模式线程安全（2022蔚来）
 
 #### 多线程安全单例模式实例一(不使用同步锁)
@@ -8123,7 +8107,7 @@ public class Singleton
 }
 ```
 
-上述代码中的一个缺点是该类加载的时候就会直接new 一个静态对象出来，当系统中这样的类较多时，会使得启动速度变慢 。现在流行的设计都是讲**“延迟加载”**，我们可以在第一次使用的时候才初始化第一个该类对象。所以这种适合在小系统。 
+上述代码中的一个缺点是该类加载的时候就会直接new 一个静态对象出来，当系统中这样的类较多时，会使得启动速度变慢 。现在流行的设计都是讲**“延迟加载”**，我们可以在第一次使用的时候才初始化第一个该类对象。所以这种适合在小系统。
 
 #### 多线程安全单例模式实例二(使用同步方法)
 
@@ -8165,18 +8149,16 @@ public class Singleton
 }
 ```
 
-
-
 ## 问题解答选取的 github 仓库
 
 如果不是在 github 上查找到的答案会给予标注
 
-1. https://github.com/Snailclimb/JavaGuide 「Java 学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！
+1. <https://github.com/Snailclimb/JavaGuide> 「Java 学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！
 2. [Java 全栈知识体系](https://www.pdai.tech/)
-3. https://github.com/rbmonster/learning-note java 开发 面试八股文（个人的面试及工作总结）
-4. https://github.com/CoderLeixiaoshuai/java-eight-part 『Java 八股文』Java 面试套路
-5. https://github.com/doocs/advanced-java 互联网 Java 工程师进阶知识完全扫盲
-6. https://www.iamshuaidi.com/ 帅地玩编程
-7. https://github.com/xiaolincoder/CS-Base 小林 x 图解计算机基础
-8. https://www.mianshiya.com/ 面试鸭
+3. <https://github.com/rbmonster/learning-note> java 开发 面试八股文（个人的面试及工作总结）
+4. <https://github.com/CoderLeixiaoshuai/java-eight-part> 『Java 八股文』Java 面试套路
+5. <https://github.com/doocs/advanced-java> 互联网 Java 工程师进阶知识完全扫盲
+6. <https://www.iamshuaidi.com/> 帅地玩编程
+7. <https://github.com/xiaolincoder/CS-Base> 小林 x 图解计算机基础
+8. <https://www.mianshiya.com/> 面试鸭
 9. 国外网站

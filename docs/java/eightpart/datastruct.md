@@ -6,6 +6,7 @@ title: 数据结构
 category:
   - 计算机基础
   - 八股文
+outline: deep
 ---
 
 ## 🧩数据结构
@@ -25,8 +26,6 @@ category:
 **为什么要用红黑树？** 简单来说红黑树就是为了解决二叉查找树的缺陷，因为二叉查找树在某些情况下会退化成一个线性结构。详细了解可以查看 [漫画：什么是红黑树？open in new window](https://juejin.im/post/5a27c6946fb9a04509096248#comment)（也介绍到了二叉查找树，非常推荐）
 
 **相关阅读** ：[《红黑树深入剖析及Java实现》open in new window](https://zhuanlan.zhihu.com/p/24367771)（美团点评技术团队）
-
-
 
 ### 十大经典排序算法
 
@@ -69,8 +68,6 @@ category:
 
 非比较排序时间复杂度底，但由于非比较排序需要占用空间来确定唯一位置。所以对数据规模和数据分布有一定的要求。
 
-
-
 ### 冒泡排序 (Bubble Sort)
 
 冒泡排序是一种简单的排序算法。它重复地遍历要排序的序列，依次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历序列的工作是重复地进行直到没有再需要交换为止，此时说明该序列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢 “浮” 到数列的顶端。
@@ -97,7 +94,7 @@ public static int[] bubbleSort(int[] arr) {
                 int tmp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = tmp;
-			    // Change flag
+       // Change flag
                 flag = false;
             }
         }
@@ -117,8 +114,6 @@ public static int[] bubbleSort(int[] arr) {
 - **时间复杂度** ：最佳：O(n) ，最差：O(n2)， 平均：O(n2)
 - **空间复杂度** ：O(1)
 - **排序方式** ：In-place
-
-
 
 ### 选择排序 (Selection Sort)
 
@@ -165,8 +160,6 @@ public static int[] selectionSort(int[] arr) {
 - **空间复杂度** ：O(1)
 - **排序方式** ：In-place
 
-
-
 ### 插入排序 (Insertion Sort)
 
 插入排序是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用 in-place 排序（即只需用到 `O(1)` 的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。
@@ -208,16 +201,12 @@ public static int[] insertionSort(int[] arr) {
 }
 ```
 
-
-
 #### 算法分析
 
 - **稳定性**：稳定
 - **时间复杂度** ：最佳：O(n) ，最差：O(n2)， 平均：O(n2)
 - **空间复杂度** ：O(1)
 - **排序方式** ：In-place
-
-
 
 ### 希尔排序 (Shell Sort)
 
@@ -272,8 +261,6 @@ public static int[] shellSort(int[] arr) {
 - **稳定性**：稳定
 - **时间复杂度** ：最佳：O(nlogn)， 最差：O(n2) 平均：O(nlogn)
 - **空间复杂度** ：`O(n)`
-
-
 
 ### 归并排序 (Merge Sort)
 
@@ -356,8 +343,6 @@ public static int[] merge(int[] arr_1, int[] arr_2) {
 - **时间复杂度** ：最佳：O(nlogn)， 最差：O(nlogn)， 平均：O(nlogn)
 - **空间复杂度** ：O(n)
 
-
-
 ### 快速排序 (Quick Sort)
 
 快速排序用到了分治思想，同样的还有归并排序。乍看起来快速排序和归并排序非常相似，都是将问题变小，先排序子串，最后合并。不同的是快速排序在划分子问题的时候经过多一步处理，将划分的两组数据划分为一大一小，这样在最后合并的时候就不必像归并排序那样再进行比较。但也正因为如此，划分的不定性使得快速排序的时间复杂度并不稳定。
@@ -373,8 +358,6 @@ public static int[] merge(int[] arr_1, int[] arr_2) {
 3. 递归地把小于基准值元素的子序列和大于基准值元素的子序列进行快速排序。
 
 ![](https://guide-blog-./personal_images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/cs-basics/sorting-algorithms/random_quick_sort.gif)
-
-
 
 #### 代码实现
 
@@ -405,15 +388,11 @@ public static void quickSort(int[] array, int low, int high) {
 }
 ```
 
-
-
 #### 算法分析
 
 - **稳定性** ：不稳定
 - **时间复杂度** ：最佳：O(nlogn)， 最差：O(nlogn)，平均：O(nlogn)
 - **空间复杂度** ：O(nlogn)
-
-
 
 ### 堆排序 (Heap Sort)
 
@@ -502,8 +481,6 @@ public static int[] heapSort(int[] arr) {
 - **时间复杂度** ：最佳：O(nlogn)， 最差：O(nlogn)， 平均：O(nlogn)
 - **空间复杂度** ：O(1)
 
-
-
 ### 计数排序 (Counting Sort)
 
 计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，**计数排序要求输入的数据必须是有确定范围的整数**。
@@ -581,8 +558,6 @@ public static int[] countingSort(int[] arr) {
 - **稳定性** ：稳定
 - **时间复杂度** ：最佳：`O(n+k)` 最差：`O(n+k)` 平均：`O(n+k)`
 - **空间复杂度** ：`O(k)`
-
-
 
 ### 桶排序 (Bucket Sort)
 
@@ -664,8 +639,6 @@ public static List<Integer> bucketSort(List<Integer> arr, int bucket_size) {
 - **稳定性** ：稳定
 - **时间复杂度** ：最佳：`O(n+k)` 最差：`O(n²)` 平均：`O(n+k)`
 - **空间复杂度** ：`O(k)`
-
-
 
 ### 基数排序 (Radix Sort)
 

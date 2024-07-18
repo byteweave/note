@@ -3,6 +3,7 @@ sidebar_position: 4
 title: 力扣算法模板 & 刷题顺序
 category:
   - lc
+outline: deep
 ---
 
 # 算法模板

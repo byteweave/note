@@ -6,6 +6,7 @@ title: Java并发
 category:
   - 并发
   - 八股文
+outline: deep
 ---
 
 ## 🕙 Java并发
@@ -49,18 +50,21 @@ category:
 **线程**是程序并发执行的**最小单位**，因为创建、销毁、切换的成本相较于进程更小，所以能够更好地提高程序的并发性和系统资源的利用率。
 
 > 另外在这里还可以再扩展一下：**协程**和Java 19的**虚拟线程**
+>
 > 1. **协程（Coroutines）** 是一种比线程更轻量级的存在，它们的特点是可以在用户态进行调度，而无需涉及到系统调度，因此创建、切换的成本更低。不过，协程并不是由操作系统提供的概念，而是由特定的编程语言或者库提供。协程的一个重要特性是可以通过 yield 和 resume 操作进行手动调度，允许在函数内部保存状态，从而实现非常轻量级的任务切换和并发。
 > 2. **Java 19引入了虚拟线程（Virtual Threads）** 的概念，也被称为轻量级线程或者**纤程（fibers）**。虚拟线程是为了解决Java并发编程中的一些问题，比如高并发时线程资源的消耗，线程切换导致的性能开销等。相比于常规线程，虚拟线程的创建和切换开销更小，这是因为虚拟线程的调度不是由操作系统来完成，而是在用户态由Java运行时系统来完成。虚拟线程使得开发者可以在不担心性能和资源问题的前提下，创建大量的线程来提高程序的并发性能。
-> - https://docs.oracle.com/en/java/javase/19/core/virtual-threads.html 官方虚拟线程介绍
-> - https://www.javacodegeeks.com/2023/03/intro-to-java-virtual-threads.html 虚拟线程Java简介
-> - https://spring.io/blog/2022/10/11/embracing-virtual-threads 拥抱虚拟线程
-> - https://stackoverflow.com/questions/796217/what-is-the-difference-between-a-thread-and-a-fiber 线程和fibers有什么区别？
+>
+> * <https://docs.oracle.com/en/java/javase/19/core/virtual-threads.html> 官方虚拟线程介绍
+> * <https://www.javacodegeeks.com/2023/03/intro-to-java-virtual-threads.html> 虚拟线程Java简介
+> * <https://spring.io/blog/2022/10/11/embracing-virtual-threads> 拥抱虚拟线程
+> * <https://stackoverflow.com/questions/796217/what-is-the-difference-between-a-thread-and-a-fiber> 线程和fibers有什么区别？
 
 ### Java线程的创建方式
 
 有**四种**方式可以用来创建线程：
 
 1. 继承**Thread**类
+
 ```java
 public class MyThread extends Thread {
     @Override
@@ -74,7 +78,9 @@ public class MyThread extends Thread {
     }
 }
 ```
+
 2. 实现**Runnable**接口
+
 ```java
 public class MyRunnable implements Runnable {
     @Override
@@ -89,7 +95,9 @@ public class MyRunnable implements Runnable {
     }
 }
 ```
+
 3. **Callable**和**FutureTask**创建线程：为了解决异步执行的结果问题，Java语言在1.5版本之后提供了一种新的多线程创建方法：通过Callable接口和FutureTask类相结合创建线程。
+
 ```java
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -115,7 +123,9 @@ public class MyCallable implements Callable<String> {
     }
 }
 ```
+
 4. **线程池**创建线程，使用Executors创建线程池
+
 ```java
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -167,9 +177,9 @@ public class FiberExample {
 
 **Java内存模型（JMM）有3个重要的概念：**
 Java内存模型（JMM）是一种抽象的概念，它定义了Java程序如何与主内存和线程之间共享变量进行交互。JMM中最重要的概念就是“原子性”、“可见性”和“有序性”。其中，“原子性”指一个操作不可被中断或分割，同时对于所有其他线程来说，该操作要么完全执行要么完全不执行；“可见性”指当一个线程修改某个变量时，其他线程能够立即看到这个变化；“有序性”则是指指令重排的问题，在JMM中，禁止对存在控制依赖关系的指令进行重排序。
-- **原子性**：提供了synchronized关键字和java.util.concurrent包中的原子类来实现原子性。Java语言规范定义了一些基本数据类型的简单读取和赋值（非long和double的64位数据类型）也是原子操作。
-- **可见性**：使用主内存和工作内存的方式来实现可见性。主内存是线程之间共享的内存区域，而每个线程都有自己的工作内存。当线程读取共享变量时，JVM将该变量从主内存复制到线程的工作内存中，当线程修改变后，再将其写回主内存。这样就能够保证所有线程对于该变量的访问都是一致的。Java也提供了`volatile`关键字来保证可见性。对标记为`volatile`的变量的写操作，会立即刷新到主内存，而读操作则会读取主内存的新值，这就保证了变量的改动对所有线程是可见的。
-- **有序性**：使用指令重排和内存屏障（Memory Barrier）来实现有序性。指令重排是为了提高程序的执行效率，但可能会破坏程序的正确性。JVM通过插入内存屏障来禁止某些指令重排序，以此来保证程序的正确性。Java提供了`happens-before`原则用来保证有序性。这是一种偏序关系，可以用来推断在一个线程中，什么操作会对另一个线程可见。这些规则包括：程序顺序原则、监视器锁原则、`volatile`变量原则、线程启动原则、线程终止原则、线程中断原则、对象终结原则和传递性原则。
+* **原子性**：提供了synchronized关键字和java.util.concurrent包中的原子类来实现原子性。Java语言规范定义了一些基本数据类型的简单读取和赋值（非long和double的64位数据类型）也是原子操作。
+* **可见性**：使用主内存和工作内存的方式来实现可见性。主内存是线程之间共享的内存区域，而每个线程都有自己的工作内存。当线程读取共享变量时，JVM将该变量从主内存复制到线程的工作内存中，当线程修改变后，再将其写回主内存。这样就能够保证所有线程对于该变量的访问都是一致的。Java也提供了`volatile`关键字来保证可见性。对标记为`volatile`的变量的写操作，会立即刷新到主内存，而读操作则会读取主内存的新值，这就保证了变量的改动对所有线程是可见的。
+* **有序性**：使用指令重排和内存屏障（Memory Barrier）来实现有序性。指令重排是为了提高程序的执行效率，但可能会破坏程序的正确性。JVM通过插入内存屏障来禁止某些指令重排序，以此来保证程序的正确性。Java提供了`happens-before`原则用来保证有序性。这是一种偏序关系，可以用来推断在一个线程中，什么操作会对另一个线程可见。这些规则包括：程序顺序原则、监视器锁原则、`volatile`变量原则、线程启动原则、线程终止原则、线程中断原则、对象终结原则和传递性原则。
 
     Java内存模型规定所有的变量都存储在主存中，JMM的主存类似于物理内存，但有区别，还能包含部分共享缓存。每个Java线程都有自己的工作内存（类似于CPU高速缓存，但也有区别）
 
@@ -203,6 +213,7 @@ JMM规定：
 > 解决混淆问题：JVM和JMM的区别？
 
   Java虚拟机（JVM）和Java内存模型（JMM）是两个不同层次的概念，但它们都是Java运行时环境的重要组成部分。
+
   1. **Java虚拟机（JVM）**：JVM是一个虚拟的计算机，它是Java运行环境的一部分，负责执行Java字节码。JVM有自己的一套字节码指令集，还有输入/输出流等系统资源。JVM负责Java程序的加载、验证、编译以及执行等操作。同时，JVM还负责垃圾回收（GC）操作，管理Java程序使用的内存。JVM的实现不仅可以让Java程序在不同的硬件和操作系统上运行，还可以优化和改进程序的性能。
   2. **Java内存模型（JMM）**：JMM是一个抽象的概念，它定义了Java程序中各种共享变量（即线程之间共享的数据）的访问规则，包括原子性、可见性和有序性等特性。JMM主要关注的是多线程环境下如何正确处理共享变量，避免出现线程安全问题。JMM定义了主内存、工作内存、内存屏障、volatile、synchronized等概念和规则，这些是处理多线程内存可见性和顺序性的基础。
 
@@ -240,6 +251,7 @@ JMM规定：
 >As-if-Serial规则只能保障单内核指令重排序之后的执行结果正确，不能保障多内核以及跨CPU指令重排序之后的执行结果正确。
 
 #### happens-before 原则是什么？
+
 **前提**：在**单线程环境**中，重排序不会影响到程序执行的结果；但在**多线程环境**中，可能会导致严重的问题。比如，线程A在进行某些计算后，修改了共享变量的值，而线程B读取到的却是修改前的值，这可能会**导致程序行为的不确定性**。**为了解决这个问题**，Java内存模型提出了“**happens-before**”原则来约束重排序，为开发者提供了一种机制（如volatile关键字、synchronized关键字和Lock接口等）来保证多线程环境中的内存可见性，防止因重排序带来的问题。
 
 happens-before 这个概念最早诞生于 Leslie Lamport 于 1978 年发表的论文[《Time，Clocks and the Ordering of Events in a Distributed System》](https://lamport.azurewebsites.net/pubs/time-clocks.pdf)。在这篇论文中，Leslie Lamport 提出了逻辑时钟open in new window的概念，这也成了第一个逻辑时钟算法 。在分布式环境中，通过一系列规则来定义逻辑时钟的变化，从而能通过逻辑时钟来对分布式系统中的事件的先后顺序进行判断。逻辑时钟并不度量时间本身，仅区分事件发生的前后顺序，其本质就是定义了一种 happens-before 关系。
@@ -249,22 +261,23 @@ happens-before 这个概念最早诞生于 Leslie Lamport 于 1978 年发表的�
 JSR 133 引入了 happens-before 这个概念来描述两个操作之间的内存可见性。
 
 为什么需要 happens-before 原则？ happens-before 原则的诞生是为了程序员和编译器、处理器之间的平衡。程序员追求的是易于理解和编程的强内存模型，遵守既定规则编码即可。编译器和处理器追求的是较少约束的弱内存模型，让它们尽己所能地去优化性能，让性能最大化。happens-before 原则的设计思想其实非常简单：
-- 为了对编译器和处理器的约束尽可能少，只要不改变程序的执行结果（单线程程序和正确执行的多线程程序），编译器和处理器怎么进行重排序优化都行。
-- 对于会改变程序执行结果的重排序，JMM 要求编译器和处理器必须禁止这种重排序。
+* 为了对编译器和处理器的约束尽可能少，只要不改变程序的执行结果（单线程程序和正确执行的多线程程序），编译器和处理器怎么进行重排序优化都行。
+* 对于会改变程序执行结果的重排序，JMM 要求编译器和处理器必须禁止这种重排序。
 下面这张是 《Java 并发编程的艺术》这本书中的一张 JMM 设计思想的示意图，非常清晰。
 ![](./personal_images/image-20220731155332375.webp)
 了解了 happens-before 原则的设计思想，我们再来看看 JSR-133 对 happens-before 原则的定义：
-- 如果一个操作 happens-before 另一个操作，那么第一个操作的执行结果将对第二个操作可见，并且第一个操作的执行顺序排在第二个操作之前。
-- 两个操作之间存在 happens-before 关系，并不意味着 Java 平台的具体实现必须要按照 happens-before 关系指定的顺序来执行。如果重排序之后的执行结果，与按 happens-before 关系来执行的结果一致，那么 JMM 也允许这样的重排序。
+* 如果一个操作 happens-before 另一个操作，那么第一个操作的执行结果将对第二个操作可见，并且第一个操作的执行顺序排在第二个操作之前。
+* 两个操作之间存在 happens-before 关系，并不意味着 Java 平台的具体实现必须要按照 happens-before 关系指定的顺序来执行。如果重排序之后的执行结果，与按 happens-before 关系来执行的结果一致，那么 JMM 也允许这样的重排序。
 
 ```java
-int userNum = getUserNum(); 	// 1
-int teacherNum = getTeacherNum();	 // 2
-int totalNum = userNum + teacherNum;	// 3
+int userNum = getUserNum();  // 1
+int teacherNum = getTeacherNum();  // 2
+int totalNum = userNum + teacherNum; // 3
 ```
+
 - 1 happens-before 2
-- 2 happens-before 3
-- 1 happens-before 3
+* 2 happens-before 3
+* 1 happens-before 3
 
 虽然 1 happens-before 2，但对 1 和 2 进行重排序不会影响代码的执行结果，所以 JMM 是允许编译器和处理器执行这种重排序的。但 1 和 2 必须是在 3 执行之前，也就是说 1,2 happens-before 3 。
 
@@ -273,21 +286,22 @@ happens-before 原则表达的意义其实并不是一个操作发生在另外�
 举个例子：操作 1 happens-before 操作 2，即使操作 1 和操作 2 不在同一个线程内，JMM 也会保证操作 1 的结果对操作 2 是可见的。
 
 #### Happens-Before规则
+>
 > **程序次序规则**（Program Order Rule）：在一个线程内，按照控制流顺序，书写在前面的操作先行发生（Happens-before）于书写在后面的操作。注意，这里说的是控制流顺序而不是程序代码顺序，因为要考虑分支、循环等结构。
 
 举个例子：
 
 ```java
-int a = 1; 		// A
-int b = 2;		// B
-int c = a + b;	// C
+int a = 1;   // A
+int b = 2;  // B
+int c = a + b; // C
 ```
 
 根据程序次序规则，上述代码存在 3 个 Happens-before 关系：
 
-- A Happens-before B
-- B Happens-before C
-- A Happens-before C
+* A Happens-before B
+* B Happens-before C
+* A Happens-before C
 
 > **管程锁定规则**（Monitor Lock Rule）：一个 unlock 操作先行发生于后面对同一个锁的 lock 操作。这里必须强调的是 “同一个锁”，而 “后面” 是指时间上的先后。
 
@@ -297,7 +311,7 @@ int c = a + b;	// C
 
 ```java
 synchronized (this) { // 此处自动加锁
-	if (x > 1) {
+ if (x > 1) {
         x = 1;
     }    
 } // 此处自动解锁
@@ -338,17 +352,22 @@ synchronized (this) { // 此处自动加锁
 > **传递性**（Transitivity）：如果操作 A 先行发生于操作 B，操作 B 先行发生于操作 C，那就可以得出操作 A 先行发生于操作 C 的结论。
 
 #### happens-before 和 JMM 什么关系？
+
 happens-before 与 JMM 的关系用《Java 并发编程的艺术》这本书中的一张图就可以非常好的解释清楚。
 ![](./personal_images/image-20220731084604667.webp)
 
 ### 聊聊volatile
+
 #### 简要介绍
+
 在Java中，volatile是一种关键字，用于修饰变量。当一个变量被volatile修饰后，意味着该变量的值可能在任意时刻被其他线程修改。因此，使用volatile能够实现多线程间数据的可见性。
 
 具体来说，当一个线程修改了一个被volatile修饰的变量的值时，该变量的值会**立即更新到主存**中，*而不是先更新到线程的缓存*中。其他线程在读取该变量时，会直接从主存中获取最新的值。
 
 ![](./personal_images/jmm.webp)
+
 #### 前言
+
 先要从 **CPU 缓存模型** 说起
 
 **为什么要弄一个 CPU 高速缓存呢？** **CPU Cache 缓存的是内存数据用于解决 CPU 处理速度和内存不匹配的问题，内存缓存的是硬盘数据用于解决硬盘访问速度过慢的问题。**
@@ -367,9 +386,9 @@ happens-before 与 JMM 的关系用《Java 并发编程的艺术》这本书中�
 
 > 📖《Java并发编程实战》中这样说到：
 >
->  Java语言提供了一种稍弱的同步机制，即volatile变量，用来确保将变量的更新操作通知到其他线程。当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者对其他处理器不可见的地方，因此在读取volatile类型的变量时总会返回最新写入的值
+> Java语言提供了一种稍弱的同步机制，即volatile变量，用来确保将变量的更新操作通知到其他线程。当把变量声明为volatile类型后，编译器与运行时都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序。volatile变量不会被缓存在寄存器或者对其他处理器不可见的地方，因此在读取volatile类型的变量时总会返回最新写入的值
 >
->  volatile变量对可见性的影响比volatile变量本身更为重要。当线程A首先写入一个volatile变量并且线程B随后读取该变量时，在写入volatile变量之前对A可见的所有变量的值，在B读取了volatile变量后，对B也是可见的。因此，**从内存可见性的角度来看，写入volatile变量相当于退出同步代码块，而读取volatile变量就相当于进入同步代码块**。
+> volatile变量对可见性的影响比volatile变量本身更为重要。当线程A首先写入一个volatile变量并且线程B随后读取该变量时，在写入volatile变量之前对A可见的所有变量的值，在B读取了volatile变量后，对B也是可见的。因此，**从内存可见性的角度来看，写入volatile变量相当于退出同步代码块，而读取volatile变量就相当于进入同步代码块**。
 
 #### 实现原理
 
@@ -411,7 +430,7 @@ lock指令相当于一个内存屏障，它保证以下这几点：
 
 维基百科的定义：
 
-> 也称内存栅栏，内存栅障，屏障指令等，是一类同步屏障指令，它使得 CPU 或编译器在对内存进行操作的时候, 严格按照一定的顺序来执行, 也就是说在内存屏障之前的指令和之后的指令不会由于系统优化等原因而导致乱序。 
+> 也称内存栅栏，内存栅障，屏障指令等，是一类同步屏障指令，它使得 CPU 或编译器在对内存进行操作的时候, 严格按照一定的顺序来执行, 也就是说在内存屏障之前的指令和之后的指令不会由于系统优化等原因而导致乱序。
 
 是让一个CPU高速缓存的内存状态对其他CPU内核可见的一项技术，也是一项保障跨CPU内核有序执行指令的技术。硬件层常用的内存屏障分为三种：读屏障（Load Barrier）、写屏障（Store Barrier）和全屏障（Full Barrier）
 
@@ -437,8 +456,6 @@ lock指令相当于一个内存屏障，它保证以下这几点：
 
 X86处理器上的lock前缀指令也具有内存全屏障的功能。lock前缀后面可以跟ADD、ADC、AND、BTC、BTR、BTS、CMPXCHG、CMPXCH8B、DEC、INC、NEG、NOT、OR、SBB、SUB、XOR、XADD、XCHG等指令。
 
-
-
 ##### 作用
 
 （1）阻止屏障两侧的指令重排序
@@ -450,14 +467,18 @@ X86处理器上的lock前缀指令也具有内存全屏障的功能。lock前缀
 硬件层的内存屏障强制把高速缓存中的最新数据写回主存，让高速缓存中相应的脏数据失效。一旦完成写入，任何访问这个变量的线程将会得到最新的值。
 
 #### 如何禁止指令重排序
+
 在 Java 中，volatile 关键字除了可以保证变量的可见性，还有一个重要的作用就是防止 JVM 的指令重排序。 如果我们将变量声明为 volatile ，在对这个变量进行读写操作的时候，会通过插入特定的 内存屏障 的方式来禁止指令重排序。在 Java 中，Unsafe 类提供了三个开箱即用的内存屏障相关的方法，屏蔽了操作系统底层的差异：
+
 ```java
 public native void loadFence();
 public native void storeFence();
 public native void fullFence();
 ```
+
 理论上来说，你通过这个三个方法也可以实现和volatile禁止重排序一样的效果，只是会麻烦一些。下面我以一个常见的面试题为例讲解一下 volatile 关键字禁止指令重排序的效果。面试中面试官经常会说：“单例模式了解吗？来给我手写一下！给我解释一下双重检验锁方式实现单例模式的原理呗！”
 双重校验锁实现对象单例（线程安全） ：
+
 ```java
 public class Singleton {
 
@@ -480,11 +501,13 @@ public class Singleton {
     }
 }
 ```
+
 uniqueInstance 采用 volatile 关键字修饰也是很有必要的， uniqueInstance = new Singleton(); 这段代码其实是分为三步执行：为 uniqueInstance 分配内存空间初始化 uniqueInstance将 uniqueInstance 指向分配的内存地址但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1->3->2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T1 执行了 1 和 3，此时 T2 调用 getUniqueInstance() 后发现 uniqueInstance 不为空，因此返回 uniqueInstance，但此时 uniqueInstance 还未被初始化。
 
 > 例子拓展
 
 可能看到这里小伙伴们还是只能理解**volatile有禁止重排序的效果**，但是还是无法理解（如果你理解，可以跳过）。那么再举一个例子：
+
 ```java
 public class VolatileExample {
     private volatile int number = 0;
@@ -502,6 +525,7 @@ public class VolatileExample {
     }
 }
 ```
+
 在上面的代码中，我们定义了一个类VolatileExample，其中包含了一个volatile变量number和一个普通变量ready。当主线程执行write方法时，会设置number的值为42，并将ready标记为true。在另外一个线程中，执行read方法，如果ready为true，则输出number的值。
 
 假如number不是volatile类型，在写入number数据的时候，编译器可能就会将语句：**number=42；与语句：ready=true；重排序**，以此来优化程序性能。但是，如果这两个语句被重排序了，那么在另外一个线程中执行read方法时，**由于ready的值为true，所以会输出number的值**，但是此时可能number的值还没有被正确写入。
@@ -514,17 +538,17 @@ public class VolatileExample {
 
 cas 叫做 CompareAndSwap，**比较并交换**，很多地方使用到了它，比如锁升级中自旋锁就有用到，主要是**通过处理器的指令来保证操作的原子性**，它主要包含三个变量：
 
-- **1.变量内存地址**
-- **2.旧的预期值 A**
-- **3.准备设置的新值 B**
+* **1.变量内存地址**
+* **2.旧的预期值 A**
+* **3.准备设置的新值 B**
 
 当一个线程需要修改一个共享变量的值，完成这个操作需要先取出共享变量的值，赋给 A，基于 A 进行计算，得到新值 B，在用预期原值 A 和内存中的共享变量值进行比较，**如果相同就认为其他线程没有进行修改**，而将新值写入内存
 
 **CAS的缺点**
 
-- **CPU开销比较大**：在并发量比较高的情况下，如果许多线程反复尝试更新某一个变量，却又一直更新不成功，又因为**自旋**的时候会一直占用CPU，如果CAS一直更新不成功就会一直占用，造成CPU的浪费。
-- **ABA 问题**：比如线程 A 去修改 1 这个值，修改成功了，但是中间 线程 B 也修改了这个值，但是修改后的结果还是 1，所以不影响 A 的操作，这就会有问题。可以用**版本号**来解决这个问题。
-- **只能保证一个共享变量的原子性**
+* **CPU开销比较大**：在并发量比较高的情况下，如果许多线程反复尝试更新某一个变量，却又一直更新不成功，又因为**自旋**的时候会一直占用CPU，如果CAS一直更新不成功就会一直占用，造成CPU的浪费。
+* **ABA 问题**：比如线程 A 去修改 1 这个值，修改成功了，但是中间 线程 B 也修改了这个值，但是修改后的结果还是 1，所以不影响 A 的操作，这就会有问题。可以用**版本号**来解决这个问题。
+* **只能保证一个共享变量的原子性**
 
 > 📖《offer来了》这样定义CAS的：**CAS（Compare And Swap）**指比较并交换。CAS算法CAS(V, E, N)包含3个参数，V表示要更新的变量，E表示预期的值，N表示新值。在且仅在V值等于 E值时，才会将V值设为 N，如果 V值和 E值不同，则说明已经有其他线程做了更新，当前线程什么都不做。最后，CAS返回当前V的真实值。
 >
@@ -557,7 +581,7 @@ ABA 是 CAS 操作的一个经典问题，假设有一个变量初始值为 A，
 
 最终结果都是 A 但是版本号改变了。
 
-从 JDK 1.5 开始提供了 `AtomicStampedReference`类，这个类的 `compareAndSe `方法首先检查 `当前引用`是否等于 `预期引用`，并且 `当前标志`是否等于 `预期标志`，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。
+从 JDK 1.5 开始提供了 `AtomicStampedReference`类，这个类的 `compareAndSe`方法首先检查 `当前引用`是否等于 `预期引用`，并且 `当前标志`是否等于 `预期标志`，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。
 
 #### 自旋开销问题
 
@@ -573,40 +597,28 @@ i++；j++；
 
 这个时候可以使用 synchronized 进行加锁，有没有其他办法呢？有，将多个变量操作合成一个变量操作。从 JDK1.5 开始提供了 `AtomicReference` 类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行CAS操作。
 
-
-
 ### 说说 sleep() 方法和 wait() 方法区别和共同点?
 
 （最主要的区别）锁持有：
 
-- `sleep()` 方法：在睡眠期间，线程并没有释放所持有的锁。
-- `wait()` 方法：调用 `wait()` 方法后，线程会释放所持有的锁，允许其他线程使用同步代码块。
-
-
+* `sleep()` 方法：在睡眠期间，线程并没有释放所持有的锁。
+* `wait()` 方法：调用 `wait()` 方法后，线程会释放所持有的锁，允许其他线程使用同步代码块。
 
 线程暂停执行：
 
-- 两者都可以使线程暂停执行，但是他们通常应用在不同的上下文。
-
-
+* 两者都可以使线程暂停执行，但是他们通常应用在不同的上下文。
 
 使用场景：
 
-- `wait()` 方法：常被用于线程间的交互/通信，特别是在生产者消费者模式中，用于告知某个正在等待的线程，现在可以开始工作了。
-- `sleep()` 方法：常被用于暂停执行，比如模拟 IO 操作、复杂计算或者其他任何可能需要花费时间的操作后，暂停一段时间再继续执行。
-
-
+* `wait()` 方法：常被用于线程间的交互/通信，特别是在生产者消费者模式中，用于告知某个正在等待的线程，现在可以开始工作了。
+* `sleep()` 方法：常被用于暂停执行，比如模拟 IO 操作、复杂计算或者其他任何可能需要花费时间的操作后，暂停一段时间再继续执行。
 
 线程苏醒：
 
-- `wait()` 方法：线程不会自动苏醒，需要其他线程调用 `notify()` 或 `notifyAll()` 方法来唤醒等待的线程。然而，可以指定一个超时参数（`wait(long timeout)`），在超时期满后线程会自动苏醒。
-- `sleep()` 方法：不需要被其他线程显式唤醒。当指定的睡眠时间到了，线程会自动苏醒。
-
-
+* `wait()` 方法：线程不会自动苏醒，需要其他线程调用 `notify()` 或 `notifyAll()` 方法来唤醒等待的线程。然而，可以指定一个超时参数（`wait(long timeout)`），在超时期满后线程会自动苏醒。
+* `sleep()` 方法：不需要被其他线程显式唤醒。当指定的睡眠时间到了，线程会自动苏醒。
 
 所属类别：Java中，`sleep()` 方法是 `Thread` 类的静态方法，这意味着，它会对当前正在执行的线程进行操作。而 `wait()` 方法是从 `Object` 类继承的，每个对象都有 `wait()` 方法，它需要在同步块或同步方法中被调用，意味着调用 `wait()` 的线程必须拥有该对象的锁。
-
-
 
 ### 为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？
 
@@ -615,8 +627,6 @@ i++；j++；
 new 一个 Thread，线程进入了新建状态。调用 `start()`方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。 `start()` 会执行线程的相应准备工作，然后自动执行 `run()` 方法的内容，这是真正的多线程工作。 但是，直接执行 `run()` 方法，会把 `run()` 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。
 
 **总结： 调用 `start()` 方法方可启动线程并使线程进入就绪状态，直接执行 `run()` 方法的话不会以多线程的方式执行。**
-
-
 
 ### synchronized汇总
 
@@ -633,8 +643,6 @@ new 一个 Thread，线程进入了新建状态。调用 `start()`方法，会�
 > 📖笔者个人认为《offer来了》里面解释Java中的关键字是真的不错，上述截取的Guide，但是过于晦涩，所以截取了里面对synchronized 的解释：
 >
 > 🙋‍♂️**synchronized**关键字用于为Java对象、方法、代码块提供线程安全的操作。synchronized属于独占式的悲观锁，同时属于可重入锁。在使用synchronized修饰对象时，同一时刻只能有一个线程对该对象进行访问；在synchronized修饰方法、代码块时，同一时刻只能有一个线程执行该方法体或代码块，其他线程只有等待当前线程执行完毕并释放锁资源后才能访问该对象或执行同步代码块。Java中的每个对象都有个monitor对象，加锁就是在竞争monitor（监视器锁）对象。对代码块加锁是通过在前后分别加上monitorenter和monitorexit指令实现的，对方法是否加锁是通过一个标记位来判断的。
-
-
 
 #### 讲一下 synchronized 关键字的底层原理
 
@@ -702,9 +710,9 @@ public class SynchronizedDemo2 {
 
 `synchronized` 关键字和 `volatile` 关键字是两个互补的存在，而不是对立的存在！
 
-- **`volatile` 关键字**是线程同步的**轻量级实现**，所以 **`volatile `性能肯定比 `synchronized`关键字要好** 。但是 **`volatile` 关键字只能用于变量而 `synchronized`   \**同步的\**  关键字可以修饰方法以及代码块** 。
-- **`volatile` 关键字能保证数据的可见性，但不能保证数据的原子性。`synchronized` 关键字两者都能保证。**
-- **`volatile`关键字主要用于解决变量在多个线程之间的可见性，而 `synchronized` 关键字解决的是多个线程之间访问资源的同步性。**
+* **`volatile` 关键字**是线程同步的**轻量级实现**，所以 **`volatile`性能肯定比 `synchronized`关键字要好** 。但是 **`volatile` 关键字只能用于变量而 `synchronized`   \**同步的\**  关键字可以修饰方法以及代码块** 。
+* **`volatile` 关键字能保证数据的可见性，但不能保证数据的原子性。`synchronized` 关键字两者都能保证。**
+* **`volatile`关键字主要用于解决变量在多个线程之间的可见性，而 `synchronized` 关键字解决的是多个线程之间访问资源的同步性。**
 
 #### synchronized 锁升级的过程
 
@@ -739,6 +747,7 @@ public class SynchronizedDemo2 {
 
 > 自旋锁（Spinlock）是一种简单的同步原语，常见于多线程编程和操作系统内核设计。当一个线程尝试获取一个已经被其他线程占用的自旋锁时，该线程会进入一个称为自旋（Spinning）的忙等（busy-wait）状态，也就是反复检查锁是否可用，而不是让出其执行上下文（即进行上下文切换）。
 > 自旋的情况通常发生在以下两种情况：
+>
 > 1. 当锁已经被其他线程占用，且预计该线程将很快释放锁时，等待线程会选择自旋而非上下文切换。因为上下文切换本身有一定的开销，如果锁的占用时间非常短，那么自旋可能更有效率。
 > 2. 在多处理器或多核心的系统中，等待的线程可能在另一个处理器或核心上自旋，而锁的拥有者在另一个处理器或核心上运行。在这种情况下，自旋可以使等待的线程迅速获取到锁，而无需进程调度和上下文切换。
 
@@ -774,6 +783,7 @@ JVM中每个对象都会有一个监视器，监视器和对象一起创建、�
 > 举一反三：如果有两个线程竞争资源，如果第一个线程占有了资源，第二个线程要去占有资源则会自旋，等待第一个线程，但是现在第一个线程想再次获得这个资源发现这个资源还是被自己占用就会陷入死锁状态。
 
 如果是不可重入锁的代码说明：
+
 ```java
 public class DeadlockExample {
     private final Object lock = new Object();
@@ -792,6 +802,7 @@ public class DeadlockExample {
     }
 }
 ```
+
 在这个示例代码中，如果一个线程调用methodA()方法获取了锁，它将持有锁并调用methodB()方法。在methodB()方法中，该线程又试图获取同一个锁，由于该锁不可重入，因此它将被阻塞。如果此时另一个线程尝试获取锁并调用methodA()方法，它也将被阻塞，因为该锁已经被第一个线程持有并且不会被释放。这就导致了死锁的情况。
 
 ##### synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API
@@ -802,9 +813,9 @@ public class DeadlockExample {
 
 相比 `synchronized`，`ReentrantLock`增加了一些高级功能。主要来说主要有三点：
 
-- **等待可中断** : `ReentrantLock`提供了一种能够中断等待锁的线程的机制，通过 `lock.lockInterruptibly()` 来实现这个机制。也就是说*正在等待的线程可以选择放弃等待，改为处理其他事情*。而 synchronized 不支持中断。
-- **可实现公平锁** : `ReentrantLock`可以指定是公平锁还是非公平锁。而 `synchronized`只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。`ReentrantLock`默认情况是非公平的，可以通过 `ReentrantLock`类的 `ReentrantLock(boolean fair)`构造方法来制定是否是公平的。
-- **可实现选择性通知（锁可以绑定多个条件）**: `synchronized`关键字与 `wait()`和 `notify()`/`notifyAll()`方法相结合可以实现等待/通知机制。`ReentrantLock`类当然也可以实现，但是需要借助于 `Condition`接口与 `newCondition()`方法。
+* **等待可中断** : `ReentrantLock`提供了一种能够中断等待锁的线程的机制，通过 `lock.lockInterruptibly()` 来实现这个机制。也就是说*正在等待的线程可以选择放弃等待，改为处理其他事情*。而 synchronized 不支持中断。
+* **可实现公平锁** : `ReentrantLock`可以指定是公平锁还是非公平锁。而 `synchronized`只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。`ReentrantLock`默认情况是非公平的，可以通过 `ReentrantLock`类的 `ReentrantLock(boolean fair)`构造方法来制定是否是公平的。
+* **可实现选择性通知（锁可以绑定多个条件）**: `synchronized`关键字与 `wait()`和 `notify()`/`notifyAll()`方法相结合可以实现等待/通知机制。`ReentrantLock`类当然也可以实现，但是需要借助于 `Condition`接口与 `newCondition()`方法。
 
 > `Condition`是 JDK1.5 之后才有的，它具有很好的灵活性，比如可以实现多路通知功能也就是在一个 `Lock`对象中可以创建多个 `Condition`实例（即对象监视器），**线程对象可以注册在指定的 `Condition`中，从而可以有选择性的进行线程通知，在调度线程上更加灵活。 在使用 `notify()/notifyAll()`方法进行通知时，被通知的线程是由 JVM 选择的，用 `ReentrantLock`类结合 `Condition`实例可以实现“选择性通知”** ，这个功能非常重要，而且是 Condition 接口默认提供的。而 `synchronized`关键字就相当于整个 Lock 对象中只有一个 `Condition`实例，所有的线程都注册在它一个身上。如果执行 `notifyAll()`方法的话就会通知所有处于等待状态的线程这样会造成很大的效率问题，而 `Condition`实例的 `signalAll()`方法 只会唤醒注册在该 `Condition`实例中的所有等待线程。
 
@@ -885,8 +896,6 @@ static class ThreadLocalMap {
 
 虽然`ThreadLocal`使用弱引用可以带来以上好处，但也有一些需要注意的地方。比如，你需要确保在线程生命周期内，持有到`ThreadLocal`对象的强引用，否则这个`ThreadLocal`对象可能会提前被回收。另外，即使`ThreadLocal`使用弱引用，也不能完全防止内存泄漏。如果线程结束后，没有清理`ThreadLocal`的值，那么这些值将会保留在线程的ThreadLocalMap中，导致内存泄漏。所以，使用`ThreadLocal`时，最好的做法是在不再需要使用变量副本时，显式地清理它。
 
-
-
 `ThreadLocal`实现线程本地存储的核心在于每个`Thread`都维护了一个`ThreadLocalMap`，`ThreadLocalMap`实际上是一个特殊设计的哈希映射，其键为`ThreadLocal`对象（使用弱引用）, 值为线程局部变量。
 
 `ThreadLocalMap`的设计使得`ThreadLocal`对象可以在不被线程引用的情况下被垃圾回收器回收。这是因为`ThreadLocalMap`的键使用了`ThreadLocal`的弱引用。弱引用是一种弱度小于强引用但大于软引用和弱引用的引用，只要垃圾回收器发现了弱引用，不论系统内存是否足够，都会回收掉只被弱引用关联的对象。
@@ -898,7 +907,7 @@ static class ThreadLocalMap {
 private void expungeStaleEntries() {
   Entry[] tab = table;
   int len = tab.length;
-	// 遍历数组中的每一个元素
+ // 遍历数组中的每一个元素
   for (int j = 0; j < len; j++) {
     Entry e = tab[j];
     // 如果该元素存在，但其对应的ThreadLocal变量已经被回收，则进行清理
@@ -954,9 +963,9 @@ private int expungeStaleEntry(int staleSlot) {
 ### 实现 Runnable 接口和 Callable 接口的区别
 
 继承Thread类或者实现Runnable接口这两种方式来创建线程类，但是这两种方式有一个共同的缺陷：不能获取异步执行的结果。Callable接口类似于Runnable。不同的是，Runnable的唯一抽象方法run()没有返回值，也没有受检异常的异常声明。比较而言，Callable接口的call()有返回值，并且声明了受检异常，其功能更强大一些。
-- **返回值**：Runnable 接口的 run() 方法没有返回值，而 Callable 接口的 call() 方法有返回值。
-- **受检异常**：Runnable 接口的 run() 方法不会抛出受检异常，而 Callable 接口的 call() 方法会抛出受检异常。
-- **使用方式**：Runnable 接口通常用于执行没有返回值的异步任务，而 Callable 接口通常用于执行有返回值的异步任务。
+* **返回值**：Runnable 接口的 run() 方法没有返回值，而 Callable 接口的 call() 方法有返回值。
+* **受检异常**：Runnable 接口的 run() 方法不会抛出受检异常，而 Callable 接口的 call() 方法会抛出受检异常。
+* **使用方式**：Runnable 接口通常用于执行没有返回值的异步任务，而 Callable 接口通常用于执行有返回值的异步任务。
 
 `Runnable`自 Java 1.0 以来一直存在，但 `Callable`仅在 Java 1.5 中引入,目的就是为了来处理 `Runnable`不支持的用例。**`Runnable` 接口** 不会返回结果或抛出检查异常，但是 **`Callable` 接口** 可以。所以，如果任务不需要返回结果或抛出异常推荐使用 **`Runnable` 接口** ，这样代码看起来会更加简洁。
 
@@ -977,8 +986,8 @@ Thread thread = new Thread(new MyRunnable());
 thread.start();
 ```
 
-
 使用 Callable 接口创建线程：
+
 ```java
 public class MyCallable implements Callable<String> {
     @Override
@@ -1035,8 +1044,8 @@ protected <T> RunnableFuture<T> newTaskFor(Runnable runnable, T value) {
 
 > Executors 返回线程池对象的弊端如下：
 >
-> - **FixedThreadPool 和 SingleThreadExecutor** ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
-> - **CachedThreadPool 和 ScheduledThreadPool** ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
+> * **FixedThreadPool 和 SingleThreadExecutor** ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致 OOM。
+> * **CachedThreadPool 和 ScheduledThreadPool** ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致 OOM。
 
 ![image-20220609154049166](./personal_images/image-20220609154049166.webp)
 
@@ -1073,6 +1082,7 @@ public ThreadPoolExecutor(int corePoolSize, //线程池的核心线程数量
 
 ---
 Java 的 ThreadPoolExecutor 提供了几种 **BlockingQueue** 实现作为参数:
+
 1. **ArrayBlockingQueue**:基于数组的先进先出队列, FIFO 规则。有界队列,满时会阻塞添加操作。
 2. **LinkedBlockingQueue**:基于链表的先进先出队列,FIFO 规则。可选的有界队列,但默认是无界的。
 3. **SynchronousQueue**:不存储元素的阻塞队列。每个插入操作都必须等待一个移除操作,反之亦然。
@@ -1082,6 +1092,7 @@ Java 的 ThreadPoolExecutor 提供了几种 **BlockingQueue** 实现作为参数
 7. **LinkedBlockingDeque**:基于链表的双向阻塞队列,可以用作阻塞队列的 FIFO 和 LIFO。
 
 常见的场景：
+
 1. **LinkedBlockingQueue**:高吞吐量且公平的阻塞队列,一般作为 ThreadPoolExecutor 的任务队列使用。
 2. **ArrayBlockingQueue**:有界阻塞队列,可以指定最大容量,超过容量时阻塞添加操作,保证不会内存溢出。
 3. **SynchronousQueue**:没有存储空间的阻塞队列,用于传递性场景,比如一个线程提交任务,另一个线程立即消费的场景。
@@ -1133,6 +1144,7 @@ Java 的 ThreadPoolExecutor 提供了几种 **BlockingQueue** 实现作为参数
 Java中的ThreadPoolExecutor允许你自定义拒绝策略。RejectedExecutionHandler是一个接口，你可以实现这个接口来定义自己的拒绝策略。下面是一个简单的自定义拒绝策略示例：
 
 首先，我们创建一个实现RejectedExecutionHandler接口的类：
+
 ```java
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -1145,7 +1157,9 @@ public class CustomRejectedExecutionHandler implements RejectedExecutionHandler 
     }
 }
 ```
+
 接下来，我们创建一个ThreadPoolExecutor实例，并将自定义的拒绝策略作为参数传递：
+
 ```java
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -1176,6 +1190,7 @@ public class CustomRejectedExecutionHandlerExample {
     }
 }
 ```
+
 在这个例子中，我们创建了一个具有自定义拒绝策略的ThreadPoolExecutor。当线程池无法处理更多任务时，它将执行我们在CustomRejectedExecutionHandler类中定义的拒绝策略。在这个例子里，我们只是简单地打印出了被拒绝的任务信息。你可以根据需要实现更复杂的拒绝策略。
 
 ### JUC 包中的原子类是哪 4 类?
@@ -1184,29 +1199,29 @@ public class CustomRejectedExecutionHandlerExample {
 
 使用原子的方式更新基本类型
 
-- `AtomicInteger`：整型原子类
-- `AtomicLong`：长整型原子类
-- `AtomicBoolean`：布尔型原子类
+* `AtomicInteger`：整型原子类
+* `AtomicLong`：长整型原子类
+* `AtomicBoolean`：布尔型原子类
 
 **数组类型**
 
 使用原子的方式更新数组里的某个元素
 
-- `AtomicIntegerArray`：整型数组原子类
-- `AtomicLongArray`：长整型数组原子类
-- `AtomicReferenceArray`：引用类型数组原子类
+* `AtomicIntegerArray`：整型数组原子类
+* `AtomicLongArray`：长整型数组原子类
+* `AtomicReferenceArray`：引用类型数组原子类
 
 **引用类型**
 
-- `AtomicReference`：引用类型原子类
-- `AtomicStampedReference`：原子更新带有**版本号**的引用类型。该类将整数值与引用关联起来，可用于解决原子的更新数据和数据的版本号，可以解决使用 CAS 进行原子更新时可能出现的 ABA 问题。
-- `AtomicMarkableReference` ：原子更新带有**标记位**的引用类型
+* `AtomicReference`：引用类型原子类
+* `AtomicStampedReference`：原子更新带有**版本号**的引用类型。该类将整数值与引用关联起来，可用于解决原子的更新数据和数据的版本号，可以解决使用 CAS 进行原子更新时可能出现的 ABA 问题。
+* `AtomicMarkableReference` ：原子更新带有**标记位**的引用类型
 
 **对象的属性修改类型**
 
-- `AtomicIntegerFieldUpdater`：原子更新整型字段的更新器
-- `AtomicLongFieldUpdater`：原子更新长整型字段的更新器
-- `AtomicReferenceFieldUpdater`：原子更新引用类型字段的更新器
+* `AtomicIntegerFieldUpdater`：原子更新整型字段的更新器
+* `AtomicLongFieldUpdater`：原子更新长整型字段的更新器
+* `AtomicReferenceFieldUpdater`：原子更新引用类型字段的更新器
 
 ### 能不能给我简单介绍一下 AtomicInteger 类
 
@@ -1223,8 +1238,10 @@ public final int getAndAdd(int delta) //获取当前的值，并加上预期的�
 boolean compareAndSet(int expect, int update) //如果输入的数值等于预期值，则以原子方式将该值设置为输入值（update）
 public final void lazySet(int newValue)//最终设置为newValue,使用 lazySet 设置之后可能导致其他线程在之后的一小段时间内还是可以读到旧的值。
 ```
+
 > 此外，AtomicInteger类中的一些方法（如incrementAndGet()和decrementAndGet()）是通过本地方法(native)来实现的。本地方法是指由Java程序调用的非Java代码，通常是由C、C++或ASM等语言编写的代码。本地方法可以直接访问底层操作系统的资源和硬件设备，因此可以提高程序的性能。
-> - 参考：https://stackoverflow.com/questions/15137308/atomicinteger-incrementandget-vs-atomicinteger-getandincrement
+>
+> * 参考：<https://stackoverflow.com/questions/15137308/atomicinteger-incrementandget-vs-atomicinteger-getandincrement>
 
 AtomicInteger 类主要利用 **CAS (compare and swap) + volatile 和 native** 方法来保证原子操作，从而避免 synchronized 的高开销，执行效率大为提升。
 
@@ -1324,12 +1341,12 @@ Define the skeleton of an algorithm in an operation,deferring some steps to subc
 
 ```java
 public abstract class Mammal {
-	public abstract void move( );
-	public abstract void eat( );
-	public final void live() {
-		move();
-		eat();
-	}
+ public abstract void move( );
+ public abstract void eat( );
+ public final void live() {
+  move();
+  eat();
+ }
 }
 ```
 
@@ -1381,14 +1398,15 @@ AQS为每个共享资源都设置一个共享资源锁，线程在需要访问�
 ![image-20220626111741892](./personal_images/image-20220626111741892.webp)
 
 AQS，即AbstractQueuedSynchronizer 在我的理解中，AQS的主要原理可以分为以下几个部分：
-- **状态（State）：** AQS中有一个volatile int state变量用来表示同步状态，初始值为0。当状态为0时，代表未锁定；当状态大于0时，代表已锁定。具体的状态值含义可以由子类来定义。例如，在ReentrantLock中，state表示重入的次数。
-- **节点（Node）：** AQS使用Node来表示等待线程，每个Node都包含一个线程引用和状态标识。这些节点会被组织成一个双向链表。
-- **FIFO队列：** 当一个线程尝试获取资源失败（比如试图获取一个已经被其他线程持有的锁），它会被AQS转化为一个Node节点，然后被放入到一个FIFO队列的尾部，直到有机会再次尝试获取资源。当线程成功获取到资源，其对应的Node将从队列中删除。
-- **独占和共享模式：** AQS支持两种模式：独占模式和共享模式。在独占模式下，每次只有一个线程能执行，其他的线程都需要等待；在共享模式下，多个线程可以同时执行。这两种模式由子类实现，并通过isHeldExclusively(), tryAcquire(), tryRelease()等方法实现。、
-- **条件队列：** 条件队列是一种阻塞队列，它与AQS的同步队列有所不同。当线程调用条件的await()方法后，线程会被放入到条件队列中，当其他线程调用signal()方法后，线程会从条件队列转移至同步队列，准备获取锁。
-- **公平和非公平锁：** 在AQS中，公平和非公平锁的区别在于获取锁的方式。公平锁遵循FIFO原则，按照线程请求的顺序来获取锁，而非公平锁则可能插队获取锁，这通常会带来更高的吞吐量。
+* **状态（State）：** AQS中有一个volatile int state变量用来表示同步状态，初始值为0。当状态为0时，代表未锁定；当状态大于0时，代表已锁定。具体的状态值含义可以由子类来定义。例如，在ReentrantLock中，state表示重入的次数。
+* **节点（Node）：** AQS使用Node来表示等待线程，每个Node都包含一个线程引用和状态标识。这些节点会被组织成一个双向链表。
+* **FIFO队列：** 当一个线程尝试获取资源失败（比如试图获取一个已经被其他线程持有的锁），它会被AQS转化为一个Node节点，然后被放入到一个FIFO队列的尾部，直到有机会再次尝试获取资源。当线程成功获取到资源，其对应的Node将从队列中删除。
+* **独占和共享模式：** AQS支持两种模式：独占模式和共享模式。在独占模式下，每次只有一个线程能执行，其他的线程都需要等待；在共享模式下，多个线程可以同时执行。这两种模式由子类实现，并通过isHeldExclusively(), tryAcquire(), tryRelease()等方法实现。、
+* **条件队列：** 条件队列是一种阻塞队列，它与AQS的同步队列有所不同。当线程调用条件的await()方法后，线程会被放入到条件队列中，当其他线程调用signal()方法后，线程会从条件队列转移至同步队列，准备获取锁。
+* **公平和非公平锁：** 在AQS中，公平和非公平锁的区别在于获取锁的方式。公平锁遵循FIFO原则，按照线程请求的顺序来获取锁，而非公平锁则可能插队获取锁，这通常会带来更高的吞吐量。
 
 #### AQS状态
+
 **state：状态** Abstract Queued Synchronizer维护了一个volatile int类型的变量，用于表示当前的同步状态。Volatile虽然不能保证操作的原子性，但是能保证当前变量state的可见性。state的访问方式有三种：getState()、setState()和compareAndSetState()，均是原子操作，其中，compareAndSetState的实现依赖于Unsafe的compareAndSwapInt()。具体的JDK代码实现如下：
 
 ```java
@@ -1752,9 +1770,10 @@ private void unparkSuccessor(Node node) {
 
 ReentrantLock 指的是一个线程能够对一个临界资源重复加锁。ReentrantLock继承了Lock接口并实现了在接口中定义的方法，是一个可重入的独占锁。ReentrantLock通过自定义队列同步器（Abstract Queued Sychronized，AQS）来实现锁的获取与释放。
 
-> 🥴tips: 
-> - 独占锁：该锁在同一时刻只能被一个线程获取，而获取锁的其他线程只能在同步队列中等待；
-> - 可重入锁：该锁能够支持一个线程对同一个资源执行多次加锁操作。
+> 🥴tips:
+>
+> * 独占锁：该锁在同一时刻只能被一个线程获取，而获取锁的其他线程只能在同步队列中等待；
+> * 可重入锁：该锁能够支持一个线程对同一个资源执行多次加锁操作。
 
     ReentrantLock不但提供了synchronized对锁的操作功能，还提供了诸如可响应中断锁、可轮询锁请求、定时锁等避免多线程死锁的方法。
     
@@ -1772,12 +1791,14 @@ ReentrantLock 里面有一个内部类 Sync，Sync 继承 AQS（AbstractQueuedSy
 
 ![demo](./personal_images/reentrantlock-class-diagram.webp)
 ReentrantLock 默认使用非公平锁，也可以通过构造器来显示的指定使用公平锁。
+
 ```java
 // 传入一个 boolean 值，true 时为公平锁，false 时为非公平锁
 public ReentrantLock(boolean fair) {
     sync = fair ? new FairSync() : new NonfairSync();
 }
 ```
+
 从上面的内容可以看出， ReentrantLock 的底层就是由 AQS 来实现的。
 
 #### 避免死锁

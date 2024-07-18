@@ -4,9 +4,11 @@ title: SpringCloud
 category:
   - Spring
   - 分布式
+outline: deep
 ---
 # 前言
-观看地址：https://www.bilibili.com/video/BV18E411x7eT
+
+观看地址：<https://www.bilibili.com/video/BV18E411x7eT>
 
 什么是微服务架构：
 
@@ -20,8 +22,6 @@ springCloud 和 springCloud Alibaba 目前是最主流的微服务框架组合�
 
 > 选用 springboot 和 springCloud 版本有约束，不按照它的约束会有冲突。
 
-
-
 ## Cloud简介
 
 ![1597213783265](./images/1597213783265.webp)
@@ -30,7 +30,7 @@ springCloud 和 springCloud Alibaba 目前是最主流的微服务框架组合�
 
 ![1597213855903](./images/1597213855903.webp)
 
-> https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/
+> <https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/htmlsingle/>
 
 # 工程建造
 
@@ -379,7 +379,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping(value = "/payment/create")
-    //	    注意这里的 @RequestBody  是必须要写的，虽然 MVC可以自动封装参数成为对象，
+    //     注意这里的 @RequestBody  是必须要写的，虽然 MVC可以自动封装参数成为对象，
     //      但是当消费者项目调用，它传参是 payment 整个实例对象传过来的， 即Json数据，因此需要写这个注解
     public CommonResult create(@RequestBody Payment payment){
         int result = paymentService.create(payment);
@@ -508,7 +508,7 @@ package com.dkf.springcloud.controller;import com.dkf.springcloud.entities.Commo
 > server 模块使用 7001端口，下面是pom文件需要的依赖：
 >
 > ```xml
-> 	<artifactId>cloud-eureka-server7001</artifactId> <dependencies>     <dependency>         <groupId>org.springframework.cloud</groupId>         <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-web</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-actuator</artifactId>     </dependency>     <dependency>         <groupId>org.mybatis.spring.boot</groupId>         <artifactId>mybatis-spring-boot-starter</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-devtools</artifactId>         <scope>runtime</scope>         <optional>true</optional>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-test</artifactId>         <scope>test</scope>     </dependency>     <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->         <groupId>com.dkf.cloud</groupId>         <artifactId>cloud-api-commons</artifactId>         <version>${project.version}</version>     </dependency> </dependencies>
+>  <artifactId>cloud-eureka-server7001</artifactId> <dependencies>     <dependency>         <groupId>org.springframework.cloud</groupId>         <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-web</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-actuator</artifactId>     </dependency>     <dependency>         <groupId>org.mybatis.spring.boot</groupId>         <artifactId>mybatis-spring-boot-starter</artifactId>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-devtools</artifactId>         <scope>runtime</scope>         <optional>true</optional>     </dependency>     <dependency>         <groupId>org.springframework.boot</groupId>         <artifactId>spring-boot-starter-test</artifactId>         <scope>test</scope>     </dependency>     <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->         <groupId>com.dkf.cloud</groupId>         <artifactId>cloud-api-commons</artifactId>         <version>${project.version}</version>     </dependency> </dependencies>
 > ```
 
 > 下面配置 yml 文件：
@@ -532,14 +532,14 @@ package com.dkf.springcloud.controller;import com.dkf.springcloud.entities.Commo
 1. 在 pom 文件的基础上引入 eureka 的client包，pom 的全部依赖如下所示：
 
 ```xml
-	<artifactId>cloud-provider-payment8001</artifactId>    <dependencies>        <!--eureka-client-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <artifactId>cloud-provider-payment8001</artifactId>    <dependencies>        <!--eureka-client-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 2. 主启动类 加上注解 ： @EnableEurekaClient
 3. yml 文件添加关于 Eureka 的配置：
 
 ```yml
-eureka:  client:	# 注册进 Eureka 的服务中心    register-with-eureka: true    # 检索 服务中心 的其它服务    fetch-registry: true    service-url:      # 设置与 Eureka Server 交互的地址      defaultZone: http://localhost:7001/eureka/
+eureka:  client: # 注册进 Eureka 的服务中心    register-with-eureka: true    # 检索 服务中心 的其它服务    fetch-registry: true    service-url:      # 设置与 Eureka Server 交互的地址      defaultZone: http://localhost:7001/eureka/
 ```
 
 应用名称：
@@ -553,7 +553,7 @@ eureka:  client:	# 注册进 Eureka 的服务中心    register-with-eureka: tru
 1. 修改 pom 文件，加入Eureka 的有关依赖， 全部 pom 依赖如下：
 
 ```xml
-	<artifactId>cloud-customer-order80</artifactId>    <dependencies>        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>    </dependencies>
+ <artifactId>cloud-customer-order80</artifactId>    <dependencies>        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>    </dependencies>
 ```
 
 2. 主启动类 加上注解 ： @EnableEurekaClient
@@ -626,7 +626,7 @@ Eureka Server 上的提供者的服务名称如下：
 ![1597299306196](./images/1597299306196.webp)
 
 ```java
-@RestController@Slf4jpublic class OrderController {							    // 重点是这里，改成 提供者在Eureka 上的名称，而且无需写端口号	    public static final String PAYMENY_URL = "http://CLOUD-PROVIDER-SERVICE";    @Resource    private RestTemplate restTemplate;    @PostMapping("customer/payment/create")    public CommonResult<Payment> create (Payment payment){        return restTemplate.postForObject(PAYMENY_URL + "/payment/create", payment, CommonResult.class);    }    @GetMapping("customer/payment/{id}")    public CommonResult<Payment> getPaymentById(@PathVariable("id")Long id){        return restTemplate.getForObject(PAYMENY_URL + "/payment/" + id, CommonResult.class);    }}
+@RestController@Slf4jpublic class OrderController {           // 重点是这里，改成 提供者在Eureka 上的名称，而且无需写端口号     public static final String PAYMENY_URL = "http://CLOUD-PROVIDER-SERVICE";    @Resource    private RestTemplate restTemplate;    @PostMapping("customer/payment/create")    public CommonResult<Payment> create (Payment payment){        return restTemplate.postForObject(PAYMENY_URL + "/payment/create", payment, CommonResult.class);    }    @GetMapping("customer/payment/{id}")    public CommonResult<Payment> getPaymentById(@PathVariable("id")Long id){        return restTemplate.getForObject(PAYMENY_URL + "/payment/" + id, CommonResult.class);    }}
 ```
 
 还有，消费者里面对RestTemplate配置的config文件，需要更改成如下：（就是加一个注解 @LoadBalanced）
@@ -693,13 +693,13 @@ package com.dkf.springcloud.config;import org.springframework.cloud.client.loadb
 pom文件如下：
 
 ```xml
-	<artifactId>cloud-provider-payment8004</artifactId>    <dependencies>        <!--springcloud 整合 zookeeper 组件-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>            <exclusions>                <exclusion>                    <groupId>org.apache.zookeeper</groupId>                    <artifactId>zookeeper</artifactId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>org.apache.zookeeper</groupId>            <artifactId>zookeeper</artifactId>            <version>3.4.9</version>            <exclusions>                <exclusion>                    <groupId>org.slf4j</groupId>                    <artifactId>slf4j-log4j12</artifactId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <artifactId>cloud-provider-payment8004</artifactId>    <dependencies>        <!--springcloud 整合 zookeeper 组件-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>            <exclusions>                <exclusion>                    <groupId>org.apache.zookeeper</groupId>                    <artifactId>zookeeper</artifactId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>org.apache.zookeeper</groupId>            <artifactId>zookeeper</artifactId>            <version>3.4.9</version>            <exclusions>                <exclusion>                    <groupId>org.slf4j</groupId>                    <artifactId>slf4j-log4j12</artifactId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 主启动类：
 
 ```java
-import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.client.discovery.EnableDiscoveryClient;@SpringBootApplication@EnableDiscoveryClient	public class PaymentMain8004 {    public static void main(String[] args){        SpringApplication.run(PaymentMain8004.class, args);    }}
+import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.client.discovery.EnableDiscoveryClient;@SpringBootApplication@EnableDiscoveryClient public class PaymentMain8004 {    public static void main(String[] args){        SpringApplication.run(PaymentMain8004.class, args);    }}
 ```
 
 Controller 打印信息：
@@ -750,21 +750,21 @@ controller层也是和之前类似：
 
 ## Consul
 
-> consul也是服务注册中心的一个实现，是由go语言写的。官网地址： https://www.consul.io/intro
+> consul也是服务注册中心的一个实现，是由go语言写的。官网地址： <https://www.consul.io/intro>
 >
-> 中文地址： https://www.springcloud.cc/spring-cloud-consul.html
+> 中文地址： <https://www.springcloud.cc/spring-cloud-consul.html>
 >
 > 功能：![1597380885054](./images/1597380885054.webp)
 
 ### 安装并运行
 
->  下载地址：https://www.consul.io/downloads.html
+> 下载地址：<https://www.consul.io/downloads.html>
 >
->  打开下载的压缩包，只有一个exe文件，实际上是不用安装的，在exe文件所在目录打开dos窗口使用即可。
+> 打开下载的压缩包，只有一个exe文件，实际上是不用安装的，在exe文件所在目录打开dos窗口使用即可。
 >
->  使用开发模式启动：consul agent -dev
+> 使用开发模式启动：consul agent -dev
 >
->  访问8500端口，即可访问首页
+> 访问8500端口，即可访问首页
 
 ### 提供者
 
@@ -773,7 +773,7 @@ controller层也是和之前类似：
 pom 文件：
 
 ```xml
-	<artifactId>cloud-providerconsul-service8006</artifactId>    <dependencies>        <!--springcloud consul server-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-consul-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <artifactId>cloud-providerconsul-service8006</artifactId>    <dependencies>        <!--springcloud consul server-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-consul-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml 文件：
@@ -863,7 +863,7 @@ RestTemplate 的 ForEntity 相比 ForObject特殊的地方:
 就是 如果使用 ForObject 得到的就是提供者返回的对象，而如果要使用 ForEntity 得到时 ResponstEntity对象，使用getBody()才能得到提供者返回的数据。
 
 ```java
-	//使用forEnriry示例：	@GetMapping("customer/payment/forEntity/{id}")    public CommonResult<Payment> getPaymentById2(@PathVariable("id")Long id){                ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENY_URL + "/payment/" + id, CommonResult.class);                if(entity.getStatusCode().is2xxSuccessful()){            return entity.getBody();        }else{            return new CommonResult<>(444, "操作失败");        }    }
+ //使用forEnriry示例： @GetMapping("customer/payment/forEntity/{id}")    public CommonResult<Payment> getPaymentById2(@PathVariable("id")Long id){                ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENY_URL + "/payment/" + id, CommonResult.class);                if(entity.getStatusCode().is2xxSuccessful()){            return entity.getBody();        }else{            return new CommonResult<>(444, "操作失败");        }    }
 ```
 
 ### 负载均衡
@@ -891,7 +891,7 @@ package com.dkf.myrule;import com.netflix.loadbalancer.IRule;import com.netflix.
 然后在主启动类上添加如下注解 @RibbonClient：
 
 ```java
-package com.dkf.springcloud;import com.dkf.myrule.MySelfRule;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.client.discovery.EnableDiscoveryClient;import org.springframework.cloud.netflix.eureka.EnableEurekaClient;import org.springframework.cloud.netflix.ribbon.RibbonClient;@SpringBootApplication@EnableEurekaClient@EnableDiscoveryClient	   //指定该负载均衡规则对哪个提供者服务使用    加载自定义规则的配置类@RibbonClient(name="CLOUD-PROVIDER-SERVICE", configuration = MySelfRule.class)public class OrderMain80 {    public static void main(String[] args){        SpringApplication.run(OrderMain80.class, args);    }}
+package com.dkf.springcloud;import com.dkf.myrule.MySelfRule;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cloud.client.discovery.EnableDiscoveryClient;import org.springframework.cloud.netflix.eureka.EnableEurekaClient;import org.springframework.cloud.netflix.ribbon.RibbonClient;@SpringBootApplication@EnableEurekaClient@EnableDiscoveryClient    //指定该负载均衡规则对哪个提供者服务使用    加载自定义规则的配置类@RibbonClient(name="CLOUD-PROVIDER-SERVICE", configuration = MySelfRule.class)public class OrderMain80 {    public static void main(String[] args){        SpringApplication.run(OrderMain80.class, args);    }}
 ```
 
 ### 轮询算法原理
@@ -915,7 +915,7 @@ package com.dkf.springcloud;import com.dkf.myrule.MySelfRule;import org.springfr
 pom ：
 
 ```xml
-	<dependencies>        <!-- Open Feign -->         <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-openfeign</artifactId>        </dependency>        <!-- eureka Client -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>    </dependencies>
+ <dependencies>        <!-- Open Feign -->         <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-openfeign</artifactId>        </dependency>        <!-- eureka Client -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>    </dependencies>
 ```
 
 主启动类：
@@ -928,7 +928,7 @@ pom ：
 
 > 这个service还是 customer 模块的接口，和提供者没有任何关系，不需要包类名一致。它使用起来就相当于是普通的service。
 >
-> 
+>
 >
 > 推测大致原理，对于这个service 接口，读取它某个方法的注解（GET或者POST注解不写报错），知道了请求方式和请求地址，而抽象方法，只是对于我们来讲，调用该方法时，可以进行传参等。
 
@@ -964,7 +964,7 @@ Controller层：
 
 # Hystrix 断路器
 
-> 官方地址：https://github.com/Netflix/Hystrix/wiki/How-To-Use
+> 官方地址：<https://github.com/Netflix/Hystrix/wiki/How-To-Use>
 
 ## 概述
 
@@ -997,7 +997,7 @@ Controller层：
 pom 文件：
 
 ```xml
-	<dependencies>        <!-- hystrix -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>        </dependency>        <!--eureka-client-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- hystrix -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>        </dependency>        <!--eureka-client-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 下面主启动类、service、和controller代码都很简单普通。
@@ -1053,7 +1053,7 @@ controller层：
 首先 对 8001 的service进行配置（对容易超时的方法进行配置) :
 
 ```java
-	@HystrixCommand(fallbackMethod = "paymentInfo_timeoutHandler", commandProperties = {            //设置峰值，超过 3 秒，就会调用兜底方法，这个时间也可以由feign控制            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value = "3000")    })    public String paymentinfo_Timeout(Integer id){        ......会执行5秒.....    }	//兜底方法，根据上述配置，程序内发生异常、或者运行超时，都会执行该兜底方法    public String paymentInfo_timeoutHandler(Integer id){        .......    }}
+ @HystrixCommand(fallbackMethod = "paymentInfo_timeoutHandler", commandProperties = {            //设置峰值，超过 3 秒，就会调用兜底方法，这个时间也可以由feign控制            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value = "3000")    })    public String paymentinfo_Timeout(Integer id){        ......会执行5秒.....    } //兜底方法，根据上述配置，程序内发生异常、或者运行超时，都会执行该兜底方法    public String paymentInfo_timeoutHandler(Integer id){        .......    }}
 ```
 
 主启动类添加注解： @EnableCircuitBreaker
@@ -1061,7 +1061,7 @@ controller层：
 然后对 80 进行服务降级：很明显 service 层是接口，所以我们对消费者，在它的 controller 层进行降级
 
 ```java
-	 @HystrixCommand(fallbackMethod = "paymentInfo_timeoutHandler", commandProperties = {            //设置峰值，超过 3 秒，就会调用兜底方法            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value = "3000")    })    @GetMapping("/customer/payment/hystrix/timeout/{id}")    public String paymentInfo_Timeout(@PathVariable("id")Integer id){        log.info("paymentInfo_timeout");        return orderService.paymentInfo_Timeout(id);    }	//兜底方法，注意，兜底方法参数随意    public String paymentInfo_timeoutHandler(@PathVariable("id")Integer id){        log.info("paymentInfo_timeout--handler");        return "访问 payment 失败----人工报错";    }
+  @HystrixCommand(fallbackMethod = "paymentInfo_timeoutHandler", commandProperties = {            //设置峰值，超过 3 秒，就会调用兜底方法            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value = "3000")    })    @GetMapping("/customer/payment/hystrix/timeout/{id}")    public String paymentInfo_Timeout(@PathVariable("id")Integer id){        log.info("paymentInfo_timeout");        return orderService.paymentInfo_Timeout(id);    } //兜底方法，注意，兜底方法参数随意    public String paymentInfo_timeoutHandler(@PathVariable("id")Integer id){        log.info("paymentInfo_timeout--handler");        return "访问 payment 失败----人工报错";    }
 ```
 
 主启动类添加注解： @EnableCircuitBreaker
@@ -1091,13 +1091,13 @@ server:  port: 80spring:  application:    name: cloud-customer-feign-hystrix-ser
 2. 修改service 接口：
 
 ```java
-@Component											// 这里是重点@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT", fallback = OrderFallbackService.class)public interface OrderService {    @GetMapping("/payment/hystrix/{id}")    public String paymentInfo_OK(@PathVariable("id")Integer id);    @GetMapping("/payment/hystrix/timeout/{id}")    public String paymentInfo_Timeout(@PathVariable("id")Integer id);}
+@Component           // 这里是重点@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT", fallback = OrderFallbackService.class)public interface OrderService {    @GetMapping("/payment/hystrix/{id}")    public String paymentInfo_OK(@PathVariable("id")Integer id);    @GetMapping("/payment/hystrix/timeout/{id}")    public String paymentInfo_Timeout(@PathVariable("id")Integer id);}
 ```
 
 3. fallback 指向的类：
 
 ```java
-package com.dkf.springcloud.service;import org.springframework.stereotype.Component;@Component						//注意这里，它实现了service接口public class OrderFallbackService implements  OrderService{    @Override    public String paymentInfo_OK(Integer id) {        return "OrderFallbackService --发生异常";    }    @Override    public String paymentInfo_Timeout(Integer id) {        return "OrderFallbackService --发生异常--paymentInfo_Timeout";    }}
+package com.dkf.springcloud.service;import org.springframework.stereotype.Component;@Component      //注意这里，它实现了service接口public class OrderFallbackService implements  OrderService{    @Override    public String paymentInfo_OK(Integer id) {        return "OrderFallbackService --发生异常";    }    @Override    public String paymentInfo_Timeout(Integer id) {        return "OrderFallbackService --发生异常--paymentInfo_Timeout";    }}
 ```
 
 新问题，这样配置如何设置超时时间？
@@ -1113,7 +1113,7 @@ package com.dkf.springcloud.service;import org.springframework.stereotype.Compon
 > 只需要在yml配置里面配置 Ribbon 的 超时时长即可。注意：hystrix 默认自带 ribbon包。
 >
 > ```yml
-> ribbon:	ReadTimeout: xxxx	ConnectTimeout: xxx
+> ribbon: ReadTimeout: xxxx ConnectTimeout: xxx
 > ```
 
 ### 服务熔断
@@ -1133,13 +1133,13 @@ package com.dkf.springcloud.service;import org.springframework.stereotype.Compon
 service层的方法设置服务熔断:
 
 ```java
- 	//=====服务熔断    @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {            @HystrixProperty(name="circuitBreaker.enabled", value="true"),  // 是否开启断路器            @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),  //请求次数            @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="10000"), // 时间窗口期            @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="60"),  // 失败率达到多少后跳闸            //整体意思：10秒内 10次请求，有6次失败，就跳闸    })    public String paymentCircuitBreaker(Integer id){        //模拟发生异常        if(id < 0){            throw new RuntimeException("*****id，不能为负数");        }        String serialNumber = IdUtil.simpleUUID();        return Thread.currentThread().getName() + "\t" + "调用成功，流水号：" + serialNumber;    }    public String paymentCircuitBreaker_fallback(Integer id){        return "id 不能为负数，请稍后再试....";    }
+  //=====服务熔断    @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {            @HystrixProperty(name="circuitBreaker.enabled", value="true"),  // 是否开启断路器            @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),  //请求次数            @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="10000"), // 时间窗口期            @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="60"),  // 失败率达到多少后跳闸            //整体意思：10秒内 10次请求，有6次失败，就跳闸    })    public String paymentCircuitBreaker(Integer id){        //模拟发生异常        if(id < 0){            throw new RuntimeException("*****id，不能为负数");        }        String serialNumber = IdUtil.simpleUUID();        return Thread.currentThread().getName() + "\t" + "调用成功，流水号：" + serialNumber;    }    public String paymentCircuitBreaker_fallback(Integer id){        return "id 不能为负数，请稍后再试....";    }
 ```
 
 controller:
 
 ```java
-	//====服务熔断    @GetMapping("/payment/circuit/{id}")    public String paymentCircuitBreaker(@PathVariable("id")Integer id){        return paymentService.paymentCircuitBreaker(id);    }
+ //====服务熔断    @GetMapping("/payment/circuit/{id}")    public String paymentCircuitBreaker(@PathVariable("id")Integer id){        return paymentService.paymentCircuitBreaker(id);    }
 ```
 
 关于解耦以后的全局配置说明：
@@ -1161,12 +1161,12 @@ controller:
 pom 文件：
 
 ```xml
-	<dependencies>        <!-- hystrix Dashboard-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>        </dependency>        <!-- 常规 jar 包 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->        <dependency>            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- hystrix Dashboard-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>        </dependency>        <!-- 常规 jar 包 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->        <dependency>            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml文件只需要配置端口号，主启动类加上这样注解：@EnableHystrixDashboard
 
-启动测试：访问  http://ocalhost:9001/hystrix
+启动测试：访问  <http://ocalhost:9001/hystrix>
 
 ### 监控实战
 
@@ -1186,7 +1186,7 @@ yml文件只需要配置端口号，主启动类加上这样注解：@EnableHyst
 
 ## Gateway
 
-> 内容过多，开发可参考 https://docs.spring.io/  官网文档
+> 内容过多，开发可参考 <https://docs.spring.io/>  官网文档
 
 ### 简介
 
@@ -1234,11 +1234,11 @@ server:  port: 9527spring:  application:    name: cloud-gateway  ## GateWay配�
 
 访问测试：1 启动eureka Server，2 启动 8001 项目，3 启动9527（Gateway项目）
 
-> 可见，当我们访问 http://localhost:9527/payment/get/1 时，即访问网关地址时，会给我们转发到 8001 项目的请求地址，以此作出响应。
+> 可见，当我们访问 <http://localhost:9527/payment/get/1> 时，即访问网关地址时，会给我们转发到 8001 项目的请求地址，以此作出响应。
 >
-> 加入网关前：http://localhost:8001/payment/get/1
+> 加入网关前：<http://localhost:8001/payment/get/1>
 >
-> 加入网关后：http://localhost:9527/payment/get/1
+> 加入网关后：<http://localhost:9527/payment/get/1>
 
 上面是以 yml 文件配置的路由，也有使用config类配置的方式：
 
@@ -1276,7 +1276,7 @@ spring:  application:    name: cloud-gateway  cloud:    gateway:      discovery:
 
 > 放爬虫思路，前后端分离的话，只限定前端项目主机访问，这样可以屏蔽大量爬虫。
 >
-> 例如我加上： - Host=localhost:**       ** 代表允许任何端口
+> 例如我加上： - Host=localhost:**** 代表允许任何端口
 >
 > 就只能是主机来访
 
@@ -1316,7 +1316,7 @@ spring:  application:    name: cloud-gateway  cloud:    gateway:      discovery:
 
 > 首先在github上新建一个仓库 springcloud-config
 >
-> 然后使用git命令克隆到本地，命令：git clone https://github.com/LZXYF/springcloud-config
+> 然后使用git命令克隆到本地，命令：git clone <https://github.com/LZXYF/springcloud-config>
 >
 > 注意上面的操作不是必须的，只要github上有就可以，克隆到本地只是修改文件。
 
@@ -1325,7 +1325,7 @@ spring:  application:    name: cloud-gateway  cloud:    gateway:      discovery:
 pom文件：
 
 ```xml
-	<dependencies>        <!-- config Server -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-config-server</artifactId>        </dependency>        <!--eureka-client config Server也要注册进服务中心-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- config Server -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-config-server</artifactId>        </dependency>        <!--eureka-client config Server也要注册进服务中心-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml 配置：
@@ -1342,7 +1342,7 @@ server:  port: 3344spring:  application:    name: cloud-config-center  # 注册�
 
 添加模拟映射：【C:\Windows\System32\drivers\etc\hosts】文件中添加：  127.0.0.1 config-3344.com
 
-启动微服务3344，访问http://config-3344.com:3344/master/config-dev.yml 文件（注意，要提前在git上弄一个这文件）
+启动微服务3344，访问<http://config-3344.com:3344/master/config-dev.yml> 文件（注意，要提前在git上弄一个这文件）
 
 文件命名和访问的规则：
 
@@ -1361,7 +1361,7 @@ server:  port: 3344spring:  application:    name: cloud-config-center  # 注册�
 pom文件：
 
 ```xml
-	<dependencies>        <!-- config Client 和 服务端的依赖不一样 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-config</artifactId>        </dependency>        <!--eureka-client config Server也要注册进服务中心-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- config Client 和 服务端的依赖不一样 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-config</artifactId>        </dependency>        <!--eureka-client config Server也要注册进服务中心-->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 **** bootstrap.yml文件
@@ -1416,9 +1416,9 @@ package com.dkf.springcloud.controller;import org.springframework.beans.factory.
 
 4. 向 client 端发送一个 POST 请求
 
-> 如 curl -X POST "http://localhost:3355/actuator/refresh"
+> 如 curl -X POST "<http://localhost:3355/actuator/refresh>"
 >
-> 两个必须：1.必须是 POST 请求，2.请求地址：http://localhost:3355/actuator/refresh
+> 两个必须：1.必须是 POST 请求，2.请求地址：<http://localhost:3355/actuator/refresh>
 
 成功！
 
@@ -1438,10 +1438,10 @@ package com.dkf.springcloud.controller;import org.springframework.beans.factory.
 
 > 在windows 上安装RabbitMQ
 
-1. 安装RabbitMQ的依赖环境 Erlang  下载地址： http://erlang.org/download/otp_win64_21.3.exe
-2. 安装RabbitMQ   下载地址： http://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.14/rabbitmq-server-3.7.14.exe
+1. 安装RabbitMQ的依赖环境 Erlang  下载地址： <http://erlang.org/download/otp_win64_21.3.exe>
+2. 安装RabbitMQ   下载地址： <http://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.14/rabbitmq-server-3.7.14.exe>
 3. 进入 rabbitMQ安装目录的sbin目录下，打开cmd窗口，执行 【rabbitmq-plugins enable rabbitmq_management】
-4. 访问【http://localhost:15672/】，输入密码和账号：默认都为 guest
+4. 访问【<http://localhost:15672/】，输入密码和账号：默认都为> guest
 
 ### 广播式刷新配置
 
@@ -1452,7 +1452,7 @@ package com.dkf.springcloud.controller;import org.springframework.beans.factory.
 首先给 config Server 和 config client 都添加如下依赖：
 
 ```xml
-	<!-- 添加rabbitMQ的消息总线支持包 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-bus-amqp</artifactId>        </dependency>
+ <!-- 添加rabbitMQ的消息总线支持包 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-bus-amqp</artifactId>        </dependency>
 ```
 
 config Server 的yml文件增加如下配置：
@@ -1469,7 +1469,7 @@ spring:  application:    name: config-client  cloud:    # config 客户端配置
 
 可在github上修改yml文件进行测试，修改完文件，向 config server 发送 请求：
 
-【curl -X POST "http://localhost:3344/actuator/bus-refresh"】
+【curl -X POST "<http://localhost:3344/actuator/bus-refresh"】>
 
 > 注意，之前是向config client 一个个发送请求，但是这次是向 config Server 发送请求，而所有的config client 的配置也都全部更新。
 
@@ -1518,7 +1518,7 @@ server:  port: 8801spring:  application:    name: cloud-stream-provider  cloud: 
 业务类：（此业务类不是以前的service，而实负责推送消息的服务类）
 
 ```java
-package com.dkf.springcloud.service;import org.springframework.cloud.stream.annotation.EnableBinding;import org.springframework.cloud.stream.messaging.Source;import org.springframework.messaging.MessageChannel;import org.springframework.messaging.support.MessageBuilder;import javax.annotation.Resource;import java.util.UUID;@EnableBinding(Source.class)  // 不是和controller打交道的service,而是发送消息的推送服务类public class IMessageProviderImpl implements IMessageProvider {									     //上面是自定义的接口    @Resource    private MessageChannel output;    @Override    public String send() {        String serial = UUID.randomUUID().toString();        output.send(MessageBuilder.withPayload(serial).build());        System.out.println("******serial: " + serial);        return null;    }}
+package com.dkf.springcloud.service;import org.springframework.cloud.stream.annotation.EnableBinding;import org.springframework.cloud.stream.messaging.Source;import org.springframework.messaging.MessageChannel;import org.springframework.messaging.support.MessageBuilder;import javax.annotation.Resource;import java.util.UUID;@EnableBinding(Source.class)  // 不是和controller打交道的service,而是发送消息的推送服务类public class IMessageProviderImpl implements IMessageProvider {              //上面是自定义的接口    @Resource    private MessageChannel output;    @Override    public String send() {        String serial = UUID.randomUUID().toString();        output.send(MessageBuilder.withPayload(serial).build());        System.out.println("******serial: " + serial);        return null;    }}
 ```
 
 controller:
@@ -1572,7 +1572,7 @@ import org.springframework.beans.factory.annotation.Value;import org.springframe
 消费者 yml 文件配置：
 
 ```yml
-	# 8802 的消费者	bindings:        input:             destination: studyExchange            content-type: application/json            binder: defaultRabbit            group: dkfA  # 自定义分组配置    # 8803 的消费者	bindings:        input:             destination: studyExchange            content-type: application/json            binder: defaultRabbit            group: dkfB  # 自定义分组配置
+ # 8802 的消费者 bindings:        input:             destination: studyExchange            content-type: application/json            binder: defaultRabbit            group: dkfA  # 自定义分组配置    # 8803 的消费者 bindings:        input:             destination: studyExchange            content-type: application/json            binder: defaultRabbit            group: dkfB  # 自定义分组配置
 ```
 
 ![1597732035990](./images/1597732035990.webp)
@@ -1595,9 +1595,9 @@ import org.springframework.beans.factory.annotation.Value;import org.springframe
 
 > sleuth 负责跟踪，而zipkin负责展示。
 >
-> zipkin 下载地址： http://dl.bintray.com/openzipkin/maven/io/zipkin/java/zipkin-server/2.12.9/zipkin-server-2.12.9-exec.jar
+> zipkin 下载地址： <http://dl.bintray.com/openzipkin/maven/io/zipkin/java/zipkin-server/2.12.9/zipkin-server-2.12.9-exec.jar>
 >
-> 使用 【java -jar】 命令运行下载的jar包，访问地址：【 http://localhost:9411/zipkin/ 】
+> 使用 【java -jar】 命令运行下载的jar包，访问地址：【 <http://localhost:9411/zipkin/> 】
 
 ## 案例
 
@@ -1606,7 +1606,7 @@ import org.springframework.beans.factory.annotation.Value;import org.springframe
 分别给他们引入依赖：
 
 ```xml
-	<!-- 引入sleuth + zipkin -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-zipkin</artifactId>        </dependency>
+ <!-- 引入sleuth + zipkin -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-zipkin</artifactId>        </dependency>
 ```
 
 yml增加配置：
@@ -1625,13 +1625,13 @@ spring:  zipkin:    base-url: http://localhost:9411  # zipkin 地址  sleuth:   
 
 ![1597735215211](./images/1597735215211.webp)
 
-##  Nacos
+## Nacos
 
 > Nacos = Eureka + Config + Bus
 
-> github地址：  https://github.com/alibaba/Nacos
+> github地址：  <https://github.com/alibaba/Nacos>
 >
-> Nacos 地址：  https://nacos.io/zh-cn/
+> Nacos 地址：  <https://nacos.io/zh-cn/>
 
 ![1597755893534](./images/1597755893534.webp)
 
@@ -1641,13 +1641,13 @@ spring:  zipkin:    base-url: http://localhost:9411  # zipkin 地址  sleuth:   
 
 ### 下载
 
-> 下载地址：  https://github.com/alibaba/nacos/releases/tag/1.1.4
+> 下载地址：  <https://github.com/alibaba/nacos/releases/tag/1.1.4>
 >
-> 直接下载网址： https://github.com/alibaba/nacos/releases/download/1.1.4/nacos-server-1.1.4.zip
+> 直接下载网址： <https://github.com/alibaba/nacos/releases/download/1.1.4/nacos-server-1.1.4.zip>
 >
 > 下载压缩包以后解压，进入bin目录，打开dos窗口，执行startup命令启动它。
 >
-> 可访问 ： 【 http://192.168.101.105:8848/nacos/index.html】地址，默认账号密码都是nacos
+> 可访问 ： 【 <http://192.168.101.105:8848/nacos/index.html】地址，默认账号密码都是nacos>
 
 ### 服务中心
 
@@ -1658,7 +1658,7 @@ spring:  zipkin:    base-url: http://localhost:9411  # zipkin 地址  sleuth:   
 pom依赖：
 
 ```xml
-	<dependencies>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml 配置：
@@ -1795,7 +1795,7 @@ Nacos持久化配置：
 >
 > nginx的安装参考之前学，使用 ContOs7 至少需要安装gcc库，不然无法编译安装【yum install gcc】
 >
-> nacos下载linux版本的 tar.gz 包：https://github.com/alibaba/nacos/releases/download/1.1.4/nacos-server-1.1.4.tar.gz
+> nacos下载linux版本的 tar.gz 包：<https://github.com/alibaba/nacos/releases/download/1.1.4/nacos-server-1.1.4.tar.gz>
 >
 > mysql root用户密码为 Dkf!!2020
 
@@ -1805,11 +1805,11 @@ Nacos集群配置
 
 2. 修改 nacos/conf 下的cluster文件，最好先复制一份，添加如下内容:
 
-   	![1597812518508](./images/1597812518508.webp)
+    ![1597812518508](./images/1597812518508.webp)
 
 3. 模拟三台nacos服务，编辑nacos的startup启动脚本，使他能够支持不同的端口启动多次。
 
-   	![1597812716080](./images/1597812716080.webp)
+    ![1597812716080](./images/1597812716080.webp)
 
    ![1597812799242](./images/1597812799242.webp)
 
@@ -1819,7 +1819,7 @@ Nacos集群配置
 
 4. nginx配置负载均衡：
 
-   	![1597813917440](./images/1597813917440.webp)
+    ![1597813917440](./images/1597813917440.webp)
 
 5. 测试完成！
 
@@ -1831,7 +1831,7 @@ Nacos集群配置
 
 ### 下载
 
-> 下载地址： https://github.com/alibaba/Sentinel/releases/download/1.7.1/sentinel-dashboard-1.7.1.jar
+> 下载地址： <https://github.com/alibaba/Sentinel/releases/download/1.7.1/sentinel-dashboard-1.7.1.jar>
 >
 > 下载jar包以后，使用【java -jar】命令启动即可。
 >
@@ -1846,7 +1846,7 @@ Nacos集群配置
 pom依赖：
 
 ```xml
-	<dependencies>        <!-- 后续做Sentinel的持久化会用到的依赖 -->        <dependency>            <groupId>com.alibaba.csp</groupId>            <artifactId>sentinel-datasource-nacos</artifactId>        </dependency>        <!-- sentinel  -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>        </dependency>        <!-- springcloud alibaba nacos 依赖,Nacos Server 服务注册中心 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- 后续做Sentinel的持久化会用到的依赖 -->        <dependency>            <groupId>com.alibaba.csp</groupId>            <artifactId>sentinel-datasource-nacos</artifactId>        </dependency>        <!-- sentinel  -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>        </dependency>        <!-- springcloud alibaba nacos 依赖,Nacos Server 服务注册中心 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml 配置：
@@ -1916,7 +1916,7 @@ server:  port: 8401spring:  application:    name: cloudalibaba-sentinel-service 
 controller层写一个demo:
 
 ```java
-	@GetMapping("/testhotkey")    @SentinelResource(value = "testhotkey", blockHandler = "deal_testhotkey")    //这个value是随意的值，并不和请求路径必须一致    //在填写热点限流的 资源名 这一项时，可以填 /testhotkey 或者是 @SentinelResource的value的值    public String testHotKey(            @RequestParam(value="p1", required = false) String p1,            @RequestParam(value = "p2", required = false) String p2    ){        return "testHotKey__success";    }	//类似Hystrix 的兜底方法    public String deal_testhotkey(String p1, String p2, BlockException e){        return "testhotkey__fail";     }
+ @GetMapping("/testhotkey")    @SentinelResource(value = "testhotkey", blockHandler = "deal_testhotkey")    //这个value是随意的值，并不和请求路径必须一致    //在填写热点限流的 资源名 这一项时，可以填 /testhotkey 或者是 @SentinelResource的value的值    public String testHotKey(            @RequestParam(value="p1", required = false) String p1,            @RequestParam(value = "p2", required = false) String p2    ){        return "testHotKey__success";    } //类似Hystrix 的兜底方法    public String deal_testhotkey(String p1, String p2, BlockException e){        return "testhotkey__fail";     }
 ```
 
 ![1597822501876](./images/1597822501876.webp)
@@ -1942,7 +1942,7 @@ controller层写一个demo:
 例如：
 
 ```java
-package com.dkf.springcloud.controller;import com.alibaba.csp.sentinel.annotation.SentinelResource;import com.alibaba.csp.sentinel.slots.block.BlockException;import com.dkf.springcloud.entities.CommonResult;import com.dkf.springcloud.entities.Payment;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.RestController;@RestControllerpublic class RateLimitController {    @GetMapping("/byResource")						//处理降级的方法名    @SentinelResource(value = "byResource", blockHandler = "handleException")    public CommonResult byResource(){        return new CommonResult(200, "按照资源名限流测试0K", new Payment(2020L,"serial001"));    }    //降级方法    public CommonResult handleException(BlockException e){        return new CommonResult(444, e.getClass().getCanonicalName() + "\t 服务不可用");    }}
+package com.dkf.springcloud.controller;import com.alibaba.csp.sentinel.annotation.SentinelResource;import com.alibaba.csp.sentinel.slots.block.BlockException;import com.dkf.springcloud.entities.CommonResult;import com.dkf.springcloud.entities.Payment;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.RestController;@RestControllerpublic class RateLimitController {    @GetMapping("/byResource")      //处理降级的方法名    @SentinelResource(value = "byResource", blockHandler = "handleException")    public CommonResult byResource(){        return new CommonResult(200, "按照资源名限流测试0K", new Payment(2020L,"serial001"));    }    //降级方法    public CommonResult handleException(BlockException e){        return new CommonResult(444, e.getClass().getCanonicalName() + "\t 服务不可用");    }}
 ```
 
 ![1597901945492](./images/1597901945492.webp)
@@ -1974,7 +1974,7 @@ package com.dkf.springcloud.controller;import com.alibaba.csp.sentinel.annotatio
 pom依赖：
 
 ```xml
-	<dependencies>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>                <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>                <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml配置：
@@ -1996,7 +1996,7 @@ package com.dkf.sprIngcloud.controller;import com.dkf.springcloud.entities.Commo
 pom依赖：
 
 ```xml
-	<dependencies>        <!-- 后续做Sentinel的持久化会用到的依赖 -->        <dependency>            <groupId>com.alibaba.csp</groupId>            <artifactId>sentinel-datasource-nacos</artifactId>        </dependency>        <!-- sentinel  -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>        </dependency>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- 后续做Sentinel的持久化会用到的依赖 -->        <dependency>            <groupId>com.alibaba.csp</groupId>            <artifactId>sentinel-datasource-nacos</artifactId>        </dependency>        <!-- sentinel  -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>        </dependency>        <!-- springcloud alibaba nacos 依赖 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml配置：
@@ -2026,7 +2026,7 @@ controller 层：
 只配置 fallback:
 
 ```java
-	@GetMapping("/consutomer/payment/get/{id}")    @SentinelResource(value = "fallback", fallback = "handleFallback") //fallback只处理业务异常    public CommonResult getPayment(@PathVariable("id")Long id){        if(id >= 4){            throw new IllegalArgumentException("非法参数异常...");        }else {            return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);        }    }    //兜底方法    public CommonResult handleFallback(@PathVariable("id")Long id, Throwable e){        return new CommonResult(414, "---非法参数异常--", e);    }
+ @GetMapping("/consutomer/payment/get/{id}")    @SentinelResource(value = "fallback", fallback = "handleFallback") //fallback只处理业务异常    public CommonResult getPayment(@PathVariable("id")Long id){        if(id >= 4){            throw new IllegalArgumentException("非法参数异常...");        }else {            return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);        }    }    //兜底方法    public CommonResult handleFallback(@PathVariable("id")Long id, Throwable e){        return new CommonResult(414, "---非法参数异常--", e);    }
 ```
 
 > 业务异常会被 fallback 处理，返回我们自定义的提示信息，而如果给它加上流控，并触发阈值，只能返回sentinel默认的提示信息。
@@ -2034,7 +2034,7 @@ controller 层：
 只配置blockHandler:
 
 ```java
-	//@SentinelResource(value = "fallback", fallback = "handleFallback") //fallback只处理业务异常    @GetMapping("/consutomer/payment/get/{id}")    @SentinelResource(value = "fallback", blockHandler = "handleblockHandler")    public CommonResult getPayment(@PathVariable("id")Long id){        if(id >= 4){            throw new IllegalArgumentException("非法参数异常...");        }else {            return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);        }    }//    //====fallback//    public CommonResult handleFallback(@PathVariable("id")Long id, Throwable e){//        return new CommonResult(414, "---非法参数异常--", e);//    }    //====blockHandler                                       blockHandler的方法必须有这个参数    public CommonResult handleblockHandler(@PathVariable("id")Long id, BlockException e){        return new CommonResult(414, "---非法参数异常--", e);    }
+ //@SentinelResource(value = "fallback", fallback = "handleFallback") //fallback只处理业务异常    @GetMapping("/consutomer/payment/get/{id}")    @SentinelResource(value = "fallback", blockHandler = "handleblockHandler")    public CommonResult getPayment(@PathVariable("id")Long id){        if(id >= 4){            throw new IllegalArgumentException("非法参数异常...");        }else {            return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);        }    }//    //====fallback//    public CommonResult handleFallback(@PathVariable("id")Long id, Throwable e){//        return new CommonResult(414, "---非法参数异常--", e);//    }    //====blockHandler                                       blockHandler的方法必须有这个参数    public CommonResult handleblockHandler(@PathVariable("id")Long id, BlockException e){        return new CommonResult(414, "---非法参数异常--", e);    }
 ```
 
 > 这时候的效果就是，运行异常直接报错错误页面。在sentinel上添加一个降级规则，设置2s内触发异常2次，触发阈值以后，返回的是我们自定义的 blockhanlder 方法返回的内容。
@@ -2127,7 +2127,7 @@ spring:  cloud:    sentinel:      datasource:        ds1:            nacos:     
 >
 > 微服务模块，连接多个数据库，多个数据源，而数据库之间的数据一致性需要被保证。
 >
-> 官网：  http://seata.io/zh-cn/
+> 官网：  <http://seata.io/zh-cn/>
 
 Seata术语： 一 + 三
 
@@ -2139,7 +2139,7 @@ Seata术语： 一 + 三
 
 ### 下载安装
 
-> 下载地址 ： https://github.com/seata/seata/releases/download/v1.0.0/seata-server-1.0.0.zip
+> 下载地址 ： <https://github.com/seata/seata/releases/download/v1.0.0/seata-server-1.0.0.zip>
 
 ![1597984908755](./images/1597984908755.webp)
 
@@ -2202,7 +2202,7 @@ storage 库：
 pom依赖：
 
 ```xml
-	<dependencies>        <!-- seata -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>            <exclusions>                <exclusion>                    <artifactId>seata-all</artifactId>                    <groupId>io.seata</groupId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>io.seata</groupId>            <artifactId>seata-all</artifactId>            <version>1.0.0</version>        </dependency>        <!-- springcloud alibaba nacos 依赖,Nacos Server 服务注册中心 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- open feign 服务调用 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-openfeign</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 持久层支持 -->        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <!-- mybatis -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
+ <dependencies>        <!-- seata -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>            <exclusions>                <exclusion>                    <artifactId>seata-all</artifactId>                    <groupId>io.seata</groupId>                </exclusion>            </exclusions>        </dependency>        <dependency>            <groupId>io.seata</groupId>            <artifactId>seata-all</artifactId>            <version>1.0.0</version>        </dependency>        <!-- springcloud alibaba nacos 依赖,Nacos Server 服务注册中心 -->        <dependency>            <groupId>com.alibaba.cloud</groupId>            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>        </dependency>        <!-- open feign 服务调用 -->        <dependency>            <groupId>org.springframework.cloud</groupId>            <artifactId>spring-cloud-starter-openfeign</artifactId>        </dependency>        <!-- springboot整合Web组件 -->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-web</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-actuator</artifactId>        </dependency>        <!-- 持久层支持 -->        <dependency>            <groupId>com.alibaba</groupId>            <artifactId>druid-spring-boot-starter</artifactId>            <version>1.1.10</version>        </dependency>        <!--mysql-connector-java-->        <dependency>            <groupId>mysql</groupId>            <artifactId>mysql-connector-java</artifactId>        </dependency>        <!--jdbc-->        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-jdbc</artifactId>        </dependency>        <!-- mybatis -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <!-- 日常通用jar包 -->        <dependency>            <groupId>org.mybatis.spring.boot</groupId>            <artifactId>mybatis-spring-boot-starter</artifactId>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-devtools</artifactId>            <scope>runtime</scope>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.projectlombok</groupId>            <artifactId>lombok</artifactId>            <optional>true</optional>        </dependency>        <dependency>            <groupId>org.springframework.boot</groupId>            <artifactId>spring-boot-starter-test</artifactId>            <scope>test</scope>        </dependency>        <dependency><!-- 引入自己定义的api通用包，可以使用Payment支付Entity -->            <groupId>com.dkf.cloud</groupId>            <artifactId>cloud-api-commons</artifactId>            <version>${project.version}</version>        </dependency>    </dependencies>
 ```
 
 yml配置：
@@ -2262,7 +2262,7 @@ controller 层调用 orderService 方法即可。
 #### Seata使用
 
 ```java
-	@Override	//只需要在业务类的方法上加上该注解，name值自定义唯一即可。    @GlobalTransactional(name = "dkf-create-order", rollbackFor = Exception.class)    public void create(Order order) {        log.info("--------》 开始创建订单");        orderDao.create(order);        log.info("--------》 订单微服务开始调用库存，做扣减---Count-");        storageService.decrease(order.getProductId(), order.getCount());        log.info("--------》 订单微服务开始调用库存，库存扣减完成！！");        log.info("--------》 订单微服务开始调用账户，账户扣减---money-");        accountService.decrease(order.getUserId(),order.getMoney());        log.info("--------》 订单微服务开始调用账户，账户扣减完成!!");        //修改订单状态，从0到1        log.info("--------》 订单微服务修改订单状态，start");        orderDao.update(order.getUserId(),0);        log.info("--------》 订单微服务修改订单状态，end");        log.info("--订单结束--");    }
+ @Override //只需要在业务类的方法上加上该注解，name值自定义唯一即可。    @GlobalTransactional(name = "dkf-create-order", rollbackFor = Exception.class)    public void create(Order order) {        log.info("--------》 开始创建订单");        orderDao.create(order);        log.info("--------》 订单微服务开始调用库存，做扣减---Count-");        storageService.decrease(order.getProductId(), order.getCount());        log.info("--------》 订单微服务开始调用库存，库存扣减完成！！");        log.info("--------》 订单微服务开始调用账户，账户扣减---money-");        accountService.decrease(order.getUserId(),order.getMoney());        log.info("--------》 订单微服务开始调用账户，账户扣减完成!!");        //修改订单状态，从0到1        log.info("--------》 订单微服务修改订单状态，start");        orderDao.update(order.getUserId(),0);        log.info("--------》 订单微服务修改订单状态，end");        log.info("--订单结束--");    }
 ```
 
 ![1597998982271](./images/1597998982271.webp)

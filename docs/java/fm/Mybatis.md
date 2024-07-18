@@ -3,6 +3,7 @@ order: 3
 title: Mybatis
 category:
   - 数据库
+outline: deep
 ---
 MyBatis ALL IN ONE
 
@@ -85,6 +86,7 @@ MyBatis ALL IN ONE
     </dependency>
 </dependencies>
 ```
+
 创建实体类
 
 ```java
@@ -96,6 +98,7 @@ public class Employee {
     private String gender;
 }
 ```
+
 创建一个DAO接口
 
 ```java
@@ -104,6 +107,7 @@ public interface EmployeeDao {
     public Employee getEmpById(Integer id);
 }
 ```
+
 ### Mybatis配置文件
 
 全局配置文件：
@@ -131,6 +135,7 @@ public interface EmployeeDao {
 
 </configuration>
 ```
+
 SQL映射文件
 
 ```xml
@@ -152,6 +157,7 @@ SQL映射文件
     </select>
 </mapper>
 ```
+
 在全局文件中配置SQL映射文件
 
 ```xml
@@ -166,6 +172,7 @@ SQL映射文件
     </mappers>
 </configuration>
 ```
+
 使用纯JAVA测试结果：
 
 ```java
@@ -183,6 +190,7 @@ public void test() throws IOException {
     System.out.println(emp);
 }
 ```
+
 优化写法：
 
 ```java
@@ -218,8 +226,6 @@ mybatis的CRUD一般不需要resultType，它自己会自动封装结果
 在原来的测试基础上，如果插入要加入SqlSession的commit()，如果要选择自动commit可以把opensession的参数传入true
 
 ![347d7348-131c-4cdf-88b2-c168755d3a5c](./images/347d7348-131c-4cdf-88b2-c168755d3a5c.webp)
-
-
 
 ## 使用外部properties引用数据库连接
 
@@ -258,8 +264,6 @@ mybatis的CRUD一般不需要resultType，它自己会自动封装结果
 
 </configuration>
 ```
-
-
 
 ## 使用setttings修改行为
 
@@ -334,8 +338,6 @@ DEBUG 07-13 11:02:02,143 <==   Total: 1 (BaseJdbcLogger.java:137)
 
 Employee{id=1, empName='netty', email='netty@qq.com', gender=1, loginAccount='netty'}
 ```
-
-
 
 ## typeAliases（类型别名）和typeHandlers（类型处理器）
 
@@ -434,8 +436,6 @@ MyBatis 在设置预处理语句（PreparedStatement）中的参数或从结果�
 | YearMonthTypeHandler       | java.time.YearMonth           | VARCHAR 或 LONGVARCHAR                                       |
 | JapaneseDateTypeHandler    | java.time.chrono.JapaneseDate | DATE                                                         |
 
-
-
 ## 【了解】plugins（插件）
 
 MyBatis的四大对象：
@@ -447,8 +447,6 @@ MyBatis的四大对象：
 - ResultSetHandler (handleResultSets, handleOutputParameters)
 
 - StatementHandler (prepare, parameterize, batch, update, query)
-
-
 
 ## 环境配置（environments）
 
@@ -473,8 +471,6 @@ MyBatis的四大对象：
         </environment>
     </environments>
 ```
-
-
 
 ## 数据库厂商标识（databaseIdProvider）
 
@@ -507,13 +503,9 @@ properties?, settings?, typeAliases?, typeHandlers?, objectFactory?, objectWrapp
 </select>
 ```
 
-
-
 ## 映射器（mappers）
 
 ### mappers
-
- 
 
 ```
 <!--    写好的SQL映射文件需要使用mappers映射进来-->
@@ -606,8 +598,6 @@ DEBUG 07-15 00:33:11,410 <==    Updates: 1  (BaseJdbcLogger.java:137)
 10 //代码： Employee emp = new Employee(null, "tomcat6", "tomcat6@qq.com", 0); System.out.println(em
 ```
 
-
-
 ## SQL映射 传入多个参数
 
 **传入单个参数**：
@@ -626,7 +616,7 @@ DEBUG 07-15 00:33:11,410 <==    Updates: 1  (BaseJdbcLogger.java:137)
 
 ​        封装时使用的key就是参数的索引和参数的第几个表示
 
-​       ` Map<String, Object> map = new HashMap<>();`
+​       `Map<String, Object> map = new HashMap<>();`
 
 ​        \#{key}就是从这个map的取值
 
@@ -644,8 +634,6 @@ DEBUG 07-15 00:33:11,410 <==    Updates: 1  (BaseJdbcLogger.java:137)
 public Employee getEmpByIdAndName(@Param("id") Integer id, @Param("empName") String empName);
 ```
 
- 
-
 ```xml
 <select id="getEmpByIdAndName" resultType="cn.zhiyucs.domain.Employee">
         select * from t_employee where id=#{id} and empname=#{empName};
@@ -657,8 +645,6 @@ public Employee getEmpByIdAndName(@Param("id") Integer id, @Param("empName") Str
 ```java
 public Employee getEmpByIdAndName(Integer id, String empName);
 ```
-
- 
 
 ```xml
 <select id="getEmpByIdAndName" resultType="cn.zhiyucs.domain.Employee">
@@ -730,8 +716,6 @@ Employee{id=1, empName='netty', email='netty@qq.com', gender=1, loginAccount='nu
 - ${} 不是参数预编译, 而是直接和sql进行拼串【不安全】, 但可以动态取表名
 - 在不支持预编译的位置进行取值就可以使用${}
 
-
-
 ## SQL映射 查询集合
 
 ### 封装成LIST
@@ -776,13 +760,9 @@ Employee{id=10, empName='tomcat7', email='tomcat6@qq.com', gender=0, loginAccoun
 </select>
 ```
 
- 
-
 ```java
 public Map<String, Object> getEmpByIdRetMap(Integer id);
 ```
-
- 
 
 ```
 DEBUG 07-15 01:18:09,253 ==>  Preparing: select * from t_employee where id = ?  (BaseJdbcLogger.java:137) 
@@ -801,15 +781,11 @@ DEBUG 07-15 01:18:09,307 <==      Total: 1  (BaseJdbcLogger.java:137)
 </select>
 ```
 
- 
-
 ```java
 //    @MapKey把查出的key为id作为Map的key封装进去
 @MapKey("id")
 public Map<Integer, Employee> getAllEmpsRetMap();
 ```
-
- 
 
 ```java
 @Test
@@ -823,8 +799,6 @@ DEBUG 07-15 01:27:03,165 ==> Parameters:   (BaseJdbcLogger.java:137)
 DEBUG 07-15 01:27:03,182 <==      Total: 7  (BaseJdbcLogger.java:137) 
 Employee{id=1, empName='netty', email='netty@qq.com', gender=1, loginAccount='null'}
 ```
-
-
 
 ## SQL映射 自定义resultType
 
@@ -882,8 +856,6 @@ DEBUG 07-15 01:47:29,057 <==      Total: 1  (BaseJdbcLogger.java:137)
 Cat{id=1, name='加菲猫', gender=0, age=12}
 ```
 
-
-
 ## SQL映射 级联属性查询
 
 ### 序言: 一对一关联
@@ -916,8 +888,6 @@ public class Lock {
 同时映射了外键lockid
 
 ![13e6e1c7-f56c-449e-a97d-fe46e6acfd17](./images/13e6e1c7-f56c-449e-a97d-fe46e6acfd17.webp)
-
-
 
 ![568320a5-c6af-408f-83f4-d975a17b0799](./images/568320a5-c6af-408f-83f4-d975a17b0799.webp)
 
@@ -971,8 +941,6 @@ DEBUG 07-15 11:47:05,899 ==> Parameters: 1(Integer)  (BaseJdbcLogger.java:137)
 DEBUG 07-15 11:47:05,913 <==      Total: 1  (BaseJdbcLogger.java:137) 
 Key{id=1, keyName='1号钥匙', lock=Lock{id=1, lockName='1号锁'}}
 ```
-
-
 
 ## SQL映射 级联 一对多 多对多
 
@@ -1038,8 +1006,6 @@ DEBUG 07-15 12:36:13,226 ==> Parameters: 3(Integer)  (BaseJdbcLogger.java:137)
 DEBUG 07-15 12:36:13,241 <==      Total: 3  (BaseJdbcLogger.java:137) 
 [Lock{id=3, lockName='303锁'}, Lock{id=4, lockName='303锁'}, Lock{id=5, lockName='303锁'}]
 ```
-
-
 
 ## SQL映射 分步查询
 
@@ -1156,8 +1122,6 @@ DEBUG 07-15 13:19:17,478 <==      Total: 3  (BaseJdbcLogger.java:137)
 303钥匙3
 ```
 
-
-
 ## SQL映射 延迟加载 按需加载
 
 全局开启按需加载和延时加载
@@ -1175,8 +1139,6 @@ DEBUG 07-15 13:19:17,478 <==      Total: 3  (BaseJdbcLogger.java:137)
 局部开启：fetchType
 
 ![c27b8eb0-8eef-4365-a59d-45217c07602e](./images/c27b8eb0-8eef-4365-a59d-45217c07602e.webp)
-
-
 
 ## 动态SQL IF
 
@@ -1225,7 +1187,7 @@ public List<Teacher> getTeacherByCondition(Teacher teacher);
 
 ------
 
-查询的条件是： 
+查询的条件是：
 
 - ID 大于条件ID
 - 名字模糊搜索
@@ -1253,8 +1215,6 @@ public List<Teacher> getTeacherByCondition(Teacher teacher);
 ```
 
 **注意：**这个test里的属性是Java中的属性而不是数据库中的
-
-
 
 ## 动态SQL WHERE TRIM
 
@@ -1308,8 +1268,6 @@ public List<Teacher> getTeacherByCondition(Teacher teacher);
 </select>
 ```
 
-
-
 ## 动态SQL FOREACH
 
 动态 SQL 的另一个常见使用场景是对**集合进行遍历**（尤其是在构建 **IN 条件语句**的时候）
@@ -1321,8 +1279,6 @@ public List<Teacher> getTeacherByCondition(Teacher teacher);
 ```java
 public List<Teacher> getTeacherByIdIn(@Param("ids") List<Integer> ids);
 ```
-
- 
 
 ```xml
 <select id="getTeacherByIdIn" resultMap="teacher">
@@ -1357,8 +1313,6 @@ DEBUG 07-15 18:28:27,040 ==> Parameters: 1(Integer), 2(Integer), 3(Integer), 4(I
 DEBUG 07-15 18:28:27,057 <==      Total: 3  (BaseJdbcLogger.java:137) 
 [Teacher{id=1, name='admin', course='语文', address='保安区', birthday=Wed Jul 01 00:00:00 CST 2020}, Teacher{id=2, name='tomcat', course='数学', address='福田区', birthday=Fri Jul 10 00:00:00 CST 2020}, Teacher{id=3, name='jerry', course='英语', address='罗湖区', birthday=Sun Jul 05 00:00:00 CST 2020}]
 ```
-
-
 
 ## 动态SQL CHOOSE、WHEN、OTHERWISE
 
@@ -1420,8 +1374,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 [Teacher{id=1, name='admin', course='语文', address='保安区', birthday=Wed Jul 01 00:00:00 CST 2020}, Teacher{id=2, name='tomcat', course='数学', address='福田区', birthday=Fri Jul 10 00:00:00 CST 2020}, Teacher{id=3, name='jerry', course='英语', address='罗湖区', birthday=Sun Jul 05 00:00:00 CST 2020}]
 ```
 
-
-
 ## 动态SQL SET
 
 ### 动态更新
@@ -1452,8 +1404,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 </select>
 ```
 
-
-
 ## OGNL表达式
 
 **OGNL（ Object Graph Navigation Language ）**对象图导航语言，这是一种强大的
@@ -1470,7 +1420,7 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 
 调用构造方法：    new com.atguigu.bean.Person(‘admin’).name
 
-运算符：   ` +,-*,/,%`
+运算符：   `+,-*,/,%`
 
 逻辑运算符：    `in,not in,>,>=,<,<=,==,!=`
 
@@ -1486,8 +1436,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 | List、Set      | iterator      | List.iterator()、Set.iterator()            |
 | Map            | keys、values  | Map.keySet()、Map.values()                 |
 | Iterator       | next、hasNext | Iterator.next()、Iterator.hasNext()        |
-
-
 
 ## 动态SQL BIND  INCLUDE
 
@@ -1522,8 +1470,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 </select>
 ```
 
-
-
 ## 一级缓存
 
 一级缓存的演示：
@@ -1556,8 +1502,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 
 ![6a8cc7cf-39f4-4189-b28d-3f17b968ab13](./images/6a8cc7cf-39f4-4189-b28d-3f17b968ab13.webp)
 
-
-
 ## 二级缓存
 
 二级缓存：namespace级别的缓存
@@ -1580,8 +1524,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 
 ![7b49ac50-2710-47c9-a64b-87ec97593dce](./images/7b49ac50-2710-47c9-a64b-87ec97593dce.webp)
 
-
-
 ## 缓存的查询顺序和原理
 
 ### 缓存查询顺序
@@ -1600,8 +1542,6 @@ DEBUG 07-15 18:36:46,992 <==      Total: 3  (BaseJdbcLogger.java:137)
 二级缓存只要一级缓存关闭就能使用
 
 ![dc0a195a-51c1-4df7-870d-097c35f1189b](./images/dc0a195a-51c1-4df7-870d-097c35f1189b.webp)
-
-
 
 ## 缓存的属性
 

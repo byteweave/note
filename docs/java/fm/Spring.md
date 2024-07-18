@@ -3,6 +3,7 @@ order: 1
 title: Spring
 category:
   - Spring
+outline: deep
 ---
 # Spring All in One
 
@@ -125,8 +126,6 @@ public void test() {
     System.out.println(add);
 }
 ```
-
-
 
 ### AOP的专业术语和简单使用
 
@@ -252,8 +251,6 @@ public class AopTest {
 public class MyMathCalculator/* implements Calculator*/ {...
 ```
 
- 
-
 ```java
     @Autowired
     MyMathCalculator mcc;
@@ -264,8 +261,6 @@ public class MyMathCalculator/* implements Calculator*/ {...
         System.out.println(mcc.getClass()); //class cn.zhiyucs.MyMathCalculator$$EnhancerBySpringCGLIB$$ac796d0b
     }
 ```
-
-
 
 ### AOP的另一些细节
 
@@ -330,8 +325,6 @@ public class MyMathCalculator/* implements Calculator*/ {...
 
 获取**结果值**和获取**抛出异常的信息**：在切入点表达式之后加入returning / throwing
 
- 
-
 ```java
 //    需要告诉spring result要接收返回值
     @AfterReturning(value = "execution(public int cn.zhiyucs.MyMathCalculator.*(int, int))",
@@ -351,8 +344,6 @@ public class MyMathCalculator/* implements Calculator*/ {...
 ```
 
 #### 切入点表达式的重用
-
- 
 
 ```java
     @Pointcut("execution(* cn.zhiyucs.*.*(..))")
@@ -414,8 +405,6 @@ public class MyMathCalculator/* implements Calculator*/ {...
 
 如果使用**@Order（value=""）** value值越小，优先级越高
 
-
-
 ### 基于XML的AOP
 
 基于注解的AOP步骤：
@@ -449,11 +438,7 @@ public class MyMathCalculator/* implements Calculator*/ {...
 
 重要的用配置，不重要的注解
 
-
-
 ## IOC
-
-
 
 ### Spring第一个程序
 
@@ -549,8 +534,6 @@ public class IOCTest {
 - ioc容器在创建对象的时候（property）会利用setter方法为JavaBean属性进行赋值
 - JavaBean的属性名是由getter/setter方法决定属性名，setLastName -> lastName
 
-
-
 ### Spring多个对象赋值和构造器赋值
 
 #### 【序言】一般都是使用name+value的方式进行赋值
@@ -581,8 +564,6 @@ public class IOCTest {
 ```java
 <T> T getBean(String name, Class<T> requiredType) throws BeansException;
 ```
-
-
 
 ```java
 @Test
@@ -647,8 +628,6 @@ public Person(String lastName, Integer age, String gender, String email) {
     <constructor-arg value="女"></constructor-arg>
 </bean>
 ```
-
-
 
 ### Spring命名空间
 
@@ -836,8 +815,6 @@ util命名空间引入，进行全局引用：
     </bean>
 ```
 
-
-
 ### 其他属性的赋值
 
 属性继承：关键属性 --- **parent**
@@ -883,8 +860,6 @@ bean之间的依赖：（基本不用）
     <bean id="book" class="cn.zhiyucs.bean.Book"></bean>
 ```
 
-
-
 ### 【重点】Bean的作用域：单实例和多实例
 
 prototype 多实例
@@ -901,8 +876,6 @@ singleton 单实例
 ```xml
 <bean id="book" class="cn.zhiyucs.bean.Book" scope="prototype"></bean>
 ```
-
-
 
 ### 使用工厂创建对象
 
@@ -949,8 +922,6 @@ public class InstanceFactory {
 }
 ```
 
- 
-
 ```xml
 <bean id="instanceFactory" class="cn.zhiyucs.factory.InstanceFactory">
 </bean>
@@ -990,13 +961,9 @@ public class MyFactoryBeanImpl implements FactoryBean<Book> {
 }
 ```
 
- 
-
 ```xml
 <bean class="cn.zhiyucs.factory.MyFactoryBeanImpl" id="myFactoryBean"></bean>
 ```
-
-
 
 ### Bean的生命周期方法和后置处理器
 
@@ -1092,8 +1059,6 @@ XML配置
 这是图书的销毁方法
 ```
 
-
-
 ### 单实例：数据库连接池
 
 需要额外导入两个Jar
@@ -1132,8 +1097,6 @@ public void test02() throws SQLException {
     System.out.println(dataSource.getConnection());
 }
 ```
-
- 
 
 ```
 七月 04, 2020 11:43:53 上午 com.mchange.v2.log.MLog <clinit>
@@ -1176,8 +1139,6 @@ driverClass=com.mysql.jdbc.Driver
     </bean>
 </beans>
 ```
-
-
 
 ### XML的自动装配和SqEL
 
@@ -1223,8 +1184,6 @@ driverClass=com.mysql.jdbc.Driver
     <property name="gender" value="#{book2.getBookName()}"></property>
 </bean>
 ```
-
-
 
 ### 通过注解创建@Cotroller @Service @Repository
 
@@ -1291,8 +1250,6 @@ public void test() {
 }
 ```
 
-
-
 ### Spring依赖注入（DI）
 
 ```java
@@ -1358,8 +1315,6 @@ public class BookServlet {
 
 @Autowired是Spring独有的依赖注入注解
 
-
-
 ### Spring单元测试
 
 不用Spring单元测试： 需要使用ioc.getBean来获取组件
@@ -1392,8 +1347,6 @@ public class SpringTest {
 }
 ```
 
-
-
 ### Spring泛型依赖注入
 
 #### **Dao层**
@@ -1404,8 +1357,6 @@ public abstract class BaseDao<T> {
 }
 ```
 
- 
-
 ```java
 @Repository
 public class BookDao extends BaseDao<Book> {
@@ -1415,8 +1366,6 @@ public class BookDao extends BaseDao<Book> {
     }
 }
 ```
-
- 
 
 ```java
 @Repository
@@ -1440,15 +1389,11 @@ public class BaseService<T> {
 }
 ```
 
- 
-
 ```java
 @Service
 public class BookService extends BaseService<Book>{
 }
 ```
-
- 
 
 ```java
 @Service
@@ -1486,10 +1431,3 @@ public class SpringTest {
 书籍保存
 用户保存
 ```
-
-
-
-
-
-
-

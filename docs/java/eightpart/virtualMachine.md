@@ -7,10 +7,10 @@ category:
   - 虚拟机
   - JVM
   - 八股文
+outline: deep
 ---
 
 ## ♻️ JVM
-
 
 ### 图解JVM结构
 
@@ -48,6 +48,7 @@ category:
 ![image-20220628171657570](./personal_images/image-20220628171657570.webp)
 
 简单总结一下程序运行中栈可能会出现两种错误：
+
 - `StackOverFlowError`： 若栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前 Java 虚拟机栈的最大深度的时候，就抛出 StackOverFlowError 错误。
 - `OutOfMemoryError`： 如果栈的内存大小可以动态扩展， 如果虚拟机在动态扩展栈时无法申请到足够的内存空间，则抛出OutOfMemoryError异常。
 
@@ -89,9 +90,7 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 
 ![image-20220628164028744](./personal_images/image-20220628164028744.webp)
 
-
-
-#### 方法区 
+#### 方法区
 
 **方法区和永久代以及元空间是什么关系呢？** 方法区和永久代以及元空间的关系很像 Java 中接口和类的关系，类实现了接口，这里的类就可以看作是永久代和元空间，接口可以看作是方法区，也就是说永久代以及元空间是 HotSpot 虚拟机对虚拟机规范中方法区的两种实现方式。并且，永久代是 JDK 1.8 之前的方法区实现，JDK 1.8 及以后方法区的实现变成了元空间。
 ![](./personal_images/method-area-implementation.webp)
@@ -150,8 +149,6 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 
 > **元空间存在于本地内存，意味着只要本地内存足够，它就不会 OOM**，不会出现像永久代中的 `java.lang.OutOfMemoryError: PermGenspace`
 
-
-
 ##### 运行时常量池
 
 **运行时常量池是方法区的一部分**。上面我们说过方法区包含类信息，而描述类信息的 Class 文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是**常量池表 (Constant Pool Table)**，用于存放**编译期**生成的各种字面量（字面量相当于 Java 语言层面常量的概念，如文本字符串，声明为 final 的常量值等）与符号引用。有一些文章会把 class 常量池表称为**静态常量池**。
@@ -168,10 +165,11 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 > **# n这里是常量池的引用**。 #2 是对System.out字段的符号引用，#3 是一个Hello, world!字符串和#4 是对PrintStream.println(String)方法的符号引用。
 > 符号引用不仅仅是名称。例如，还有对方法的符号引用，包含有关其参数（Ljava/lang/String;）和返回类型（V表示void）的信息。
 > 参考：
-> - https://stackoverflow.com/questions/10209952/what-is-the-purpose-of-the-java-constant-pool
-> - https://stackoverflow.com/questions/22921010/what-is-run-time-constant-pool-and-method-area-in-java
-> - https://stackoverflow.com/questions/17406159/symbolic-references-in-java
-> - https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html
+>
+> - <https://stackoverflow.com/questions/10209952/what-is-the-purpose-of-the-java-constant-pool>
+> - <https://stackoverflow.com/questions/22921010/what-is-run-time-constant-pool-and-method-area-in-java>
+> - <https://stackoverflow.com/questions/17406159/symbolic-references-in-java>
+> - <https://docs.oracle.com/javase/specs/jvms/se6/html/ConstantPool.doc.html>
 
 为什么需要常量池这个东西呢？主要是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享。以**字符串常量池**为例，字符串 `String` 既然作为 `Java` 中的一个类，那么它和其他的对象分配一样，需要耗费高昂的时间与空间代价，作为最基础最常用的数据类型，大量频繁的创建字符串，将会极大程度的影响程序的性能。为此，JVM 为了提高性能和减少内存开销，在实例化字符串常量的时候进行了一些优化：
 
@@ -179,7 +177,8 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 - 创建字符串常量时，首先检查字符串常量池中是否存在该字符串
 - **若字符串常量池中存在该字符串，则直接返回该引用实例，无需重新实例化**；若不存在，则实例化该字符串并放入池中。
 
-> 字符串常量池支持的引用类型：（参考：https://www.baeldung.com/jvm-constant-pool）
+> 字符串常量池支持的引用类型：（参考：<https://www.baeldung.com/jvm-constant-pool）>
+>
 > - Integer, Float: with 32-bit constants
 > - Double, Long: with 64-bit constants
 > - String: a 16-bit string constant that points at another entry in the pool which contains the actual bytes
@@ -211,8 +210,6 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 
 ![image-20220628160739969](./personal_images/image-20220628160739969.webp)
 
-
-
 ### 为什么程序计数器是在JVM运行时数据区唯一一个不会出现 OutOfMemoryError 的内存区域
 
 1. **简单的结构与功能**：程序计数器是一个非常小且简单的内存结构。它的作用是记录线程正在执行的字节码指令的地址或者说是指令的行号。对于正在执行的方法，程序计数器记录的是当前线程正在执行的字节码指令地址；如果是调用的本地方法，则计数器的值为空（undefined）。因此，它的内存需求是非常有限且固定的。
@@ -220,8 +217,6 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 3. **无需动态扩展**：程序计数器的生命周期与线程相同，且在创建时即确定了大小，不需要在运行时动态扩展，因此不存在内存溢出的情况。
 
 因此，程序计数器是 JVM 中唯一一个不会出现 `OutOfMemoryError` 的内存区域。
-
-
 
 ### JDK 中有哪些默认的类加载器
 
@@ -237,8 +232,8 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，当前
 
 ### 如何对栈进行参数调优
 
-* 可以通过-Xss：调整每个线程栈空间的大小
-* -XXThreadStackSize：设置线程栈的大小
+- 可以通过-Xss：调整每个线程栈空间的大小
+- -XXThreadStackSize：设置线程栈的大小
 
 ### 说一下方法区和永久代的关系
 
@@ -275,9 +270,11 @@ GC Roots 并不包括堆中对象所引用的对象，这样就不会有循环�
 - 2️⃣随后进行一次筛选，筛选的条件是此对象是否有必要执行 `finalized()` 方法。如果对象没有覆盖 `finalized()` 方法，或者 `finalized()` 已经被虚拟机调用过，这两种情况都会视为没有必要执行。如果判定结果是有必要执行，此时对象会被放入名为 `F-Queue` 的队列，等待 Finalizer 线程执行其 `finalized()` 方法。在这个过程中，收集器会进行第二次小规模的标记，如果对象在 `finalized()` 方法中重新将自己与引用链上的任何一个对象进行了关联，如将自己（this 关键字）赋值给某个类变量或者对象的成员变量，此时它就实现了自我拯救，则第二次标记会将其移除 “即将回收” 的集合，否则该对象就将被真正回收，走向死亡。
 
 ### 什么是GC Root？有哪些常见的GC Root？
+
 在Java中，GC（Garbage Collection）Roots 是垃圾收集器在进行**垃圾回收时用作起始点的一组对象**。垃圾回收器从这些GC Roots开始，通过引用关系，找到所有从GC Roots开始可达的对象。如果一个对象从GC Roots开始无法达到，那么这个对象就是不可达的，垃圾收集器就可以认为它是“垃圾”，并且可以回收这个对象占用的内存。
 
 以下是在Java中一些常见的GC Roots：
+
 1. 系统类加载器加载的类。这些类通常包括Java API类和用户定义的类。一旦类被加载，除非对应的ClassLoader被回收，否则类的定义对象（java.lang.Class）就会一直存在。
 2. 活动线程。在Java程序运行过程中，至少存在一个非守护线程。垃圾收集器把当前执行的线程当作GC Roots。
 3. 方法区和堆中静态变量引用的对象。
@@ -285,21 +282,20 @@ GC Roots 并不包括堆中对象所引用的对象，这样就不会有循环�
 5. 帧栈中的本地变量和输入参数。
 
 > 参考：
-> 1. https://www.baeldung.com/java-gc-roots
-> 2. https://stackoverflow.com/questions/27186799/what-are-gc-roots-for-classes
-> 3. https://www.baeldung.com/java-nth-root
+>
+> 1. <https://www.baeldung.com/java-gc-roots>
+> 2. <https://stackoverflow.com/questions/27186799/what-are-gc-roots-for-classes>
+> 3. <https://www.baeldung.com/java-nth-root>
 
 ### ⭐️虚引用与软引用和弱引用的区别
 
-* **虚引用**：1️⃣虚引用是Java中一种特殊的引用类型。它的作用是帮助程序员在对象被回收之前，了解对象的状态，并且在对象被回收之前执行一些必要的操作。2️⃣虚引用必须和引用队列（ReferenceQueue）联合使用。虚引用必须和引用队列一起使用。当一个对象被垃圾回收器准备回收时，如果它还有虚引用，垃圾回收器会把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解对象是否将要被垃圾回收。3️⃣虚引用并不会阻止垃圾回收器回收对象，只是提供了一个通知机制，使程序有机会在对象被回收之前执行一些必要的操作，例如清理操作或保存对象状态到磁盘上等。
+- **虚引用**：1️⃣虚引用是Java中一种特殊的引用类型。它的作用是帮助程序员在对象被回收之前，了解对象的状态，并且在对象被回收之前执行一些必要的操作。2️⃣虚引用必须和引用队列（ReferenceQueue）联合使用。虚引用必须和引用队列一起使用。当一个对象被垃圾回收器准备回收时，如果它还有虚引用，垃圾回收器会把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解对象是否将要被垃圾回收。3️⃣虚引用并不会阻止垃圾回收器回收对象，只是提供了一个通知机制，使程序有机会在对象被回收之前执行一些必要的操作，例如清理操作或保存对象状态到磁盘上等。
 
-  * **虚引用主要用来跟踪对象被垃圾回收的活动**。
-* **软引用**：如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存
+  - **虚引用主要用来跟踪对象被垃圾回收的活动**。
+- **软引用**：如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存
 
-  * 实现内存敏感的高速缓存
-* **弱引用**：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。
-
-
+  - 实现内存敏感的高速缓存
+- **弱引用**：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。
 
 ### 变量在JVM中的不同区域
 
@@ -315,13 +311,11 @@ GC Roots 并不包括堆中对象所引用的对象，这样就不会有循环�
 >
 > 参考资料：
 >
-> - https://stackoverflow.com/questions/50163218/is-method-area-still-present-in-java-8
-> - http://karunsubramanian.com/websphere/one-important-change-in-memory-management-in-java-9/
-> - https://blogs.sap.com/2021/07/16/jep-387-elastic-metaspace-a-new-classroom-for-the-java-virtual-machine/
+> - <https://stackoverflow.com/questions/50163218/is-method-area-still-present-in-java-8>
+> - <http://karunsubramanian.com/websphere/one-important-change-in-memory-management-in-java-9/>
+> - <https://blogs.sap.com/2021/07/16/jep-387-elastic-metaspace-a-new-classroom-for-the-java-virtual-machine/>
 
 因此，除了方法内的局部变量存储在虚拟机栈中之外，实例变量存储在堆中，静态变量存储在方法区中。运行时常量池是方法区的一部分，它主要用于存储编译期间生成的字面量和符号引用。
-
-
 
 补充一下：实例变量
 
@@ -374,8 +368,6 @@ Total persons: 2
 
 可以看到，每个 `Person` 实例都有自己的 `name` 和 `age` 实例变量，而静态变量 `personCount` 是所有实例共享的。
 
-
-
 ### 如何判断一个常量是废弃常量
 
 1. JDK1.7 之前运行时常量池逻辑包含字符串常量池存放在方法区, 此时 hotspot 虚拟机对方法区的实现为永久代
@@ -389,6 +381,7 @@ Total persons: 2
 每一个类都有一个对应它的类加载器。系统中的 ClassLoader 在协同工作的时候会默认使用 **双亲委派模型** 。即在类加载的时候，系统会首先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，首先会把该请求委派给父类加载器的 `loadClass()` 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 `BootstrapClassLoader` 中。当父类加载器无法处理时，才由自己来处理。当父类加载器为 null 时，会使用启动类加载器 `BootstrapClassLoader` 作为父类加载器。
 
 假设有一个类A需要被加载
+
 1. 首先，加载类A的请求到达一个称为"应用类加载器"的类加载器。这个应用类加载器并不会立即加载类A，而是将请求传递给它的父类加载器，也就是"扩展类加载器"。
 2. 扩展类加载器同样不会立即加载类A，而是将请求传递给它的父类加载器，也就是"引导类加载器"。
 3. 引导类加载器会首先尝试加载类A。如果找到了类A，它就会加载类A并结束请求。如果没有找到，加载请求会返回到扩展类加载器。
@@ -443,8 +436,8 @@ public class MyClassLoader extends ClassLoader {
 MyClassLoader classLoader = new MyClassLoader("mylib.jar");
 Class<?> clazz = classLoader.loadClass("com.example.MyClass");
 ```
-这样就可以避免类名冲突的问题。但需要注意的是，自定义ClassLoader可能会导致类加载器的冲突和内存泄漏等问题，因此需要谨慎使用。
 
+这样就可以避免类名冲突的问题。但需要注意的是，自定义ClassLoader可能会导致类加载器的冲突和内存泄漏等问题，因此需要谨慎使用。
 
 ### 如何判断一个类是无用的类
 
@@ -495,13 +488,16 @@ Class<?> clazz = classLoader.loadClass("com.example.MyClass");
 ![image-20220629095251304](./personal_images/image-20220629095251304.webp)
 
 缺点（中小厂会问到所以加入）：
+
 1. **停顿时间长**：标记-整理算法在进行垃圾回收时，需要首先标记所有可达对象，然后再进行移动和清理。在这个过程中，应用程序的所有线程都需要暂停，这将导致较长的暂停时间，尤其是在处理大量对象或大型堆内存时。
 2. **处理速度慢**：在标记阶段，标记-整理算法需要遍历所有的对象。而在整理阶段，它需要移动对象并更新所有的引用。这个过程比其他的垃圾收集算法（如复制、标记-清除）要慢。
 
 #### 分代收集算法
+
 当前虚拟机的垃圾收集都采用分代收集算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将 Java 堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。比如在新生代中，每次收集都会有大量对象死去，所以可以选择”标记-复制“算法，只需要付出少量对象的复制成本就可以完成每次垃圾收集。而老年代的对象存活几率是比较高的，而且没有额外的空间对它进行分配担保，所以我们必须选择“标记-清除”或“标记-整理”算法进行垃圾收集。
 
 ### 跨代引用假说、弱分代假说 和 强分代假说
+>
 > 为了保证知识的正确性这里摘录周志明老师的《深入理解Java虚拟机》
 
 当前商业虚拟机的垃圾收集器，大多数都遵循了“分代收集”（Generational Collection）的理论进行设计，分代收集名为理论，实质是一套符合大多数程序运行实际情况的经验法则，它建立在两个分代假说之上：
@@ -524,9 +520,11 @@ Class<?> clazz = classLoader.loadClass("com.example.MyClass");
 依据这条假说，我们就不应再为了少量的跨代引用去扫描整个老年代，也不必浪费空间专门记录每一个对象是否存在及存在哪些跨代引用，只需在新生代上建立一个全局的数据结构（该结构被称为“记忆集”，Remembered Set），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。此后当发生Minor GC时，只有包含了跨代引用的小块内存里的对象才会被加入到GCRoots进行扫描。虽然这种方法需要在对象改变引用关系（如将自己或者某个属性赋值）时维护记录数据的正确性，会增加一些运行时的开销，但比起收集时扫描整个老年代来说仍然是划算的。
 
 ### HotSpot 为什么要分为新生代和老年代
+>
 > 这部分内容基于上述的弱分代引用假说，请先补充上面的知识，如果有可忽略
 
 HotSpot JVM 的内存结构分为新生代（Young Generation）和老年代（Old Generation）的设计，是基于一个称为 "弱分代假说"（Weak Generational Hypothesis）的观察：
+
 1. **大部分对象都会很快变得无用**：许多对象在创建后，只会被短暂地使用，然后就可以被回收。比如，一些临时变量、函数调用的栈帧等，都是生命周期很短的对象。
 2. **存活的对象通常能活很久**：一旦对象存活了一段时间，它们通常会继续存活很久。例如，系统中的全局配置、常驻内存的缓存、持久化对象等。
 根据这种假说，将内存分为新生代和老年代可以更有效地进行垃圾收集：
@@ -622,25 +620,31 @@ JDK1.8  默认使用的是 Parallel Scavenge + Parallel Old，如果指定了-XX
 
 > 细节：CMS通常有两个阶段会进行STW（🕊️ 妙记：并发的不会STW）
 > ==第一阶段和第三阶段==
+>
 > - **初始标记（Initial-Mark）阶段**：在这个阶段中，程序中所有的工作线程 (用户线程) 都将会因为  “Stop-The-World” 机制而出现短暂的暂停，这个阶段的主要任务仅仅只是标记出 GC Roots  能直接关联到的对象。一旦标记完成之后就会恢复之前被暂停的所有应用线程。由于直接关联对象比较小，所以这里的速度非常快。
 > - **重新标记（Remark）阶段**：由于在并发标记阶段中，程序的工作线程会和垃圾收集线程同时运行或者交叉运行，因此为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间通常会比初始标记阶段稍长一些，但也远比并发标记阶段的时间短。
 
 > 参考文献：
-> - https://en.wikipedia.org/wiki/Concurrent_mark_sweep_collector
-> - https://www.baeldung.com/jvm-garbage-collectors
-> - https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/cms.html
-> - https://www.herongyang.com/Java-GC/Concurrent-What-Is-CMS-Collector.html
+>
+> - <https://en.wikipedia.org/wiki/Concurrent_mark_sweep_collector>
+> - <https://www.baeldung.com/jvm-garbage-collectors>
+> - <https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/cms.html>
+> - <https://www.herongyang.com/Java-GC/Concurrent-What-Is-CMS-Collector.html>
 
 #### G1 收集器
+>
 > 根据网上搜集的资料：
-> - https://www.oracle.com/technical-resources/articles/java/g1gc.html Oracle官网解释G1
-> - https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html Oracle官网解释G1
-> - https://www.datadoghq.com/blog/java-memory-management/ datadoghq的文章
-> - https://tech.meituan.com/2016/09/23/g1.html 美团技术团队-Java Hotspot G1 GC的一些关键技术
-> - https://ericfu.me/g1-garbage-collector/ G1 垃圾收集器
+>
+> - <https://www.oracle.com/technical-resources/articles/java/g1gc.html> Oracle官网解释G1
+> - <https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html> Oracle官网解释G1
+> - <https://www.datadoghq.com/blog/java-memory-management/> datadoghq的文章
+> - <https://tech.meituan.com/2016/09/23/g1.html> 美团技术团队-Java Hotspot G1 GC的一些关键技术
+> - <https://ericfu.me/g1-garbage-collector/> G1 垃圾收集器
 
 首先，我们介绍 G1 种最核心的两个概念：Region 和 Remember Set。
+
 ##### Heap Regions
+
 如下图所示，G1 垃圾收集器将堆内存空间分成等分的 Regions，物理上不一定连续，逻辑上构成连续的堆地址空间。各个 Mutator 线程（即用户应用的线程）拥有各自的 Thread-Local Allocation Buffer (TLAB），用于降低各个线程分配内存的冲突。
 ![](./personal_images/g1-heap-regions.webp)
 要特别注意的是，**巨型对象（Humongous Object）**，即大小超过 3/4 的 Region 大小的对象会作特殊处理，分配到由一个或多个连续 Region 构成的区域。巨型对象会引起其他一些问题，不过这些已经超出了本文的范畴，总之记得尽量别用就好了。
@@ -648,6 +652,7 @@ JDK1.8  默认使用的是 Parallel Scavenge + Parallel Old，如果指定了-XX
 默认配置下，在满足 Region Size 是 2 的整数幂的前提下，G1 将总内存尽量划分成大约 2048 个 Region。
 
 ##### Remember Set (RSet)
+
 为什么要把堆空间分成 Region 呢？其主要目的是让各个 Region 相对独立，可以分别进行 GC，而不是一次性地把所有垃圾收集掉。我们知道现代 GC 算法都是基于可达性标记，而这个过程必须遍历所有 Live Objects 才能完成。那问题来了，如果为了收集一个 Region 的垃圾，却完整的遍历所有 Live Objects，这也太浪费了！
 
 所以，我们需要一个机制来让各个 Region 能独立地进行垃圾收集，这也就是 Remember Set 存在的意义。`每个 Region 会有一个对应的 Remember Set`，它记录了哪些内存区域中存在对当前 Region 中对象的引用（all locations that might contain pointers to (live) objects within the region）。当一个Region被标记为收集目标时，G1会扫描其对应的RSet，而不是整个Java堆。这样，G1可以在局部（部分Region）执行回收，而不需要停止整个应用（stop-the-world）。
@@ -661,10 +666,10 @@ JDK1.8  默认使用的是 Parallel Scavenge + Parallel Old，如果指定了-XX
 >"dirty"这个术语主要用来表达“该区域有东西被改动了，可能需要注意或处理”。这里的“脏”并不是指“不需要的”或者“应该被清除的”，而是指在该区域中有引用关系发生了变化。这是一种常见的在计算机科学中使用"dirty"的方式，例如在缓存(coherent cache)系统中也存在类似的用法。所以，在G1中，当一个Card被标记为"dirty"时，它表示该Card对应的内存区域有新的或者被修改的对象引用，需要在并发标记阶段进行扫描和处理。（在并发标记阶段，G1会扫描所有dirty的Cards，将新的引用关系（标记为dirty的）添加到对应的Remembered Set中。）
 
 ##### Remember Set 的维护
+
 维护上面所说的 Remember Set 势必需要记录对象的引用，通常的做法是在 set 一个引用的时候插入一段代码，这称为 Write Barrier。为了尽可能降低对 Mutator 线程的影响，Write Barrier 的代码应当尽可能简化。G1 的 Write Barrier 实际上只是一个“通知”：将当前 set 引用的事件放到 Remember Set Log 队列中，交给后台专门的 GC 线程处理。
 ![](./personal_images/g1-remember-set-maintenance.webp)
 Write Barrier 具体实现如下。当发生 X.f = Y 时，假设 rX 为 X 对象的地址，rY 为 Y 对象的地址，则 Write 的同时还会执行以下逻辑：
-
 
 ```
 t = (rX XOR rY) >> LogOfRegionSize  // 对 X, Y 地址右移得到 Region 编号，并将二者做个 XOR
@@ -678,8 +683,8 @@ if (rY == NULL ? 0 : t)  // 忽略两种情况： X.f 被赋值为 NULL，或 X 
 
 极端情况下，如果后台的 GC 进程追不上 Mutator 进程写入的速度，这时候 Mutator 线程会退化到自己处理更新，形成反压机制。
 
-
 ##### Generational Garbage-First
+
 G1 名字来自于 Garbage-First 这个理念，即，以收集到尽可能多的垃圾为第一目标。每次收集时 G1 会选出垃圾最多的几个 Region，进行一次 Stop-the-world 的收集过程。
 
 有趣的是，另一方面 G1 又是一个 Generational （分代）的垃圾收集器，它会从逻辑上将 Region 分成 Young、Old 等不同的 Generation，然后针对它们各自特点应用不同的策略。
@@ -690,7 +695,6 @@ G1 论文中提到它有一个 Pure Garbage-First 的模式，但在现在的资
 
 ![](./personal_images/g1-generation-regions-example.webp)
 
-
 ##### 总结 面试用：清除阶段
 
 1. **初始标记 (Inital Marking)**：标记 GC Roots 能直接关联到的对象，并且修改 TAMS（Top at Mark Start）指针的值，让下一阶段用户线程并发运行时，能够正确的在 Reigin 中分配新对象。G1 为每一个 Reigin 都设计了两个名为 TAMS 的指针，新分配的对象必须位于这两个指针位置以上，位于这两个指针位置以上的对象默认被隐式标记为存活的，不会纳入回收范围；
@@ -700,6 +704,7 @@ G1 论文中提到它有一个 Pure Garbage-First 的模式，但在现在的资
 ![](./personal_images/image-20220628152953093-7e268260.webp)
 
 ##### 详解垃圾回收（Evacuation）
+
 Generational 模式下 G1 的垃圾收集分为两种：Young GC 和 Mixed GC。Young GC 只会涉及到 Young Regions，它将 Eden Region 中存活的对象移动到一个或多个新分配的 Survivor Region，之前的 Eden Region 就被归还到 Free list，供以后的新对象分配使用。
 ![](./personal_images/g1-generation-regions-young-gc-1.webp)
 当区域中对象的 Survive 次数超过阈值（TenuringThreshold）时，Survivor Regions 的对象被移动到 Old Regions；否则和 Eden 的对象一样，继续留在 Survivor Regions 里。
@@ -718,12 +723,12 @@ Mixed GC 的重要性不言而喻：Old Regions 的垃圾就是在这个阶段�
 2. 由于 Young Regions 一定会被收集，我们获得了一个可观的收益：Remember Set 的维护工作不需要考虑 Young 内的引用修改（换句话说 RSet 只关心 old-to-young 和 old-to-old 的引用），当 Young Region 上发生 Evacuation 时我们再去扫描并构建出它的 RSet 即可。
 
 ##### 详解并发标记（Concurrent Marking）
+
 在 Evacuation 之前，我们要通过并发标记来确定哪些对象是垃圾、哪些还活着。G1 中的 Concurrent Marking 是以 Region 为单位的，为了保证结果的正确性，这里用到了 Snapshot-at-the-beginning（SATB）算法。
 
 SATB 算法顾名思义是对 Marking 开始时的一个（逻辑上的）Snapshot 进行标记。为什么要用 Snapshot 呢？下面就是一个直接标记导致问题的例子：对象 X 由于没有被标记到而被标记为垃圾，导致 B 引用失效。
 ![](./personal_images/illustrate-why-need-satb.webp)
 SATB 算法为了解决这一问题，在修改引用 X.f = B 之前插入了一个 Write Barrier，记录下被覆写之前的引用地址。这些地址最终也会被 Marking 线程处理，从而确保了所有在 Marking 开始时的引用一定会被标记到。这个 Write Barrier 伪代码如下：
-
 
 ```
 t = the previous referenced address  // 记录原本的引用地址
@@ -732,15 +737,14 @@ if (t has been marked && t != NULL)  // 如果地址 t 还没来的及标记，�
 通过以上措施，SATB 确保 Marking 开始时存活的对象一定会被标记到。
 ```
 
-
 标记的过程和 CMS 中是类似的，可以看作一个优化版的 DFS：记当前已经标记到的 offset 为 cur，随着标记的进行 cur 不断向后推进。每当访问到地址 < cur 的对象，就对它做深度扫描，递归标记所有应用；反之，对于地址 > cur 的对象，只标记不扫描，等到 cur 推进到那边的时候再去做扫描。
 ![](./personal_images/concurrent-marking.webp)
 上图中，假设当前 cur 指向对象 c，c有两个引用：a 和 e，其中 a 的地址小于 cur，因而做了扫描；而 e 则仅仅是标记。扫描 a 的过程中又发现了对象 b，b 同样被标记并继续扫描。但是 b 引用的 d 在 cur 之后，所以 d 仅仅是被标记，不再继续扫描。
 
 最后一个问题是：如何处理 Concurrent Marking 中新产生的对象？因为 SATB 算法只保证能标记到开始时 snapshot 的对象，对于新出现的那些对象，我们可以简单地认为它们全都是存活的，毕竟数量不是很多。
 
-
 #### CMS和G1有什么区别
+>
 > 个人理解：**G1（Garbage-First）和CMS（Concurrent Mark Sweep）** 都是JVM中的垃圾收集器，它们之间的主要区别在于**G1引入了分区（Region）的概念**，而CMS没有。G1将整个堆内存分成了多个大小相等的区域（region），每个区域都可以是Eden区、Survivor区或Old区。
 
 - 算法实现：**CMS使用标记-清除算法**，而**G1使用标记-整理算法**。标记-清除算法会在垃圾回收过程中产生内存碎片，可能会影响应用程序的性能。而标记-整理算法会在回收时整理内存，减少内存碎片，并将可用内存块紧凑排列，从而提高应用程序的性能。
@@ -749,13 +753,15 @@ if (t has been marked && t != NULL)  // 如果地址 t 还没来的及标记，�
 - 性能：CMS和G1在不同的场景下表现不同。CMS适用于需要快速响应时间和较小内存占用的应用程序，因为它的暂停时间短。G1适用于大型堆内存的应用程序，因为它可以更好地管理内存碎片，并且在执行垃圾回收时可以更好地利用多核CPU。
 
 另外下面是**G1有但是CMS没有**的：
+
 - 分区（Region）：G1将堆内存划分为多个固定大小的分区（Region），每个分区可以是Eden、Survivor或Old区。这使得G1能够更高效地并行回收垃圾，并有助于实现可预测的停顿时间。相比之下，CMS的内存布局采用了传统的分代模型（Young和Old代）。
 - 并发与停顿时间：G1旨在实现低停顿时间，因为它可以在并发阶段执行部分垃圾收集工作，避免了全局停顿。另外，G1可以基于用户指定的停顿时间目标来调整自身的行为。相比之下，CMS的并发能力较弱，它在收集Old代时可能导致较长的停顿时间。
 - 碎片整理（Compaction）：由于G1的分区设计，它可以在回收过程中执行局部的碎片整理，减少内存碎片。而CMS在垃圾回收过程中不执行碎片整理，可能导致内存碎片问题。CMS需要依赖Full GC（包括STW的Serial Old GC）来进行碎片整理，但这会导致较长的停顿时间。
 - 可预测性：G1通过跟踪每个分区的垃圾比例和回收时间，可以更好地预测垃圾回收的效果和停顿时间。这有助于在满足停顿时间目标的前提下，最大限度地提高垃圾回收效率。相比之下，CMS的可预测性较差。
 
 #### ZGC 收集器
-> https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html 美团技术团队-新一代垃圾回收器ZGC的探索与实践
+>
+> <https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html> 美团技术团队-新一代垃圾回收器ZGC的探索与实践
 
 **ZGC（The Z Garbage Collector）** 是JDK 11中推出的一款低延迟垃圾回收器，它的设计目标包括：
 
@@ -763,13 +769,16 @@ if (t has been marked && t != NULL)  // 如果地址 t 还没来的及标记，�
 停顿时间不会随着堆的大小，或者活跃对象的大小而增加；
 支持8MB~4TB级别的堆（未来支持16TB）。
 从设计目标来看，我们知道ZGC适用于大内存低延迟服务的内存管理和回收。本文主要介绍ZGC在低延时场景中的应用和卓越表现，文章内容主要分为四部分：
+
 ##### GC之痛
+
 GC之痛：介绍实际业务中遇到的GC痛点，并分析CMS收集器和G1收集器停顿时间瓶颈；
 ZGC原理：分析ZGC停顿时间比G1或CMS更短的本质原因，以及背后的技术原理；
 ZGC调优实践：重点分享对ZGC调优的理解，并分析若干个实际调优案例；
 升级ZGC效果：展示在生产环境应用ZGC取得的效果。
 
 ##### CMS与G1停顿时间瓶颈
+
 在介绍ZGC之前，首先回顾一下CMS和G1的GC过程以及停顿时间的瓶颈。CMS新生代的Young GC、G1和ZGC都基于标记-复制算法，但算法具体实现的不同就导致了巨大的性能差异。
 
 标记-复制算法应用在CMS新生代（ParNew是CMS默认的新生代垃圾回收器）和G1垃圾回收器中。标记-复制算法可以分为三个阶段：
@@ -782,20 +791,24 @@ ZGC调优实践：重点分享对ZGC调优的理解，并分析若干个实际�
 G1的混合回收过程可以分为标记阶段、清理阶段和复制阶段。
 
 **标记阶段停顿分析**
+
 - 初始标记阶段：初始标记阶段是指从GC Roots出发标记全部直接子节点的过程，该阶段是STW的。由于GC Roots数量不多，通常该阶段耗时非常短。
 - 并发标记阶段：并发标记阶段是指从GC Roots开始对堆中对象进行可达性分析，找出存活对象。该阶段是并发的，即应用线程和GC线程可以同时活动。并发标记耗时相对长很多，但因为不是STW，所以我们不太关心该阶段耗时的长短。
 - 再标记阶段：重新标记那些在并发标记阶段发生变化的对象。该阶段是STW的。
 
 **清理阶段停顿分析**
+
 - 清理阶段清点出有存活对象的分区和没有存活对象的分区，该阶段不会清理垃圾对象，也不会执行存活对象的复制。该阶段是STW的。
 
 **复制阶段停顿分析**
+
 - 复制算法中的转移阶段需要分配新内存和复制对象的成员变量。转移阶段是STW的，其中内存分配通常耗时非常短，但对象成员变量的复制耗时有可能较长，这是因为复制耗时与存活对象数量与对象复杂度成正比。对象越复杂，复制耗时越长。
 四个STW过程中，初始标记因为只标记GC Roots，耗时较短。再标记因为对象数少，耗时也较短。清理阶段因为内存分区数量少，耗时也较短。转移阶段要处理所有存活的对象，耗时会较长。因此，G1停顿时间的瓶颈主要是标记-复制中的转移阶段STW。为什么转移阶段不能和标记阶段一样并发执行呢？主要是G1未能解决转移过程中准确定位对象地址的问题。
 
 G1的Young GC和CMS的Young GC，其标记-复制全过程STW，这里不再详细阐述。
 
 ##### ZGC原理
+
 与CMS中的ParNew和G1类似，ZGC也采用标记-复制算法，不过ZGC对该算法做了重大改进：ZGC在标记、转移和重定位阶段几乎都是并发的，这是ZGC实现停顿时间小于10ms目标的最关键原因。
 
 ZGC垃圾回收周期如下图所示：
@@ -803,6 +816,7 @@ ZGC垃圾回收周期如下图所示：
 ZGC只有三个STW阶段：初始标记，再标记，初始转移。其中，初始标记和初始转移分别都只需要扫描所有GC Roots，其处理时间和GC Roots的数量成正比，一般情况耗时非常短；再标记阶段STW时间很短，最多1ms，超过1ms则再次进入并发标记阶段。即，ZGC几乎所有暂停都只依赖于GC Roots集合大小，停顿时间不会随着堆的大小或者活跃对象的大小而增加。与ZGC对比，G1的转移阶段完全STW的，且停顿时间随存活对象的大小增加而增加。
 
 ##### ZGC关键技术
+
 ZGC通过着色指针和读屏障技术，解决了转移过程中准确访问对象的问题，实现了并发转移。大致原理描述如下：并发转移中“并发”意味着GC线程在转移对象的过程中，应用线程也在不停地访问对象。假设对象发生转移，但对象地址未及时更新，那么应用线程可能访问到旧地址，从而造成错误。而在ZGC中，应用线程访问对象将触发“读屏障”，如果发现对象被移动了，那么“读屏障”会把读出来的指针更新到对象的新地址上，这样应用线程始终访问的都是对象的新地址。那么，JVM是如何判断对象被移动过呢？就是利用对象引用的地址，即着色指针。下面介绍着色指针和读屏障技术细节。
 
 **着色指针**
@@ -830,9 +844,11 @@ Object p = o  // 无需加入屏障，因为不是从堆中读取引用
 o.dosomething() // 无需加入屏障，因为不是从堆中读取引用
 int i =  obj.FieldB  //无需加入屏障，因为不是对象引用
 ```
+
 ZGC中读屏障的代码作用：在对象标记和转移过程中，用于确定对象的引用地址是否满足条件，并作出相应动作。
 
 ##### ZGC并发处理演示
+
 接下来详细介绍ZGC一次垃圾回收周期中地址视图的切换过程：
 
 - **初始化**：ZGC初始化之后，整个内存空间的地址视图被设置为Remapped。程序正常运行，在内存中分配对象，满足一定条件后垃圾回收启动，此时进入标记阶段。
@@ -842,7 +858,6 @@ ZGC中读屏障的代码作用：在对象标记和转移过程中，用于确�
 
 着色指针和读屏障技术不仅应用在并发转移阶段，还应用在并发标记阶段：将对象设置为已标记，传统的垃圾回收器需要进行一次内存访问，并将对象存活信息放在对象头中；而在ZGC中，只需要设置指针地址的第42~45位即可，并且因为是寄存器访问，所以速度比访问内存更快。
 ![](./personal_images/a621733099b8fda2a0f38a8859e6a114213563.webp)
-
 
 #### 其他
 
@@ -855,9 +870,11 @@ ZGC中读屏障的代码作用：在对象标记和转移过程中，用于确�
 - **（青色虚线）**JDK 14 中：删除 CMS 垃圾回收器（JEP363）。
 
 ### 卡表
+
 对于HotSpot JVM，使用了**卡标记（Card Marking）** 技术来解决**老年代到新生代的引用问题（也就是跨代引用问题，2023面试题目之一）**。具体是，使用**卡表（Card Table）** 和**写屏障（Write Barrier）** 来进行标记并加快对GC Roots的扫描。
 
 #### 卡表（Card Table）的概念
+
 卡表（Card Table）是一种用于垃圾收集优化的数据结构，主要用于跟踪从老年代到新生代的对象引用。在Java的HotSpot虚拟机中，卡表与写屏障（Write Barrier）一起工作，用于标记并加快对GC Roots的扫描。
 
 在基于卡表的设计中，通常将堆空间划分为一系列2次幂大小的卡页（Card Page）。每个卡页在卡表中都有一个对应的标记项。当对一个对象引用进行写操作时（例如，改变一个对象的字段为另一个对象的引用），写屏障逻辑将会标记对象所在的卡页为dirty，这个过程被称为卡标记（Card Marking）。
@@ -869,24 +886,28 @@ ZGC中读屏障的代码作用：在对象标记和转移过程中，用于确�
 
 ![card-table](./giant_images/v2-8cec22d735be76cd4a140ac30513ca49_b.webp)
 
-
 #### 卡表在垃圾收集中的作用
+
 在进行垃圾收集时，卡表可以帮助我们快速找到那些可能包含从老年代到新生代的引用的对象，从而避免扫描整个老年代。这对于新生代的垃圾收集（Minor GC）尤其重要，因为新生代的垃圾收集通常比老年代的垃圾收集（Major GC）要频繁得多。
 
 #### 卡表在CMS GC和G1 GC中的应用
+
 CMS（Concurrent Mark Sweep）和G1（Garbage-First）是HotSpot JVM中的两种垃圾收集器。它们都使用卡表来优化垃圾收集过程。在CMS的并发标记阶段，应用线程和GC线程是并发执行的，因此可能产生新的对象或对象关系发生变化。为了提高重新标记的效率，并发标记阶段会把这些发生变化的对象所在的Card标识为Dirty，这样后续阶段就只需要扫描这些Dirty Card的对象，从而避免扫描整个老年代。
 
 #### 虚共享（False Sharing）问题
+
 在高并发环境下，写屏障可能会引发虚共享（false sharing）问题。在高并发情况下，频繁的写屏障很容易发生虚共享，从而带来性能开销。为了解决这个问题，JDK 7引入了一个新的JVM参数-XX:+UseCondCardMark，在执行写屏障之前，先简单的做一下判断。如果卡页已被标识过，则不再进行标识。
 
 > 参考文献如下：
-> - https://stackoverflow.com/questions/19154607/how-actually-card-table-and-writer-barrier-work 卡表和写屏障是如何工作的？
-> - https://tschatzl.github.io/2022/02/15/card-table-card-size.html Card Table Card Size Shenanigans
-> - https://www.mo4tech.com/jvm-card-table.html JVM Card Table
-> - https://www.cnblogs.com/hongdada/p/12016020.html JVM-卡表（Card Table）
-> - http://blog.ragozin.info/2011/06/understanding-gc-pauses-in-jvm-hotspots.html Alexey Ragozin
+>
+> - <https://stackoverflow.com/questions/19154607/how-actually-card-table-and-writer-barrier-work> 卡表和写屏障是如何工作的？
+> - <https://tschatzl.github.io/2022/02/15/card-table-card-size.html> Card Table Card Size Shenanigans
+> - <https://www.mo4tech.com/jvm-card-table.html> JVM Card Table
+> - <https://www.cnblogs.com/hongdada/p/12016020.html> JVM-卡表（Card Table）
+> - <http://blog.ragozin.info/2011/06/understanding-gc-pauses-in-jvm-hotspots.html> Alexey Ragozin
 
-###  TLAB（Thread Local Allocation Buffer）
+### TLAB（Thread Local Allocation Buffer）
+>
 > 关于TLAB的基本理解，它是一个专用于单个线程的小块Eden区域。这种设计可以实现无锁并发快速分配，因为每个线程都有自己的专用区域，所以在对象分配时无需担心其他线程的争用。TLAB的使用提高了在多线程环境中对象分配的性能。
 
 在Java中，所有新的对象分配都应该发生在Eden Space中。将整个堆的子区域用于新的分配是JVM中新分配如此之快的原因之一。为了更快地分配，JVM将Eden空间划分为更多的子区域，每个子区域专用于特定的线程。每个专用区域都称为线程本地分配缓冲区或简称**TLAB（Thread Local Allocation Buffer）**。该机制允许每个线程有一个自己可以使用的TLAB区域，并且只有该线程可以使用该区域。因此，TLAB是每个线程独立的。只要对象在TLAB区域内进行分配，就不需要进行任何类型的同步。在TLAB区域内部进行分配只需要简单的指针碰撞操作。
@@ -896,6 +917,7 @@ CMS（Concurrent Mark Sweep）和G1（Garbage-First）是HotSpot JVM中的两种
 
 **分配满的情况**：
 然而，TLAB并非无限的，某些时刻，它会变满。如果某个线程需要分配一个新对象，但当前的TLAB几乎已满，可能会发生以下两件事情：
+
 - 在TLAB之外分配对象。由于分配直接发生在Eden空间内，因此称为慢速分配（Slow Allocation）。
 - 创建一个新的TLAB并在新的TLAB中分配该对象。从技术上讲，JVM淘汰了旧的TLAB。
 
@@ -907,23 +929,27 @@ CMS（Concurrent Mark Sweep）和G1（Garbage-First）是HotSpot JVM中的两种
 默认情况下，TLAB会为每个线程单独动态调整大小。TLAB的大小会根据Eden的大小、线程数量及分配率等参数重新计算。如果某个线程需要分配一个超出TLAB大小限制的大对象（比如大数组），那么它将被分配到Eden中的共享区域。这样一来，就会需要同步操作。在我的应用程序中，某些对象因其尺寸过大，从未在TLAB中分配过。
 
 此外，如果你的应用程序有特定的需求，JVM也允许手动设置TLAB的大小：
+
 - `-XX:TLABWasteTargetPercent=N` 该参数指定了TLAB（Thread-Local Allocation Buffer）的浪费空间目标百分比。当TLAB内存空间分配后被使用的比例小于该百分比时，JVM会尝试将TLAB的大小调整为更小的值，以减少浪费的空间。默认值是 1%。
-- `-XX:TLABWasteIncrement=N `该参数指定了TLAB内存空间大小的最小增量。当JVM调整TLAB大小时，会将调整后的大小向上增加最小增量的整数倍。默认值是 1KB。
+- `-XX:TLABWasteIncrement=N`该参数指定了TLAB内存空间大小的最小增量。当JVM调整TLAB大小时，会将调整后的大小向上增加最小增量的整数倍。默认值是 1KB。
 - `-XX:+PrintTLAB` 该参数使JVM输出有关TLAB分配使用情况的详细日志信息。这些信息包括TLAB的总分配次数、使用次数、空闲次数以及使用的总空间大小。这些信息可帮助开发人员调整和优化应用程序的内存使用情况。
 
 **分配的对象过大问题**：
 在某些情况下，通过TLAB之外的分配机制来分配对象并不是一件坏事。例如，在小GC之前就可以这样进行。但是，与TLAB内部相比，使用TLAB之外进行的对象分配数量较大。此时，有两种选择：
+
 - 让对象变小
 - 调整TLAB的大小
 
 手动调整TLAB大小并不是最好的选择。毕竟，只有较少的对象类型会分配到TLAB之外。因此，在修复代码时，我们应优先考虑使对象满足分配到TLAB区域内部的条件。具体可以根据以下选择：
+
 - 如果你的应用程序经常需要创建大对象，那么可能需要调整TLAB的大小，以减少在Eden区域进行的慢速分配。但是，增大TLAB的大小也会减少可以同时活动的线程数量，因此需要谨慎权衡。
 - 如果只有少数类型的对象是大对象，那么可能更好的策略是尝试减小这些对象的大小，或者更改程序设计，以避免创建这些大对象。
 
 >参考文献：
->- https://stackoverflow.com/questions/43747221/what-is-a-tlab-thread-local-allocation-buffer
->- https://alidg.me/blog/2019/6/21/tlab-jvm
->- https://www.opsian.com/blog/jvm-tlabs-important-multicore/
+>
+>- <https://stackoverflow.com/questions/43747221/what-is-a-tlab-thread-local-allocation-buffer>
+>- <https://alidg.me/blog/2019/6/21/tlab-jvm>
+>- <https://www.opsian.com/blog/jvm-tlabs-important-multicore/>
 
 ### Minor Gc 和 Full GC 有什么不同呢
 
@@ -947,26 +973,26 @@ CMS（Concurrent Mark Sweep）和G1（Garbage-First）是HotSpot JVM中的两种
 
  **Minor GC**
 
-* 当年轻代空间不足时，就会触发Minor GC，这里的年轻代满指的是 `Eden区满`，Survivor区满不会触发GC。（每次Minor GC会清理年轻代的内存）
-* 因为Java对象大多都具备朝生夕灭的特性，所以**Minor GC非常频繁**，一般回收速度也比较快。这一定义既清晰又易于理解。
-* Minor GC会引发 `STW`，`暂停其它用户的线程，等待垃圾回收线程结束，用户线程才恢复运行`
+- 当年轻代空间不足时，就会触发Minor GC，这里的年轻代满指的是 `Eden区满`，Survivor区满不会触发GC。（每次Minor GC会清理年轻代的内存）
+- 因为Java对象大多都具备朝生夕灭的特性，所以**Minor GC非常频繁**，一般回收速度也比较快。这一定义既清晰又易于理解。
+- Minor GC会引发 `STW`，`暂停其它用户的线程，等待垃圾回收线程结束，用户线程才恢复运行`
 
 **Major GC**
 
-* 指发生在老年代的GC，对象从老年代消失时，我们说 “Major Gc” 或 “Full GC” 发生了
-* 出现了MajorGc，经常会伴随至少一次的Minor GC
-  * 但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程
-  * 也就是在老年代空间不足时，会先尝试触发Minor GC，如果之后空间还不足，则触发Major GC
-* **Major GC的速度一般会比Minor GC慢10倍以上**，STW的时间更长
-* 如果Major GC后，内存还不足，就报OOM了
+- 指发生在老年代的GC，对象从老年代消失时，我们说 “Major Gc” 或 “Full GC” 发生了
+- 出现了MajorGc，经常会伴随至少一次的Minor GC
+  - 但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程
+  - 也就是在老年代空间不足时，会先尝试触发Minor GC，如果之后空间还不足，则触发Major GC
+- **Major GC的速度一般会比Minor GC慢10倍以上**，STW的时间更长
+- 如果Major GC后，内存还不足，就报OOM了
 
 **Full GC**
 
-* 调用System.gc( )时，系统建议执行Full GC，但是不必然执行
-* 老年代空间不足
-* 方法区空间不足
-* **通过Minor GC后进入老年代的平均大小 大于 老年代的可用内存**
-* 由Eden区、survivor space0（From Space）区 向survivor space1（To Space）区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存 小于 该对象大小
+- 调用System.gc( )时，系统建议执行Full GC，但是不必然执行
+- 老年代空间不足
+- 方法区空间不足
+- **通过Minor GC后进入老年代的平均大小 大于 老年代的可用内存**
+- 由Eden区、survivor space0（From Space）区 向survivor space1（To Space）区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存 小于 该对象大小
 
 ### ⭐️对象的创建过程
 
@@ -1106,6 +1132,7 @@ JVM为了实现我们不做赋值操作的对象也可以拿来直接使用在�
 ```
 
 ##### 💦 再举几个例子加深印象
+
 假设我们有以下Java代码：
 
 ```java
@@ -1138,6 +1165,7 @@ public static void main(java.lang.String[]);
 ```
 
 这段字节码表示了创建一个新的Test对象的过程。让我们一步步看：
+
 1. `new # 2`：这个操作是创建一个新的Test对象。#2表示常量池中的一个条目，这个条目指向Test类。在这个阶段，JVM会加载Test类（如果它还没被加载过），然后在堆上为新对象`分配内存`。
 2. `dup`：这个操作将栈顶的元素（也就是新创建的Test对象的引用）复制一份，并将复制的那份压入栈顶。这是因为接下来的invokespecial操作会消耗掉栈顶的对象引用，而我们后面还需要这个引用来存储到本地变量表。
 3. `bipush 10`：将整数10压入操作数栈，为接下来的`<init>`方法调用做准备。
@@ -1145,7 +1173,6 @@ public static void main(java.lang.String[]);
 5. `astore_1`：将栈顶的对象引用（也就是新创建的Test对象的引用）存储到本地变量表的第1个位置（本地变量表的第0个位置通常用于存储this引用或者方法的参数）。
 
 以上就是从字节码角度来看创建一个Java对象的过程。通过这个过程，你应该能更好地理解在JVM层面上，new关键字所做的工作。衍生一下，对于`ArrayList`在字节码层面上，在构造函数的调用过程和我在上面的回答中描述的Test类的构造函数的调用过程类似，都是通过new和invokespecial指令来完成的。不同之处在于，ArrayList的构造函数内部会做一些额外的工作，例如分配内存和添加元素。
-
 
 ##### 🤏总览
 
@@ -1187,7 +1214,9 @@ public static void main(java.lang.String[]);
 优点 不需要额外的开辟一块空间存储引用，在原有对象头中添加指针指向即可，访问对象实体数据的时候效率高
 
 ### 安全点和安全区各代表什么？
+
 #### 概览
+
 **安全点（Safepoint）**：安全点是JVM用于停止所有的Java线程以进行全局操作（如全局垃圾收集）的一种机制。在这些点上，JVM可以确保对象引用和对象状态的一致性。一般来说，JVM会在特定的、可以预知的指令序列上设置安全点。比如方法调用、循环跳转和异常抛出等地方。这些地方的共同特点是，在执行到这些指令时，Java线程的执行状态可以明确地被JVM知晓。
 
 **安全区（Safe Region）**：安全区是在安全点的基础上进一步扩展的概念。在某些情况下，如果一个线程长时间运行在一个无法设置安全点的代码片段中，会阻碍JVM进行全局操作。这时候，就需要引入"安全区"的概念。安全区可以认为是一段代码片段，在这段代码中，所有的引用关系不会发生变化。一旦线程运行在安全区中，那么JVM就可以直接将其挂起。
@@ -1195,7 +1224,6 @@ public static void main(java.lang.String[]);
 ----
 给面试官解释这两个概念时，可以这样说：
 安全点和安全区都是JVM在进行全局操作时用来确保系统状态的一致性的机制。安全点可以看作是在程序运行过程中的特定位置，这些位置可以确保JVM对对象的引用关系和状态有准确的认知。而安全区则是一段特定的代码区域，在这个区域中，线程的引用关系不会发生变化，这样JVM就可以安全地挂起这个线程。这两个概念在垃圾收集和线程同步等操作中都非常重要。
-
 
 > 本节内容摘自周志明老师的《深入理解Java虚拟机》内容
 
@@ -1241,8 +1269,6 @@ public void testMethod2() {
 
 ![image-20220723173000230](./personal_images/image-20220723173000230.webp)
 
-
-
 #### 安全点
 
 在 OopMap 的协助下，HotSpot 可以快速完成根节点枚举了，但一个很现实的问题随之而来：由于引用关系可能会发生变化，这就会导致  OopMap 内容变化的指令非常多，如果为每一条指令都生成对应的  OopMap，那将会需要大量的额外存储空间，这样垃圾收集伴随而来的空间成本就会变得无法忍受的高昂。
@@ -1283,8 +1309,8 @@ public void testMethod2() {
 
 当安全区域中的线程被唤醒并离开安全区域时，它需要检查下主动式中断策略的标志位是否为真（虚拟机是否处于  STW 状态
 
-* 如果为真则继续挂起等待（防止根节点枚举过程中这些被唤醒线程的执行破坏了对象之间的引用关系）
-* 如果为假则标识还没开始 STW 或者 STW 刚刚结束，那么线程就可以被唤醒然后继续执行。
+- 如果为真则继续挂起等待（防止根节点枚举过程中这些被唤醒线程的执行破坏了对象之间的引用关系）
+- 如果为假则标识还没开始 STW 或者 STW 刚刚结束，那么线程就可以被唤醒然后继续执行。
 
 ### 三色标记法
 
@@ -1367,15 +1393,11 @@ Wilson 于 1994 年在理论上证明了，当且仅当以上两个条件同时�
 
 在 HotSpot 虚拟机中，增量更新和原始快照这两种解决方案都有实际应用，CMS 是基于增量更新来做并发标记的，G1、Shenandoah 则是用原始快照来实现
 
-
-
 ### 什么是字节码？类文件结构的组成了解吗？
 
 **Java 字节码**（英语：Java bytecode）是[Java虚拟机](https://zh.wikipedia.org/wiki/Java虚拟机)执行的一种[指令](https://zh.wikipedia.org/wiki/指令)格式。大多数[操作码](https://zh.wikipedia.org/w/index.php?title=操作码&action=edit&redlink=1)都是一个[字节](https://zh.wikipedia.org/wiki/字节)长，而有些操作需要参数，导致了有一些多字节的操作码。而且并不是所有可能的256个操作码都被使用；其中有51个操作码被保留做将来使用。除此之外，原始[Java平台](https://zh.wikipedia.org/wiki/Java平台)开发商，[太阳微系统](https://zh.wikipedia.org/wiki/昇陽微系統)，额外保留了3个代码永久不使用。
 
 > 一个[Java](https://zh.wikipedia.org/wiki/Java)程序员并不需要理解所有的Java字节码。但是，就像[IBM](https://zh.wikipedia.org/wiki/IBM) developerWorks周刊建议的那样：“理解字节码以及理解Java编译器如何生成Java字节码与学习[汇编](https://zh.wikipedia.org/wiki/汇编语言)知识对于[C](https://zh.wikipedia.org/wiki/C)/[C++](https://zh.wikipedia.org/wiki/C%2B%2B)程序员有一样的意义。”
-
-
 
 #### Class 文件结构总结
 
@@ -1564,11 +1586,9 @@ Class 文件存储格式中对方法的描述与对字段的描述几乎采用�
 
 在  Class 文件，字段表，方法表中都可以携带自己的属性表集合，以用于描述某些场景专有的信息。与 Class  文件中其它的数据项目要求的顺序、长度和内容不同，属性表集合的限制稍微宽松一些，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写 入自己定义的属性信息，Java 虚拟机运行时会忽略掉它不认识的属性。
 
-
-
 ### OOM 常见原因及解决方法
 
-> 节选自：StabilityGuide 
+> 节选自：StabilityGuide
 
 当 JVM 内存严重不足时，就会抛出 java.lang.OutOfMemoryError 错误。本文总结了常见的 OOM 原因及其解决方法，如下图所示。如有遗漏或错误，欢迎补充指正。
 
@@ -1732,4 +1752,3 @@ Direct ByteBuffer 的默认大小为 64 MB，一旦使用超出限制，就会�
 - 检查 JVM 参数是否有 `-XX:+DisableExplicitGC` 选项，如果有就去掉，因为该参数会使 `System.gc()` 失效。
 - 检查堆外内存使用代码，确认是否存在内存泄漏；或者通过反射调用 `sun.misc.Cleaner` 的 `clean()` 方法来主动释放被 Direct ByteBuffer 持有的内存空间。
 - 内存容量确实不足，升级配置。
-

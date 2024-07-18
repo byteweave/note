@@ -3,8 +3,10 @@ order: 4
 title: SpringBoot
 category:
   - Spring
+outline: deep
 ---
 # Spring-Boot-Note
+
 - [Spring-Boot-Note](#spring-boot-note)
   - [环境搭建 & 简化部署](#环境搭建--简化部署)
     - [环境搭建](#环境搭建)
@@ -59,7 +61,7 @@ category:
       - [定制Filter](#定制filter)
       - [定制Listener](#定制listener)
   - [源码刨析 嵌入式Servlet原理](#源码刨析-嵌入式servlet原理)
-      - [以Tomcat为例](#以tomcat为例)
+    - [以Tomcat为例](#以tomcat为例)
     - [配置是如何修改原理](#配置是如何修改原理)
     - [小结：](#小结-2)
   - [嵌入式Servlet自动配置原理](#嵌入式servlet自动配置原理)
@@ -90,7 +92,7 @@ category:
     - [@CacheConfig](#cacheconfig)
   - [整合缓存中间件Redis](#整合缓存中间件redis)
   - [自定义RedisCacheManager](#自定义rediscachemanager)
-      - [扩展CacheManager的用法](#扩展cachemanager的用法)
+    - [扩展CacheManager的用法](#扩展cachemanager的用法)
   - [SpringSecurity的简单使用](#springsecurity的简单使用)
     - [Thymeleaf整合SpringSecurity](#thymeleaf整合springsecurity)
     - [**记住我**](#记住我)
@@ -101,6 +103,7 @@ category:
     - [扩展：](#扩展)
       - [shiro默认过滤器](#shiro默认过滤器)
       - [shiro常用的权限控制注解，可以在控制器类上使用](#shiro常用的权限控制注解可以在控制器类上使用)
+
 ## 环境搭建 & 简化部署
 
 ### 环境搭建
@@ -129,8 +132,6 @@ Spring Boot将所有的功能场景都抽取出来，做成一个个的starters�
 在默认包下创建一个启动器 标注为SpringBoot程序**@SpringBootApplication**
 
 **注：这个类必须和controller在同一个包下，不然就无法访问controller**
-
- 
 
 ```java
 @SpringBootApplication
@@ -210,8 +211,6 @@ java -jar 包名既可以运行
 | `spring-boot-starter-web-services`            | Starter 使用 Spring Web Services                                                                         | Pom |
 | `spring-boot-starter-webflux`                 | Starter for building WebFlux applications 使用 Spring Framework 的 Reactive Web 支持                     | Pom |
 | `spring-boot-starter-websocket`               | Starter for building WebSocket applications 使用 Spring Framework 的 WebSocket 支持                      | Pom |
-
-
 
 ## @SpringBootApplication启动原理
 
@@ -318,8 +317,6 @@ public String[] selectImports(AnnotationMetadata annotationMetadata) {
 
 ![4](./img/4.webp)
 
-
-
 可以观察到这个查到包的调用方式：getCandidateConfigurations
 
 ```java
@@ -355,8 +352,6 @@ protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, A
 
 ![5](./img/5.webp)
 
-
-
 这个**FACTORIES_RESOURCE_LOCATION**静态变量也标识了这些**包的路径位置**：
 
 ```java
@@ -371,8 +366,6 @@ public static final String FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factor
 
 将META-INF/spring.factories里面配置的所有通过EnableAutoConfiguration加入到容器中
 
-
-
 ## IDEA 快速构建
 
 ![7](./img/7.webp)
@@ -382,19 +375,15 @@ public static final String FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factor
 resources文件夹中目录结构
 
 - **static**：保存所有的静态资源； js css images；
-- 
+-
 - **templates**：保存所有的模板页面；（Spring Boot默认jar包使用嵌入式的Tomcat，默认不支持JSP页面）；可以使用模板引擎（freemarker、thymeleaf）；
 - **application.properties**：Spring Boot应用的配置文件；可以修改一些默认设置；
-
-
 
 ## YAML
 
 XML和YAML区别：
 
 XML：
-
- 
 
 ```
 <server>
@@ -403,8 +392,6 @@ XML：
 ```
 
 YAML:
-
- 
 
 ```
 server:
@@ -415,7 +402,7 @@ server:
 
 写法：Key:(空格)Value
 
-其他数组、对象语法可以阅读：https://juejin.im/post/5c1a4a0fe51d45344a1c3d2a
+其他数组、对象语法可以阅读：<https://juejin.im/post/5c1a4a0fe51d45344a1c3d2a>
 
 将YAML的配置的属性映射到实体类中**@ConfigurationProperties**对实体类的配置进行绑定
 
@@ -477,8 +464,6 @@ public class Person {
 Person{lastName='张三', age=18, isBoss=null, birthday=Sun Feb 02 00:00:00 CST 2020, map={k1=12, k2=13}, list=[lisi, zhaoliu], dog=Dog{name='小狗', age=2}}
 ```
 
-
-
 ## 单元测试
 
 注：测试类和主类要包名要统一才能启动
@@ -487,7 +472,7 @@ Person{lastName='张三', age=18, isBoss=null, birthday=Sun Feb 02 00:00:00 CST 
 
 **使用SSM和使用SpringBoot的Test功能的对比**
 
-### SSM 
+### SSM
 
 ```java
 //@RunWith 指定用哪种驱动进行单元测试，默认是junit
@@ -549,8 +534,6 @@ class Springboot02ApplicationTests {
 }
 ```
 
-
-
 ## @ConfigurationProperties&@Value
 
 |                         | @ConfigurationProperties | @Value     |
@@ -581,8 +564,6 @@ public class Person {
 ```json
 Person{lastName='zhiyu', age=20, isBoss=true, birthday=null, map=null, list=null, dog=null}
 ```
-
-
 
 ## @PropertySource&@ImportResource
 
@@ -682,8 +663,6 @@ public class TestConfig {
 }
 ```
 
-
-
 ### 配置文件的占位符
 
 在配置文件可以使用${} 取值random
@@ -700,13 +679,9 @@ person.dog.name=${person.last-name}_dog
 person.dog.age=2
 ```
 
- 
-
 ```json
 Person{lastName='20b50b74-4721-4d80-a786-f0e726b195f3', age=-790018533, isBoss=null, birthday=Sun Feb 02 00:00:00 CST 2020, map={k2=13, k1=12}, list=[a, b], dog=Dog{name='6a1ab7a2-c65c-4df5-be46-3614ef009efd_dog', age=2}}
 ```
-
-
 
 ### 多Profile支持
 
@@ -763,8 +738,6 @@ java -jar 包名 --spring.profiles.active=dev/pro
 
 ![11](./img/11.webp)
 
-
-
 ## 加载配置文件的位置和优先级
 
 测试**类路径下**（port:8080）和**类路径的config**文件夹下（port:8081）：
@@ -773,15 +746,11 @@ java -jar 包名 --spring.profiles.active=dev/pro
 
 ![12.1](./img/12.1.webp)
 
-
-
 前两个同时存在，再把一个端口为8083的文件放在**根目录下**：
 
 ![13](./img/13.webp)
 
 ![13.1](./img/13.1.webp)
-
-
 
 前三个同时存在，把这个文件放到**根目录下的config**（端口为8084）：
 
@@ -809,8 +778,6 @@ server:
 **运维配置**
 还可以使用命令行：
 java -jar 包名 --spring.config.location=指定配置文件绝对路径
-
-
 
 ## 自动配置原理
 
@@ -915,8 +882,6 @@ SpringBoot 启动的时候加载主配置类，开启了自动配置功能 @Enab
 - `xxxAutoConfiguration`：自动配置类给容器中添加组件。
 - `xxxProperties`：封装配置文件中相关属性。
 
-
-
 ## @Conditional相关注解和Debug
 
 @ConditionalOnBean:仅仅在当前上下文中存在某个对象时，才会实例化一个Bean
@@ -926,8 +891,6 @@ SpringBoot 启动的时候加载主配置类，开启了自动配置功能 @Enab
 @ConditionalOnMissingClass:某个class不位于类路径上才会实例化一个Bean
 @ConditionalOnNotWebApplication:不是web应用
 
-
-
 开启SpringBoot debug查看使用了哪些配置类
 
 ![19](./img/19.webp)
@@ -936,17 +899,11 @@ SpringBoot 启动的时候加载主配置类，开启了自动配置功能 @Enab
 
 ![20](./img/20.webp)
 
-
-
-
-
 ## 日志框架SL4J
 
 SL4J的几种实现方式：
 
 ![21](./img/21.webp)
-
-
 
 ### 其他日志框架转换为SL4J
 
@@ -959,8 +916,6 @@ Hibernate（jboss-logging）
 转换方式如下：
 
 ![22](./img/22.webp)
-
-
 
 ### SpringBoot和日志关系
 
@@ -1012,8 +967,6 @@ logging.pattern.file=%d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} =
 2020-07-18 === [SpringContextShutdownHook] === INFO  === o.s.scheduling.concurrent.ThreadPoolTaskExecutor ==== Shutting down ExecutorService 'applicationTaskExecutor'
 ```
 
-
-
 ### 指定日志框架
 
 在类路径下直接指定：logback.xml logback-spring.xml log4j2-spring.xml log4j2.xml
@@ -1023,8 +976,6 @@ logging.pattern.file=%d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} =
 logback.xml：直接被日志框架识别
 
 logback-spring.xml：可以使用SpringBoot日志的Profile的高级功能
-
- 
 
 ```
 <layout class="ch.qos.logback.classic.PatternLayout">
@@ -1040,8 +991,6 @@ logback-spring.xml：可以使用SpringBoot日志的Profile的高级功能
 ### 切换日志框架
 
 直接在Maven的exclude即可
-
-
 
 ## 静态资源映射规则
 
@@ -1085,13 +1034,11 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
 ![27](./img/27.webp)
 
 路径是在：org\webjars\jquery\3.5.1\jquery-3.5.1.jar!\META-INF\resources\webjars\jquery\3.5.1\jquery.js
-网页访问路径：http://localhost:8080/webjars/jquery/3.5.1/jquery.js
+网页访问路径：<http://localhost:8080/webjars/jquery/3.5.1/jquery.js>
 
 ![28](./img/28.webp)
 
 2. 可以设置静态资源的有关参数：（ResourceProperties.class）
-
- 
 
 ```java
 @ConfigurationProperties(prefix = "spring.resources", ignoreUnknownFields = false)
@@ -1114,7 +1061,7 @@ public class ResourceProperties {
 
 ![29](./img/29.webp)
 
-**网页访问路径：http://localhost:8080/asserts/js/Chart.min.js**
+**网页访问路径：<http://localhost:8080/asserts/js/Chart.min.js>**
 
 4. 欢迎页的加载方式：也在WebMvcAutoConfiguration这个类中
 
@@ -1143,8 +1090,6 @@ private Resource getIndexHtml(String location) {
 }
 ```
 
-
-
 ## 模板引擎Thymeleaf
 
 整合SpringBoot
@@ -1169,8 +1114,6 @@ public class ThymeleafProperties {
 **注：**Controller中的@RequestMapping("/su")不能和return"xx"重复
 
 ![30](./img/30.webp)
-
-
 
 ## SpringMVC自动配置原理
 
@@ -1296,8 +1239,6 @@ Spring MVC 使用`HttpMessageConverter`接口转换 HTTP 请求和响应。
 
 这个组件是从容器中确定的（WebMvcAutoConfiguration.class）：
 
- 
-
 ```
 public WebMvcAutoConfigurationAdapter(ResourceProperties resourceProperties, WebMvcProperties mvcProperties,
                                       ListableBeanFactory beanFactory, ObjectProvider<HttpMessageConverters> messageConvertersProvider,
@@ -1313,8 +1254,6 @@ public WebMvcAutoConfigurationAdapter(ResourceProperties resourceProperties, Web
 ```
 
 从构造函数就可以看出这个类是获取了所有的HttpMessageConverter
-
- 
 
 ```
 public HttpMessageConverters(HttpMessageConverter<?>... additionalConverters) {
@@ -1422,8 +1361,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
 public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer {
 ```
 
- 
-
 ```java
 @Configuration(proxyBeanMethods = false)
 public static class EnableWebMvcConfiguration extends DelegatingWebMvcConfiguration implements ResourceLoaderAware {
@@ -1444,8 +1381,6 @@ public void setConfigurers(List<WebMvcConfigurer> configurers) {
 
 ![33](./img/33.webp)
 
-
-
 以addViewControllers为例:
 
 ```java
@@ -1457,7 +1392,7 @@ public void addViewControllers(ViewControllerRegistry registry) {
 }
 ```
 
-### 小结：
+### 小结
 
 1. 实现了WebMvcConfigurer接口，SpringBoot就会将这个一起实现，如刚刚MyMvcConfig
 
@@ -1516,8 +1451,6 @@ public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
                      ValidationAutoConfiguration.class })
 public class WebMvcAutoConfiguration {
 ```
-
-
 
 ## 国际化
 
@@ -1661,8 +1594,6 @@ public LocaleResolver localeResolver() {
 }
 ```
 
-
-
 ## 拦截器
 
 以拦截登录为例
@@ -1733,8 +1664,6 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
         .addResourceLocations("classpath:/static/");
 }
 ```
-
-
 
 ## 错误处理原理
 
@@ -1891,8 +1820,6 @@ private ModelAndView resolve(String viewName, Map<String, Object> model) {
 }
 ```
 
-
-
 ## 定制错误页面和JSON错误数据
 
 定制错误页面
@@ -1909,8 +1836,6 @@ message 异常消息
 errors JSR303 数据校验的错误
 
 ![43](./img/43.webp)
-
-
 
 ### 定制一个JSON数据
 
@@ -2009,11 +1934,9 @@ public interface RequestAttributes {
 
 ![44](./img/44.webp)
 
-
-
 ## 嵌入式Servlet
 
-### Spring两种配置方式：
+### Spring两种配置方式
 
 - xxxConfigurer扩展配置
 - xxxCustomizer定制配置
@@ -2175,8 +2098,6 @@ public class MyServerConfig {
 
 ![46](./img/46.webp)
 
-
-
 ## 源码刨析 嵌入式Servlet原理
 
 WebServerFactoryCustomizer嵌入式Servlet的自动配置类：**ServletWebServerFactoryAutoConfiguration**
@@ -2247,8 +2168,6 @@ class ServletWebServerFactoryConfiguration {
 
 ![47](./img/47.webp)
 
-
-
 #### 以Tomcat为例
 
 进入TomcatServletWebServerFactory，可以看到这个方法，配置Tomcat基本环境，返回一个嵌入式Servlet容器：
@@ -2289,8 +2208,6 @@ protected TomcatWebServer getTomcatWebServer(Tomcat tomcat) {
 
 ![48](./img/48.webp)
 
-
-
 ### 配置是如何修改原理
 
 看ServletWebServerFactoryAutoConfiguration中，在自动配置之前先导入了BeanPostProcessorsRegistrar（后置处理器，Bean初始化前后，创建完对象没有赋值的除四害工作）
@@ -2298,8 +2215,6 @@ protected TomcatWebServer getTomcatWebServer(Tomcat tomcat) {
 ```java
 @Import({ ServletWebServerFactoryAutoConfiguration.BeanPostProcessorsRegistrar.class,
 ```
-
- 
 
 ```java
 @Override
@@ -2348,7 +2263,7 @@ private Collection<WebServerFactoryCustomizer<?>> getCustomizers() {
 }
 ```
 
-### 小结：
+### 小结
 
 1. 根据导入情况，添加相应的容器工厂：
 
@@ -2380,8 +2295,6 @@ private Collection<WebServerFactoryCustomizer<?>> getCustomizers() {
         return this.customizers;
     }
 ```
-
-
 
 ## 嵌入式Servlet自动配置原理
 
@@ -2512,8 +2425,6 @@ ServletWebServerFactory factory = getWebServerFactory();
 
 7. 嵌入式Servlet容器创建并启动Tomcat
 
-
-
 ## 整合JDBC
 
 YAML配置：
@@ -2529,7 +2440,7 @@ spring:
 
 ### 自动配置原理
 
-DataSourceProperties 
+DataSourceProperties
 
 1. DataSourceConfiguration，根据配置创建数据源，默认使用Tomcat连接池，可以使用spring.datasource.type自定义数据源类型
 
@@ -2554,8 +2465,6 @@ static class Generic {
 2. DataSourceAutoConfiguration
 
 3. JdbcTemplateAutoConfiguration
-
-
 
 ## 整合Druid
 
@@ -2643,8 +2552,6 @@ public class DruidConfig {
 
 ![60](./img/60.webp)
 
-
-
 SpringBoot2 使用YAML直接配置监控器和访问地址：
 
 ```yaml
@@ -2694,8 +2601,6 @@ spring:
         login-password: 123
 ```
 
-
-
 ## 整合Mybatis
 
 ### Maven
@@ -2740,8 +2645,6 @@ public class Employee {
     private String email;
     private Integer dId;
 ```
-
- 
 
 ```java
 public class Department {
@@ -2822,8 +2725,6 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
 ```
-
-
 
 ## SpringBoot启动原理
 
@@ -3134,8 +3035,6 @@ public void refresh() throws BeansException, IllegalStateException {
 }
 ```
 
-
-
 ## （基于原理的测试笔记）测试启动的四个类
 
 测试类：
@@ -3153,8 +3052,6 @@ public class HelloApplicationContextInitializer implements ApplicationContextIni
     }
 }
 ```
-
- 
 
 ```java
 public class HelloSpringApplicationRunListener implements SpringApplicationRunListener {
@@ -3190,8 +3087,6 @@ public class HelloSpringApplicationRunListener implements SpringApplicationRunLi
 }
 ```
 
- 
-
 ```java
 @Component
 public class HelloApplicationRunner implements ApplicationRunner {
@@ -3201,8 +3096,6 @@ public class HelloApplicationRunner implements ApplicationRunner {
     }
 }
 ```
-
- 
 
 ```java
 @Component
@@ -3222,8 +3115,6 @@ cn.zhiyucs.listener.HelloApplicationContextInitializer
 org.springframework.boot.SpringApplicationRunListener=\
 cn.zhiyucs.listener.HelloSpringApplicationRunListener
 ```
-
-
 
 ## 自定义starters【暂时无法理解】
 
@@ -3263,8 +3154,6 @@ org.springframework.boot.autoconfigure.
 
 ![66](./img/66.webp)
 
-
-
 ## SpringBoot缓存基本使用
 
 应用--缓存--数据库的关系
@@ -3295,8 +3184,6 @@ org.springframework.boot.autoconfigure.
 | caches          | root object        | 当前方法调用使用的缓存列表（如@Cacheable(value={"cache1", "cache2"})），则有两个cache                                         | #root.caches[0].name |
 | *argument name* | evaluation context | 方法参数的名字. 可以直接 #参数名 ，也可以使用 #p0或#a0 的形式，0代表参数的索引；                                              | #iban 、 #a0 、 #p0  |
 | result          | evaluation context | 方法执行后的返回值（仅当方法执行之后的判断有效，如‘unless’，’cache put’的表达式 ’cache evict’的表达式beforeInvocation=false） | #result              |
-
-
 
 ### 基本使用
 
@@ -3394,8 +3281,6 @@ public class MyCacheConfig {
  @Cacheable(cacheNames = {"emp"},key = "keyGenerator")
 ```
 
-
-
 ## 缓存自动配置原理
 
 ```java
@@ -3480,8 +3365,6 @@ protected Object lookup(Object key) {
 
 ### 以@Cacheable为例
 
- 
-
 ```java
 @Cacheable(cacheNames = {"emp"},condition = "#id>0",unless = "#result == null")
 ```
@@ -3516,8 +3399,6 @@ public static Object generateKey(Object... params) {
     }
 }
 ```
-
- 
 
 ```java
 @Nullable
@@ -3568,17 +3449,13 @@ public void put(Object key, @Nullable Object value) {
 
 lookup找到缓存后会转到 ValueWrapper get(Object key) 得到值；
 
+### 小结
 
-
-### 小结：
-
-#### 核心：
+#### 核心
 
 1. 使用CacheManager（ConcurrentMapCacheManager）按照名字得到Cache组件（ConcurrentMapCache）
 
 2. key使用的是keyGennerator生成，默认是SimpleKeyGennerator
-
-
 
 1. @Cacheable标注的方法执行前先检查缓存中有没有这个数据，默认按照参数的值作为key去查询缓存，如果没有就运行方法并将结果放入缓存。 以后再来调用就直接使用缓存中的数据
 
@@ -3598,8 +3475,6 @@ public class SimpleKeyGenerator implements KeyGenerator {
 
 ![73](./img/73.webp)
 
-
-
 #### 思路整理
 
 ConcurrentMapCacheManager通过getCache获取到name（key）
@@ -3613,8 +3488,6 @@ createConcurrentMapCache -> lookup根据key(key有生成策略)查找缓存的�
 ![74](./img/74.webp)
 
 Cache cache = this.cacheMap.get(name);调回缓存的数据-> 返回方法
-
-
 
 ## @CachePut的使用
 
@@ -3650,11 +3523,9 @@ public Employee getEmp(Integer id) {
 
 ![76](./img/76.webp)
 
-
-
 ## @CacheEvict 清除缓存
 
-@CacheEvict要清除name为emp缓存中key为id的所有数据 
+@CacheEvict要清除name为emp缓存中key为id的所有数据
 
 ```java
 /**
@@ -3670,8 +3541,6 @@ public void deleteEmp(Integer id) {
     //        employeeMapper.deleteEmpById(id);
 }
 ```
-
-
 
 ## @Caching和@CacheConfig
 
@@ -3708,8 +3577,6 @@ public Employee getEmpByLastName(String lastName) {
 @Service
 public class EmployeeService {
 ```
-
-
 
 ## 整合缓存中间件Redis
 
@@ -3775,8 +3642,6 @@ public class MyRedisConfig {
 RedisTemplate<Object, Employee> employeeRedisTemplate;
 ```
 
- 
-
 ```java
 @Test
 public void test02() {
@@ -3787,8 +3652,6 @@ public void test02() {
 ```
 
 ![77](./img/77.webp)
-
-
 
 ## 自定义RedisCacheManager
 
@@ -3846,8 +3709,6 @@ public Department getDeptById(Integer id) {
 
 ![79](./img/79.webp)
 
-
-
 #### 扩展CacheManager的用法
 
 判断在Redis中是否存在这个nosql，如果有就直接使用缓存，不查数据库，如果没有就查数据库缓存数据：
@@ -3865,13 +3726,9 @@ public Department getDeptById(Integer id) {
 }
 ```
 
-
-
 ## SpringSecurity的简单使用
 
 导包：
-
- 
 
 ```
 <dependency>
@@ -3886,16 +3743,12 @@ public Department getDeptById(Integer id) {
 
 继承： WebSecurityConfigurerAdapter
 
- 
-
 ```
 @EnableWebSecurity
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 
 定义授权规则和定义认证规则
-
- 
 
 ```
 // 定义授权规则
@@ -3988,8 +3841,6 @@ http.formLogin().usernameParameter("user").passwordParameter("pwd")
                 .loginPage("/userlogin"); // 默认post请求的/login是处理登录
 ```
 
- 
-
 ```html
 <div align="center">
         <form th:action="@{/userlogin}" th:method="post">
@@ -4000,8 +3851,6 @@ http.formLogin().usernameParameter("user").passwordParameter("pwd")
         </form>
     </div>
 ```
-
-
 
 ## Shiro的简单使用
 
@@ -4164,8 +4013,6 @@ public ResultMap logout() {
 }
 ```
 
-
-
 ### 整合Shiro启动器
 
 导包：
@@ -4297,29 +4144,26 @@ public String loginAuth(@PathParam("username") String username,
 }
 ```
 
-### 扩展：
+### 扩展
 
 #### shiro默认过滤器
 
-- anon	AnonymousFilter	指定url可以匿名访问
-- authc	FormAuthenticationFilter	指定url需要form表单登录，默认会从请求中获取username、password,rememberMe等参数并尝试登录，如果登录不了就会跳转到loginUrl配置的路径。我们也可以用这个过滤器做默认的登录逻辑，但是一般都是我们自己在控制器写登录逻辑的，自己写的话出错返回的信息都可以定制嘛。
-- authcBasic	BasicHttpAuthenticationFilter	指定url需要basic登录
-- logout	LogoutFilter	登出过滤器，配置指定url就可以实现退出功能，非常方便
-- noSessionCreation	NoSessionCreationFilter	禁止创建会话
-- perms	PermissionsAuthorizationFilter	需要指定权限才能访问
-- port	PortFilter	需要指定端口才能访问
-- rest	HttpMethodPermissionFilter	将http请求方法转化成相应的动词来构造一个权限字符串，这个感觉意义不大，有兴趣自己看源码的注释
-- roles	RolesAuthorizationFilter	需要指定角色才能访问
-- ssl	SslFilter	需要https请求才能访问
-- user	UserFilter	需要已登录或“记住我”的用户才能访问
+- anon AnonymousFilter 指定url可以匿名访问
+- authc FormAuthenticationFilter 指定url需要form表单登录，默认会从请求中获取username、password,rememberMe等参数并尝试登录，如果登录不了就会跳转到loginUrl配置的路径。我们也可以用这个过滤器做默认的登录逻辑，但是一般都是我们自己在控制器写登录逻辑的，自己写的话出错返回的信息都可以定制嘛。
+- authcBasic BasicHttpAuthenticationFilter 指定url需要basic登录
+- logout LogoutFilter 登出过滤器，配置指定url就可以实现退出功能，非常方便
+- noSessionCreation NoSessionCreationFilter 禁止创建会话
+- perms PermissionsAuthorizationFilter 需要指定权限才能访问
+- port PortFilter 需要指定端口才能访问
+- rest HttpMethodPermissionFilter 将http请求方法转化成相应的动词来构造一个权限字符串，这个感觉意义不大，有兴趣自己看源码的注释
+- roles RolesAuthorizationFilter 需要指定角色才能访问
+- ssl SslFilter 需要https请求才能访问
+- user UserFilter 需要已登录或“记住我”的用户才能访问
 
 #### shiro常用的权限控制注解，可以在控制器类上使用
 
-- @RequiresGuest	只有游客可以访问
-- @RequiresAuthentication	需要登录才能访问
-- @RequiresUser	已登录的用户或“记住我”的用户能访问
-- @RequiresRoles	已登录的用户需具有指定的角色才能访问
-- @RequiresPermissions	已登录的用户需具有指定的权限才能访问
-
-
-
+- @RequiresGuest 只有游客可以访问
+- @RequiresAuthentication 需要登录才能访问
+- @RequiresUser 已登录的用户或“记住我”的用户能访问
+- @RequiresRoles 已登录的用户需具有指定的角色才能访问
+- @RequiresPermissions 已登录的用户需具有指定的权限才能访问

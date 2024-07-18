@@ -3,6 +3,7 @@ order: 2
 title: SpringMVC
 category:
   - Spring
+outline: deep
 ---
 # SpringMVC ALL IN ONE
 
@@ -76,13 +77,13 @@ category:
   - [源码分析 异常处理](#源码分析-异常处理)
     - [HandlerExceptionResolver的实现类](#handlerexceptionresolver的实现类)
   - [【小结】SpringMVC的运行流程](#小结springmvc的运行流程)
-      - [1. 所有请求，前端控制器（DispatcherServlet）调用doDispatch进行处理](#1-所有请求前端控制器dispatcherservlet调用dodispatch进行处理)
-      - [2. 根据HandlerMapping的请求应色号信息找到，处理当前的请求，处理执行链](#2-根据handlermapping的请求应色号信息找到处理当前的请求处理执行链)
-      - [3. 根据当前处理器找到它的适配器](#3-根据当前处理器找到它的适配器)
-      - [4. 拦截器的preHandler先执行](#4-拦截器的prehandler先执行)
-      - [5. 适配器执行目标方法，返回ModelAndView](#5-适配器执行目标方法返回modelandview)
-      - [6. 拦截器的postHandler执行](#6-拦截器的posthandler执行)
-      - [7. 渲染页面，处理结果](#7-渲染页面处理结果)
+    - [1. 所有请求，前端控制器（DispatcherServlet）调用doDispatch进行处理](#1-所有请求前端控制器dispatcherservlet调用dodispatch进行处理)
+    - [2. 根据HandlerMapping的请求应色号信息找到，处理当前的请求，处理执行链](#2-根据handlermapping的请求应色号信息找到处理当前的请求处理执行链)
+    - [3. 根据当前处理器找到它的适配器](#3-根据当前处理器找到它的适配器)
+    - [4. 拦截器的preHandler先执行](#4-拦截器的prehandler先执行)
+    - [5. 适配器执行目标方法，返回ModelAndView](#5-适配器执行目标方法返回modelandview)
+    - [6. 拦截器的postHandler执行](#6-拦截器的posthandler执行)
+    - [7. 渲染页面，处理结果](#7-渲染页面处理结果)
   - [SpringMVC和Spring的整合（分工明确）](#springmvc和spring的整合分工明确)
     - [合并](#合并)
     - [分容器](#分容器)
@@ -163,7 +164,7 @@ public class MyFirstController {
 
 不指定配置文件的用法：
 
-如果**不用 ` <init-param> </init-param>`** 指定配置文件，它会在WEB-INF下找到**`<servlet-name>springmvc</servlet-name>`**的springmvc-servlet：
+如果**不用 `<init-param> </init-param>`** 指定配置文件，它会在WEB-INF下找到**`<servlet-name>springmvc</servlet-name>`**的springmvc-servlet：
 
 ![d02c1842-8ae0-48fa-969d-046b41e75649](./images/d02c1842-8ae0-48fa-969d-046b41e75649.webp)
 
@@ -175,15 +176,13 @@ public class MyFirstController {
 <a href="hello">进入Hello页面</a>
 ```
 
-地址是：http://localhost:8080/SpringMVC_01_war_exploded/hello
+地址是：<http://localhost:8080/SpringMVC_01_war_exploded/hello>
 
 ```xml
 <a href="/hello">进入Hello页面</a>
 ```
 
-地址是：http://localhost:8080/hello
-
-
+地址是：<http://localhost:8080/hello>
 
 ## @RequestMapping的其他属性
 
@@ -235,8 +234,6 @@ public class MyFirstController {
 ### produces
 
 给响应头加上content-type：text/html;charset=utf-8
-
-
 
 ## ant风格的url和@PathVariable
 
@@ -290,8 +287,6 @@ REST的解释：
 - Re（Representation） 表现层
 - ST（State Transfer）状态转化
 
-
-
 ## 获取请求信息
 
 ### @RequestMapping 获取参数 path?xxx= xxx
@@ -334,8 +329,6 @@ REST的解释：
         return "cookie!!";
     }
 ```
-
-
 
 ## 使用 POJO 对象绑定请求参数值
 
@@ -402,8 +395,6 @@ public class Book {
 
 ![60a719d2-b67c-473a-9250-cdd72fe9ed7f](./images/60a719d2-b67c-473a-9250-cdd72fe9ed7f.webp)
 
-
-
 ## 使用tomcat原生API
 
 在Maven中加入依赖：
@@ -451,8 +442,6 @@ JSP通过EL表达式可以取到数据：
 </html>
 ```
 
-
-
 ## 数据输出 Model和ModelMap
 
 ### 使用Model
@@ -485,8 +474,6 @@ BindingAwareModelMap保存的数据都会放在**请求域**中
 
 ![c7d7120d-838d-407a-bbdd-b8bd10f973e1](./images/c7d7120d-838d-407a-bbdd-b8bd10f973e1.webp)
 
-
-
 ## 数据输出 ModelAndView使用
 
 ```java
@@ -504,8 +491,6 @@ BindingAwareModelMap保存的数据都会放在**请求域**中
         return mv;
     }
 ```
-
-
 
 ## 数据输出 @SessionAttributes
 
@@ -529,8 +514,6 @@ public class IndexController {
 ```
 
 **注意：**@SessionAttributes的参数 -- names必须包含要传入session的key，如果没有sesssion域中就没有这个数据
-
-
 
 ## 数据输出 @ModelAttribute
 
@@ -590,8 +573,6 @@ public class Hello2ModelController {
     }
 }
 ```
-
-
 
 ## 源码分析 DispatcherServlet
 
@@ -696,8 +677,6 @@ processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchExc
 processedRequest = checkMultipart(request);
 ```
 
- 
-
 ```java
 // Determine handler for the current request.
 // 根据当前请求决定（哪个类来处理）处理器
@@ -712,8 +691,6 @@ if (mappedHandler == null) {
     return;
 }
 ```
-
- 
 
 ```java
 // Determine handler adapter for the current request.
@@ -744,8 +721,6 @@ mv modelandview，要转到的地址
 */
 processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 ```
-
-
 
 ### getHandler的详细
 
@@ -817,8 +792,6 @@ HandlerMapping的实现类：
 
 ![5c5d0e95-e1e9-4aec-951e-8ee90a9b9ab1](./images/5c5d0e95-e1e9-4aec-951e-8ee90a9b9ab1.webp)
 
-
-
 ## 源码分析 SpringMVC的九大组件
 
 以下组件都来自类：**DispatcherServlet**
@@ -879,8 +852,6 @@ protected void initStrategies(ApplicationContext context) {
 
 ![4d99f2f0-fa40-407e-a576-b964fbd6f2ec](./images/4d99f2f0-fa40-407e-a576-b964fbd6f2ec.webp)
 
-
-
 ## 源码分析 @ModelAttribute
 
 1. 有注解：保存注解信息了，最终得到这个注解应该对应的值
@@ -904,9 +875,9 @@ protected void initStrategies(ApplicationContext context) {
 
    6. 拿到之前创建好的对象，使用数据绑定器（WebDataBinder）将请求中每一个数据绑定到这个对象中
 
-4. 
+4.
 
-5. 
+5.
 
 ## 视图解析 转发和重定向
 
@@ -927,8 +898,6 @@ protected void initStrategies(ApplicationContext context) {
         return "forward:/success.jsp";
     }
 ```
-
-
 
 ## 源码分析 视图解析
 
@@ -1111,8 +1080,6 @@ protected void renderMergedOutputModel(
 
 ![84be0a06-b3b9-4f4c-9a18-d8b07a1cd1fd](./images/84be0a06-b3b9-4f4c-9a18-d8b07a1cd1fd.webp)
 
-
-
 ## 视图解析 JSTL 国际化
 
 导入Maven -- taglib
@@ -1167,8 +1134,6 @@ protected void renderMergedOutputModel(
 </body>
 </html>
 ```
-
-
 
 ## 数据绑定 mvc:annotation-driver
 
@@ -1252,8 +1217,6 @@ public class Person {
     </bean>
 ```
 
-
-
 ## 数据校验 校验注解&去错误页面
 
 ### 提示：IDEA使用 alt + shift + insert 进入多行编辑模式
@@ -1263,8 +1226,6 @@ public class Person {
 ------
 
 \1. 导包
-
- 
 
 ```
 <dependency>
@@ -1286,8 +1247,6 @@ public class Person {
 
 \2. 给实体类加上需要的校验注解
 
- 
-
 ```
 @NotEmpty
 private Integer id;
@@ -1304,8 +1263,6 @@ private String email;
 
 \3. 告诉SpringMVC这个实体类需要校验 **@Valid**
 
- 
-
 ```
 @RequestMapping(value = "/birth", method = RequestMethod.POST)
 public String birth(@Valid Person person, Model model) {
@@ -1314,8 +1271,6 @@ public String birth(@Valid Person person, Model model) {
 ```
 
 \4. 获取校验结果：BindingResult，紧跟@Valid后面
-
- 
 
 ```
 @RequestMapping(value = "/birth", method = RequestMethod.POST)
@@ -1334,8 +1289,6 @@ public String birth(@Valid Person person, BindingResult result, Model model) {
 获取错误消息：**getDefaultMessage**
 
 获取错误字段：**getField**
-
- 
 
 ```
 @RequestMapping(value = "/birth", method = RequestMethod.POST)
@@ -1414,8 +1367,6 @@ Length.java.lang.String=length must be between {1} and {2}.
 private Integer id;
 ```
 
-
-
 ## SpringMVC对AJAX的支持
 
 导包：
@@ -1493,8 +1444,6 @@ public Collection<Person> ajaxGetAll() {
 </script>
 ```
 
-
-
 ## 请求体 @ResponseBody
 
 使用的要求：
@@ -1546,8 +1495,6 @@ public String recRequestBody(@RequestBody(required = false)Person person) {
 Person{id=2, name='ZHANGSAN', birthday=null, gender='男'
 ```
 
-
-
 ## 获取请求头 @HttpEntity
 
 **@HttpEntity**比**@RequestBody**更强，可以直接拿到请求头的所有，
@@ -1567,8 +1514,6 @@ Person{id=2, name='ZHANGSAN', birthday=null, gender='男'
 ```
 <{host=[localhost:8080], user-agent=[Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0], accept=[text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8], accept-language=[zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2], accept-encoding=[gzip, deflate], connection=[keep-alive], referer=[http://localhost:8080/SpringMVC_04_war_exploded/], cookie=[JSESSIONID=3944762874A51FC04663B252095F6AB7; Idea-c46feb8f=7b368810-f802-4784-8798-e6c8a43ae387], upgrade-insecure-requests=[1]}>
 ```
-
-
 
 ## @ResponseEntity 返回响应式数据
 
@@ -1620,8 +1565,6 @@ ResponseEntity<String> customHeader() {
         .body("Custom header set");
 }
 ```
-
-
 
 ## 文件下载及文件上传
 
@@ -1750,8 +1693,6 @@ public String upload(@RequestParam("username") String username,@RequestParam("pa
 }
 ```
 
-
-
 ## 拦截器及多拦截器
 
 拦截器的基本方法：
@@ -1842,8 +1783,6 @@ FirstInterceptor afterCompletion invoke....
 拦截器的postHandle是按照逆序执行
 
 拦截器的afterCompletion是按照逆序执行
-
-
 
 ## 源码分析 拦截器
 
@@ -1955,8 +1894,6 @@ if (!mappedHandler.applyPreHandle(processedRequest, response)) {
     return;
 }
 ```
-
-
 
 ## 国际化
 
@@ -2077,13 +2014,11 @@ SessionLocaleResolver & LocaleChangeInterceptor 工作原理
 
 ![f135df2d-8df3-4660-8b18-e6918bd9af36](./images/f135df2d-8df3-4660-8b18-e6918bd9af36.webp)
 
-
-
 ## 异常处理 @ExceptionHandler
 
 ### 处理异常的一般步骤
 
-首先假设一个异常的存在： 
+首先假设一个异常的存在：
 
 ```java
 @RequestMapping("/handler01")
@@ -2124,8 +2059,6 @@ public ModelAndView handleException01(Exception e) {
 当访问参数i = 0时，就会处理这个异常
 
 ![15acf3ed-c8e8-4cc4-82d6-d45e8026af63](./images/15acf3ed-c8e8-4cc4-82d6-d45e8026af63.webp)
-
-
 
 ## 异常处理 @ResponseStatus
 
@@ -2170,11 +2103,9 @@ public String handler03(){}
 [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
 ```
 
-
-
 ## 源码分析 异常处理
 
-同样出发点时doDispatch 
+同样出发点时doDispatch
 
 ```java
 processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
@@ -2306,8 +2237,6 @@ else if (ex instanceof AsyncRequestTimeoutException) {
 
 ![d897564b-ad6a-40ec-95d1-91d1fabe74ac](./images/d897564b-ad6a-40ec-95d1-91d1fabe74ac.webp)
 
-
-
 ## 【小结】SpringMVC的运行流程
 
 #### 1. 所有请求，前端控制器（DispatcherServlet）调用doDispatch进行处理
@@ -2369,8 +2298,6 @@ render(mv, request, response);
 ```
 
 ![43de9505-cdc5-4593-9f65-94086766ed1a](./images/43de9505-cdc5-4593-9f65-94086766ed1a.webp)
-
-
 
 ## SpringMVC和Spring的整合（分工明确）
 

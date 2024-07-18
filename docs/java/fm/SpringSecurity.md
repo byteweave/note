@@ -3,6 +3,7 @@ order: 6
 title: SpringSecurity
 category:
   - Spring
+outline: deep
 ---
 - [Spring Security 基础](#spring-security-基础)
   - [Spring Security 对比 Shiro](#spring-security-对比-shiro)
@@ -76,15 +77,15 @@ category:
 
 ### Spring Security 核心
 
-* Authentication：身份认证，用户登录的验证
-* Authorization：访问授权，授权资源的访问权限
-* 安全防护，防止跨站请求，session攻击等
+- Authentication：身份认证，用户登录的验证
+- Authorization：访问授权，授权资源的访问权限
+- 安全防护，防止跨站请求，session攻击等
 
 ### 对比shiro
 
-* Spring Security对OAuth支持更友好
-* Spring Security在网络安全方面更好
-* 通常来说，shiro入门更加容易，使用起来也非常简单，这也是造成shiro的使用量一直高于Spring Security的主要原因
+- Spring Security对OAuth支持更友好
+- Spring Security在网络安全方面更好
+- 通常来说，shiro入门更加容易，使用起来也非常简单，这也是造成shiro的使用量一直高于Spring Security的主要原因
 
 ## Http Basic认证模式
 
@@ -157,9 +158,9 @@ public interface PasswordEncoder {
 }
 ```
 
-* encode 加密密码，hash值是不能被逆向解密的。
-* matches 用来校验用户输入密码rawPassword，和加密后的hash值encodedPassword是否匹配。
-* upgradeEncoding 判断当前的密码是否需要升级。也就是是否需要重新加密？需要的话返回true，不需要的话返回fasle。默认实现是返回false。
+- encode 加密密码，hash值是不能被逆向解密的。
+- matches 用来校验用户输入密码rawPassword，和加密后的hash值encodedPassword是否匹配。
+- upgradeEncoding 判断当前的密码是否需要升级。也就是是否需要重新加密？需要的话返回true，不需要的话返回fasle。默认实现是返回false。
 
 #### 测试
 
@@ -223,20 +224,20 @@ Spring Security的登录认证并不需要我们自己去写登录认证的Contr
 protected void configure (HttpSecurity http) throws Exception {
     http.csrf().disable()// 禁用跨站csrf攻击防御
         .formLogin()
-        	.loginPage("/login.html") // 一旦用户的请求没有权限就跳转到这个页面
-        	.loginProcessingUrl("/login") // 登录表单form中action的地址，也就是处理认证请求的路径
-        	.usernameParameter("username") // 登录表单form中用户名输入框input的name名，不修改的话默认是username
-        	.passwordParameter("password") // form中密码输入框input的name名，不修改的话默认是password
-        	.defaultSuccessUrl("/") // 登录认证成功后默认转跳的路径
+         .loginPage("/login.html") // 一旦用户的请求没有权限就跳转到这个页面
+         .loginProcessingUrl("/login") // 登录表单form中action的地址，也就是处理认证请求的路径
+         .usernameParameter("username") // 登录表单form中用户名输入框input的name名，不修改的话默认是username
+         .passwordParameter("password") // form中密码输入框input的name名，不修改的话默认是password
+         .defaultSuccessUrl("/") // 登录认证成功后默认转跳的路径
         .and()
-        	.authorizeRequests()
-        	.antMatchers("/login.html","/login").permitAll()// 不需要通过登录验证就可以被访问的资源路径
-        	.antMatchers("/","/biz1","/biz2") // 资源路径匹配
-        		.hasAnyAuthority("ROLE_user","ROLE_admin")  // user角色和admin角色都可以访问
+         .authorizeRequests()
+         .antMatchers("/login.html","/login").permitAll()// 不需要通过登录验证就可以被访问的资源路径
+         .antMatchers("/","/biz1","/biz2") // 资源路径匹配
+          .hasAnyAuthority("ROLE_user","ROLE_admin")  // user角色和admin角色都可以访问
         //                    .antMatchers("/syslog","/sysuser")  // 资源路径匹配
         //                        .hasAnyRole("admin")  // admin角色可以访问
-        	.antMatchers("/syslog").hasAuthority("sys:log")
-        	.antMatchers("/sysuser").hasAuthority("sys:user")
+         .antMatchers("/syslog").hasAuthority("sys:log")
+         .antMatchers("/sysuser").hasAuthority("sys:user")
         .anyRequest()
         .authenticated();// 所有请求都需要登录认证才能访问
 }
@@ -244,12 +245,12 @@ protected void configure (HttpSecurity http) throws Exception {
 
 逻辑小结：
 
-* 首先关闭跨站攻击防御（*scrf*）
-* 使用.*formLogin*() 开启模式
-* 配置登录页、前端传入的账号和密码、成功后跳转
-* 然后（*and*）开始认证（*authorizeRequests*）
-* 添加认证的跳转地址（*antMatchers*）和跳转该地址需要的权限（*permitAll*、*hasAuthority*）
-* 最后加上任何请求（*anyRequest*）和认证才能访问（*authenticated*）
+- 首先关闭跨站攻击防御（*scrf*）
+- 使用.*formLogin*() 开启模式
+- 配置登录页、前端传入的账号和密码、成功后跳转
+- 然后（*and*）开始认证（*authorizeRequests*）
+- 添加认证的跳转地址（*antMatchers*）和跳转该地址需要的权限（*permitAll*、*hasAuthority*）
+- 最后加上任何请求（*anyRequest*）和认证才能访问（*authenticated*）
 
 #### 创建自定义角色
 
@@ -385,9 +386,9 @@ public class AjaxResponse {
 
 成功处理，以下为代码和注意事项：
 
-* 记得@Component
-* 继承的是SavedRequestAwareAuthenticationSuccessHandler
-* ObjectMapper是Spring Boot默认集成的JSON数据处理类库Jackson中的类
+- 记得@Component
+- 继承的是SavedRequestAwareAuthenticationSuccessHandler
+- ObjectMapper是Spring Boot默认集成的JSON数据处理类库Jackson中的类
 
 ```java
 @Component
@@ -423,13 +424,13 @@ public class MyAuthenticationSuccessHandler
 ```java
 http.csrf().disable()// 禁用跨站csrf攻击防御
     .formLogin()
-    	.loginPage("/login.html") // 一旦用户的请求没有权限就跳转到这个页面
-    	.loginProcessingUrl("/login") // 登录表单form中action的地址，也就是处理认证请求的路径
-    	.usernameParameter("username") // 登录表单form中用户名输入框input的name名，不修改的话默认是username
-    	.passwordParameter("password") // form中密码输入框input的name名，不修改的话默认是password
+     .loginPage("/login.html") // 一旦用户的请求没有权限就跳转到这个页面
+     .loginProcessingUrl("/login") // 登录表单form中action的地址，也就是处理认证请求的路径
+     .usernameParameter("username") // 登录表单form中用户名输入框input的name名，不修改的话默认是username
+     .passwordParameter("password") // form中密码输入框input的name名，不修改的话默认是password
     //                    .defaultSuccessUrl("/") // 登录认证成功后默认转跳的路径
-    	.successHandler(mySuccessHandler)
-    	.failureHandler(myFailureHandler)
+     .successHandler(mySuccessHandler)
+     .failureHandler(myFailureHandler)
 ```
 
 #### 前端处理
@@ -453,10 +454,10 @@ $.ajax({
         password
     },
     success(resp) {
-		....
+  ....
     },
     error(e) {
-		...
+  ...
     }
 });
 ```
@@ -541,7 +542,7 @@ server.servlet.session.cookie.secure=true
 - **maxSessionsPreventsLogin** 提供两种session保护策略：
   - true表示已经登录就不予许再次登录，
   - false表示允许再次登录但是之前的登录账户会被踢下线
-- **expiredSessionStrategy **表示自定义一个session被下线(超时)之后的处理策略。
+- **expiredSessionStrategy**表示自定义一个session被下线(超时)之后的处理策略。
 
 如果不使用前后端分离，被踢下线后的策略可以：
 
@@ -580,8 +581,6 @@ public void onExpiredSessionDetected(SessionInformationExpiredEvent event)
 }
 ```
 
-
-
 # Spring Security 进阶篇
 
 ## RBAC权限模型
@@ -600,15 +599,13 @@ RBAC权限模型核心授权逻辑如下：
 
 ![image-20210527230359492](https://gitee.com/kyrzy0416/imagebed/raw/master/img/image-20210527230359492.webp)
 
-
-
 ## 动态加载RBAC数据
 
 提纲：
 
-* Dao层实现UserDetails接口，设置set方法
-* Service层实现UserDetailsService接口，完成loadUserByUsername方法
-* 配置Security中的configure(AuthenticationManagerBuilder auth)
+- Dao层实现UserDetails接口，设置set方法
+- Service层实现UserDetailsService接口，完成loadUserByUsername方法
+- 配置Security中的configure(AuthenticationManagerBuilder auth)
 
 ### 实现Dao层接口和Service接口
 
@@ -633,14 +630,14 @@ boolean enabled;  //账号是否可用
 
 设置对应的实体类
 
->  IDEA中Generator -- Setter即可设置成功
+> IDEA中Generator -- Setter即可设置成功
 
 实例代码如下：
 
 注意点（此坑整整浪费了3天时间）：
 
-* 在设置enable的时候注意书写enable，不要写成enabled或者其他，不然无法从Mybatis中取出数据，导致默认是false一直登陆不上去！
-* 在数据库中保存enable字段应使用tinyint
+- 在设置enable的时候注意书写enable，不要写成enabled或者其他，不然无法从Mybatis中取出数据，导致默认是false一直登陆不上去！
+- 在数据库中保存enable字段应使用tinyint
 
 ```java
 public class MyUserDetails implements UserDetails {
@@ -837,8 +834,6 @@ public void configure(AuthenticationManagerBuilder auth) throws Exception {
 }
 ```
 
-
-
 ### 资源鉴权规则
 
 简而言之：当前访问的路径和当前用户所拥有权限的路径是否匹配
@@ -890,8 +885,6 @@ public boolean hasPermission(HttpServletRequest request, Authentication authenti
 > .anyRequest().access("@rbacService.hasPermission(request,authentication)")
 > ```
 
-
-
 ## SPEL权限表达式
 
 Spring Express Language
@@ -928,19 +921,19 @@ Spring Express Language
 
 ### Method表达式安全控制
 
-* @PreAuthorize 注解适合进入方法前的权限验证。
+- @PreAuthorize 注解适合进入方法前的权限验证。
 
 > ```java
 > @PreAuthorize("hasRole('admin')")
 > ```
 
-* @PostAuthorize 在方法执行后再进行权限验证,适合根据返回值结果进行权限验证。
+- @PostAuthorize 在方法执行后再进行权限验证,适合根据返回值结果进行权限验证。
 
 > ```java
 > @PostAuthorize("returnObject.name == authentication.name")
 > ```
 
-* @PreFilter 针对参数进行过滤,下文代码表示针对ids参数进行过滤，只有id为偶数的元素才被作为参数传入函数。
+- @PreFilter 针对参数进行过滤,下文代码表示针对ids参数进行过滤，只有id为偶数的元素才被作为参数传入函数。
 
 ```java
 //当有多个对象是使用filterTarget进行标注
@@ -950,7 +943,7 @@ public void delete(List<Integer> ids, List<String> usernames) {
 }
 ```
 
-* @PostFilter 针对返回结果进行过滤，特别适用于集合类返回值，过滤集合中不符合表达式的对象。
+- @PostFilter 针对返回结果进行过滤，特别适用于集合类返回值，过滤集合中不符合表达式的对象。
 
 ```java
 @PostFilter("filterObject.name == authentication.name")
@@ -996,11 +989,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 > <label><input type="checkbox" name="remember-me"/>记住密码</label>
 > ```
 
-
-
 它有两个默认行为：
 
-* 前后端分离的项目，如果要判断是否为记住我，上传的数据名默认为"remember-me"：
+- 前后端分离的项目，如果要判断是否为记住我，上传的数据名默认为"remember-me"：
 
 ```json
 data: {
@@ -1010,9 +1001,7 @@ data: {
 },
 ```
 
-* 2周内免登录
-
-
+- 2周内免登录
 
 Spring Security的记住我cookie使用Base64实现的：
 
@@ -1208,14 +1197,14 @@ kaptcha.textproducer.font.names=宋体,楷体,微软雅黑
 
 配置完之后创建配置类，倒入配置信息：
 
-* 使用@Value从配置中导入值
-* 创建DefaultKaptcha 方法，一般取名为：kaptchaProducer，加上@Bean注解
-  * 实例化DefaultKaptcha、Properties 类
-  * 利用properties.setProperty导入配置
-  * 实例化Config 类，传入properties
-  * DefaultKaptcha利用设置配置的方法
-  * 返回DefaultKaptcha
-* 加上@Component注解和@PropertySource（标注peoperties的位置）
+- 使用@Value从配置中导入值
+- 创建DefaultKaptcha 方法，一般取名为：kaptchaProducer，加上@Bean注解
+  - 实例化DefaultKaptcha、Properties 类
+  - 利用properties.setProperty导入配置
+  - 实例化Config 类，传入properties
+  - DefaultKaptcha利用设置配置的方法
+  - 返回DefaultKaptcha
+- 加上@Component注解和@PropertySource（标注peoperties的位置）
 
 示例代码如下：
 
@@ -1265,8 +1254,8 @@ public class CaptchaConfig {
 
 导读：
 
-* captchaProducer.createText() 生成验证码文字
-* KaptchaForm 保存Session中验证码的信息（验证码、过期时间）
+- captchaProducer.createText() 生成验证码文字
+- KaptchaForm 保存Session中验证码的信息（验证码、过期时间）
 
 #### 创建验证码信息类
 
@@ -1291,8 +1280,6 @@ public class KaptchaForm {
     }
 }
 ```
-
-
 
 #### 把验证码传到Session前端
 
@@ -1350,9 +1337,7 @@ public class KaptchaController {
 - 比对不通过，抛出SessionAuthenticationException异常，交给AuthenticationFailureHandler处理
 - 最后将KaptchaCodeFilter放在UsernamePasswordAuthenticationFilter表单过滤器之前执行。
 
-
-
-首先，创建一个Filter类继承OncePerRequestFilter 
+首先，创建一个Filter类继承OncePerRequestFilter
 
 > ```java
 > public class KaptchaFilter extends OncePerRequestFilte
@@ -1477,8 +1462,8 @@ jwt:
   expiration: 3600000
 ```
 
-* secret是用来为JWT基础信息加密和解密的密钥
-* expiration是JWT令牌的有效时间（毫秒）
+- secret是用来为JWT基础信息加密和解密的密钥
+- expiration是JWT令牌的有效时间（毫秒）
 
 ##### JWT模板引入
 
@@ -1608,16 +1593,16 @@ public class JWTUtil {
 
 先序：（官方文档）介绍AuthenticationManager 、SecurityContextHolder、SecurityContext
 
-* AuthenticationManager ：AuthenticationManager 是一个API，定义了Spring Security如何过滤的认证方式，然后由调用AuthenticationManager 的控制器在 SecurityContextHolder 上设置返回的身份验证。
+- AuthenticationManager ：AuthenticationManager 是一个API，定义了Spring Security如何过滤的认证方式，然后由调用AuthenticationManager 的控制器在 SecurityContextHolder 上设置返回的身份验证。
 
-* SecurityContextHolder：SecurityContextHolder是Spring Security存储已认证身份的细节。Spring Security 不关心 SecurityContextHolder 是如何填充的。如果它包含一个值，则将其用作当前经过身份验证的用户。指定用户已通过身份验证的最简单方法是直接设置 SecurityContextHolder。
+- SecurityContextHolder：SecurityContextHolder是Spring Security存储已认证身份的细节。Spring Security 不关心 SecurityContextHolder 是如何填充的。如果它包含一个值，则将其用作当前经过身份验证的用户。指定用户已通过身份验证的最简单方法是直接设置 SecurityContextHolder。
 
 ![securitycontextholder](https://gitee.com/kyrzy0416/imagebed/raw/master/img/securitycontextholder.webp)
 
-* SecurityContext：SecurityContext 是从 SecurityContextHolder 获得的。 SecurityContext 包含一个 Authentication 对象（包含如下信息）
-  * 主体（principal） - 标识用户。当使用用户名/密码进行身份验证时，这通常是 UserDetails 的一个实例。 
-  * 凭据（credentials） - 通常是密码。在许多情况下，这将在用户通过身份验证后被清除，以确保它不会泄露。 
-  * 权限（authorities） - GrantedAuthoritys 是授予用户的高级权限。一些示例是角色或范围。
+- SecurityContext：SecurityContext 是从 SecurityContextHolder 获得的。 SecurityContext 包含一个 Authentication 对象（包含如下信息）
+  - 主体（principal） - 标识用户。当使用用户名/密码进行身份验证时，这通常是 UserDetails 的一个实例。
+  - 凭据（credentials） - 通常是密码。在许多情况下，这将在用户通过身份验证后被清除，以确保它不会泄露。
+  - 权限（authorities） - GrantedAuthoritys 是授予用户的高级权限。一些示例是角色或范围。
 
 认证拦截的流程如下：
 
@@ -1820,4 +1805,3 @@ CorsConfigurationSource corsConfigurationSource() {
     return source;
 }
 ```
-

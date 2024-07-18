@@ -6,6 +6,7 @@ title: 分布式
 category:
   - 分布式
   - 八股文
+outline: deep
 ---
 
 ## 🔗 分布式
@@ -71,8 +72,6 @@ CAP 理论的提出者布鲁尔在提出 CAP 猜想的时候，并没有详细�
 1. **ZooKeeper 保证的是 CP。** 任何时刻对 ZooKeeper 的读请求都能得到一致性的结果，但是， ZooKeeper 不保证每次请求的可用性比如在 Leader 选举过程中或者半数以上的机器不可用的时候服务就是不可用的。
 2. **Eureka 保证的则是 AP。** Eureka 在设计的时候就是优先保证 A （可用性）。在 Eureka 中不存在什么 Leader 节点，每个节点都是一样的、平等的。因此  Eureka 不会像 ZooKeeper 那样出现选举过程中或者半数以上的机器不可用的时候服务就是不可用的情况。 Eureka  保证即使大部分节点挂掉也不会影响正常提供服务，只要有一个节点是可用的就行了。只不过这个节点上的数据可能并不是最新的。
 3. **Nacos 不仅支持 CP 也支持 AP。**
-
-
 
 #### Base理论
 
@@ -218,8 +217,6 @@ Basic Paxos 中存在 3 个重要的角色：
 
 举例如下：假如现在一共有 3 个将军 A，B 和  C，每个将军都有一个随机时间的倒计时器，倒计时一结束，这个将军就把自己当成大将军候选人，然后派信使传递选举投票的信息给将军 B 和 C，如果将军 B 和 C 还没有把自己当作候选人（自己的倒计时还没有结束），并且没有把选举票投给其他人，它们就会把票投给将军 A，信使回到将军 A 时，将军 A 知道自己收到了足够的票数，成为大将军。在有了大将军之后，是否需要进攻就由大将军 A  决定，然后再去派信使通知另外两个将军，自己已经成为了大将军。如果一段时间还没收到将军 B 和 C  的回复（信使可能会被暗杀），那就再重派一个信使，直到收到回复。
 
-
-
 ##### 共识算法
 
 共识是可容错系统中的一个基本问题：即使面对故障，服务器也可以在共享状态上达成一致。
@@ -346,8 +343,6 @@ broadcastTime << electionTimeout << MTBF
 
 一般来说，broadcastTime 一般为 `0.5～20ms`，electionTimeout 可以设置为 `10～500ms`，MTBF 一般为一两个月。
 
-
-
 ### 了解RPC吗？
 
 一言蔽之：**RPC （Remote Procedure Call）的出现就是为了让你调用远程方法像调用本地方法一样简单。**
@@ -378,8 +373,6 @@ broadcastTime << electionTimeout << MTBF
 
 **最后，对于 RPC 的原理，希望小伙伴不单单要理解，还要能够自己画出来并且能够给别人讲出来。因为，在面试中这个问题在面试官问到 RPC 相关内容的时候基本都会碰到。**
 
-
-
 ### 有哪些常见的 RPC 框架？
 
 我们这里说的 RPC 框架指的是可以让客户端直接调用服务端方法，就像调用本地方法一样简单的框架，比如我下面介绍的  Dubbo、Motan、gRPC这些。 如果需要和 HTTP 协议打交道，解析和封装 HTTP 请求和响应。这类框架并不能算是“RPC  框架”，比如Feign
@@ -398,10 +391,8 @@ Dubbo 是由阿里开源，后来加入了 Apache 。正式由于 Dubbo 的出�
 
 Dubbo 算的是比较优秀的国产开源项目了，它的源码也是非常值得学习和阅读的！
 
-- Github ：https://github.com/apache/incubator-dubbo
-- 官网：https://dubbo.apache.org/zh/
-
-
+- Github ：<https://github.com/apache/incubator-dubbo>
+- 官网：<https://dubbo.apache.org/zh/>
 
 #### Motan
 
@@ -411,10 +402,8 @@ Motan 是新浪微博开源的一款 RPC 框架，据说在新浪微博正支撑
 
 不过，我不推荐你在实际项目中使用 Motan。如果你要是公司实际使用的话，还是推荐 Dubbo ，其社区活跃度以及生态都要好很多。
 
-- 从 Motan 看 RPC 框架设计：http://kriszhang.com/motan-rpc-impl/
-- Motan 中文文档：https://github.com/weibocom/motan/wiki/zh_overview
-
-
+- 从 Motan 看 RPC 框架设计：<http://kriszhang.com/motan-rpc-impl/>
+- Motan 中文文档：<https://github.com/weibocom/motan/wiki/zh_overview>
 
 #### gRPC
 
@@ -434,10 +423,8 @@ gRPC 是 Google 开源的一个高性能、通用的开源 RPC 框架。其由�
 
 不过，gRPC 的设计导致其几乎没有服务治理能力。如果你想要解决这个问题的话，就需要依赖其他组件比如腾讯的 PolarisMesh（北极星）了。
 
-- Github：https://github.com/grpc/grpc
-- 官网：https://grpc.io/
-
-
+- Github：<https://github.com/grpc/grpc>
+- 官网：<https://grpc.io/>
 
 #### Thrift
 
@@ -445,10 +432,8 @@ Apache Thrift 是 Facebook 开源的跨语言的 RPC 通信框架，目前已经
 
 `Thrift`支持多种不同的**编程语言**，包括`C++`、`Java`、`Python`、`PHP`、`Ruby`等（相比于 gRPC 支持的语言更多 ）。
 
-- 官网：https://thrift.apache.org/
-- Thrift 简单介绍：https://www.jianshu.com/p/8f25d057a5a9
-
-
+- 官网：<https://thrift.apache.org/>
+- Thrift 简单介绍：<https://www.jianshu.com/p/8f25d057a5a9>
 
 #### 总结
 
@@ -468,8 +453,6 @@ Dubbo 也是 Spring Cloud Alibaba 里面的一个组件。
 
 综上，如果是 Java 后端技术栈，并且你在纠结选择哪一种 RPC 框架的话，我推荐你考虑一下 Dubbo
 
-
-
 ### 微服务的4种部署策略
 
 > 概要：
@@ -478,8 +461,6 @@ Dubbo 也是 Spring Cloud Alibaba 里面的一个组件。
 > 2. 滚动发布：逐步更新系统实例，一次只更新少量服务器，在更新过程中保持新旧版本的一致性，便于回滚，但部署时间较长。
 > 3. 金丝雀发布：将新版本应用发布给一部分用户，逐步扩大范围，以确保系统稳定性。金丝雀发布是灰度发布的一种方式。
 > 4. A/B测试：在黑与白之间进行灰度发布，一部分用户开始使用新版本，逐渐扩大范围。AB测试能够保证整体系统稳定，并提供用户反馈。
-
-
 
 #### 蓝绿发布
 
@@ -495,8 +476,6 @@ Dubbo 也是 Spring Cloud Alibaba 里面的一个组件。
 
 当确信对外提供服务的蓝色系统工作正常，不对外提供服务的绿色系统已经不再需要的时候，蓝色系统正式成为对外提供服务系统，成为新的绿色系统。原先的绿色系统可以销毁，将资源释放出来，用于[部署下一个蓝色系统。
 
-
-
 #### 滚动发布
 
 一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。
@@ -508,8 +487,6 @@ Dubbo 也是 Spring Cloud Alibaba 里面的一个组件。
 相对于蓝绿发布需要一套完备的机器不同， 滚动发布只需要一台机器(这儿这是为了理解， 实际可能是多台)， 我们只需要将部分功能部署在这台机器上， 然后去替换正在运行的机器。
 
 如上图， 将更新后的功能部署在Server1 上， 然后Server1去替换正在运行的Server， 替换下来的物理机又可以继续部署Server2的新版本， 然后去替换正在工作的Server2 ， 以此类推， 直到替换完所有的服务器， 至此 ，服务更新完成。
-
-
 
 #### 灰度发布
 
@@ -533,8 +510,6 @@ Dubbo 也是 Spring Cloud Alibaba 里面的一个组件。
 6. 将“金丝雀”服务器重新添加到负载均衡列表中（连通性和健康检查）。
 7. 如果“金丝雀”在线使用测试成功，升级剩余的其他服务器。（否则就回滚）
 
-
-
 #### A/B 测试
 
 A/B测试和蓝绿发布、滚动发布以及金丝雀发布，完全是两回事。
@@ -549,29 +524,33 @@ A/B测试时，线上同时运行多个版本的服务，这些服务通常会�
 
 ![IkvkyLKbsflnJEJIDagwRQ4](./personal_images/IkvkyLKbsflnJEJIDagwRQ4.webp)
 
-
-
 ### GateWay和Nginx的相同点和不同点在那里？
+
 Nginx 可以被配置成一个 API Gateway（比如，Amazon API Gateway, Kong, Apigee, Azure API Gateway 等等）。然而，API Gateway 和 Nginx 还是有一些不同的。以下是 Nginx 和 API Gateway 的一些相同和不同点：
 
 相同点：
+
 1. 转发请求：两者都能作为反向代理服务器，将来自客户端的请求转发到相应的服务。
 2. 负载均衡：两者都可以对到达的请求进行负载均衡，以便在多个服务器间均匀分配负载。
 3. 安全性：两者都可以提供一些安全性特性，比如SSL终结、访问控制等。
 
 不同点：
+
 1. 功能的全面性：API Gateway 通常提供了比 Nginx 更为全面的功能，包括请求路由、API版本控制、API密钥管理、OAuth 令牌分发、速率限制、访问授权等等。
 2. 扩展性：API Gateway 通常更具有扩展性，可以通过插件系统增加更多功能。
 3. 维护和配置：由于 Nginx 更简单，因此其维护和配置通常比 API Gateway 要容易些。
 
 ### GateWay需要注册到Nacos中吗？如何注册的？
+
 Nacos是阿里巴巴开源的一个更现代、更动态、更易于使用的服务发现、配置和服务管理平台。使用Nacos，你可以轻松实现服务的自动发现、自动配置、自动负载平衡。
 
 在微服务架构中，API Gateway 也被视为一个服务，它可以注册到服务发现组件（如Nacos）中。注册后，其它服务可以通过服务发现来找到 Gateway，同时 Gateway 也可以发现其它服务。注册 Gateway 到 Nacos 可以使得服务之间的发现和通信更加容易和高效。
 
 以下是一个基于Spring Cloud Gateway 和 Nacos 的示例，展示如何将 Gateway 注册到 Nacos 中：
+
 1. 首先，你需要在你的pom.xml或者build.gradle中加入相应的依赖。这通常包括Spring Cloud Starter Gateway 和 Spring Cloud Starter Alibaba Nacos Discovery。
 2. 在你的application.properties或application.yml文件中，配置 Nacos 服务器的地址，以及 Gateway 服务的名称：
+
 ```yaml
 spring:
   cloud:
@@ -581,7 +560,9 @@ spring:
   application:
     name: gateway-service # 这是你的 Gateway 服务的名称
 ```
+
 3. 在你的主类上添加 @EnableDiscoveryClient 注解，这将使得你的 Gateway 服务成为一个 Nacos 客户端，可以被 Nacos 服务器发现。
+
 ```java
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -593,7 +574,9 @@ public class GatewayApplication {
 ```
 
 ### 如果要对feign的头部统一加一些字段，怎么实现？
+
 要对 Feign 的头部统一添加一些字段，可以创建一个自定义的RequestInterceptor，然后在applicationContext.xml 或者其他的 Spring Boot 配置文件中注册这个拦截器。下面是一个基本的示例：
+
 ```java
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -605,7 +588,9 @@ public class CustomFeignInterceptor implements RequestInterceptor {
     }
 }
 ```
+
 然后，你需要在 Spring Boot 配置文件中注册这个拦截器，如下所示：
+
 ```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -618,6 +603,7 @@ public class FeignConfiguration {
     }
 }
 ```
+
 在上述代码中，我们创建了一个拦截器，该拦截器将在每个请求发送之前运行，并添加一个自定义的 HTTP 头字段。需要注意的是，这里的 "Header-Name" 和 "Header-Value" 需要替换为你想要的实际头部键和值。
 
 ### 了解分布式事务吗？
@@ -644,7 +630,7 @@ public class FeignConfiguration {
 
 不多BB了，我们开始介绍这个两个事物吧。
 
-#### ✔️2pc（两段式提交） 
+#### ✔️2pc（两段式提交）
 
 ![image-20220617144013552](./personal_images/image-20220617144013552.webp)
 
@@ -653,8 +639,6 @@ public class FeignConfiguration {
 **但是我不知道大家看到问题所在没有？**
 
 是的你可能已经发现了，如果A系统事务提交成功了，但是B系统在提交的时候网络波动或者各种原因提交失败了，其实还是会失败的。
-
-
 
 #### ✔️3PC
 
@@ -710,8 +694,6 @@ public class FeignConfiguration {
 
 我再说下 3PC 我没有找到具体的实现，所以我认为 3PC 只是纯的理论上的东西，而且可以看到相比于 2PC 它是做了一些努力但是效果甚微，所以只做了解即可。
 
-
-
 #### ✔️TCC柔性补偿
 
 1. 启动事务（业务系统）
@@ -743,8 +725,6 @@ TCC 指的是`Try - Confirm - Cancel`。
 
 相对于 2PC、3PC ，TCC 适用的范围更大，但是开发量也更大，毕竟都在业务上实现，而且有时候你会发现这三个方法还真不好写。不过也因为是在业务上实现的，所以**TCC可以跨数据库、跨不同的业务系统来实现事务**。
 
-
-
 #### （了解）最大努力通知
 
 其实我觉得本地消息表也可以算最大努力，事务消息也可以算最大努力。
@@ -756,8 +736,6 @@ TCC 指的是`Try - Confirm - Cancel`。
 所以**最大努力通知其实只是表明了一种柔性事务的思想**：我已经尽力我最大的努力想达成事务的最终一致了。
 
 适用于对时间不敏感的业务，例如短信通知。
-
-
 
 #### （了解）本地消息表
 
@@ -772,8 +750,6 @@ TCC 指的是`Try - Confirm - Cancel`。
 这时候有可能消息对应的操作不成功，因此也需要重试，重试就得保证对应服务的方法是幂等的，而且一般重试会有最大次数，超过最大次数可以记录下报警让人工处理。
 
 可以看到本地消息表其实实现的是**最终一致性**，容忍了数据暂时不一致的情况。
-
-
 
 #### 消息事务
 
@@ -795,8 +771,6 @@ RocketMQ 就很好的支持了消息事务，让我们来看一下如何通过�
 
 可以看到消息事务实现的也是最终一致性。
 
-
-
 #### 最终一致性
 
 ![image-20220617144020576](./personal_images/image-20220617144020576.webp)
@@ -810,36 +784,26 @@ RocketMQ 就很好的支持了消息事务，让我们来看一下如何通过�
 
 还是那句话：**没有最完美的系统，只有最适合的系统。**
 
-
-
 #### 分布式事务比较
 
-* 基于消息事务是强一致性事务（会造成等待），会存在资源浪费
-* TCC事务是柔性事务，在try阶段要对资源做预留
-* TCC事务在确认或取消阶段释放资源
-* 与基于消息事务相比，TCC的时效性要更好
-
-
+- 基于消息事务是强一致性事务（会造成等待），会存在资源浪费
+- TCC事务是柔性事务，在try阶段要对资源做预留
+- TCC事务在确认或取消阶段释放资源
+- 与基于消息事务相比，TCC的时效性要更好
 
 #### 分布式事务注意点
 
-* 不要在分布式事务捕获任何异常
-* 使用TCC-Transaction的时候，confirm和cancel的幂等性需要自己代码支持
-  * 这就解释了为什么要在confirm和cancel里检查订单状态，而不直接修改为结束状态 ---> 保证幂等性
-
-
+- 不要在分布式事务捕获任何异常
+- 使用TCC-Transaction的时候，confirm和cancel的幂等性需要自己代码支持
+  - 这就解释了为什么要在confirm和cancel里检查订单状态，而不直接修改为结束状态 ---> 保证幂等性
 
 #### TCC-Transaction框架
 
 ![image-20220913170527093](./personal_images/image-20220913170527093.webp)
 
-
-
 1. 什么时候生成的TRANSACTION_CONTEXT隐式参数
 2. 如何判断大事务下有哪些小事务
 3. 为什么要有@Compensable注解
-
-
 
 ### 常见保证幂等的方式
 
@@ -884,8 +848,6 @@ RocketMQ 就很好的支持了消息事务，让我们来看一下如何通过�
 - x 不满足幂等
 
 - \- 可能满足也可能不满足幂等，根据实际业务逻辑有关
-
-  
 
 | 方法类型 | 是否幂等 |                             描述                             |
 | :------: | :------: | :----------------------------------------------------------: |
@@ -1029,8 +991,6 @@ UPDATE my_table SET price=price+50,version=version+1 WHERE id=1 AND version=5
 - ③ 上游服务到 Redis 中检测是否存在对应的“序列号”与“认证ID”组成的  Key，如果存在就抛出重复执行的异常信息，然后响应下游对应的错误信息。如果不存在就以该“序列号”和“认证ID”组合作为  Key，以下游关键信息作为 Value，进而存储到 Redis 中，然后正常执行接来来的业务逻辑。
 
 > 上面步骤中插入数据到 Redis 一定要设置过期时间。这样能保证在这个时间范围内，如果重复调用接口，则能够进行判断识别。如果不设置过期时间，很可能导致数据无限量的存入 Redis，致使 Redis 不能正常工作。
-
-
 
 ### 分布式系统接口，如何避免表单的重复提交？
 
@@ -1184,20 +1144,16 @@ ksuid由两部分组成
 
 另外还有：
 
-* 百度-UidGenerator
-* 美团Leaf
+- 百度-UidGenerator
+- 美团Leaf
 
 对比了5种解决方案。在我的业务场景下，我选择简单可靠的ksuid算法来生成唯一ID
-
-
 
 ### 单点登录
 
 单点登录的英文名叫做：Single Sign On（简称**SSO**）。
 
 在**初学/以前**的时候，一般我们就**单系统**，所有的功能都在同一个系统上。
-
-
 
 ### Dubbo面试汇总
 
@@ -1217,8 +1173,6 @@ ksuid由两部分组成
 ![image-20220726154002025](./personal_images/image-20220726154002025.webp)
 
 简单来说就是： **Dubbo 不光可以帮助我们调用远程服务，还提供了一些其他开箱即用的功能比如智能负载均衡。**
-
-
 
 #### Dubbo 的负载均衡策略
 
@@ -1249,13 +1203,13 @@ public abstract class AbstractLoadBalance implements LoadBalance {
 
 ![image-20220726154345877](./personal_images/image-20220726154345877.webp)
 
-官方文档对负载均衡这部分的介绍非常详细，推荐小伙伴们看看，地址：https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#m-zhdocsv27devsourceloadbalance
+官方文档对负载均衡这部分的介绍非常详细，推荐小伙伴们看看，地址：<https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#m-zhdocsv27devsourceloadbalance>
 
 ##### RandomLoadBalance
 
 根据权重随机选择（对加权随机算法的实现）。这是Dubbo默认采用的一种负载均衡策略。
 
-` RandomLoadBalance` 具体的实现原理非常简单，假如有两个提供相同服务的服务器 S1,S2，S1的权重为7，S2的权重为3。
+`RandomLoadBalance` 具体的实现原理非常简单，假如有两个提供相同服务的服务器 S1,S2，S1的权重为7，S2的权重为3。
 
 我们把这些权重值分布在坐标区间会得到：S1->[0, 7) ，S2->[7, 10)。我们生成[0, 10) 之间的随机数，随机数落到对应的区间，我们就选择对应的服务器来处理请求。
 
@@ -1302,8 +1256,6 @@ public class RandomLoadBalance extends AbstractLoadBalance {
 
 }
 ```
-
-
 
 ##### LeastActiveLoadBalance
 
@@ -1410,9 +1362,7 @@ public class RpcStatus {
 
 ![image-20220726154517156](./personal_images/image-20220726154517156.webp)
 
-官方有详细的源码分析：https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#23-consistenthashloadbalance 。
-
-
+官方有详细的源码分析：<https://dubbo.apache.org/zh/docs/v2.7/dev/source/loadbalance/#23-consistenthashloadbalance> 。
 
 ##### RoundRobinLoadBalance
 

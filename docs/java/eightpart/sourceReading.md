@@ -6,16 +6,21 @@ title: JDK部分源码阅读
 category:
   - 源码
   - 八股文
+outline: deep
 ---
 # JDK部分源码阅读
 
 ## 前言
+
 这部分内容是个人理解+部分源码解析以下仓库：
+
 * [JavaGuide](https://github.com/Snailclimb/JavaGuide)
 * [JDKSourceCode1.8](https://github.com/wupeixuan/JDKSourceCode1.8)
 
 ## 🍉ArrayList
-> 源码：https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/ArrayList.java
+>
+> 源码：<https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/ArrayList.java>
+>
 ### 源码
 
 ```java
@@ -576,6 +581,7 @@ public class ArrayList<E> extends AbstractList<E>
 ```
 
 ### 一步一步分析 ArrayList 扩容机制
+
 **这部分来自JavaGuide，写的十分奶思**
 这里以无参构造函数创建的 ArrayList 为例分析
 先来看 `add` 方法
@@ -585,16 +591,18 @@ public class ArrayList<E> extends AbstractList<E>
  * 将指定的元素追加到此列表的末尾。
  */
 public boolean add(E e) {
-	//添加元素之前，先调用ensureCapacityInternal方法
-	ensureCapacityInternal(size + 1);  // Increments modCount!!
-	//这里看到ArrayList添加元素的实质就相当于为数组赋值
-	elementData[size++] = e;
-	return true;
+ //添加元素之前，先调用ensureCapacityInternal方法
+ ensureCapacityInternal(size + 1);  // Increments modCount!!
+ //这里看到ArrayList添加元素的实质就相当于为数组赋值
+ elementData[size++] = e;
+ return true;
 }
 ```
+
 > 注意 ：JDK11 移除了 ensureCapacityInternal() 和 ensureExplicitCapacity() 方法
 
 #### ensureCapacityInternal() 方法
+
 （`JDK7`）可以看到 `add` 方法 首先调用了`ensureCapacityInternal(size + 1)`
 
 ```java
@@ -609,12 +617,14 @@ public boolean add(E e) {
     }
 
 ```
+
 当 要 add 进第 1 个元素时，minCapacity 为 1，在 Math.max()方法比较后，minCapacity 为 10。
 
 > 此处和后续 JDK8 代码格式化略有不同，核心代码基本一样。
 
 #### ensureExplicitCapacity() 方法
-如果调用 `ensureCapacityInternal() `方法就一定会进入（执行）这个方法，下面我们来研究一下这个方法的源码！
+
+如果调用 `ensureCapacityInternal()`方法就一定会进入（执行）这个方法，下面我们来研究一下这个方法的源码！
 
 ```java
   //判断是否需要扩容
@@ -631,12 +641,14 @@ public boolean add(E e) {
 ```
 
 我们来仔细分析一下：
+
 * 当我们要 add 进第 1 个元素到 ArrayList 时，elementData.length 为 0 （因为还是一个空的 list），因为执行了 ensureCapacityInternal() 方法 ，所以 minCapacity 此时为 10。此时，minCapacity - elementData.length > 0成立，所以会进入 grow(minCapacity) 方法
 * 当 add 第 2 个元素时，minCapacity 为 2，此时 elementData.length(容量)在添加第一个元素后扩容成 10 了。此时，minCapacity - elementData.length > 0 不成立，所以不会进入 （执行）grow(minCapacity) 方法。
 * 添加第 3、4···到第 10 个元素时，依然不会执行 grow 方法，数组容量都为 10。
 直到添加第 11 个元素，minCapacity(为 11)比 elementData.length（为 10）要大。进入 grow 方法进行扩容。
 
 #### grow() 方法
+
 ```java
     /**
      * 要分配的最大数组大小
@@ -664,10 +676,12 @@ public boolean add(E e) {
     }
 
 ```
+
 int newCapacity = oldCapacity + (oldCapacity >> 1),所以 ArrayList 每次扩容之后容量都会变为原来的 1.5 倍左右（oldCapacity 为偶数就是 1.5 倍，否则是 1.5 倍左右）！ 奇偶不同，比如 ：10+10/2 = 15, 33+33/2=49。如果是奇数的话会丢掉小数。
 > ">>"（移位运算符）：>>1 右移一位相当于除 2，右移 n 位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了 1 位所以相当于 oldCapacity /2。对于大数据的 2 进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源
 
 我们再来通过例子探究一下grow() 方法 ：
+
 * 当 add 第 1 个元素时，oldCapacity 为 0，经比较后第一个 if 判断成立，newCapacity = minCapacity(为 10)。但是第二个 if 判断不会成立，即 newCapacity 不比 MAX_ARRAY_SIZE 大，则不会进入 hugeCapacity 方法。数组容量为 10，add 方法中 return true,size 增为 1。
 * 当 add 第 11 个元素进入 grow 方法时，newCapacity 为 15，比 minCapacity（为 11）大，第一个 if 判断不成立。新容量没有大于数组最大 size，不会进入 hugeCapacity 方法。数组容量扩为 15，add 方法中 return true,size 增为 11。
 * 以此类推······
@@ -677,7 +691,9 @@ int newCapacity = oldCapacity + (oldCapacity >> 1),所以 ArrayList 每次扩容
 * java 中的 size() 方法是针对泛型集合说的,如果想看这个泛型有多少个元素,就调用此方法来查看!
 
 #### hugeCapacity() 方法
+
 从上面 grow() 方法源码我们知道： 如果新容量大于 MAX_ARRAY_SIZE,进入(执行) hugeCapacity() 方法来比较 minCapacity 和 MAX_ARRAY_SIZE，如果 minCapacity 大于最大容量，则新容量则为Integer.MAX_VALUE，否则，新容量大小则为 `MAX_ARRAY_SIZE` 即为 `Integer.MAX_VALUE - 8`。
+
 ```java
     private static int hugeCapacity(int minCapacity) {
         if (minCapacity < 0) // overflow
@@ -694,10 +710,13 @@ int newCapacity = oldCapacity + (oldCapacity >> 1),所以 ArrayList 每次扩容
 ```
 
 #### System.arraycopy() 和 Arrays.copyOf()方法
+
 阅读源码的话，我们就会发现 ArrayList 中大量调用了这两个方法。比如：我们上面讲的扩容操作以及add(int index, E element)、toArray() 等方法中都用到了该方法！
 
-#### System.arraycopy() 
+#### System.arraycopy()
+
 源码：
+
 ```
     // 我们发现 arraycopy 是一个 native 方法,接下来我们解释一下各个参数的具体意义
     /**
@@ -713,6 +732,7 @@ int newCapacity = oldCapacity + (oldCapacity >> 1),所以 ArrayList 每次扩容
                                         int length);
 
 ```
+
 场景：
 
 ```java
@@ -733,37 +753,40 @@ int newCapacity = oldCapacity + (oldCapacity >> 1),所以 ArrayList 每次扩容
     }
 
 ```
+
 我们写一个简单的方法测试以下：
 
 ```java
 public class ArraycopyTest {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int[] a = new int[10];
-		a[0] = 0;
-		a[1] = 1;
-		a[2] = 2;
-		a[3] = 3;
-		System.arraycopy(a, 2, a, 3, 3);
-		a[2]=99;
-		for (int i = 0; i < a.length; i++) {
-			System.out.print(a[i] + " ");
-		}
-	}
+ public static void main(String[] args) {
+  // TODO Auto-generated method stub
+  int[] a = new int[10];
+  a[0] = 0;
+  a[1] = 1;
+  a[2] = 2;
+  a[3] = 3;
+  System.arraycopy(a, 2, a, 3, 3);
+  a[2]=99;
+  for (int i = 0; i < a.length; i++) {
+   System.out.print(a[i] + " ");
+  }
+ }
 
 }
 
 ```
+
 结果
 > 0 1 99 2 3 0 0 0 0 0
 
 #### Arrays.copyOf()
+
 ```java
     public static int[] copyOf(int[] original, int newLength) {
-    	// 申请一个新的数组
+     // 申请一个新的数组
         int[] copy = new int[newLength];
-	// 调用System.arraycopy,将源数组中的数据进行拷贝,并返回新的数组
+ // 调用System.arraycopy,将源数组中的数据进行拷贝,并返回新的数组
         System.arraycopy(original, 0, copy, 0,
                          Math.min(original.length, newLength));
         return copy;
@@ -783,19 +806,20 @@ public class ArraycopyTest {
     }
 
 ```
+
 个人觉得使用 Arrays.copyOf()方法主要是为了给原有数组扩容，测试代码如下：
 
 ```java
 public class ArrayscopyOfTest {
 
-	public static void main(String[] args) {
-		int[] a = new int[3];
-		a[0] = 0;
-		a[1] = 1;
-		a[2] = 2;
-		int[] b = Arrays.copyOf(a, 10);
-		System.out.println("b.length"+b.length);
-	}
+ public static void main(String[] args) {
+  int[] a = new int[3];
+  a[0] = 0;
+  a[1] = 1;
+  a[2] = 2;
+  int[] b = Arrays.copyOf(a, 10);
+  System.out.println("b.length"+b.length);
+ }
 }
 
 ```
@@ -807,12 +831,14 @@ public class ArrayscopyOfTest {
 ```
 
 #### copyOf() & System.arraycopy()联系和区别
+
 联系：
 看两者源代码可以发现 `copyOf()`内部实际调用了 `System.arraycopy()` 方法
 区别：
 arraycopy() 需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置 copyOf() 是系统自动在内部新建一个数组，并返回该数组。
 
 #### ensureCapacity方法
+
 ArrayList 源码中有一个 ensureCapacity 方法不知道大家注意到没有，这个方法 ArrayList 内部没有被调用过，所以很显然是提供给用户调用的，那么这个方法有什么作用呢？
 
 ```java
@@ -836,26 +862,28 @@ ArrayList 源码中有一个 ensureCapacity 方法不知道大家注意到没有
 
 
 ```
+
 理论上来说，最好在向 ArrayList 添加大量元素之前用 ensureCapacity 方法，以减少增量重新分配的次数
 
 我们通过下面的代码实际测试以下这个方法的效果：
 
 ```java
 public class EnsureCapacityTest {
-	public static void main(String[] args) {
-		ArrayList<Object> list = new ArrayList<Object>();
-		final int N = 10000000;
-		long startTime = System.currentTimeMillis();
-		for (int i = 0; i < N; i++) {
-			list.add(i);
-		}
-		long endTime = System.currentTimeMillis();
-		System.out.println("使用ensureCapacity方法前："+(endTime - startTime));
+ public static void main(String[] args) {
+  ArrayList<Object> list = new ArrayList<Object>();
+  final int N = 10000000;
+  long startTime = System.currentTimeMillis();
+  for (int i = 0; i < N; i++) {
+   list.add(i);
+  }
+  long endTime = System.currentTimeMillis();
+  System.out.println("使用ensureCapacity方法前："+(endTime - startTime));
 
-	}
+ }
 }
 
 ```
+
 运行结果：
 > 使用ensureCapacity方法前：2158
 
@@ -875,23 +903,22 @@ public class EnsureCapacityTest {
 }
 
 ```
+
 运行结果：
 > 使用ensureCapacity方法后：1773
 
 通过运行结果，我们可以看出向 ArrayList 添加大量元素之前使用ensureCapacity 方法可以提升性能。不过，这个性能差距几乎可以忽略不计。而且，实际项目根本也不可能往 ArrayList 里面添加这么多元素。
 
-
-
 ## LinkedList
 
 @todo
 
-
-
 ## 🍓HashMap
-> 源码：https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/HashMap.java
+>
+> 源码：<https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/HashMap.java>
 
 ### 构造方法
+
 HashMap 中有四个构造方法，它们分别如下：
 
 ```java
@@ -924,7 +951,9 @@ HashMap 中有四个构造方法，它们分别如下：
      }
 
 ```
+
 putMapEntries 方法：
+
 ```java
 final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
     int s = m.size();
@@ -954,12 +983,15 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 ```
 
 ### put 方法
+
 HashMap 只提供了 put 用于添加元素，putVal 方法只是给 put 方法调用的一个方法，并没有提供给用户使用。
 对 putVal 方法添加元素的分析如下：
+
 1. 如果定位到的数组位置没有元素 就直接插入。
 2. 如果定位到的数组位置有元素就和要插入的 key 比较，如果 key 相同就直接覆盖，如果 key 不相同，就判断 p 是否是一个树节点，如果是就调用`e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value)`将元素添加进入。如果不是就遍历链表插入(插入的是链表尾部)。
 ![put方法](./personal_images/put方法.webp)
 说明:上图有两个小问题：
+
 * 直接覆盖之后应该就会 return，不会有后续操作。参考 JDK8 HashMap.java 658 行
 * 当链表长度大于阈值（默认为 8）并且 HashMap 数组长度超过 64 的时候才会执行链表转红黑树的操作，否则就只是对数组扩容。参考 HashMap 的 treeifyBin() 方法
 
@@ -1038,11 +1070,12 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 
 ```
+
 再来对比一下 JDK1.7 put 方法的代码
 对于 put 方法的分析如下：
-1. 如果定位到的数组位置没有元素 就直接插入。
-2.  如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的 key 比较，如果 key 相同就直接覆盖，不同就采用头插法插入元素。
 
+1. 如果定位到的数组位置没有元素 就直接插入。
+2. 如果定位到的数组位置有元素，遍历以这个元素为头结点的链表，依次和插入的 key 比较，如果 key 相同就直接覆盖，不同就采用头插法插入元素。
 
 ```java
 public V put(K key, V value)
@@ -1069,8 +1102,8 @@ public V put(K key, V value)
 }
 
 ```
-### get 方法
 
+### get 方法
 
 ```java
 public V get(Object key) {
@@ -1105,6 +1138,7 @@ final Node<K,V> getNode(int hash, Object key) {
 ```
 
 ### resize 方法
+
 进行扩容，会伴随着一次重新 hash 分配，并且会遍历 hash 表中所有的元素，是非常耗时的。在编写程序中，要尽量避免 resize。
 
 ```java
@@ -1268,11 +1302,12 @@ public class HashMapDemo {
 
 ```
 
-
 ## 🍅ConcurrentHashMap
-> 源码：https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/concurrent/ConcurrentHashMap.java
+>
+> 源码：<https://github.com/wupeixuan/JDKSourceCode1.8/blob/master/src/java/util/concurrent/ConcurrentHashMap.java>
 
 ### 存储结构
+
 ![](./personal_images/java7_concurrenthashmap.webp)
 
 Java 7 中 ConcurrentHashMap 的存储结构如上图，ConcurrnetHashMap 由很多个 Segment 组合，而每一个 Segment 是一个类似于 HashMap 的结构，所以每一个 HashMap 的内部可以进行扩容。但是 Segment 的个数一旦初始化就不能改变，默认 Segment 的个数是 16 个，你也可以认为 ConcurrentHashMap 默认支持最多 16 个线程并发。
@@ -1280,6 +1315,7 @@ Java 7 中 ConcurrentHashMap 的存储结构如上图，ConcurrnetHashMap 由很
 可以发现 Java8 的 ConcurrentHashMap 相对于 Java7 来说变化比较大，不再是之前的 Segment 数组 + HashEntry 数组 + 链表，而是 Node 数组 + 链表 / 红黑树。当冲突链表达到一定长度时，链表会转换成红黑树。
 
 ### 初始化 initTable
+
 ```java
 /**
  * Initializes table, using the size recorded in sizeCtl.
@@ -1311,12 +1347,14 @@ private final Node<K,V>[] initTable() {
 ```
 
 从源码中可以发现 ConcurrentHashMap 的初始化是通过自旋和 CAS 操作完成的。里面需要注意的是变量 sizeCtl ，它的值决定着当前的初始化状态。
+
 1. -1 说明正在初始化
 2. -N 说明有N-1个线程正在进行扩容
 3. 0 表示 table 初始化大小，如果 table 没有初始化
 4. 0 表示 table 扩容的阈值，如果 table 已经初始化。
 
 ### put
+
 ```java
 public V put(K key, V value) {
     return putVal(key, value, false);
@@ -1403,6 +1441,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 6. 如果数量大于 TREEIFY_THRESHOLD 则要执行树化方法，在 treeifyBin 中会首先判断当前数组长度≥64时才会将链表转换为红黑树
 
 ### get
+
 ```java
 public V get(Object key) {
     Node<K,V>[] tab; Node<K,V> e, p; int n, eh; K ek;
@@ -1431,12 +1470,14 @@ public V get(Object key) {
 ```
 
 总结一下 get 过程：
+
 1. 根据 hash 值计算位置。
 2. 查找到指定位置，如果头节点就是要找的，直接返回它的 value.
 3. 如果头节点 hash 值小于 0 ，说明正在扩容或者是红黑树，查找之。
 4. 如果是链表，遍历查找之。
 
 ### 总结
+
 Java7 中 ConcurrentHashMap 使用的分段锁，也就是每一个 Segment 上同时只有一个线程可以操作，每一个 Segment 都是一个类似 HashMap 数组的结构，它可以扩容，它的冲突会转化为链表。但是 Segment 的个数一但初始化就不能改变。
 
 Java8 中的 ConcurrentHashMap 使用的 Synchronized 锁加 CAS 的机制。结构也由 Java7 中的 Segment 数组 + HashEntry 数组 + 链表 进化成了 Node 数组 + 链表 / 红黑树，Node 是类似于一个 HashEntry 的结构。它的冲突再达到一定大小时会转化成红黑树，在冲突小于一定数量时又退回链表。
