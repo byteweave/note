@@ -2,7 +2,11 @@ const path = "/back_end_storage";
 export const back_end_storage = () => {
   return [
     {
-      text: "电商系统",
+      text: "后端存储实战",
+      link: path + "/",
+    },
+    {
+      text: "电商系统是如何设计的？",
       link: path + "/00/",
     },
     {
@@ -10,7 +14,7 @@ export const back_end_storage = () => {
       collapsed: true,
       items: [
         {
-          text: "创业篇",
+          text: "概述",
           link: path + "/01/",
         },
         {
@@ -18,27 +22,27 @@ export const back_end_storage = () => {
           link: path + "/01/01.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "流量大、数据多的商品详情页系统该如何设计",
           link: path + "/01/02.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "复杂而又重要的购物车系统，应该如何设计？",
           link: path + "/01/03.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "事务：账户余额总是对不上账，怎么办？",
           link: path + "/01/04.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "分布式事务：如何保证多个系统间的数据是一致的？",
           link: path + "/01/05.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "如何用 Elasticsearch 构建商品搜索系统？",
           link: path + "/01/06.md",
         },
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "MySQL HA：如何将「删库跑路」的损失降到最低？",
           link: path + "/01/07.md",
         },
       ],
@@ -48,7 +52,7 @@ export const back_end_storage = () => {
       collapsed: true,
       items: [
         {
-          text: "创建和更新订单时，如何保证数据准确无误",
+          text: "概述",
           link: path + "/02/",
         },
         {
