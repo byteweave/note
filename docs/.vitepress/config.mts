@@ -41,7 +41,6 @@ export default defineConfig({
     nav: [
       { text: "java", link: "/java/" },
       { text: "mysql", link: "/mysql/" },
-      { text: "redis", link: "/redis" },
       { text: "git", link: "/git_scm/" },
       { text: "存储实战", link: "/back_end_storage/" },
       { text: "亿级流量电商详情页系统实战", link: "/cache_pdp/" },
