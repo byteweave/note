@@ -1,6 +1,7 @@
 # 自定义结果集
 
 ## 相关资料
+
 - [支持的数据类型](https://dev.mysql.com/doc/refman/5.7/en/data-types.html)
 - --------- 后面是协议相关-------------
 - [数据类型](https://dev.mysql.com/doc/internals/en/com-query-response.html#column-type)
@@ -13,6 +14,7 @@
 :::
 
 ## 数字类型
+
 - 整数类型（精确值） - [INT,INTEGER]，SMALLINT，TINYINT，MEDIUMINT，BIGINT
 - 定点类型（精确值） - [DECIMAL，NUMERIC]
 - 浮点类型（近似值） - FLOAT，DOUBLE
@@ -31,6 +33,7 @@ UNSIGNED 所有数据类型都可以选用（非标准）的属性，无符号�
 无符号属性的定义：`CREATE TABLE t1 (i1 TINYINT, i2 TINYINT UNSIGNED);`
 
 ### 超出范围和溢出处理
+>
 > [官网文档](https://dev.mysql.com/doc/refman/5.7/en/out-of-range-and-overflow.html)
 
 当 sql 模式处于严格模式的时候：`SET sql_mode = 'TRADITIONAL';` 超出数据类型的范围会报错；
@@ -38,11 +41,13 @@ UNSIGNED 所有数据类型都可以选用（非标准）的属性，无符号�
 `SET sql_mode = '';` : 非严格模式只会把值裁剪到范围类存储，并发出警告日志
 
 ## 时间类型
+
 - DATE, DATETIME, TIMESTAMP
 - TIME
 - YEAR：限制为显示宽度为固定值 YEAR(4)
 
 ## 字符串类型
+
 - CHAR、VARCHAR
 - BINARY、VARBINARY
 - BLOB、TEXT
@@ -50,6 +55,7 @@ UNSIGNED 所有数据类型都可以选用（非标准）的属性，无符号�
 - SET
 
 ## 空间数据类型
+
 ## JSON 数据类型（5.7.8+）
 
 ## 小总结
