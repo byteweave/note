@@ -3,6 +3,7 @@ import { ai } from "../ai";
 import { back_end_storage } from "../back_end_storage";
 import { cache_pdp } from "../cache_pdp";
 import { git_scm } from "../git_scm";
+import { java } from "../java";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
 // https://vitepress.dev/reference/site-config
@@ -37,7 +38,7 @@ export default defineConfig({
     },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "java", link: "/java" },
+      { text: "java", link: "/java/" },
       { text: "redis", link: "/redis" },
       { text: "git", link: "/git_scm/" },
       { text: "存储实战", link: "/back_end_storage/" },
@@ -71,36 +72,7 @@ export default defineConfig({
           ],
         },
       ],
-      "/java/": [
-        {
-          // text: "java",
-          items: [
-            { text: "简介", link: "/java/index.md" },
-            { text: "java虚拟机8-11双版本", link: "/java/1.md" },
-            {
-              text: "数组",
-              collapsed: true,
-              items: [
-                { text: "一维数组", link: "/java/array/array.md" },
-                { text: "二维数组", link: "/java/array/double-array.md" },
-                { text: "打印数组", link: "/java/array/print" },
-              ],
-            },
-            {
-              text: "集合",
-              collapsed: true,
-              items: [
-                { text: "ArrayDeque源码分析", link: "/java/collection/arraydeque.md" },
-                { text: "ArrayList源码分析", link: "/java/collection/arraylist.md" },
-                {
-                  text: "Comparable和Comparator的区别",
-                  link: "/java/collection/comparable-omparator.md",
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      "/java/": java(),
       "/redis/": [
         {
           text: "redis",
