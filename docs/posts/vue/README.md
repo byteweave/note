@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # vue相关
 
 ## vue-cli 3.0 中 webstom 配置

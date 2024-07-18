@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # nginx + lua + webhook 自动化部署
 
 如果将 vuepress build 之后的静态网站部署在自己的服务器上，这里有一个自动化方案，思路如下：
@@ -15,7 +18,7 @@
 
 请按该文章完成安装后，并完成  hello world lua 的测试，再继续下面的步骤
 
-##  nginx 执行 shell 脚本
+## nginx 执行 shell 脚本
 
 [本节内容参考文章](https://blog.csdn.net/weixin_40429878/article/details/81908019)
 
@@ -40,7 +43,7 @@ chmod 0666 /tmp/shell.sock
 
 sockproc 是一个服务器程序，侦测 unix socket 或者 tcp socket ， 并把收到的命令，传递给子进程执行，执行完毕后，把结果返回给客户端,，我们就让 sockproc 侦测 `/tmp/shell.sock` 的套接口有没有数据到来。
 
-###  安装 lua-resty-shell 模块
+### 安装 lua-resty-shell 模块
 
 它是一个很小的库，配合 openresty 使用，目的是提供类似于 os.execute 或 io.popen 的功能， 唯一区别它是非阻塞的，也就是说即使需要耗时很久的命令，你也可以使用它
 
@@ -150,7 +153,7 @@ echo "Hello World !"
 - 配置 nginx 访问构建好的静态网站
 - 在 Github 对应项目配置 webhook 地址到我们提供的 lua 入口
 
-###  clone 项目
+### clone 项目
 
 把要自动部署构建的项目 clone 下来。我们的构建和发布目录都在 `/usr/servers/notework/` 目录下展开
 
@@ -254,9 +257,9 @@ function  isInTable(value,list)
       return false   
    end 
    for k, v in pairs(list) do
-	if v == value then
-	  return true
-	end
+ if v == value then
+   return true
+ end
    end
 end 
 if( not isInTable(noteName,supportNotes) ) then
@@ -268,7 +271,7 @@ end
 local shell = require "resty.shell"
 local args = {
     socket = "unix:/tmp/shell.sock", 
-	timeout = 120000
+ timeout = 120000
 }
 -- 不加 nohub 15秒回执行超时，加了之后，貌似受上面的 timeout 控制，不明白这一块是啥原因
 local exeStr = "nohub sh /usr/servers/notework/build.sh "..noteName

@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # virtualbox
 
 ## win10 Hyper-V 冲突
+
 当 win10 开启了 Hyper-V 那么虚拟机无法运行
 
 ```bash
@@ -17,7 +21,7 @@ bcdedit /set hypervisorlaunchtype Auto
 解决方案：
 
 1. 运行命令窗口（“Win+R”键，输入 cmd 回车）
-2. 进入VirtualBox 的安装目录，默认是 ` X:\Program Files\VirtualBox`(视具体情况)
+2. 进入VirtualBox 的安装目录，默认是 `X:\Program Files\VirtualBox`(视具体情况)
 3. 执行命令 `VBoxSVC /ReRegServer`
 4. 执行命令：`regsvr32 VBoxC.dll`
 
@@ -58,7 +62,6 @@ bcdedit /set hypervisorlaunchtype Auto
     ![](./assets/markdown-img-paste-20190421203624760.png)
 
     解决方案是：把虚拟网卡的 ip 地址修改为 192.168.0.1，就能共享成功了，成功之后再把虚拟网卡的 ip 地址修改成你需要的网段即可
-
 
 在某些情况下，这种配置会失效，比如：选择虚拟机休眠，win10 也选择休眠，再启动的时候，就会失效，
 这个时候，只能重复上面的步骤，重新共享下就能解决了

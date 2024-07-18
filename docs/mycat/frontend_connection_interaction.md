@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 前端连接交互探索
 
 前端连接探索之前需要先了解 mysql 协议，了解使用 reactor 模型是怎么和 mysql 服务器交互的，
@@ -8,22 +11,24 @@
 >
 > 也就是下面 <<初级尝试与 mysal 交互>> 中尝试的 demo 程序
 
-
 > [mysql 协议中的基本数据类型](https://github.com/zq99299/hp-note/blob/master/chapter/mysql/client_server_protocol/overview/basic_types.md) 在解析和构建包的时候，这两个基本类型是使用频率最高的
 
 > [初级尝试与 mysal 交互](https://github.com/zq99299/newstudy/blob/master/hp-base/src/test/java/cn/mrcode/newstudy/hpbase/mysql/TestDemo.java) 怎么解析握手包，发出登录认证包
 
-
 > [简化版完整交互应用](https://github.com/zq99299/newstudy/blob/master/hp-base/src/test/java/cn/mrcode/newstudy/hpbase/mysql/mymysql2/NIORactorTest.java) 接收 mysql 命令行的登录命令，执行 sql 查询命令 示例
 
 ## 基础知识
+
 Reactor 模型
 
 ![](./assets/markdown-img-paste-20180909220559232.png)
 
 Acceptor 处理前端连接的入口类， 来分析 Acceptor 的源码  
+
 ## 初始化
+
 io.mycat.MycatServer#startup 是 mycat 启动类，里面对 Acceptor 做了初始化操作。
+
 ```java
 
 
@@ -58,37 +63,37 @@ else {
 
 ```java
 public final class NIOAcceptor extends Thread implements SocketAcceptor{
-	private static final Logger LOGGER = LoggerFactory.getLogger(NIOAcceptor.class);
-	private static final AcceptIdGenerator ID_GENERATOR = new AcceptIdGenerator();
+ private static final Logger LOGGER = LoggerFactory.getLogger(NIOAcceptor.class);
+ private static final AcceptIdGenerator ID_GENERATOR = new AcceptIdGenerator();
 
-	private final int port;
-	private volatile Selector selector;
-	private final ServerSocketChannel serverChannel;
-	private final FrontendConnectionFactory factory;
-	private long acceptCount;
-	private final NIOReactorPool reactorPool;
+ private final int port;
+ private volatile Selector selector;
+ private final ServerSocketChannel serverChannel;
+ private final FrontendConnectionFactory factory;
+ private long acceptCount;
+ private final NIOReactorPool reactorPool;
 
-	public NIOAcceptor(String name, String bindIp,int port,
-			FrontendConnectionFactory factory, NIOReactorPool reactorPool)
-			throws IOException {
-		super.setName(name);
+ public NIOAcceptor(String name, String bindIp,int port,
+   FrontendConnectionFactory factory, NIOReactorPool reactorPool)
+   throws IOException {
+  super.setName(name);
     // 经典的构造方式
-		this.port = port;
-		this.selector = Selector.open();
-		this.serverChannel = ServerSocketChannel.open();
+  this.port = port;
+  this.selector = Selector.open();
+  this.serverChannel = ServerSocketChannel.open();
     // 同步处理
-		this.serverChannel.configureBlocking(false);
-		/** 设置TCP属性 */
+  this.serverChannel.configureBlocking(false);
+  /** 设置TCP属性 */
     //  如果端口忙，但TCP状态位于 TIME_WAIT ，可以重用 端口。
-		serverChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+  serverChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
     //   在默认情况下，输入流的接收缓冲区是8096个字节（8K）
-		serverChannel.setOption(StandardSocketOptions.SO_RCVBUF, 1024 * 16 * 2);
-		// backlog=100 当前 socket 连接上可以挂起的连接数量，也就是说
-		serverChannel.bind(new InetSocketAddress(bindIp, port), 100);
-		this.serverChannel.register(selector, SelectionKey.OP_ACCEPT);
-		this.factory = factory;
-		this.reactorPool = reactorPool;
-	}
+  serverChannel.setOption(StandardSocketOptions.SO_RCVBUF, 1024 * 16 * 2);
+  // backlog=100 当前 socket 连接上可以挂起的连接数量，也就是说
+  serverChannel.bind(new InetSocketAddress(bindIp, port), 100);
+  this.serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+  this.factory = factory;
+  this.reactorPool = reactorPool;
+ }
 ```
 
 当有连接 mycat 的请求的时候，会执行
@@ -130,7 +135,7 @@ private void accept() {
 
 ## 构造 FrontendConnection 时做了什么
 
-> socket 相关属性解说：http://elf8848.iteye.com/blog/1739598
+> socket 相关属性解说：<http://elf8848.iteye.com/blog/1739598>
 
 `FrontendConnection c = factory.make(channel);`
 
@@ -138,20 +143,20 @@ private void accept() {
 
 ```java
 public abstract class FrontendConnectionFactory {
-	protected abstract FrontendConnection getConnection(NetworkChannel channel)
-			throws IOException;
+ protected abstract FrontendConnection getConnection(NetworkChannel channel)
+   throws IOException;
 
-	public FrontendConnection make(NetworkChannel channel) throws IOException {
+ public FrontendConnection make(NetworkChannel channel) throws IOException {
     // 设置 socket 通道的属性，端口忙的时候可复用
-		channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-		channel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+  channel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+  channel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 
-		FrontendConnection c = getConnection(channel);
+  FrontendConnection c = getConnection(channel);
     // 根据 mycat 的配置，这里就有点不理解了
     // 上面获取连接中已经设置过一次了，这里怎么还设置了一次？
-		MycatServer.getInstance().getConfig().setSocketParams(c, true);
-		return c;
-	}
+  MycatServer.getInstance().getConfig().setSocketParams(c, true);
+  return c;
+ }
 }
 ```
 
@@ -222,22 +227,23 @@ io.mycat.net.NIOReactor.RW#register
 
 ```java
 private void register(Selector selector) {
-		AbstractConnection c = null;
-		if (registerQueue.isEmpty()) {
-			return;
-		}
-		while ((c = registerQueue.poll()) != null) {
-			try {
-				((NIOSocketWR) c.getSocketWR()).register(selector);
+  AbstractConnection c = null;
+  if (registerQueue.isEmpty()) {
+   return;
+  }
+  while ((c = registerQueue.poll()) != null) {
+   try {
+    ((NIOSocketWR) c.getSocketWR()).register(selector);
         // 注意这里关键语句，调用了连接对象里面的 注册方法
-				c.register();
-			} catch (Exception e) {
-				c.close("register err" + e.toString());
-			}
-		}
-	}
+    c.register();
+   } catch (Exception e) {
+    c.close("register err" + e.toString());
+   }
+  }
+ }
 }
 ```
+
 ### 发送问候包/握手包
 
 io.mycat.net.FrontendConnection#register
@@ -303,24 +309,24 @@ public void register() throws IOException {
 io.mycat.net.NIOReactor.RW#run
 
 for (SelectionKey key : keys) {
-		AbstractConnection con = null;
-		try {
-			Object att = key.attachment();
-			if (att != null) {
-				con = (AbstractConnection) att;
-				if (key.isValid() && key.isReadable()) {
-					try {
+  AbstractConnection con = null;
+  try {
+   Object att = key.attachment();
+   if (att != null) {
+    con = (AbstractConnection) att;
+    if (key.isValid() && key.isReadable()) {
+     try {
             // 当接收到客户端发送来的认证包。则触发读事件
-						con.asynRead();
-					} catch (IOException e) {
-						con.close("program err:" + e.toString());
-						continue;
-					} catch (Exception e) {
-						LOGGER.warn("caught err:", e);
-						con.close("program err:" + e.toString());
-						continue;
-					}
-				}
+      con.asynRead();
+     } catch (IOException e) {
+      con.close("program err:" + e.toString());
+      continue;
+     } catch (Exception e) {
+      LOGGER.warn("caught err:", e);
+      con.close("program err:" + e.toString());
+      continue;
+     }
+    }
 
 io.mycat.net.AbstractConnection#handle
 
@@ -367,6 +373,7 @@ public FrontendConnection(NetworkChannel channel) throws IOException {
 ### FrontendAuthenticator 认证处理
 
 io.mycat.net.handler.FrontendAuthenticator#handle
+
 ```java
 @Override
    public void handle(byte[] data) {

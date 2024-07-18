@@ -1,9 +1,9 @@
+---
+outline: deep
+---
 # 学习 k8s 的基础知识
 
-此笔记详细参考：https://kubernetes.io/zh/docs/tutorials/kubernetes-basics/
-
-
-
+此笔记详细参考：<https://kubernetes.io/zh/docs/tutorials/kubernetes-basics/>
 
 ## 部署应用
 
@@ -63,12 +63,15 @@ Name of the Pod: kubernetes-bootcamp-69fbc6f4cf-ppc9j
 ```
 
 ## 了解你的应用
+
 ### 目标
 
 - 了解 Kubernetes Pod。
 - 了解 Kubernetes 工作节点。
 - 对已部署的应用故障排除。
+
 ### 查看 pod 和工作节点
+
 #### Kubernetes Pods
 
 **Pod** 托管你的应用实例。Pod 是 Kubernetes 抽象出来的，表示一组一个或多个应用程序容器（如 Docker 或 rkt ），以及这些容器的一些共享资源。这些资源包括:
@@ -88,8 +91,6 @@ Name of the Pod: kubernetes-bootcamp-69fbc6f4cf-ppc9j
 
 *如果它们紧耦合并且需要共享磁盘等资源，这些容器应在一个 Pod 中编排。*
 
-
-
 ### 使用 kubectl 进行故障排除
 
 - kubectl get - 列出资源
@@ -98,6 +99,7 @@ Name of the Pod: kubernetes-bootcamp-69fbc6f4cf-ppc9j
 - kubectl exec - 在 pod 中的容器上执行命令
 
 #### 检查应用程序配置
+
 ```bash
 # 检查现有的 pod
 $ kubectl get pods
@@ -162,6 +164,7 @@ Events:
 ```
 
 #### 在终端中显示应用
+
 pods 是在私有网络中运行的，因此先创建一个代理
 
 ```bash
@@ -179,6 +182,7 @@ Hello Kubernetes bootcamp! | Running on: kubernetes-bootcamp-765bf4c7b4-nw2d8 | 
 ```
 
 #### 显示容器日志
+
 应用程序发送到 STDOUT 的任何内容都会成为 pod 中容器的日志。
 
 ```bash
@@ -187,6 +191,7 @@ $ kubectl logs $POD_NAME
 ```
 
 #### 在容器上执行命令
+
 一旦 Pod 启动并运行，我们就可以直接在容器上执行命令。为此，我们使用 exec 命令并使用 Pod 的名称作为参数。让我们列出环境变量:
 
 ```bash
@@ -424,9 +429,9 @@ kubernetes-bootcamp-765bf4c7b4   1         1         1       38m
 # CURRENT：当前正在运行的副本数量
 ```
 
-注意：副本集的名称总是格式化为 `[DEPLOYMENT-NAME]-[RANDOM-STRING]`，随机字符串是随机生成的，使用 ` pod-template-hash` 作为随机数种子 
+注意：副本集的名称总是格式化为 `[DEPLOYMENT-NAME]-[RANDOM-STRING]`，随机字符串是随机生成的，使用 `pod-template-hash` 作为随机数种子
 
-接下来，我们将部署扩展到 4 个副本。使用 `kubectl scale ` 命令
+接下来，我们将部署扩展到 4 个副本。使用 `kubectl scale` 命令
 
 ```bash
 # 部署类型/应用名称 所需要的数量

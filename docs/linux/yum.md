@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # yum
 
 ## 配置阿里云 YUM 源

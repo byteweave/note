@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # docker
 
 ```bash
@@ -9,7 +12,7 @@ systemctl restart docker
 systemctl stop docker
 ```
 
-##  拓展阅读
+## 拓展阅读
 
 更详细的系统的教程：
 
@@ -54,6 +57,7 @@ docker container rm --force serviceApp
 ```
 
 ## 仓库
+
 ```bash
 # 登陆/注销docker
 docker login --username=[ 用户名 ]
@@ -68,6 +72,7 @@ docker push [ 用户名 ]/[ 仓库 ]:[ tag ]
 ```
 
 ## 镜像
+
 ```bash
 # 查找镜像
 docker search [ 条件 ]
@@ -124,8 +129,6 @@ docker images ：镜像列表
 |xargs ： 参数列表转换
 docker rmi ： 镜像删除命令
 ```
-
-
 
 ## 本地容器
 

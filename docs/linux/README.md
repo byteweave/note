@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # linux 常用知识
 
 新机器使用如下命令升级软件或者依赖包
@@ -7,7 +10,6 @@ yum -y update
 # 或
 yum -y upgrade
 ```
-
 
 ## 环境变量配置
 
@@ -26,6 +28,7 @@ source ~/.bashrc
 ## nodejs 安装
 
 ### yum 安装(强烈建议)
+
 此方式添加有好处，因为在后面的 yarn 安装中，yarn 依赖 nodejs，使用 yum -y yarn 的时候，
 依赖下载的是旧版本的 nodejs（6.x）
 
@@ -51,9 +54,10 @@ export NODE_HOME=/usr/local/node-v10.15.3-linux-x64
 export PATH=$NODE_HOME/bin:$PATH
 ```
 
-
 ### 源码编译安装
+
 以下方式，我自己编译回报错，安装不成功
+
 ```bash
 # 手动安装的都在该目录下安装
 cd /usr/local

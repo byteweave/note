@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # vuepress
 
-## 
+##

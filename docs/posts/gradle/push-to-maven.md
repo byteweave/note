@@ -1,17 +1,18 @@
+---
+outline: deep
+---
 # 发布包到 maven 仓库
-
 
 ## 在 sonatype 做准备工作
 
-效果：发布到 https://oss.sonatype.org/#nexus-search;quick~mrcode 仓库中
+效果：发布到 <https://oss.sonatype.org/#nexus-search;quick~mrcode> 仓库中
 
-首先需要到这个页面注册账户：https://issues.sonatype.org/
+首先需要到这个页面注册账户：<https://issues.sonatype.org/>
 
 登录之后，创建点击顶部导航栏的 create 创建项目
 ![](./assets/markdown-img-paste-20181120113649925.png)
 
-
-创建完成之后就会出一个 issues, 比如这个： https://issues.sonatype.org/browse/OSSRH-43803
+创建完成之后就会出一个 issues, 比如这个： <https://issues.sonatype.org/browse/OSSRH-43803>
 
 ![](./assets/markdown-img-paste-20181120114153766.png)
 
@@ -20,13 +21,12 @@
 1. 创建账户
 2. 创建 issues 类型为新项目
 3. 他们工作人员会要求你证明你提供的 group id 的域名是属于你自己的
-  1. 如果不能提供证明，你将不能使用这个域名作为你的 group id
-  2. 他也告知你可以使用 github 等域名作为你的 group id
+1. 如果不能提供证明，你将不能使用这个域名作为你的 group id
+2. 他也告知你可以使用 github 等域名作为你的 group id
 3. 证明 group id 是你的域名之后，就可以发布包到仓库了。
 
 我选择的是在 dns 中增加 txt；如下图，很快就通过认证了
 ![](./assets/markdown-img-paste-20181120114724253.png)
-
 
 关于 gradle 的最终配置在最后部分。下面的几个配置都是探索的配置过程记录；
 
@@ -140,6 +140,7 @@ task sourceJar(type: Jar, dependsOn: classes) {
 ```
 
 ## 发布
+
 对于发布来说，有两个地址：
 
 - releases  ：
@@ -153,9 +154,10 @@ task sourceJar(type: Jar, dependsOn: classes) {
 上面的配置对于 snapshots 已经可以发布了，只要执行 task publishMavenJavaPublicationToxxx 对应的仓库名称即可；
 
 ## GPG 生成
+
 配置之前需要你现有 gpg 的签名文件，我这里下载 windows 的软件
 
-gpg4win-3.1.5 ：https://gpg4win.org/thanks-for-download.html
+gpg4win-3.1.5 ：<https://gpg4win.org/thanks-for-download.html>
 
 这个软件支持中文。创建很简单。直接新建密钥对即可。
 
@@ -171,16 +173,16 @@ gpg4win-3.1.5 ：https://gpg4win.org/thanks-for-download.html
 
 注意：这个 gpg 你在上传到服务器之前需要生成 吊销证书.rev 。以后还可以使用这个证书进行取消的。不然就没法取消了
 
-> gpg 的详细教程可以参考 阮一峰的教程：http://www.ruanyifeng.com/blog/2013/07/gpg.html
-
-
+> gpg 的详细教程可以参考 阮一峰的教程：<http://www.ruanyifeng.com/blog/2013/07/gpg.html>
 
 ## 签名配置
+
 可直接看后面的 [最终打包配置](push-to-maven.md#最终的打包配置 "最终的打包配置")
 
 首先在顶部 plugins 中增加签名插件     id 'signing'
 
 在配置一下依赖，让插件任务运行
+
 ```
 // 1. 签名配置
 signing {
@@ -214,6 +216,7 @@ publishing {
 这里可以执行 gradle task publishToMavenLocal 这个任务来查看打到本地 maven 仓库的jar
 
 可以发现如下的目录结构
+
 ```
 fast-csv-0.1.0-SNAPSHOT.asc   -> 签名文件
 fast-csv-0.1.0-SNAPSHOT.jar
@@ -225,6 +228,7 @@ maven-metadata-local.xml
 这一步执行肯定会报错的，因为你没有指定你的签名信息：
 
 在 gradle 中增加以下配置
+
 ```
 signing.keyId=上面说过 gpg 的秘钥指纹后八位
 signing.password=你创建 gpg 密钥对的设置的密码
@@ -235,13 +239,13 @@ signing.secretKeyRingFile=C:/Users/Administrator/Desktop/xxxx.gpg   // gpg 路�
 
 ![](./assets/markdown-img-paste-20181120142547855.png)
 
-
 ## 尝试 release 版本
+
 这里只是一个尝试发布的过程记录；
 
 执行 gradle publishMavenJavaPublicationToSonatypeRepository 任务，将会打包推送到远程仓库
 
-不过只是被暂存了在 https://oss.sonatype.org/#stagingRepositories 中了，如下图（需要登录后，在最底部才能看到）
+不过只是被暂存了在 <https://oss.sonatype.org/#stagingRepositories> 中了，如下图（需要登录后，在最底部才能看到）
 
 ![](./assets/markdown-img-paste-20181127092734261.png)
 
@@ -259,18 +263,21 @@ signing.secretKeyRingFile=C:/Users/Administrator/Desktop/xxxx.gpg   // gpg 路�
 
 1. 提交的所有文件必须签名
 
-  - fast-csv-0.1.0.jar
-  - fast-csv-0.1.0.pom
-  - fast-csv-0.1.0-sources.jar
+- fast-csv-0.1.0.jar
+- fast-csv-0.1.0.pom
+- fast-csv-0.1.0-sources.jar
+
 2. javadoc 也必须随包一起发布
 
 其实第一个任务就告诉了，这些规则都是必须的。。
 ![](./assets/markdown-img-paste-20181127100441889.png)
 
 ## 最终的打包配置
-百度了好长时间，不知道怎么配置，最后还是在官网找到了配置教程 : https://docs.gradle.org/current/userguide/publishing_overview.html
+
+百度了好长时间，不知道怎么配置，最后还是在官网找到了配置教程 : <https://docs.gradle.org/current/userguide/publishing_overview.html>
 
 build.gradle
+
 ```java
 plugins {
     id 'java'
@@ -407,6 +414,7 @@ signing {
 ```
 
 gradle.properties
+
 ```
 NEXUS_USERNAME= sonatype 注册的用户名
 NEXUS_PASSWORD= sonatype 对应的密码
@@ -422,7 +430,7 @@ signing.secretKeyRingFile= C:/Users/xxx.gpg // 你的 gpg 文件路径
 ![](./assets/markdown-img-paste-20181127104531200.png)
 ![](./assets/markdown-img-paste-20181127104600253.png)
 
-再去之前 issues 项目页面  https://issues.sonatype.org/browse/OSSRH-43803 回复下;
+再去之前 issues 项目页面  <https://issues.sonatype.org/browse/OSSRH-43803> 回复下;
 
 还要 release 一下，才会被同步到 中央仓库中；
 
@@ -431,6 +439,7 @@ signing.secretKeyRingFile= C:/Users/xxx.gpg // 你的 gpg 文件路径
 哈哈哈，为了发布一个包，前前后后折腾了好几天。
 
 ## 优化 gradle 配置
+
 现在的配置遇到一个问题。有敏感信息，如何才能让敏感信息不上传到 git 上呢？又能不影响项目的构建？
 
 这些问题在 gradle 官网教程中找到了答案:

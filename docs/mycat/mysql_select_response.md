@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # mysql select 流程 - 响应
 
 上一张讲解到：
@@ -14,6 +17,7 @@
 ![](./assets/markdown-img-paste-20180916224614450.png)
 
 接着继续
+
 ## NIOSocketWR.asynRead
 
 ```
@@ -23,8 +27,6 @@ io.mycat.net.FrontendConnection#query(byte[])
 
 io.mycat.net.NIOSocketWR#asynRead
 ```
-
-
 
 ```java
 io.mycat.net.AbstractConnection#handle
@@ -55,24 +57,26 @@ public void handle(byte[] data) {
 
 public abstract class BackendAsyncHandler implements NIOHandler {
 
-	protected void offerData(byte[] data, Executor executor) {
-		handleData(data);
-	}
+ protected void offerData(byte[] data, Executor executor) {
+  handleData(data);
+ }
 
-	protected abstract void offerDataError();
+ protected abstract void offerDataError();
   // 这里 BackendAsyncHandler 的实例还是 MySQLConnectionHandler
-	protected abstract void handleData(byte[] data);
+ protected abstract void handleData(byte[] data);
 
 }
 ```
 
 ## 包解析
+
 这里的包解析，需要先了解协议，这里简约的了解下，因为对于响应来说，最后形成一个结果，
 在 handleData 中是有状态的。
 
 [该知识点可以参考 demo](https://github.com/zq99299/newstudy/blob/master/hp-base/src/test/java/cn/mrcode/newstudy/hpbase/mysql/mymysql2/MySqlConnectHandler.java)
 
 响应包的结构大致如下：
+
 1. 第一个包：列个数；从sql中select xxx,xxx from 中的列个数
 2. 第二部分：列定义，每个列定义为一个包
 3. 第三部分：列定义后面跟随一个eof包
@@ -158,6 +162,7 @@ protected void handleData(byte[] data) {
 ```
 
 数据包结束处理
+
 ```java
 io.mycat.backend.mysql.nio.MySQLConnectionHandler#handleFieldEofPacket
 
@@ -177,7 +182,9 @@ private void handleFieldEofPacket(byte[] data) {
 io.mycat.backend.mysql.nio.handler.MultiNodeQueryHandler#fieldEofResponse
 
 ```
+
 具体包解析的时候，看上去非常的复杂，中间涉及到，结果集合并，和排序等操作。本章节就不继续深入了。 最后会走该方法，把结果真正写出到 mycat 的客户端； 后面再单独的去跟中这个处理流程
+
 ```java
 io.mycat.backend.mysql.nio.handler.MultiNodeQueryHandler#outputMergeResult(io.mycat.server.ServerConnection, byte[], java.util.Iterator<io.mycat.memory.unsafe.row.UnsafeRow>, java.util.concurrent.atomic.AtomicBoolean)
 

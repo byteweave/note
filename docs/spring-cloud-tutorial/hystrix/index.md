@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # hystrix
 
 > [本章知识点大部分来自官网](https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.0.4.RELEASE/multi/multi_spring-cloud-netflix.html)
@@ -104,7 +107,7 @@ management:
           - "hystrix.stream" # 暴露这个断点
 ```
 
-启动之后访问地址：` http://localhost:80/actuator/hystrix.stream` ;
+启动之后访问地址：`http://localhost:80/actuator/hystrix.stream` ;
 能正常访问，就表示已经可以采集到短路器相关信息了
 
 访问地址：`http://localhost:80/hystrix/` 可以打开一个豪猪的页面
