@@ -679,7 +679,11 @@ Part one：
 
 part two：
 
-- 利用`style={{CSS属性名:属性值}}`进行动态条件判断
+- 利用动态条件判断
+
+```js
+style={{CSS属性名:属性值}}
+````
 
 ```html
 <!DOCTYPE html>
