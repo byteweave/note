@@ -8,8 +8,8 @@
 * 是怎么交给后端连接的（也就是怎么让实际的 mysql 服务器查询的）
 * nio 异步交互，这个数据是怎么返回前段客户端的
 
-
 ## 找到入口
+
 在 reactor 模型中说道过，NIOReactor 是处理读写事件的，那么这个类就是入口
 
 在 navicat 中执行一条简单的 sql 语句 `SELECT * FROM employee` 然后开始 debug
@@ -18,26 +18,26 @@
 io.mycat.net.NIOReactor.RW#run 下面是伪代码，为了清楚的看到我们要找的代码
 
 @Override
-		public void run() {
-			int invalidSelectCount = 0;
-			Set<SelectionKey> keys = null;
-			for (;;) {
-				++reactCount;
-				try {
-					{
-						invalidSelectCount = 0;
-						for (SelectionKey key : keys) {
-							AbstractConnection con = null;
-							try {
+  public void run() {
+   int invalidSelectCount = 0;
+   Set<SelectionKey> keys = null;
+   for (;;) {
+    ++reactCount;
+    try {
+     {
+      invalidSelectCount = 0;
+      for (SelectionKey key : keys) {
+       AbstractConnection con = null;
+       try {
                 // 获取与 该key绑定的 attachment 对象，就是 ServerConnection
-								Object att = key.attachment();
-								if (att != null) {
-									con = (AbstractConnection) att;
-									if (key.isValid() && key.isReadable()) {
-										try {
+        Object att = key.attachment();
+        if (att != null) {
+         con = (AbstractConnection) att;
+         if (key.isValid() && key.isReadable()) {
+          try {
                       // 开始读取数据
-											con.asynRead();
-										} catch (IOException e) {
+           con.asynRead();
+          } catch (IOException e) {
 ```
 
 ## nio 中 ServerConnection 是怎么和事件关联上的
@@ -45,6 +45,7 @@ io.mycat.net.NIOReactor.RW#run 下面是伪代码，为了清楚的看到我们�
 那么这里就要补充下前一章没有说道的一个知识了，attachment 是什么时候和 key 绑定关联上的？
 
 就是之前在在登录认证的时候，register 方法中关联的。
+
 ```java
 io.mycat.net.NIOSocketWR#register
 public void register(Selector selector) throws IOException {
@@ -83,6 +84,7 @@ public void handle(byte[] data) {
 ```
 
 ## select 分析
+
 FrontendCommandHandler 类最主要的方法就是下面贴出来的代码，
 根据 mysql 协议中的命令类型转调具体的方法。
 
@@ -141,13 +143,13 @@ public void handle(byte[] data)
             source.stmtPrepare(data);
             break;
         case MySQLPacket.COM_STMT_SEND_LONG_DATA:
-        	commands.doStmtSendLongData();
-        	source.stmtSendLongData(data);
-        	break;
+         commands.doStmtSendLongData();
+         source.stmtSendLongData(data);
+         break;
         case MySQLPacket.COM_STMT_RESET:
-        	commands.doStmtReset();
-        	source.stmtReset(data);
-        	break;
+         commands.doStmtReset();
+         source.stmtReset(data);
+         break;
         case MySQLPacket.COM_STMT_EXECUTE:
             commands.doStmtExecute();
             source.stmtExecute(data);
@@ -174,27 +176,26 @@ public void handle(byte[] data)
 ```java
 public void query(byte[] data) {
 
-		// 取得语句
-		String sql = null;		
-		try {
+  // 取得语句
+  String sql = null;  
+  try {
       // 把数据解析成 mysql 消息包
-			MySQLMessage mm = new MySQLMessage(data);
-			mm.position(5);
-			sql = mm.readString(charset);
-		} catch (UnsupportedEncodingException e) {
-			writeErrMessage(ErrorCode.ER_UNKNOWN_CHARACTER_SET, "Unknown charset '" + charset + "'");
-			return;
-		}		
-		// 这里需要注意了
+   MySQLMessage mm = new MySQLMessage(data);
+   mm.position(5);
+   sql = mm.readString(charset);
+  } catch (UnsupportedEncodingException e) {
+   writeErrMessage(ErrorCode.ER_UNKNOWN_CHARACTER_SET, "Unknown charset '" + charset + "'");
+   return;
+  }  
+  // 这里需要注意了
     // 由于 navicat 这样的工具发送查询 sql 前还会发送其他的命令
     // 比如这次 debug 过程中，
     // 会发送 SET PROFILING=1; 命令
     // SHOW STATUS 命令
     // 最后才会看到我们这次要测试的语句
-		this.query( sql );
-	}
+  this.query( sql );
+ }
 ```
-
 
 ```java
 io.mycat.net.FrontendConnection#query(java.lang.String)
@@ -223,7 +224,7 @@ public void query(String sql) {
     writeErrMessage(ErrorCode.ERR_WRONG_USED,
         "The statement is unsafe SQL, reject for user '" + user + "'");
     return;
-  }		
+  }  
 
   // DML 权限检查
   try {
@@ -241,16 +242,17 @@ public void query(String sql) {
      }
 
   // 执行查询
-  if (queryHandler != null) {			
+  if (queryHandler != null) {   
     // 检查该用户，也就是 mycat 的逻辑用户是否是只读权限
     queryHandler.setReadOnly(privileges.isReadOnly(user));
     queryHandler.query(sql);
 
   } else {
     writeErrMessage(ErrorCode.ER_UNKNOWN_COM_ERROR, "Query unsupported!");
-  }		
+  }  
 }
 ```
+
 ## 目前为止小结
 
 前面一条语句经过了如下流程：
@@ -266,6 +268,7 @@ public void query(String sql) {
 ![](./assets/markdown-img-paste-20180912233450284.png)
 
 ## 真正开始 sql 解析流程
+
 io.mycat.server.ServerQueryHandler
 
 ```java
@@ -414,33 +417,33 @@ public void execute(String sql, int type) {
 io.mycat.server.ServerConnection#routeEndExecuteSQL
 
 public void routeEndExecuteSQL(String sql, final int type, final SchemaConfig schema) {
-		// 路由计算
-		RouteResultset rrs = null;
-		try {
+  // 路由计算
+  RouteResultset rrs = null;
+  try {
       // 在本场景中路由计算的大概功能是：
       // 1. 先从缓存中获取该语句是否有缓存过
       // 2. 没有命中，则再次路由解析。由于我配置的是两个分片表，这里解析完成之后
       //  rrs 中会包含两个节点的sql执行信息
-			rrs = MycatServer
-					.getInstance()
-					.getRouterservice()
-					.route(MycatServer.getInstance().getConfig().getSystem(),
-							schema, type, sql, this.charset, this);
+   rrs = MycatServer
+     .getInstance()
+     .getRouterservice()
+     .route(MycatServer.getInstance().getConfig().getSystem(),
+       schema, type, sql, this.charset, this);
 
-		} catch (Exception e) {
-			StringBuilder s = new StringBuilder();
-			LOGGER.warn(s.append(this).append(sql).toString() + " err:" + e.toString(),e);
-			String msg = e.getMessage();
-			writeErrMessage(ErrorCode.ER_PARSE_ERROR, msg == null ? e.getClass().getSimpleName() : msg);
-			return;
-		}
-		if (rrs != null) {
-			// 这里使用到了 io.mycat.server.NonBlockingSession#execute
+  } catch (Exception e) {
+   StringBuilder s = new StringBuilder();
+   LOGGER.warn(s.append(this).append(sql).toString() + " err:" + e.toString(),e);
+   String msg = e.getMessage();
+   writeErrMessage(ErrorCode.ER_PARSE_ERROR, msg == null ? e.getClass().getSimpleName() : msg);
+   return;
+  }
+  if (rrs != null) {
+   // 这里使用到了 io.mycat.server.NonBlockingSession#execute
       // 之前对每一个 前段链接都分配了一个 session
-			session.execute(rrs, rrs.isSelectForUpdate()?ServerParse.UPDATE:type);
-		}
+   session.execute(rrs, rrs.isSelectForUpdate()?ServerParse.UPDATE:type);
+  }
 
- 	}
+  }
 ```
 
 路由计算是一个非常复杂的技术，这里不继续深入。还是继续探索交互流程
@@ -513,6 +516,7 @@ public void routeEndExecuteSQL(String sql, final int type, final SchemaConfig sc
 ```
 
 ## 多节点开始执行
+
 io.mycat.backend.mysql.nio.handler.MultiNodeQueryHandler
 
 ```java
@@ -537,13 +541,13 @@ public void execute() throws Exception {
     // 先从自身session中查找是否有可用连接
     if (session.tryExistsCon(conn, node)) {
       LOGGER.debug("node.getRunOnSlave()-" + node.getRunOnSlave());
-      node.setRunOnSlave(rrs.getRunOnSlave());	// 实现 master/slave注解
+      node.setRunOnSlave(rrs.getRunOnSlave()); // 实现 master/slave注解
       LOGGER.debug("node.getRunOnSlave()-" + node.getRunOnSlave());
       _execute(conn, node);
     } else {
       // 给该节点语句创建新的 后端 mysql 连接
       LOGGER.debug("node.getRunOnSlave()1-" + node.getRunOnSlave());
-      node.setRunOnSlave(rrs.getRunOnSlave());	// 实现 master/slave注解
+      node.setRunOnSlave(rrs.getRunOnSlave()); // 实现 master/slave注解
       LOGGER.debug("node.getRunOnSlave()2-" + node.getRunOnSlave());
 
       // 根据节点名称获取信息，
@@ -563,34 +567,35 @@ public void execute() throws Exception {
 ```
 
 这里就有点奇葩了，获取连接方法里面就直接执行了操作
+
 ```java
 io.mycat.backend.datasource.PhysicalDBNode#getConnection
 
 public void getConnection(String schema,boolean autoCommit, RouteResultsetNode rrs,
-							ResponseHandler handler, Object attachment) throws Exception {
-		checkRequest(schema);
-		if (dbPool.isInitSuccess()) {
-			LOGGER.debug("rrs.getRunOnSlave() " + rrs.getRunOnSlave());
-			if(rrs.getRunOnSlave() != null){		// 带有 /*db_type=master/slave*/ 注解
-				// 注释执行处理
-			}else{	// 没有  /*db_type=master/slave*/ 注解，按照原来的处理方式
-				LOGGER.debug("rrs.getRunOnSlave() " + rrs.getRunOnSlave());	// null
+       ResponseHandler handler, Object attachment) throws Exception {
+  checkRequest(schema);
+  if (dbPool.isInitSuccess()) {
+   LOGGER.debug("rrs.getRunOnSlave() " + rrs.getRunOnSlave());
+   if(rrs.getRunOnSlave() != null){  // 带有 /*db_type=master/slave*/ 注解
+    // 注释执行处理
+   }else{ // 没有  /*db_type=master/slave*/ 注解，按照原来的处理方式
+    LOGGER.debug("rrs.getRunOnSlave() " + rrs.getRunOnSlave()); // null
         // 进行了一个事物判定，无事物就是自动提交
-				if (rrs.canRunnINReadDB(autoCommit)) {
-					dbPool.getRWBanlanceCon(schema,autoCommit, handler, attachment, this.database);
-				} else {
-					PhysicalDatasource writeSource =dbPool.getSource();
-					//记录写节点写负载值
-					writeSource.setWriteCount();
-					writeSource.getConnection(schema, autoCommit,
-							handler, attachment);
-				}
-			}
+    if (rrs.canRunnINReadDB(autoCommit)) {
+     dbPool.getRWBanlanceCon(schema,autoCommit, handler, attachment, this.database);
+    } else {
+     PhysicalDatasource writeSource =dbPool.getSource();
+     //记录写节点写负载值
+     writeSource.setWriteCount();
+     writeSource.getConnection(schema, autoCommit,
+       handler, attachment);
+    }
+   }
 
-		} else {
-			throw new IllegalArgumentException("Invalid DataSource:" + dbPool.getActivedIndex());
-			}
-		}
+  } else {
+   throw new IllegalArgumentException("Invalid DataSource:" + dbPool.getActivedIndex());
+   }
+  }
 ```
 
 io.mycat.backend.datasource.PhysicalDBPool#getRWBanlanceCon
@@ -602,7 +607,7 @@ public void getRWBanlanceCon(String schema, boolean autocommit,
   PhysicalDatasource theNode = null;
   ArrayList<PhysicalDatasource> okSources = null;
   switch (banlance) {
-  case BALANCE_ALL_BACK: {			
+  case BALANCE_ALL_BACK: {   
     // all read nodes and the standard by masters
     okSources = getAllActiveRWSources(true, false, checkSlaveSynStatus());
     if (okSources.isEmpty()) {
@@ -645,48 +650,48 @@ public void getRWBanlanceCon(String schema, boolean autocommit,
 
 ```java
 public void getConnection(String schema, boolean autocommit,
-		final ResponseHandler handler, final Object attachment)
-		throws IOException {
+  final ResponseHandler handler, final Object attachment)
+  throws IOException {
 
-	// 从当前连接map中拿取已建立好的后端连接
-	BackendConnection con = this.conMap.tryTakeCon(schema, autocommit);
-	if (con != null) {
-		//如果不为空，则绑定对应前端请求的handler
-		takeCon(con, handler, attachment, schema);
-		return;
-	} else {
-		int activeCons = this.getActiveCount();
-		if (activeCons + 1 > size) {
-			LOGGER.error("the max activeConnnections size can not be max than maxconnections");
-			throw new IOException("the max activeConnnections size can not be max than maxconnections");
-		} else { // create connection
-			LOGGER.info("no ilde connection in pool,create new connection for "	+ this.name + " of schema " + schema);
-			createNewConnection(handler, attachment, schema);
-		}
-	}
+ // 从当前连接map中拿取已建立好的后端连接
+ BackendConnection con = this.conMap.tryTakeCon(schema, autocommit);
+ if (con != null) {
+  //如果不为空，则绑定对应前端请求的handler
+  takeCon(con, handler, attachment, schema);
+  return;
+ } else {
+  int activeCons = this.getActiveCount();
+  if (activeCons + 1 > size) {
+   LOGGER.error("the max activeConnnections size can not be max than maxconnections");
+   throw new IOException("the max activeConnnections size can not be max than maxconnections");
+  } else { // create connection
+   LOGGER.info("no ilde connection in pool,create new connection for " + this.name + " of schema " + schema);
+   createNewConnection(handler, attachment, schema);
+  }
+ }
 }
 ```
 
 ```java
 private BackendConnection takeCon(BackendConnection conn,
-			final ResponseHandler handler, final Object attachment,
-			String schema) {
+   final ResponseHandler handler, final Object attachment,
+   String schema) {
 
-		conn.setBorrowed(true);
+  conn.setBorrowed(true);
 
-		if (!conn.getSchema().equals(schema)) {
-			conn.setSchema(schema);
-		}
-		ConQueue queue = conMap.getSchemaConQueue(schema);
-		// 给该 dataNode 队列增加执行次数
-		queue.incExecuteCount();
-		// 给连接绑定要执行的 io.mycat.route.RouteResultsetNode ，经过路由后的sql语句信息和需要在目标机器上执行的信息
-		conn.setAttachment(attachment);
-		conn.setLastTime(System.currentTimeMillis()); // 每次取连接的时候，更新下lasttime，防止在前端连接检查的时候，关闭连接，导致sql执行失败
+  if (!conn.getSchema().equals(schema)) {
+   conn.setSchema(schema);
+  }
+  ConQueue queue = conMap.getSchemaConQueue(schema);
+  // 给该 dataNode 队列增加执行次数
+  queue.incExecuteCount();
+  // 给连接绑定要执行的 io.mycat.route.RouteResultsetNode ，经过路由后的sql语句信息和需要在目标机器上执行的信息
+  conn.setAttachment(attachment);
+  conn.setLastTime(System.currentTimeMillis()); // 每次取连接的时候，更新下lasttime，防止在前端连接检查的时候，关闭连接，导致sql执行失败
     // 这里又回到了 io.mycat.backend.mysql.nio.handler.MultiNodeQueryHandler 中
-		handler.connectionAcquired(conn);
-		return conn;
-	}
+  handler.connectionAcquired(conn);
+  return conn;
+ }
 ```
 
 `io.mycat.backend.mysql.nio.handler.MultiNodeQueryHandler#connectionAcquired`
@@ -694,26 +699,26 @@ private BackendConnection takeCon(BackendConnection conn,
 ```java
 @Override
 public void connectionAcquired(final BackendConnection conn) {
-	final RouteResultsetNode node = (RouteResultsetNode) conn
-			.getAttachment();
-	// 在session上绑定 路由信息，和获取到的连接信息
-	session.bindConnection(node, conn);
-	_execute(conn, node);
+ final RouteResultsetNode node = (RouteResultsetNode) conn
+   .getAttachment();
+ // 在session上绑定 路由信息，和获取到的连接信息
+ session.bindConnection(node, conn);
+ _execute(conn, node);
 }
 
 private void _execute(BackendConnection conn, RouteResultsetNode node) {
-	  // 如果 session 关闭则不继续执行
-		if (clearIfSessionClosed(session)) {
-			return;
-		}
-		// 在 连接上绑定一个响应处理器
-		conn.setResponseHandler(this);
-		try {
-			conn.execute(node, session.getSource(), autocommit);
-		} catch (IOException e) {
-			connectionError(e, conn);
-		}
-	}
+   // 如果 session 关闭则不继续执行
+  if (clearIfSessionClosed(session)) {
+   return;
+  }
+  // 在 连接上绑定一个响应处理器
+  conn.setResponseHandler(this);
+  try {
+   conn.execute(node, session.getSource(), autocommit);
+  } catch (IOException e) {
+   connectionError(e, conn);
+  }
+ }
 ```
 
 ## 终于到了 mysql 连接执行语句的地方
@@ -723,69 +728,69 @@ io.mycat.backend.mysql.nio.MySQLConnection#execute
 
 
 public void execute(RouteResultsetNode rrn, ServerConnection sc,
-		boolean autocommit) throws UnsupportedEncodingException {
-	if (!modifiedSQLExecuted && rrn.isModifySQL()) {
-		modifiedSQLExecuted = true;
-	}
-	String xaTXID = null;
-	if(sc.getSession2().getXaTXID()!=null){
-		xaTXID = sc.getSession2().getXaTXID()+",'"+getSchema()+"'";
-	}
-	// 同步执行
-	synAndDoExecute(xaTXID, rrn, sc.getCharsetIndex(), sc.getTxIsolation(),
-			autocommit);
+  boolean autocommit) throws UnsupportedEncodingException {
+ if (!modifiedSQLExecuted && rrn.isModifySQL()) {
+  modifiedSQLExecuted = true;
+ }
+ String xaTXID = null;
+ if(sc.getSession2().getXaTXID()!=null){
+  xaTXID = sc.getSession2().getXaTXID()+",'"+getSchema()+"'";
+ }
+ // 同步执行
+ synAndDoExecute(xaTXID, rrn, sc.getCharsetIndex(), sc.getTxIsolation(),
+   autocommit);
 }
 
 private void synAndDoExecute(String xaTxID, RouteResultsetNode rrn,
-			int clientCharSetIndex, int clientTxIsoLation,
-			boolean clientAutoCommit) {
-		String xaCmd = null;
+   int clientCharSetIndex, int clientTxIsoLation,
+   boolean clientAutoCommit) {
+  String xaCmd = null;
 
-		boolean conAutoComit = this.autocommit;
-		String conSchema = this.schema;
-		boolean strictTxIsolation = MycatServer.getInstance().getConfig().getSystem().isStrictTxIsolation();
-		boolean expectAutocommit = false;
-		if (strictTxIsolation) {
-			expectAutocommit = isFromSlaveDB() || clientAutoCommit;
-		} else {
-			expectAutocommit = (!modifiedSQLExecuted || isFromSlaveDB() || clientAutoCommit);
-		}
-		if (expectAutocommit == false && xaTxID != null && xaStatus == TxState.TX_INITIALIZE_STATE) {
-			xaCmd = "XA START " + xaTxID + ';';
-			this.xaStatus = TxState.TX_STARTED_STATE;
-		}
-		int schemaSyn = conSchema.equals(oldSchema) ? 0 : 1;
-		int charsetSyn = 0;
-		// 判定当前连接中的 字符集是否与前段连接中的字符集一致
-		if (this.charsetIndex != clientCharSetIndex) {
-			setCharset(CharsetUtil.getCharset(clientCharSetIndex));
-			charsetSyn = 1;
-		}
-		int txIsoLationSyn = (txIsolation == clientTxIsoLation) ? 0 : 1;
-		int autoCommitSyn = (conAutoComit == expectAutocommit) ? 0 : 1;
-		int synCount = schemaSyn + charsetSyn + txIsoLationSyn + autoCommitSyn + (xaCmd!=null?1:0);
-		if (synCount == 0 && this.xaStatus != TxState.TX_STARTED_STATE) {
-			//不需要同步连接，难道这个是因为不需要事务吗？需要事务的才需要同步执行？
-			sendQueryCmd(rrn.getStatement());
-			return;
-		}
-		 。。。。。
+  boolean conAutoComit = this.autocommit;
+  String conSchema = this.schema;
+  boolean strictTxIsolation = MycatServer.getInstance().getConfig().getSystem().isStrictTxIsolation();
+  boolean expectAutocommit = false;
+  if (strictTxIsolation) {
+   expectAutocommit = isFromSlaveDB() || clientAutoCommit;
+  } else {
+   expectAutocommit = (!modifiedSQLExecuted || isFromSlaveDB() || clientAutoCommit);
+  }
+  if (expectAutocommit == false && xaTxID != null && xaStatus == TxState.TX_INITIALIZE_STATE) {
+   xaCmd = "XA START " + xaTxID + ';';
+   this.xaStatus = TxState.TX_STARTED_STATE;
+  }
+  int schemaSyn = conSchema.equals(oldSchema) ? 0 : 1;
+  int charsetSyn = 0;
+  // 判定当前连接中的 字符集是否与前段连接中的字符集一致
+  if (this.charsetIndex != clientCharSetIndex) {
+   setCharset(CharsetUtil.getCharset(clientCharSetIndex));
+   charsetSyn = 1;
+  }
+  int txIsoLationSyn = (txIsolation == clientTxIsoLation) ? 0 : 1;
+  int autoCommitSyn = (conAutoComit == expectAutocommit) ? 0 : 1;
+  int synCount = schemaSyn + charsetSyn + txIsoLationSyn + autoCommitSyn + (xaCmd!=null?1:0);
+  if (synCount == 0 && this.xaStatus != TxState.TX_STARTED_STATE) {
+   //不需要同步连接，难道这个是因为不需要事务吗？需要事务的才需要同步执行？
+   sendQueryCmd(rrn.getStatement());
+   return;
+  }
+   。。。。。
 
-	}
+ }
 
-	protected void sendQueryCmd(String query) {
-		// 创建了一个命令包
-		CommandPacket packet = new CommandPacket();
-		packet.packetId = 0;
-		packet.command = MySQLPacket.COM_QUERY;
-		try {
-			packet.arg = query.getBytes(charset);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-		lastTime = TimeUtil.currentTimeMillis();
-		packet.write(this);
-	}
+ protected void sendQueryCmd(String query) {
+  // 创建了一个命令包
+  CommandPacket packet = new CommandPacket();
+  packet.packetId = 0;
+  packet.command = MySQLPacket.COM_QUERY;
+  try {
+   packet.arg = query.getBytes(charset);
+  } catch (UnsupportedEncodingException e) {
+   throw new RuntimeException(e);
+  }
+  lastTime = TimeUtil.currentTimeMillis();
+  packet.write(this);
+ }
 ```
 
 ## 命令包转成 buffer
@@ -795,25 +800,24 @@ io.mycat.net.mysql.CommandPacket#write(io.mycat.net.BackendAIOConnection)
 public void write(BackendAIOConnection c) {
         ByteBuffer buffer = c.allocate();
         try {    
-					// 把命令包转换成 mysql 协议 buffer
-	        BufferUtil.writeUB3(buffer, calcPacketSize());
-	        buffer.put(packetId);
-	        buffer.put(command);
-	        buffer = c.writeToBuffer(arg, buffer);
-					// 连接对象开始写buffer对象
-	        c.write(buffer);	        
+     // 把命令包转换成 mysql 协议 buffer
+         BufferUtil.writeUB3(buffer, calcPacketSize());
+         buffer.put(packetId);
+         buffer.put(command);
+         buffer = c.writeToBuffer(arg, buffer);
+     // 连接对象开始写buffer对象
+         c.write(buffer);         
         } catch(java.nio.BufferOverflowException e1) {
-        	//fixed issues #98 #1072
-        	buffer =  c.checkWriteBuffer(buffer, c.getPacketHeaderSize() + calcPacketSize(), false);
-	        BufferUtil.writeUB3(buffer, calcPacketSize());
-	        buffer.put(packetId);
-	        buffer.put(command);
-	        buffer = c.writeToBuffer(arg, buffer);
-	        c.write(buffer);
+         //fixed issues #98 #1072
+         buffer =  c.checkWriteBuffer(buffer, c.getPacketHeaderSize() + calcPacketSize(), false);
+         BufferUtil.writeUB3(buffer, calcPacketSize());
+         buffer.put(packetId);
+         buffer.put(command);
+         buffer = c.writeToBuffer(arg, buffer);
+         c.write(buffer);
         }
     }
 ```
-
 
 ```java
 io.mycat.net.AbstractConnection#write(java.nio.ByteBuffer)
@@ -821,70 +825,71 @@ io.mycat.net.AbstractConnection#write(java.nio.ByteBuffer)
  public final void write(ByteBuffer buffer) {
 
 
-	 if (isSupportCompress()) {
-		 // 如果需要压缩支持，则压缩包
-		 ByteBuffer newBuffer = CompressUtil.compressMysqlPacket(buffer, this, compressUnfinishedDataQueue);
-		 writeQueue.offer(newBuffer);
-	 } else {
-		 // 放入队列中
-		 writeQueue.offer(buffer);
-	 }
+  if (isSupportCompress()) {
+   // 如果需要压缩支持，则压缩包
+   ByteBuffer newBuffer = CompressUtil.compressMysqlPacket(buffer, this, compressUnfinishedDataQueue);
+   writeQueue.offer(newBuffer);
+  } else {
+   // 放入队列中
+   writeQueue.offer(buffer);
+  }
 
-	 // 一个 MySQLConnection 中也绑定了一个 io.mycat.net.NIOSocketWR
-	 try {
-		 this.socketWR.doNextWriteCheck();
-	 } catch (Exception e) {
-		 LOGGER.warn("write err:", e);
-		 this.close("write err:" + e);
-	 }
+  // 一个 MySQLConnection 中也绑定了一个 io.mycat.net.NIOSocketWR
+  try {
+   this.socketWR.doNextWriteCheck();
+  } catch (Exception e) {
+   LOGGER.warn("write err:", e);
+   this.close("write err:" + e);
+  }
  }
 ```
 
 ## NIO 写查询命令包
+
 io.mycat.net.NIOSocketWR#doNextWriteCheck
 
 ```java
 public void doNextWriteCheck() {
 
-		if (!writing.compareAndSet(false, true)) {
-			return;
-		}
+  if (!writing.compareAndSet(false, true)) {
+   return;
+  }
 
-		try {
-			// 使用 channel 写数据
-			boolean noMoreData = write0();
-			writing.set(false);
-			if (noMoreData && con.writeQueue.isEmpty()) {
-				if ((processKey.isValid() && (processKey.interestOps() & SelectionKey.OP_WRITE) != 0)) {
-					// 当没有可写数据的时候，则关闭 SelectionKey 的写事件
-					disableWrite();
-				}
+  try {
+   // 使用 channel 写数据
+   boolean noMoreData = write0();
+   writing.set(false);
+   if (noMoreData && con.writeQueue.isEmpty()) {
+    if ((processKey.isValid() && (processKey.interestOps() & SelectionKey.OP_WRITE) != 0)) {
+     // 当没有可写数据的时候，则关闭 SelectionKey 的写事件
+     disableWrite();
+    }
 
-			} else {
+   } else {
 
-				if ((processKey.isValid() && (processKey.interestOps() & SelectionKey.OP_WRITE) == 0)) {
-					enableWrite(false);
-				}
-			}
+    if ((processKey.isValid() && (processKey.interestOps() & SelectionKey.OP_WRITE) == 0)) {
+     enableWrite(false);
+    }
+   }
 
-		} catch (IOException e) {
-			if (AbstractConnection.LOGGER.isDebugEnabled()) {
-				AbstractConnection.LOGGER.debug("caught err:", e);
-			}
-			con.close("err:" + e);
-		}
+  } catch (IOException e) {
+   if (AbstractConnection.LOGGER.isDebugEnabled()) {
+    AbstractConnection.LOGGER.debug("caught err:", e);
+   }
+   con.close("err:" + e);
+  }
 
-	}
+ }
 
 // 这里终于看到了 nio 的底层代码
 private void disableWrite() {
-	try {
-		SelectionKey key = this.processKey;
-		key.interestOps(key.interestOps() & OP_NOT_WRITE);
-	} catch (Exception e) {
-		AbstractConnection.LOGGER.warn("can't disable write " + e + " con "
-				+ con);
-	}
+ try {
+  SelectionKey key = this.processKey;
+  key.interestOps(key.interestOps() & OP_NOT_WRITE);
+ } catch (Exception e) {
+  AbstractConnection.LOGGER.warn("can't disable write " + e + " con "
+    + con);
+ }
 
 }
 ```
@@ -905,8 +910,8 @@ private void disableWrite() {
 5. 用户权限检测
 6. 找到要执行的命令处理器 SelectHandler
 7. 路由计算，找到具体要在哪些节点上执行该sql
-	1. 单节点构造 singleNodeHandler 执行
-	2. 多节点构造 multiNodeHandler  执行
+1. 单节点构造 singleNodeHandler 执行
+2. 多节点构造 multiNodeHandler  执行
 8. 开始循环获取连接（这里很奇葩，在获取连接方法里面执行了后续流程）
 9. 在连接获取中回调回到了 MultiNodeQueryHandler 中
 10. session 绑定路由和连接信息，并把 MultiNodeQueryHandler 处理器设置为数据响应处理器
