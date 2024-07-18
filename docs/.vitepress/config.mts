@@ -113,6 +113,6 @@ export default defineConfig({
       ],
     },
 
-    socialLinks: [{ icon: "github", link: "https://github.com/PortfolioCare/coding" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/byteweave/note" }],
   },
 });
