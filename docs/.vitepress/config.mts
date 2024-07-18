@@ -2,7 +2,6 @@ import { defineConfig } from "vitepress";
 import { ai } from "../ai";
 import { back_end_storage } from "../back_end_storage";
 import { cache_pdp } from "../cache_pdp";
-import { git } from "../git";
 import { git_scm } from "../git_scm";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
@@ -40,7 +39,7 @@ export default defineConfig({
     nav: [
       { text: "java", link: "/java" },
       { text: "redis", link: "/redis" },
-      { text: "git", link: "/git/" },
+      { text: "git", link: "/git_scm/" },
       { text: "存储实战", link: "/back_end_storage/" },
       { text: "亿级流量电商详情页系统实战", link: "/cache_pdp/" },
       { text: "AI", link: "/ai/" },
@@ -48,7 +47,6 @@ export default defineConfig({
 
     sidebar: {
       "/ai/": ai(),
-      "/git/": git(),
       "/git_scm/": git_scm(),
       "/cache_pdp/": cache_pdp(),
       "/back_end_storage/": back_end_storage(),
