@@ -40,7 +40,7 @@ export default defineConfig({
       { text: "git", link: "/git/git-qiyuan.md" },
       { text: "gongju", link: "/gongju/brew.md" },
       { text: "AI", link: "/ai/" },
-      { text: "back_end_storage", link: "/back_end_storage/" },
+      { text: "存储实战", link: "/back_end_storage/" },
     ],
 
     sidebar: {
