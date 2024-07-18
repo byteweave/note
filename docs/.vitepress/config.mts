@@ -1,4 +1,6 @@
 import { defineConfig } from "vitepress";
+import { ai } from "../ai";
+import { back_end_storage } from "../back_end_storage";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
 // https://vitepress.dev/reference/site-config
@@ -37,9 +39,13 @@ export default defineConfig({
       { text: "redis", link: "/redis" },
       { text: "git", link: "/git/git-qiyuan.md" },
       { text: "gongju", link: "/gongju/brew.md" },
+      { text: "AI", link: "/ai/" },
+      { text: "back_end_storage", link: "/back_end_storage/" },
     ],
 
     sidebar: {
+      "/ai/": ai(),
+      "/back_end_storage/": back_end_storage(),
       "/": [
         {
           text: "Examples",
