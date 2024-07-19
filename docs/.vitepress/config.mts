@@ -9,6 +9,8 @@ import mdItCustomAttrs from "markdown-it-custom-attrs";
 
 // .vitepress/config.js
 import { VitePWA } from "vite-plugin-pwa";
+// .vitepress/config.js
+import viteCompression from "vite-plugin-compression";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -20,7 +22,7 @@ export default defineConfig({
   metaChunk: true,
   lang: "zh-CN", // 其他配置
   vite: {
-    plugins: [VitePWA()],
+    plugins: [VitePWA(), viteCompression()],
   },
   head: [
     ["link", { rel: "stylesheet", href: "/note/fancybox.css" }],
