@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # terms 搜索多个值
+
 [[toc]]
 
 之前都是使用 term 搜索一个词，那么怎么实现 sql 中的 in 效果呢？

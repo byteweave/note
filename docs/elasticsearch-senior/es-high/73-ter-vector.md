@@ -1,7 +1,13 @@
+---
+outline: deep
+---
+
 # 基于 term vector 深入探查数据的情况
+
 [[toc]]
 
 ## 何为 term vector？
+
 是 es 中提供的一个 api，获取 document 中的某个 field 内的各个 term 的统计信息，比如
 
 term：可以理解为一个分词
@@ -90,6 +96,7 @@ PUT /my_index
   }
 }
 ```
+
 > 插入数据
 
 ```json
@@ -227,6 +234,7 @@ id=2： "text" : "other hello test ..."
     ]
   }
 ```
+
 - doc_freq：hello 这个 term 在几个 doc 中出现了
 - ttf：total term frequency，一个 term 在所有 document 中出现的频率
 - term_freq：一个 term 在当前 doc 中出现的频率
@@ -234,6 +242,7 @@ id=2： "text" : "other hello test ..."
 - payload：该内容的一个编码？
 
 ## query-time term vector 实验
+
 由于在创建 mapping 的时候只手动配置了 text 为 index-time 的 term vector，
 这里直接用另外一个字段即可
 
@@ -300,6 +309,7 @@ GET /my_index/my_type/1/_termvectors
 现场去探查一下就好了
 
 ## 手动指定 doc 的 term vector
+
 ```json
 GET /my_index/my_type/_termvectors
 {
@@ -405,6 +415,7 @@ GET /my_index/my_type/_termvectors
 也挺有用的，比如你探查数据把，可以过滤掉一些出现频率过低的term，就不考虑了
 
 ## multi term vector
+
 顾名思义就是一次性可以指定多个 doc 的 term vector 信息返回
 
 ```json

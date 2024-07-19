@@ -1,13 +1,20 @@
+---
+outline: deep
+---
+
 # 基于 completion suggest 实现搜索提示
 
 ## 什么是 completion suggest ？
+
 suggest（提示）：completion suggest，常叫做自动完成（auto completion），
 其他叫法搜索推荐、搜索提示
 
 比如说我们在百度，搜索，你现在搜索“大话西游”，百度自动给你提示“大话西游电影”、“大话西游小说”、 “大话西游手游”，不用你把所有你想要输入的文本都输入完，搜索引擎会自动提示你可能是你想要搜索的那个文本
 
 ## es 提供的 completion suggest
+
 语法如下
+
 ```json{10-13}
 PUT /news_website
 {
@@ -73,6 +80,7 @@ GET /news_website/news/_search
   }
 }
 ```
+
 响应数据
 
 ```json

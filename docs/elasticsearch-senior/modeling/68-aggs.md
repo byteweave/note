@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # nested object 聚合分析
+>
 > 分析每个月的评论的评分的平均值
 
 需求分析：

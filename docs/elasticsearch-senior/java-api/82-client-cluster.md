@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # client 集群自动探查以及汽车零售店案例背景
 
 快速入门篇（[练习例子-员工管理](../../elasticsearch-core/72-employee-example.md) ），讲解过了一些基本的 java api，包括了 document 增删改查，基本的搜索，基本的聚合
@@ -5,6 +9,7 @@
 高手进阶篇，必须将 java api 这块深入讲解一下，介绍一些最常用的，最核心的一些 api 的使用，用一个模拟现实的案例背景，让大家在学习的时候更加贴近业务
 
 ## 讲师吐槽
+
 本段是讲师吐槽，大意是 java api 不能所有功能都讲解，只讲最常用的一些核心 api
 
 话说在前面，我们是不可能将所有的 java api 用视频全部录制一遍的，因为 api 太多了。
@@ -20,13 +25,14 @@
 java api，api 的学习，实际上是最最简单的，纯用，没什么难度，技术难度，你掌握了课上讲解的这些 api之后，自己应该就可以举一反三，后面自己去探索和尝试出自己要用的各种功能对应的 java api 是什么。
 
 ## client 集群自动探查
+
 默认情况下，是根据我们手动指定的所有节点，依次轮询这些节点，来发送各种请求的，如下面的代码，我们可以手动为 client 指定多个节点
 
 ```java
 TransportClient client = new PreBuiltTransportClient(settings)
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost1"), 9300))
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost2"), 9300))
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost3"), 9300));
+    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost1"), 9300))
+    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost2"), 9300))
+    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost3"), 9300));
 ```
 
 但是问题是，如果我们有成百上千个节点呢？难道也要这样手动添加吗？
@@ -47,6 +53,7 @@ Settings settings = Settings.builder()
        TransportClient client = new PreBuiltTransportClient(settings)
                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
 ```
+
 在实际的生产环境中，都是这么玩儿的。
 
 ## 汽车零售案例背景

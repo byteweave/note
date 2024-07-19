@@ -1,9 +1,14 @@
+---
+outline: deep
+---
+
 # 基于 nested object 实现博客与评论嵌套关系
+
 之前冗余数据方式的来建模，其实用的就是 object 类型，我们这里又要引入一种新的 object 类型：nested object 类型
 
 会使用 object 类型来实现一个需求：搜索 28 岁的黄药师的评论，然后引出为什么需要使用 nested objec 类型
 
-##  object 类型
+## object 类型
 
 - 删除 website index
 - 插入模拟数据
@@ -146,12 +151,14 @@ GET /website/blogs/_search
   "comments.date":    [ "2016-09-01", "2016-10-22"]
 }
 ```
+
 object 类型底层数据结构，会将一个 json 数组中的数据，进行扁平化，
 所以，直接命中了这个 document，name=黄药师，age=28，正好符合
 
 ## nested objec 类型
 
 这次我们改用 nested objec 类型
+
 ```json
 
 DELETE /website

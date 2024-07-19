@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # range filter 范围过滤
+
 [[toc]]
 
 > 为帖子增加浏览量的字段数据

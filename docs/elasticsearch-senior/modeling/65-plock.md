@@ -1,5 +1,8 @@
-# 基于 document 锁实现悲观锁并发控制
+---
+outline: deep
+---
 
+# 基于 document 锁实现悲观锁并发控制
 
 全局锁一次性就锁整个 index，对这个 index 的所有增删改操作都会被 block 住，如果上锁不频繁，还可以，比较简单
 

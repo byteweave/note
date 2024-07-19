@@ -1,6 +1,10 @@
-# 使用 search template 将搜索模板化
-[[toc]]
+---
+outline: deep
+---
 
+# 使用 search template 将搜索模板化
+
+[[toc]]
 
 搜索模板 search template 高级功能，就可以将我们的一些搜索进行模板化，
 每次执行这个搜索，就直接调用模板，给传入一些参数就可以了
@@ -19,6 +23,7 @@
 自己都没用过，但是不要紧，这是你的一种技术储备。
 
 ## 何为 search template?
+
 简单说类似 mysql 的视图，指定模板和参数即可。
 
 先来看一个入门的使用方式，
@@ -43,6 +48,7 @@ GET /blog_website/_search/template
 ```
 
 ## toJson
+
 限制：inline 的内容只能在一行上
 
 ```json
@@ -58,6 +64,7 @@ GET /blog_website/_search/template
 ```
 
 ## join
+
 作用：把一个数组转为具体分隔符的字符串连接起来
 
 如下效果：会吧 titles 数组转成 「博客 网站」，delimiter 规定了连接符是什么
@@ -92,6 +99,7 @@ GET /blog_website/blogs/_search
 ```
 
 ## default value
+
 增加一个 views 字段
 
 ```json
@@ -133,6 +141,7 @@ GET /blog_website/blogs/_search/template
 当 params.end 没有指定的之后，就会使用默认值 20
 
 ## conditional
+
 插入一条数据
 
 ```json
@@ -157,6 +166,7 @@ GET /my_index/my_type/_search/template
   }
 }
 ```
+
 看到 file 就知道需要事先准备好模板文件了，文件名以后缀 `.mustache` 结尾
 
 `config\scripts\conditonal.mustache`

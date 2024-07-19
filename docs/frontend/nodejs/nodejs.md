@@ -3,29 +3,35 @@ order: 1
 title: 玩转Node.js
 category:
   - 前端
+
+outline: deep
 ---
+
 # 玩转Node.js
 
 ### 前言
+
 实践是最好的学习方式。最近前几个月帮朋友部署了一个云崽机器人，然后事情就发展的不可收拾的地步：
 玩别人的插件 👉 开始自己写一个单个插件 👉 创造[自己的插件](https://gitee.com/kyrzy0416/rconsole-plugin) 👉 阅读机器人源代码 👉 PR机器人源代码
 总之整个过程非常的魔幻，下面目前打算介绍：`1. 常用的Node.js函数 2. 玩转Node.js机器人（待更新）`
 
 ## 常用的Node.js函数
+
 下面这个几个Node.js函数都是经过生产环境考验的函数，一般情况下是十分稳定的：
 
 ### 常用
 
 #### 下载文件
+
 ```javascript
  /**
  * 提取视频下载位置
  * @returns {{groupPath: string, target: string}}
  */
 getGroupPathAndTarget() {
-	const groupPath = `${this.defaultPath}${this.e.group_id || this.e.user_id}`;
-	const target = `${groupPath}/temp.mp4`;
-	return { groupPath, target };
+ const groupPath = `${this.defaultPath}${this.e.group_id || this.e.user_id}`;
+ const target = `${groupPath}/temp.mp4`;
+ return { groupPath, target };
 }
 
 /**
@@ -36,46 +42,47 @@ getGroupPathAndTarget() {
  * @returns {Promise<unknown>}
  */
 async downloadVideo(url, isProxy = false, headers = null) {
-	// 这个是获取下载位置，可以自定义
-	const { groupPath, target } = this.getGroupPathAndTarget.call(this);
-	// 这个参考下面的文件类
-	await mkdirIfNotExists(groupPath);
+ // 这个是获取下载位置，可以自定义
+ const { groupPath, target } = this.getGroupPathAndTarget.call(this);
+ // 这个参考下面的文件类
+ await mkdirIfNotExists(groupPath);
 
-	const userAgent =
-		"Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Mobile Safari/537.36";
-	const axiosConfig = {
-		headers: headers || { "User-Agent": userAgent },
-		responseType: "stream",
-		...(isProxy && {
-			httpAgent: tunnel.httpOverHttp({
-				proxy: { host: this.proxyAddr, port: this.proxyPort },
-			}),
-			httpsAgent: tunnel.httpOverHttp({
-				proxy: { host: this.proxyAddr, port: this.proxyPort },
-			}),
-		}),
-	};
+ const userAgent =
+  "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Mobile Safari/537.36";
+ const axiosConfig = {
+  headers: headers || { "User-Agent": userAgent },
+  responseType: "stream",
+  ...(isProxy && {
+   httpAgent: tunnel.httpOverHttp({
+    proxy: { host: this.proxyAddr, port: this.proxyPort },
+   }),
+   httpsAgent: tunnel.httpOverHttp({
+    proxy: { host: this.proxyAddr, port: this.proxyPort },
+   }),
+  }),
+ };
 
-	try {
-		// 这个参考下面的文件类
-		await checkAndRemoveFile(target);
+ try {
+  // 这个参考下面的文件类
+  await checkAndRemoveFile(target);
 
-		const res = await axios.get(url, axiosConfig);
-		logger.mark(`开始下载: ${url}`);
-		const writer = fs.createWriteStream(target);
-		res.data.pipe(writer);
+  const res = await axios.get(url, axiosConfig);
+  logger.mark(`开始下载: ${url}`);
+  const writer = fs.createWriteStream(target);
+  res.data.pipe(writer);
 
-		return new Promise((resolve, reject) => {
-			writer.on("finish", () => resolve(groupPath));
-			writer.on("error", reject);
-		});
-	} catch (err) {
-		logger.error("下载视频发生错误！");
-	}
+  return new Promise((resolve, reject) => {
+   writer.on("finish", () => resolve(groupPath));
+   writer.on("error", reject);
+  });
+ } catch (err) {
+  logger.error("下载视频发生错误！");
+ }
 }
 ```
 
 #### 重试函数
+
 ```JavaScript
 function retry(func, maxRetries = 3, delay = 1000) {
     return new Promise((resolve, reject) => {
@@ -97,7 +104,9 @@ function retry(func, maxRetries = 3, delay = 1000) {
 ```
 
 ### 文件类
+
 #### 检查文件是否存在并且删除
+
 ```JavaScript
 async function checkAndRemoveFile(file) {
     try {
@@ -111,7 +120,9 @@ async function checkAndRemoveFile(file) {
     }
 }
 ```
+
 #### 创建文件夹，如果不存在
+
 ```javascript
 async function mkdirIfNotExists(dir) {
     try {
@@ -125,7 +136,9 @@ async function mkdirIfNotExists(dir) {
     }
 }
 ```
+
 #### 删除文件夹下所有文件
+
 ```javascript
 async function deleteFolderRecursive(folderPath) {
     try {
@@ -155,6 +168,7 @@ async function deleteFolderRecursive(folderPath) {
 ### 加解密
 
 #### aes加解密
+
 ```javascript
 // AES加密
 import crypto from "crypto";
@@ -209,7 +223,9 @@ export { ha12store, store2ha1 };
 ```
 
 ### 并发
+
 #### 令牌桶
+
 ```javascript
 export default class TokenBucket {
     constructor(rate, capacity, interval = 1, isMinute = false) {
@@ -298,6 +314,7 @@ export default class TokenBucket {
 ```
 
 使用令牌桶
+
 ```javascript
 /**
  * 构造令牌桶，防止解析致使服务器宕机（默认限制5s调用一次）

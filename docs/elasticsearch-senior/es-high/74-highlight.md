@@ -1,8 +1,13 @@
+---
+outline: deep
+---
+
 # 深入剖析搜索结果的 highlight 高亮显示
 
 ## 一个最基本的高亮例子
 
 手动 mapping 指定了 ik 分词器
+
 ```json
 PUT /blog_website
 {
@@ -22,6 +27,7 @@ PUT /blog_website
   }
 }
 ```
+
 插入数据
 
 ```json
@@ -33,6 +39,7 @@ PUT /blog_website/blogs/1
 ```
 
 高亮搜索
+
 ```json
 GET /blog_website/blogs/_search
 {
@@ -49,7 +56,9 @@ GET /blog_website/blogs/_search
   }
 }
 ```
+
 高亮搜索的返回结果
+
 ```json
 {
   "took": 2,
@@ -114,6 +123,7 @@ GET /blog_website/blogs/_search
   }
 }
 ```
+
 响应结果
 
 ```json
@@ -166,6 +176,7 @@ GET /blog_website/blogs/_search
 ## posting highlight
 
 在 mapping 中配置
+
 ```json{13}
 PUT /blog_website
 {
@@ -279,6 +290,7 @@ PUT /blog_website
   }
 }
 ```
+
 模拟数据还是上面的那一条，开始搜索
 
 ```json
@@ -299,8 +311,8 @@ GET /blog_website/blogs/_search
 
 对于返回结果来说表现都是一样的，主要在于性能方面，对大 field 而言（大于 1mb），性能更高
 
-
 ## 强制使用某种 highlighter
+
 比如对于开启了 term vector 的 field 而言，可以强制使用 plain highlight
 
 ```json
@@ -330,6 +342,7 @@ GET /blog_website/blogs/_search
 - 如果 field 的值特别大，超过了 1M，那么可以用 fast vector highlight
 
 ## 设置高亮 html 标签
+
 可以根据需求自定义 html 高亮标签是什么，默认是 `<em>` 标签
 
 ```json
@@ -384,6 +397,7 @@ GET /blog_website/blogs/_search
 ```
 
 ## 高亮片段 fragment 的设置
+
 什么意思呢？比如下面这一个比较长的 content 内容，
 之前我们看到的高亮本文基本上是返回的是 doc 中的具体文本内容，
 其实不是这样的，默认会返回最多 100 个字符

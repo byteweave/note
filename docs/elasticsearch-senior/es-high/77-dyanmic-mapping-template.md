@@ -1,6 +1,11 @@
+---
+outline: deep
+---
+
 # 使用动态映射模板定制自己的映射策略
 
 ## 什么是动态映射模板？
+
 dynamic mapping template 是es 中的一个高级的用法
 
 > dynamic mapping
@@ -17,6 +22,7 @@ dynamic mapping template 是es 中的一个高级的用法
 这个时候动态映射模板就出生了。
 
 ## 查看默认 mapping
+
 ```json
 DELETE /my_index
 
@@ -53,6 +59,7 @@ GET /my_index/_mapping/my_type
 ```
 
 假设我们的需求是：
+
 - test_number，如果是个数字，我们希望默认就是 integer 类型的
 - test_string，如果是字符串，我们希望默认是个 text，这个没问题，但是内置的 field 名字，叫做 raw，不叫 keyword，类型还是 keyword，保留 500 个字符
 
@@ -100,6 +107,7 @@ PUT /my_index
   }
 }
 ```
+
 - mappings.my_type ：为指定 type 配置映射模板
 - dynamic_templates：难道是个固定语句么？这个没有语法提示不知道是不是
 - integers：自定义名称
@@ -300,6 +308,7 @@ GET /my_index/_mapping
 可以看到成功了
 
 ## 使用场景
+
 这里提供一个使用 dynamic mapping + template 的思路
 
 比如每天有一堆日志，每天有一堆数据，这些数据，每天的数据都放一个新的 type 中，

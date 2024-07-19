@@ -4,7 +4,10 @@ title: Vue2&Vue3
 category:
   - frontend
   - 前端
+
+outline: deep
 ---
+
 # Vue 2
 
 - [Vue 2](#vue-2)
@@ -96,13 +99,9 @@ Vuejs的编程方式：声明式编程
 
 3. data属性：该属性会村粗一些数据
 
-
-
 ## （掌握）列表的展示
 
 ![2](./img/2.webp)
-
-
 
 ## （掌握）计数器案例
 
@@ -114,15 +113,11 @@ Vuejs的编程方式：声明式编程
 
 ![3](./img/3.webp)
 
-
-
 ## （理解）MVVM开发模式
 
 ![4](./img/4.webp)
 
 ![5](./img/5.webp)
-
-
 
 ## （理解）Vue的生命周期
 
@@ -132,11 +127,9 @@ Vuejs的编程方式：声明式编程
 
 ![7](./img/7.webp)
 
-
-
 ## （掌握）mustache 插值操作
 
-### Mustache 
+### Mustache
 
 {{ Mustache }} 插值操作，可以让两个变量组合在一起
 
@@ -154,27 +147,19 @@ Vuejs的编程方式：声明式编程
 
 ![12](./img/12.webp)
 
-
-
 ### v-text指令
 
 不灵活，一般不使用
 
-
-
 ### v-pre指令
 
 和`<pre>`标签的效果一致
-
-
 
 ### v-cloak指令
 
 等待解析，解析后会把v-cloak删除
 
 ![13](./img/13.webp)
-
-
 
 ## （掌握）v-bind的基本使用
 
@@ -187,8 +172,6 @@ Vuejs的编程方式：声明式编程
 语法糖的写法： **:属性**
 
 ![15](./img/15.webp)**
-
-
 
 ### 绑定class
 
@@ -208,9 +191,8 @@ Vuejs的编程方式：声明式编程
 
 ![19](./img/19.webp)
 
-
-
 ### 绑定style
+
 两种写法：
 对象：
 
@@ -219,8 +201,6 @@ Vuejs的编程方式：声明式编程
 数组（使用情况比较少）：
 
 ![21](./img/21.webp)
-
-
 
 ## (掌握)计算属性的基本使用
 
@@ -236,27 +216,22 @@ Vuejs的编程方式：声明式编程
 
 计算属性和methods的对比：
 
-* computed比methods多具有缓存
-
-
+- computed比methods多具有缓存
 
 ## (掌握)v-on的基本使用和语法糖
 
 ![25](./img/25.webp)
 
-
-
 ### v-on的传参问题
 
 重点：如果需要传入event
+
 1. 不写()
 2. 写$event
 
 ![26](./img/26.webp)
 
 ![27](./img/27.webp)
-
-
 
 ### v-on的修饰符
 
@@ -270,7 +245,7 @@ Vuejs的编程方式：声明式编程
 
 ![29](./img/29.webp)
 
-3.  .enter
+3. .enter
 只有按下Enter的时候才会执行
 
 ![30](./img/30.webp)
@@ -280,16 +255,16 @@ Vuejs的编程方式：声明式编程
 
  ![31](./img/31.webp)
 
-
-
 ## (掌握)ES6部分语法总结
 
 ### let & var的区别
 
 ### const
+
 常量的含义是指向的对象不能修改，但是可以改变对象内部的属性
 
 ### 对象增强写法
+
 对象的字面量：
 
 ![32](./img/32.webp)
@@ -297,20 +272,22 @@ Vuejs的编程方式：声明式编程
 ![33](./img/33.webp)
 
 ### filter/map/reduce 高阶函数
+
 命令式编程/声明式编程
 面向对象编程（对象）/函数式编程（函数）
 
 #### filter
+
 可选参数：
 
-* value
-* index
-* array
+- value
+- index
+- array
 
 filter中的回调函数必须返回一个boolean值
 
-* true:函数内部会自动将这次回调的n加入到新的数组中
-* false:函数内部过滤掉这次n
+- true:函数内部会自动将这次回调的n加入到新的数组中
+- false:函数内部过滤掉这次n
 
 ```javascript
 const nums = [10, 20, 111, 222, 444, 40, 50];
@@ -320,14 +297,13 @@ let newNums = nums.filter(function (n) {
 console.log(newNums);
 ```
 
-
-
 #### map的函数使用
+
 可选参数
 
-* value
-* index
-* array
+- value
+- index
+- array
 
 ```javascript
 let new2Nums = newNums.map(function (n) {
@@ -335,8 +311,6 @@ let new2Nums = newNums.map(function (n) {
 });
 console.log(new2Nums);
 ```
-
-
 
 #### reduce的函数使用
 
@@ -359,8 +333,6 @@ new2Nums.reduce(function (preValue, n) {
 // 240
 ```
 
-
-
 ### 函数式编程的思想
 
 ```javascript
@@ -374,15 +346,11 @@ let total = nums.filter(function (n) {
 console.log(total);
 ```
 
-
-
 ## (掌握)条件判断
 
 ### v-if v-else-if v-else的使用
 
-参考：https://cn.vuejs.org/v2/guide/conditional.html
-
-
+参考：<https://cn.vuejs.org/v2/guide/conditional.html>
 
 ## (掌握)v-for遍历数组和对象
 
@@ -418,19 +386,13 @@ console.log(total);
 </ul>
 ```
 
-
-
 ## (掌握) 解决虚拟DOM条件判断后输入不变的问题
 
 问题：
 切换后不管是账号还是邮箱都是输入的文字都是不变的
-直接观看视频：https://www.bilibili.com/video/BV15741177Eh?p=33
-
-
+直接观看视频：<https://www.bilibili.com/video/BV15741177Eh?p=33>
 
 ## (掌握)v-show的使用及v-if的区别
-
-
 
 - v-if：当条件为false时，包含v-if的元素，根本不会存在dom中
 - v-show：当条件为false时，v-show只是给元素添加一个行内样式：display:none
@@ -441,8 +403,6 @@ console.log(total);
 
 当只有一次切换时，使用v-if
 
-
-
 ## (掌握)过滤器
 
 调用：![36](./img/36.webp)
@@ -450,8 +410,6 @@ console.log(total);
 方法：
 
 ![37](./img/37.webp)
-
-
 
 ## (掌握)响应式数组方法
 
@@ -461,15 +419,11 @@ console.log(total);
 this.letters.push('rzy');
 ```
 
-
-
 ### pop ()
 
 ```
 this.letters.pop();
 ```
-
-
 
 ### shift () :删除数组中的第一个元素
 
@@ -477,15 +431,11 @@ this.letters.pop();
 this.letters.shift();
 ```
 
-
-
 ### unshift (...values) : 在数组最前面添加元素
 
 ```
 this.letters.unshift('abc', 'bbb');
 ```
-
-
 
 ### splice (startNum, deleteCount, ...values) : 删除/插入/替换元素
 
@@ -493,13 +443,9 @@ this.letters.unshift('abc', 'bbb');
 - 替换元素：第二个参数表示要替换几个元素，后面是用于替换前面的元素
 - 插入元素：第二个参数传入0，后面跟上插入的元素
 
- 
-
 ```
 this.letters.splice(1, 3, 'e', 't', 'c');
 ```
-
-
 
 ### sort ()
 
@@ -507,15 +453,11 @@ this.letters.splice(1, 3, 'e', 't', 'c');
 this.letters.sort();
 ```
 
-
-
 ### reverse ()
 
 ```
 this.letters.reverse();
 ```
-
-
 
 ## (掌握)v-model 表单绑定
 
@@ -532,31 +474,21 @@ this.letters.reverse();
 
 ![39](./img/39.webp)
 
-
-
-###  v-model结合radio
+### v-model结合radio
 
 ![40](./img/40.webp)
-
-
 
 ### v-model结合checkbox
 
 ![41](./img/41.webp)
 
-
-
 ### v-model结合select
 
 ![42](./img/42.webp)
 
-
-
 ### 值绑定
 
 ![43](./img/43.webp)
-
-
 
 ### 修饰符
 
@@ -571,16 +503,12 @@ this.letters.reverse();
 
 v-model默认赋值类型为string
 
-
-
 **修饰符number**:把内容自动转为数字类型
 
 ```html
 <input type="number" v-model.number="age">
 <h2>{{typeof(age)}}</h2>
 ```
-
-
 
 **修饰符trim**:除去两边的空格
 
@@ -589,8 +517,6 @@ v-model默认赋值类型为string
 <h2>{{name}}</h2>
 ```
 
-
-
 ## (掌握)组件化
 
 ![45](./img/45.webp)
@@ -598,6 +524,7 @@ v-model默认赋值类型为string
 ![46](./img/46.webp)
 
 ### 全局组件和局部组件
+
 全局组件：
 
 ![47](./img/47.webp)
@@ -606,19 +533,13 @@ v-model默认赋值类型为string
 
 ![48](./img/48.webp)
 
-
-
 ### 父组件和子组件
 
 ![49](./img/49.webp)
 
-
-
 ### 注册组件和语法糖
 
 ![50](./img/50.webp)
-
-
 
 ### 模板的分离写法
 
@@ -630,13 +551,12 @@ v-model默认赋值类型为string
 
 ![52](./img/52.webp)
 
-
-
 ### 组件中的数据存放
 
 ![53](./img/53.webp)
 
 ### 思考
+
 #### 为什么data必须是个函数
 
 1. 如果是一个函数，每次都创建一个独立的空间而不对其他组件造成影响
@@ -646,8 +566,6 @@ v-model默认赋值类型为string
 2. 如果是一个对象，每次创建都引用同一个对象，就会改变一个组件其他也跟着改变
 
 ![55](./img/55.webp)
-
-
 
 ## (掌握) 父子组件通信
 
@@ -665,15 +583,9 @@ type的数据类型：
 
 ![59](./img/59.webp)
 
-
-
 小结：
 
 ![60](./img/60.webp)
-
-
-
-
 
 ## (掌握) 父子组件的访问方式
 
@@ -681,21 +593,13 @@ type的数据类型：
 
 ![61](./img/61.webp)
 
-
-
-
-
 ### 父访问子：$refs的使用
 
 ![62](./img/62.webp)
 
-
-
 ### (不常用) 子访问父：$parent / $root
 
 ![63](./img/63.webp)
-
-
 
 ## (掌握) slot插槽的基本使用
 
@@ -722,11 +626,13 @@ type的数据类型：
 ![68](./img/68.webp)
 
 ### 编译作用域
+
 父组件模板的所有东西都会在父级作用域内编译；子组件模板的所有东西都会在子级作用域内编译
 
 ![69](./img/69.webp)
 
 ### 作用域插槽
+
 ~~父组件替换插槽的标签，但是内容由子组件来提供~~
 
 ![70](./img/70.webp)

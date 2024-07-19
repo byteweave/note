@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 基于地理位置对周围汽车 4S 店进行搜索
 
 要进行地理位置的搜索需要添加两个依赖
@@ -86,6 +90,7 @@ GET /car_shop/shops/_search
   }
 }
 ```
+
 再对比下 java 语法
 
 ```java

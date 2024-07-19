@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # 基于 search template 实现按品牌分页查询模板
+
 搜索模板的功能，java api 怎么去调用一个搜索模板
 
 `elasticsearch-5.2.0\config\scripts\page-query-by-brand.mustache`
@@ -14,6 +19,7 @@
   }
 }
 ```
+
 ::: tip
 注意要重启 es，注意模板中的内容是你对应的。一定要确认不要搞错
 :::

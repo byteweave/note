@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 基于 upsert 实现汽车最新价格的调整
 
 ::: tip
@@ -42,6 +46,7 @@ PUT /car_shop
 - name：汽车名称，同上
 
 ## upsert api
+
 ```java
 package cn.mrcode.newstudy.elasticsearch.senior;
 

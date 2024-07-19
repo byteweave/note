@@ -1,5 +1,8 @@
-# 基于 mget 实现多辆汽车的配置与价格对比
+---
+outline: deep
+---
 
+# 基于 mget 实现多辆汽车的配置与价格对比
 
 场景：一般来说，我们都可以在一些汽车网站上，或者在混合销售多个品牌的汽车 4S 店的内部，
 都可以在系统里调出来多个汽车的信息，放在网页上，进行对比
@@ -11,10 +14,10 @@ mget：一次性将多个 document 的数据查询出来，也就是批量 id �
 ```json
 PUT /car_shop/cars/2
 {
-	"brand": "奔驰",
-	"name": "奔驰C200",
-	"price": 350000,
-	"produce_date": "2017-01-05"
+ "brand": "奔驰",
+ "name": "奔驰C200",
+ "price": 350000,
+ "produce_date": "2017-01-05"
 }
 
 ```
@@ -43,10 +46,10 @@ public void mget() {
 ```json
 {"brand":"宝马","name":"宝马320","price":310000,"produce_date":"2017-01-01"}
 {
-	"brand": "奔驰",
-	"name": "奔驰C200",
-	"price": 350000,
-	"produce_date": "2017-01-05"
+ "brand": "奔驰",
+ "name": "奔驰C200",
+ "price": 350000,
+ "produce_date": "2017-01-05"
 }
 ```
 

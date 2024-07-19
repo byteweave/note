@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # elasticsearch 高级篇
 
 本主题主要会在一个案例背景下讲解技术：IT 技术论坛

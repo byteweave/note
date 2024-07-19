@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # bool 组合多个 filter 搜索
+
 [[toc]]
 
 ## 第一个例子
@@ -47,7 +52,6 @@ GET /forum/article/_search
 
 - 搜索帖子 ID 为 XHDK-A-1293-#fJ3
 - 或者帖子 ID 为 JODL-X-1937-#pV7 而且发帖日期为 2017-01-01 的帖子
-
 
 ```sql
 select * from forum.article

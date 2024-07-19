@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 基于 scroll 实现月度销售数据批量下载
 
 比如说，现在要下载大批量的数据，导入到 excel 中，比如阅读、年度、销售记录等大批量数据，比如几千条、几万条、几十万条等
@@ -40,6 +44,7 @@ PUT /car_shop/sales/4
        } while (searchResponse.getHits().getHits().length != 0);
    }
 ```
+
 打印的数据
 
 ```json

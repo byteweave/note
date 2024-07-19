@@ -3,7 +3,10 @@ order: 1
 title: React笔记
 category:
   - 前端
+
+outline: deep
 ---
+
 # React笔记
 
 ## 安装脚手架命令

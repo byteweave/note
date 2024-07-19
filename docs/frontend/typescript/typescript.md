@@ -1,3 +1,7 @@
 
-# TS笔记
+---
 
+outline: deep
+---
+
+# TS笔记

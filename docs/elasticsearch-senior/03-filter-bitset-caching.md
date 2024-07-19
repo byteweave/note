@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # filter 原理剖析
 
 核心是 bitset，还有 caching 机制

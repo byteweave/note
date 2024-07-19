@@ -1,7 +1,13 @@
+---
+outline: deep
+---
+
 # 对文件系统进行数据建模以及文件搜索实战
+
 本章主要讲解对文件路径的存储于搜索
 
 ## path_hierarchy analyzer
+
 这个分词的作用是什么呢？直接看一个分词例子即可知道
 
 ```json
@@ -47,9 +53,11 @@ GET /_analyze
 ```
 
 ## 数据构造
+
 先 mappings，
 
 fs: filesystem
+
 ```json
 PUT /fs
 {

@@ -1,4 +1,9 @@
+---
+outline: deep
+---
+
 # ik 分词器的安装与简单使用
+
 [[toc]]
 
 之前大家会发现，我们全部是用英文在玩儿，不太好玩
@@ -14,6 +19,7 @@ standard：没有办法对中文进行合理分词的，只是将每个中文字
 从这一讲开始，大家就会觉得很爽，因为全部都是我们熟悉的中文了，没有英文了，高阶知识点，搜索，聚合，全部是中文了
 
 ## ik 分词器简介
+
 在搜索引擎领域，比较成熟和流行的，就是 ik 分词器
 
 比如：中国人很喜欢吃油条
@@ -24,6 +30,7 @@ standard：没有办法对中文进行合理分词的，只是将每个中文字
 看下上面分词后的结果，肯定是 ik 的分词结果比较符合中文
 
 ## 安装 ik 分词器
+
 在 elasticsearch 中安装 ik 中文分词器
 
 ```bash
@@ -32,6 +39,7 @@ git clone https://github.com/medcl/elasticsearch-analysis-ik
 git checkout tags/v5.2.0
 mvn package
 ```
+
 1. 将 target/releases/elasticsearch-analysis-ik-5.2.0.zip 拷贝到 es/plugins/ik 目录下
 2. 在 es/plugins/ik 下对 elasticsearch-analysis-ik-5.2.0.zip 进行解压缩
 
@@ -66,7 +74,9 @@ GET /_analyze
   "analyzer": "ik_smart"
 }
 ```
+
 响应结果
+
 ```json
 {
   "tokens": [

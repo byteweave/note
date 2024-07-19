@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 使用 mysql 来达到热更新 ik 词库
 
 ## 什么是热更新？
@@ -19,18 +23,20 @@ es 不停机，直接我们在外部某个地方添加新的词语，es 中立�
 
 1. 下载源码
 
-    https://github.com/medcl/elasticsearch-analysis-ik/tree/v5.2.0
+    <https://github.com/medcl/elasticsearch-analysis-ik/tree/v5.2.0>
     ik 分词器，是个标准的 java maven 工程
 
 2. 修改源码
 
     主要思路：
+
     ```java
     Dictionary类，169行：Dictionary 单例类的初始化方法，在这里需要创建一个我们自定义的线程，并且启动它
     HotDictReloadThread 类：就是死循环，不断调用 Dictionary.getSingleton().reLoadMainDict()，去重新加载词典
     Dictionary类，389行：this.loadMySQLExtDict();
     Dictionary类，683行：this.loadMySQLStopwordDict();
     ```
+
     然后再写个配置文件和 ik 的词库配置放一起，里面可以配置 mysql 的相关参数配置
     `org.wltea.analyzer.dic.Dictionary` 主要的入口点在这个类里面，大概看了一下代码量少，有中文注释，比较容易看懂
 3. mvn package 打包代码
