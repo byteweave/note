@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # margin
 
 本节能学到的知识：
@@ -13,6 +16,7 @@
 [[toc]]
 
 ## 1. CSS margin 与容器的尺寸
+>
 >了解 margin 与元素尺寸之间关系
 
 总的来讲：margin 可以改变容器的尺寸；而且是比较激进的那种，人若犯我，我必犯人
@@ -31,7 +35,7 @@
 1. 适用于没有设定 width/height 的普通 blokc 水平元素。
   
     float、absolute/fixed、inline 水平、table-cell... 都可以让元素 block 化，但是这些已经不属于普通的 blokc 元素了
-    
+
 2. 只适用于水平方向尺寸
 
 ![image-20200503143643842](./assets/image-20200503143643842.png)
@@ -194,7 +198,6 @@
 
 当出现以下项目时，就会发生重叠，只要破坏掉这些限制就破坏掉了重叠
 
-
 1. 元素没有 borde 设置
 2. 元素没有 padding 值
 3. 里面没有 inline 元素
@@ -207,8 +210,8 @@
 1. 正正取大值
 2. 正负值相加
 3. 负负最负值
-  1. 相邻重叠绝对值最大的负值
-  2. 父子重叠绝对值最大的负值
+1. 相邻重叠绝对值最大的负值
+2. 父子重叠绝对值最大的负值
 
 ![image-20200503153535691](./assets/image-20200503153535691.png)
 
@@ -229,8 +232,6 @@
 1. 连续段落或列表之类，如果没有 margin 重叠，首尾项间距会和其他兄弟标签 `1:2`关系，排版不自然（兄弟重叠）
 2. web 中任何地方嵌套或直接放入任何裸 div，都不会影响原来的布局（父子重叠）
 3. 遗落的空任意多个`<p>`元素，不要影响原来的阅读排版（空的 block 元素）
-
-
 
 ![image-20200503154342391](./assets/image-20200503154342391.png)
 
@@ -296,7 +297,7 @@
 
 而垂直高度，很显然不符合。
 
-还有一个，auto 计算后的值如果是负值，也不会生效 
+还有一个，auto 计算后的值如果是负值，也不会生效
 
 :::
 
@@ -350,7 +351,7 @@
 
 ![image-20200503163730962](./assets/image-20200503163730962.png)
 
-这种方式，在有 focus 的场景里面，就会出现一些问题，比如获得焦点时，页面飞掉了（focus 在锚点那一章节里面讲到过，因为重定位了） 
+这种方式，在有 focus 的场景里面，就会出现一些问题，比如获得焦点时，页面飞掉了（focus 在锚点那一章节里面讲到过，因为重定位了）
 
 ### margin 负值下的两栏自适应布局
 
@@ -379,10 +380,10 @@
 
 3. table-cell 与 margin
    `display:table-cell/table-row` 等声明的 margin 无效
-   
+
    无论是内联元素还是 block 元素，只要 `display:table-cell` 后，margin 就会失效
-   
-4. position:absolute 与 margin   
+
+4. position:absolute 与 margin
 
    绝对定位元素非定位的 margin 值“无效”
 
@@ -426,9 +427,7 @@
 
 右侧的按钮，给他施加 `display：table-cell` 后，通过 JS 获取它的类型却变成了 inline-blok 类型，margin 也是生效的
 
-### `osition:absolute 与 margin   `
-
-
+### `osition:absolute 与 margin`
 
 ![image-20200503170139390](./assets/image-20200503170139390.png)
 
@@ -484,9 +483,7 @@ margin-start/end  是 css3 中的属性
 
 margin-start 的出现变的更为智能，它代表了当前流向的一个 margin 效果
 
-
-
-### ` -webkit` 的 margin 的其他属性    
+### `-webkit` 的 margin 的其他属性
 
 - `-webkit-margin-before` : 默认流向情况下，等同于 margin-top  
 - `-webkit-margin-collapse` : `<collapse>|<discard>|separate`
@@ -502,4 +499,3 @@ margin-start 的出现变的更为智能，它代表了当前流向的一个 mar
 还可以取消 margin 重叠，可以看到他们的 margin 距离变多了，是 30+80
 
 ![image-20200503172106074](./assets/image-20200503172106074.png)
-

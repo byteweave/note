@@ -1,8 +1,10 @@
+---
+outline: deep
+---
 # overflow
+
 简介：overflow 看上去其貌不扬，其中蕴含的知识点还是很多的。
 有很多鲜为人知的特性表现，本课程就将带你走入 overflow 的世界，为你打开另外一扇学习之窗。
-
-
 
 [[toc]]
 
@@ -16,15 +18,15 @@
 
    图片超出框框同样显示
 
-2. hidden 
+2. hidden
 
    超出的部分会被 **隐藏**； 不是剪裁
 
-3. scroll 
+3. scroll
 
    在容器右侧和下侧出现滚动条，而且一直不消失
 
-4. auto 
+4. auto
 
     在容器右侧和下方智能出现滚动条，当内容没有超出区域时，不显示滚动条
 
@@ -106,10 +108,11 @@ html{ overflow: hidden;}
 
 如何知道浏览器的滚动条高度，找个需要 JS 支持
 
-* chrome 浏览器是： `document.body.scrollTop`
-* 其他浏览器是：`document.documentElement.scrollTop`
+- chrome 浏览器是： `document.body.scrollTop`
+- 其他浏览器是：`document.documentElement.scrollTop`
 
 目前，两者不会同时存在，因为，坊间流传这类写法：
+
 ```javascript
 // 因为必然有一个为 0，但是应该很容易出错吧。
 // 会出现 undefined 吧？ 用 || 双或 来代替+号更好
@@ -122,6 +125,7 @@ var st = document.body.scrollTop + document.documentElement.scrollTop
 .box { width:400px; height:100px; overflow:auto; padding:100px 0 }
 /** 重点是后面哪个上下 padding 100px */
 ```
+
 ![image-20200501233710895](./assets/image-20200501233710895.png)
 
 左侧是 chrome 浏览器，滚动条滚动到最底部，会出现 100 px 的空白，其他浏览器则不会出现
@@ -133,11 +137,13 @@ var st = document.body.scrollTop + document.documentElement.scrollTop
 一句话：滚动条会占用容器的可用宽度或高度
 
 怎么计算滚动条的宽度呢？通过下面的方法可以简单获得
+
 ```html
   <div class="box">
     <div id="in" class="in"></div>
   </div>
 ```
+
 ```css
   .box {
     width: 400px;
@@ -146,6 +152,7 @@ var st = document.body.scrollTop + document.documentElement.scrollTop
     .in {*zoom:1 /* for ie7*/}
   }
 ```
+
 ```javascript
 // 结果是17
 console.log(400 - document.getElementById('in').clientWidth)
@@ -172,6 +179,7 @@ console.log(400 - document.getElementById('in').clientWidth)
 ```css
 .container { width:1150px; margin: 0 auto;}
 ```
+
 这类布局当滚动条出现的时候，由于滚动条会占用宽度，就会导致内容往右边跳动
 
 那怎么修复呢？有以下两种方法：
@@ -181,6 +189,7 @@ console.log(400 - document.getElementById('in').clientWidth)
   ```css
   html { overflow-y:scroll; }
   ```
+
 2. 动态宽度
 
   ```css
@@ -196,12 +205,12 @@ console.log(400 - document.getElementById('in').clientWidth)
 
 上图左右标识了对应部分，可以参考他们的位置
 
-- 整体部分 `::-webkit-scrollbar` 
+- 整体部分 `::-webkit-scrollbar`
 - 两端按钮 `::-webkit-scrollbar-button`
-- 外层轨道 `::-webkit-scrollbar-track `
-- 内层轨道 `::-webkit-scrollbar-track-piece `
-- 滚动滑块 `::-webkit-scrollbar-thumb `
-- 边角 `::-webkit-scrollbar-corner `
+- 外层轨道 `::-webkit-scrollbar-track`
+- 内层轨道 `::-webkit-scrollbar-track-piece`
+- 滚动滑块 `::-webkit-scrollbar-thumb`
+- 边角 `::-webkit-scrollbar-corner`
 
 还有其他伪类元素等，自行学习
 
@@ -258,13 +267,12 @@ Block formatting context : 块级格式化上下文 ；
  1. auto
  2. scroll
  3. hidden
-   
 
 **一般有以下场景应用：**
 
   1. 清除浮动影响
   2. 避免 margin 穿透问题
-  3. 两栏自适应布局 
+  3. 两栏自适应布局
 
 ### 内部浮动无影响
 
@@ -309,7 +317,7 @@ Block formatting context : 块级格式化上下文 ；
 
 那为啥会产生这样的现象？先来看看流体特性下的自适应布局
 
-###  流体自适应布局
+### 流体自适应布局
 
 ![image-20200502085633167](./assets/image-20200502085633167.png)
 
@@ -343,7 +351,7 @@ Block formatting context : 块级格式化上下文 ；
 
 ![image-20200502091020379](./assets/image-20200502091020379.png)
 
-这就是 overflow 实现两栏自适应布局的原理：` left.float` + `right.overflow:hidden`
+这就是 overflow 实现两栏自适应布局的原理：`left.float` + `right.overflow:hidden`
 
 ![image-20200502091628610](./assets/image-20200502091628610.png)
 
@@ -373,15 +381,15 @@ Block formatting context : 块级格式化上下文 ；
 
 2. `float + float ；` 包裹性 + 破坏性，无法自适应，一般适用于块状浮动布局
 
-3. `position:absolutr; `脱离文档流，自娱自乐，一般没有实际的使用场景
+3. `position:absolutr;`脱离文档流，自娱自乐，一般没有实际的使用场景
 
 4. `display:inline-block；`具有包裹性，无法自适应； IE6/7 block 水平不相识
 
-5. `display:table-cell; `包裹性，但天生无溢出特性，绝对宽度也能实现自适应
+5. `display:table-cell;`包裹性，但天生无溢出特性，绝对宽度也能实现自适应
 
    就算宽度设置得很宽，也不会超出父容器的
 
-因此一般使用 `overflow:hidden`、`display:inline-block；`、`display:table-cell; `
+因此一般使用 `overflow:hidden`、`display:inline-block；`、`display:table-cell;`
 
 所以与清除浮动影响类似，可以使用一下方式实现两栏自适应布局
 
@@ -473,7 +481,7 @@ hidden 就失效了
 
     这一点，可能还在发展和修正阶段，不深入讲解，意义不大
 
-###  overflow 失效妙用
+### overflow 失效妙用
 
 > 所有每人都有自身的存在价值，所以 CSS 特性没有好不好，只有是否适合，怎么用
 
@@ -487,7 +495,7 @@ hidden 就失效了
 
 **如何定位的**：这个就是前面讲解过的，利用跟随特性，跟随`&nbsp;`  产生的定位效果
 
-- `.h0 {height:0}` ，高度为 0 
+- `.h0 {height:0}` ，高度为 0
 
   当图片使用 absolute 时，会让父级的 overflow hidden 失效，包含块不是这个父级的 div 了
 
@@ -501,9 +509,9 @@ hidden 就失效了
 
 CSS3 有个属性为 resize，可以拉伸元素尺寸
 
-* `resize: both` 水平垂直两边拉
-* `resize:horizontal` 只有水平方向拉
-* `resize:vertical` 只有垂直方向拉
+- `resize: both` 水平垂直两边拉
+- `resize:horizontal` 只有水平方向拉
+- `resize:vertical` 只有垂直方向拉
 
 但是，要想此声明起作用，元素的 overflow 属性值不能是 visible
 
@@ -514,8 +522,6 @@ CSS3 有个属性为 resize，可以拉伸元素尺寸
 那么你有没有发现，文本域你没有写这个属性的时候，为什么它天生外挂 resize 特性？是因为文本域天生就是 `overflow:auto`
 
  ![image-20200502122725884](./assets/image-20200502122725884.png)
-
-
 
 ### 跪舔 ellipsis 文字溢出点点点省略
 
@@ -569,8 +575,6 @@ CSS3 有个属性为 resize，可以拉伸元素尺寸
 - 锚点定位于 overflow 选项卡技术
 
   它兼容 ie6、ie7 的，不依赖 js 的选项卡
-
-  
 
 锚点定位于 overflow 选项卡技术  
 

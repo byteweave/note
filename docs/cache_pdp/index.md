@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 亿级流量电商详情页系统实战（第二版）：缓存架构+高可用服务架构+微服务架构
 
 cache-pdp：Cache architecture product details page
@@ -5,6 +8,7 @@ cache-pdp：Cache architecture product details page
 本章是第一版与第二版全内容目录导航
 
 ## 第一版
+>
 > 第 001 ~ 123 章是第一版，主要对缓存架构、高可用中用到的技术做了深入讲解
 
 > [第一版笔记配套项目](https://github.com/zq99299/cache-pdp.git)
@@ -131,6 +135,7 @@ cache-pdp：Cache architecture product details page
 - [123. 如何带着课程中讲解的东西化为自己的技术并找一份更好的工作？](./123.md)
 
 ## 第二版
+>
 > 从 123 章起是第二版，主要是实战，重点是商品详情页架构实战
 
 > [第二版笔记配套项目](https://github.com/zq99299/cache-eshop)

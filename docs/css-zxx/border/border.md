@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # border
 
 本章知识：
@@ -10,6 +13,7 @@
 - 如何借助 border 使用有限标签完成我们的布局。
 
 ## 1. border-width 不支持百分比
+
 **为何不支持？** 语义和使用场景决定的
 
 ![image-20200503194910311](./assets/image-20200503194910311.png)
@@ -29,6 +33,7 @@
 因为 `border-style:double`至少3px 才有效果
 
 ## 2. 深入了解各种 border-style 类型
+
 - solid ： 实线；很熟
 - dashed ：虚线；
   
@@ -38,14 +43,12 @@
     在 ie 和其他浏览器下兼容性有问题，小圆和小方（点的形状）
     在 ie7 和 ie8 下可以利用小圆点来实现实线的圆（利用 overflow:hiden 指显示其中一个角的圆）
 - double： 双线，非常不熟
-- inset ： 内凹，大眼瞪小眼（基本不使用）    
-- outset ：外凹，大眼瞪小眼 
-- groove : 沟槽，大眼瞪小眼 
+- inset ： 内凹，大眼瞪小眼（基本不使用）
+- outset ：外凹，大眼瞪小眼
+- groove : 沟槽，大眼瞪小眼
 - ridge : 山脊，大眼瞪小眼
 
- 后4个毫无价值，风格过时，各种浏览器间差异大，不兼容， 
-
-
+ 后4个毫无价值，风格过时，各种浏览器间差异大，不兼容，
 
 ### dashed
 
@@ -85,17 +88,15 @@
 
 ![image-20200503200623157](./assets/image-20200503200623157.png)
 
-### outset 
+### outset
 
 ![image-20200503200841214](./assets/image-20200503200841214.png)
 
-### groove :
+### groove
 
 ![image-20200503200911505](./assets/image-20200503200911505.png)
 
-
-
-### ridge 
+### ridge
 
 ![image-20200503200929287](./assets/image-20200503200929287.png)
 
@@ -104,6 +105,7 @@
 ![image-20200503200944228](./assets/image-20200503200944228.png)
 
 ## 3. border-color 与 color
+
 简单说：border-color 默认颜色就是 color
 
 看个例子
@@ -131,6 +133,7 @@
 ![image-20200503201511763](./assets/image-20200503201511763.png)
 
 ## 4. border 与 background 定位
+
 ### background 定位的局限
 
 只能相对左上角数值定位，不能相对右下（css2.1）

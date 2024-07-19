@@ -1,4 +1,7 @@
-#  relative 相对定位
+---
+outline: deep
+---
+# relative 相对定位
 
 简介：relative 和 absolute 的关系总让我们头疼。
 
