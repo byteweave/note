@@ -7,6 +7,9 @@ import { java } from "../java";
 import { mysql } from "../mysql";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
+// .vitepress/config.js
+import { VitePWA } from "vite-plugin-pwa";
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "note",
@@ -15,7 +18,10 @@ export default defineConfig({
   lastUpdated: true,
   ignoreDeadLinks: true,
   metaChunk: true,
-  lang: "zh-CN",
+  lang: "zh-CN", // 其他配置
+  vite: {
+    plugins: [VitePWA()],
+  },
   head: [
     ["link", { rel: "stylesheet", href: "/note/fancybox.css" }],
     ["script", { src: "/note/fancybox.umd.js" }],
