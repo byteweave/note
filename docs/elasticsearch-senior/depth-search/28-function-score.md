@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # `function_score` 自定义相关度分数算法
 
 我们可以做到自定义一个 function_score 函数，自己将某个 field 的值，
@@ -55,11 +59,11 @@ DELETE /forum/article/7
 
 - modifier：
 
-    默认是 none，这个时候得分 * 指定的 field。
-    可以设置成 log1p，使用这个内置的函数，大致意思是：new_score = old_score * log(1 + number_of_votes)
+    默认是 none，这个时候得分 *指定的 field。
+    可以设置成 log1p，使用这个内置的函数，大致意思是：new_score = old_score* log(1 + number_of_votes)
 - factor：
 
-    进一步影响分数，new_score = old_score * log(1 + factor * number_of_votes)
+    进一步影响分数，new_score = old_score *log(1 + factor* number_of_votes)
 - boost_mode:
 
     可以决定分数与指定字段的值如何计算，multiply、sum、min、max、replace
