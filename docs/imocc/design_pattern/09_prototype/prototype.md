@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 原型设计模式
 
 **定义**：指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
@@ -32,6 +35,7 @@
 coding 与源码解析
 
 ## 示例 - 发送邮件
+
 示例场景：在搞活动的时候发送大量的邮件，而邮件内容是相同的
 
 ```java
@@ -54,6 +58,7 @@ public class Mail {
                 '}';
     }
 ```
+
 发送测试。
 
 ```java
@@ -77,9 +82,9 @@ public class MailTest {
 
 }
 ```
+
 上面的代码很明显的在 mail 对象中，内容是相同的，其他的是不同的，
 而且是在大量循环中不停的创建对象。假如构造这个内容是个很耗时的操作，那么这样就影响性能
-
 
 可以使用克隆来操作，克隆是在通过拷贝内存中的二进制流来完成的新对象，比直接使用 new 要快
 
@@ -196,6 +201,7 @@ public class Pig implements Cloneable {
     ...
 }
 ```
+
 测试
 
 ```java
@@ -218,9 +224,11 @@ Pig{name='小猪1', birthday=Wed Dec 19 21:53:04 CST 2018}cn.mrcode.newstudy.des
 Pig{name='小猪1', birthday=Thu Jan 01 09:51:06 CST 1970}cn.mrcode.newstudy.design.pattern.creational.prototype.Pig@7b49cea0
 Pig{name='小猪1', birthday=Thu Jan 01 09:51:06 CST 1970}cn.mrcode.newstudy.design.pattern.creational.prototype.Pig@887af79
 ```
+
 可以看到修改 p2 的时间，p1 的也跟着一起变化了。这就是浅克隆，因为 birthday 是引用类型；如下修改即可
 
 引用类型也需要再次克隆
+
 ```java
 @Override
 protected Object clone() throws CloneNotSupportedException {
@@ -289,6 +297,7 @@ public class HungrySingleton implements Serializable, Cloneable {
         System.out.println(i2);
     }
 ```
+
 上面的代码就破坏了单例模式的“单”特性；现在有两种方法解决这个问题：
 
 1. 不实现 clone 方法
@@ -300,7 +309,6 @@ public class HungrySingleton implements Serializable, Cloneable {
         return HungrySingleton.getInstance();
     }
 ```
-
 
 ## 源码解析
 
@@ -341,4 +349,5 @@ public Object clone() {
        return result;
    }
 ```
+
 通过对 value 是引用类型的 HashMap 进行克隆调用测试，发现是浅克隆

@@ -3,30 +3,35 @@ order: 1
 title: Rust读书笔记-基础篇
 category:
   - rust
+outline: deep
 ---
+
 # Rust读书笔记-基础篇
+
 ![rest](https://github.com/sunface/rust-course/blob/main/assets/banner.jpg?raw=true)
 
 感谢[Rust语言圣经(Rust Course)](https://course.rs/about-book.html)，正如书中所说在学习 Rust 的同时你会收获很多语言之外的知识，因此 Rust 在入门阶段比很多编程语言要更难，但是一旦入门，你将收获一个全新的自己，成为一个更加优秀的程序员。
 > 要学好 Rust，你需要深入理解内存、堆栈、引用、变量作用域等这些其它高级语言往往不会深入接触的内容。另外，Rust 会通过语法、编译器和 clippy 这些静态检查工具半帮助半强迫的让你成为更优秀的程序员，写出更好的代码。同时，当你掌握 Rust 后，就会自发性的想要去做一些更偏底层的开发，这些都可以帮助你更加了解操作系统、网络、性能优化等底层知识，也会间接或者直接的接触到各种算法和数据结构的实现。
 
 🔥笔记特色：建议结合[Rust语言圣经(Rust Course)](https://course.rs/about-book.html)一起观看，因为部分内容涉及个人思考和代码踩坑，可以助力学习！
+
 - 该笔记使用的Rust版本为：`1.62`
 
 🔥其他推荐：
+
 - [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/)
 - [Rust 程序设计语言](https://www.rustwiki.org.cn/zh-CN/book/)
 - [Rust 官方文档中文教程](https://www.rustwiki.org.cn/)
 - [API查询](https://www.rustwiki.org.cn/zh-CN/std/)
 - [Rust语言中文社区](https://rustcc.cn/)
 
+## 🥳 安装rust
 
-##  🥳 安装rust
 安装日期：2023-05-03
-* [字节代理](https://rsproxy.cn/)
-
+- [字节代理](https://rsproxy.cn/)
 
 ### Mac
+
 ```sh
 brew install rust
 
@@ -34,16 +39,20 @@ cargo -V
 ```
 
 ### Win
+
 过程有点麻烦还要装VS，就直接在Mac上敲了
 
-> https://rustup.rs/
+> <https://rustup.rs/>
 
 ### 😎推荐 在线练习
+
 [点击进入PlayGround](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021)
 [Windows的备用方案](https://lightly.teamcode.com/rust/) 无需下载Rust开发环境，可直接在线编写代码，不是打广告，感觉还挺方便的
 
-##  1.1 🤪 Hello Rust
+## 1.1 🤪 Hello Rust
+
 1. 这是最简单的写法：
+
 ```rust
 fn main() {
     println!("Hello, world!");
@@ -51,11 +60,13 @@ fn main() {
 ```
 
 2. 稍微进阶一点需要了解一点知识：
+
 - `.iter()`  Rust 的集合类型不能直接进行循环，需要变成迭代器（这里是通过 .iter() 方法），才能用于迭代循环
-- `"{}"` 输出占位符，类似于其它语言惯用的 %s、%d 
+- `"{}"` 输出占位符，类似于其它语言惯用的 %s、%d
 - `&`  println! 宏需要一个引用作为参数，因为 Rust 的字符串类型是一个包含多个字节的 UTF-8 编码的向量，而不是一个简单的字符数组。因此，打印一个字符串需要将它的引用传递给 println! 宏。这样做是为了避免将整个字符串复制到堆栈上，而是使用指向原始数据的引用来进行处理。这种方式可以避免性能上的问题，并且与 Java 中的字符串处理方式有所不同。
 - `println!` 在 Rust 中，这是 宏 操作符，你目前可以认为宏是一种特殊类型函数
-	- `println!` 是一个 Rust 标准库提供的宏，用于在控制台输出文本。在这里 "!" 表示宏定义的开始，然后后面的内容是宏参数。
+ 	- `println!` 是一个 Rust 标准库提供的宏，用于在控制台输出文本。在这里 "!" 表示宏定义的开始，然后后面的内容是宏参数。
+
 ```rust
 fn greet_world() {
     let southern_germany = "Grüß Gott!";
@@ -67,25 +78,28 @@ fn greet_world() {
     }
 }
 fn main() {
-	
+ 
 }
 ```
 
 3. 再稍微进阶一点（这个例子也来自Rust圣经，但是我感觉这个例子有点劝退），需要了解下面的知识才能理解：
+
 * `let` 在 Rust 中，常量和变量的定义是通过 let 关键字来进行的，后面会说变量如何定义
-* `lines`、`enumerate`等都可以通过其他语言直观理解
-* 可能遇到问题的是这个`if let Ok(length) = fields[1].parse::<f32>()`
-	* `parse` 方法的作用类似于 Java 中的 parseInt 方法，都是将一个字符串解析为数字
-	* `fields[1].parse::<f32>()` 将第二个元素解析为一个 f32 类型的浮点数，如果解析成功，返回一个 `Result<f32, ParseFloatError>` 类型的 Ok 枚举值，否则返回一个 Err(ParseFloatError) 类型的错误值。
+- `lines`、`enumerate`等都可以通过其他语言直观理解
+- 可能遇到问题的是这个`if let Ok(length) = fields[1].parse::<f32>()`
+ 	- `parse` 方法的作用类似于 Java 中的 parseInt 方法，都是将一个字符串解析为数字
+ 	- `fields[1].parse::<f32>()` 将第二个元素解析为一个 f32 类型的浮点数，如果解析成功，返回一个 `Result<f32, ParseFloatError>` 类型的 Ok 枚举值，否则返回一个 Err(ParseFloatError) 类型的错误值。
 
 **parse**
 其中，self 是一个字符串类型的引用，F 是要解析成的数据类型。parse 方法返回一个 Result<F, ParseError> 类型的枚举值，如果解析成功，返回一个 Ok(F) 枚举值，其中包含解析得到的数据；如果解析失败，返回一个 Err(ParseError) 枚举值，其中包含解析失败的原因。
+
 ```rust
 pub fn parse<F>(&self) -> Result<F, ParseError>
     where F: FromStr
 ```
 
 示例代码：
+
 ```rust
 fn main() {
    let penguin_data = "\
@@ -135,7 +149,9 @@ fn main() {
 ## 1.2 👀 变量
 
 ### 😉常规定义
+
 写一个变量，只是用let定义
+
 ```rust
 fn main() {
     let x = 6;
@@ -145,7 +161,9 @@ fn main() {
 }
 // 错误：cannot assign twice to immutable variable `x`
 ```
+
 如果要让它成为变量，需要加入`mut`
+
 ```rust
 fn main() {
     let mut x = 6;
@@ -154,29 +172,37 @@ fn main() {
     println!("The value of x is: {}", x);
 }
 ```
+
 在rust中常量使用`const`来定义：
 > const MAX_POINTS: u32 = 100_000;
 
 可能会有疑问，rust为什么既然常量用const定义，变量要用let定义为什么要加入mut？
+>
 > 1. 使用 let 声明的变量是可变的，而使用 const 声明的常量是不可变的。这意味着，使用 let 声明的变量可以在程序中修改它们的值，而使用 const 声明的常量一旦被定义，就不能再修改它们的值。在 Rust 中，为了提高代码的可靠性和安全性，推荐尽可能使用常量而不是变量
 > 2. 类型注解：使用 let 声明变量时，通常不需要显式指定变量的类型，因为 Rust 编译器可以根据变量的值推断出变量的类型。而使用 const 声明常量时，必须显式指定常量的类型，因为 Rust 编译器不能根据常量的值推断出常量的类型。例如：let x = 10;    const Y: i32 = 20;
 > 3. 声明位置：使用 let 声明变量时，可以在任何作用域内进行声明，包括函数内部和全局作用域。而使用 const 声明常量时，只能在全局作用域中进行声明。这是因为在 Rust 中，常量的值必须在编译时就确定下来，而变量的值可以在运行时确定。
 
 ### ⛔不要警告我
+
 如果你创建了一个变量却不在任何地方使用它，Rust 通常会给你一个警告。所以可以使用下划线`_`表示`Rust 不要警告未使用的变量`
+
 ```rust
 fn main() {
     let mut x = 6;
 }
 // warning: unused variable: `x`
 ```
+
 ✔️正确写法，我不禁感叹，这也TTMD安全了：
+
 ```rust
 fn main() {
     let mut _x = 6;
 }
 ```
+
 在一次实验中我未使用`mut`，都可以提示了`warning: variable does not need to be mutable`
+
 ```rust
 fn main() {
     let (a, mut b): (bool, bool) = (true, false);
@@ -185,6 +211,7 @@ fn main() {
 ```
 
 ### 变量的解构
+
 这里可能有疑问的点是`{:?}`，为什么不直接使用`{}`
 > {:?} 占位符会使用 Debug trait 来格式化输出变量的值。Debug trait 是 Rust 中的一个特殊 trait，用于定义格式化输出调试信息的方法。许多内置类型和标准库中的类型都实现了 Debug trait，因此你可以在使用 {:?} 占位符时直接输出这些类型的值。{:?} 占位符输出的值通常包含了更多的信息，例如类型信息、结构体字段名等，这些信息对于调试代码非常有用。但是，由于输出的信息可能比较冗长，因此在正式的输出中可能需要使用其他的占位符。
 
@@ -197,7 +224,9 @@ macro_rules! assert_eq {
     ($left : expr, $right : expr, $($arg : tt) +) => { ... };
 }
 ```
+
 例子：
+
 ```rust
 let a = 3;
 let b = 1 + 2;
@@ -207,6 +236,7 @@ assert_eq!(a, b, "we are testing addition with {} and {}", a, b);
 ```
 
 有了上面的知识就可以学习这段示例了，非常类似JavaScript的语法：
+
 ```rust
 fn main() {
     let (a, mut b): (bool, bool) = (true, false);
@@ -217,9 +247,11 @@ fn main() {
 ```
 
 ### 解构式赋值
+
 在 Rust 1.59 版本后，我们可以在赋值语句的左式中使用元组、切片和结构体模式了。
-* 这里的 `..` 表示一个范围，即匹配数组中的第一个元素 c，和最后一个元素之前的所有元素 d
-* 将` Struct { e: 5 }` 解构为变量 e。这里使用了结构体解构语法，`{ e, .. }` 表示只解构结构体中的字段 e，而其他字段都不关心。
+- 这里的 `..` 表示一个范围，即匹配数组中的第一个元素 c，和最后一个元素之前的所有元素 d
+- 将`Struct { e: 5 }` 解构为变量 e。这里使用了结构体解构语法，`{ e, .. }` 表示只解构结构体中的字段 e，而其他字段都不关心。
+
 ```rust
 fn main() {
     let (a, b, c, d);
@@ -229,15 +261,17 @@ fn main() {
     [c, .., d, _] = [1, 2, 3, 4, 5];
     println!("a {:?}, b {:?}, c {:?}, d {:?}", a, b, c, d);
     // 最后输入：a 1, b 2
-	// a 1, b 2, c 1, d 4
+ // a 1, b 2, c 1, d 4
 }
 ```
 
 ### 变量遮蔽
+
 Rust 允许声明相同的变量名，在后面声明的变量会遮蔽掉前面声明的
 > 这和 mut 变量的使用是不同的，第二个 let 生成了完全不同的新变量，两个变量只是恰好拥有同样的名称，涉及一次内存对象的再分配 ，而 mut 声明的变量，可以修改同一个内存地址上的值，并不会发生内存对象的再分配，性能要更好。变量遮蔽的用处在于，如果你在某个作用域内无需再使用之前的变量（在被遮蔽后，无法再访问到之前的同名变量），就可以重复的使用变量名字，而不用绞尽脑汁去想更多的名字。
 
 这个就有点像Python了，在深度学习或者其他领域，变量又多又懒得起名字，直接就使用上一个覆盖：
+
 ```rust
 fn main() {
     let spaces = "   ";
@@ -249,19 +283,21 @@ fn main() {
 ```
 
 但是如果不使用变量遮蔽，下面的情况就是错误的：
+
 ```rust
 // error[E0308]: mismatched types
 let mut spaces = "   ";
 spaces = spaces.len();
 ```
 
-
 ## 1.3 🚗 所有权 & 🚌 借用
+
 这部分我也是第一次接触，和之前学过的Java虚拟机完全不一样，所以这章核心的内容要是我再添油加醋那么可能会带偏。本章内容十分重要，借用作者的一句话是`由于所有权是一个新概念，因此读者需要花费一些时间来掌握它，一旦掌握，海阔天空任你飞跃`。所以我[搬运](https://course.rs/basic/ownership/ownership.html)而来这块的内容，方便后面直接看。
 
 本章的所有内容都来自：[Rust语言圣经(Rust Course)](https://course.rs/basic/ownership/ownership.html)。这章作者写的鬼斧神工，出神入化，我只能这样说了。
 
 ### 1.3.1🚗 所有权
+
 所有的程序都必须和计算机内存打交道，如何从内存中申请空间来存放程序的运行内容，如何在不需要的时候释放这些空间，成了重中之重，也是所有编程语言设计的难点之一。在计算机语言不断演变过程中，出现了三种流派：
 
 垃圾回收机制(GC)，在程序运行时不断寻找不再使用的内存，典型代表：Java、Go
@@ -270,6 +306,7 @@ spaces = spaces.len();
 其中 Rust 选择了第三种，最妙的是，这种检查只发生在编译期，因此对于程序运行期，不会有任何性能上的损失。
 
 #### 一段不安全的代码
+
 先来看看一段来自 C 语言的糟糕代码：
 
 ```c
@@ -280,6 +317,7 @@ int* foo() {
     return &a;
 }                   // 变量a和c的作用域结束
 ```
+
 这段代码虽然可以编译通过，但是其实非常糟糕，变量 a 和 c 都是局部变量，函数结束后将局部变量 a 的地址返回，但局部变量 a 存在栈中，在离开作用域后，a 所申请的栈上内存都会被系统回收，从而造成了 悬空指针(Dangling Pointer) 的问题。这是一个非常典型的内存安全问题，虽然编译可以通过，但是运行的时候会出现错误, 很多编程语言都存在。
 
 再来看变量 c，c 的值是常量字符串，存储于常量区，可能这个函数我们只调用了一次，也可能我们不再会使用这个字符串，但 "xyz" 只有当整个程序结束后系统才能回收这片内存。
@@ -287,6 +325,7 @@ int* foo() {
 所以内存安全问题，一直都是程序员非常头疼的问题，好在, 在 Rust 中这些问题即将成为历史，因为 Rust 在编译的时候就可以帮助我们发现内存不安全的问题，那 Rust 如何做到这一点呢？
 
 #### 预热知识: 栈(Stack)与堆(Heap)
+
 栈和堆是编程语言最核心的数据结构，但是在很多语言中，你并不需要深入了解栈与堆。 但对于 Rust 这样的系统编程语言，值是位于栈上还是堆上非常重要, 因为这会影响程序的行为和性能。
 
 栈和堆的核心目标就是为程序在运行时提供可供使用的内存空间。
@@ -322,18 +361,23 @@ int* foo() {
 对于其他很多编程语言，你确实无需理解堆栈的原理，但是在 Rust 中，明白堆栈的原理，对于我们理解所有权的工作原理会有很大的帮助。
 
 #### 所有权原则
+
 理解了堆栈，接下来看一下关于所有权的规则，首先请谨记以下规则：
+>
 > 1. Rust 中每一个值都被一个变量所拥有，该变量被称为值的所有者
 > 2. 一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者
 > 3. 当所有者(变量)离开作用域范围时，这个值将被丢弃(drop)
 
 ##### 变量作用域
+
 作用域是一个变量在程序中有效的范围, 假如有这样一个变量：
 
 ```rust
 let s = "hello";
 ```
+
 变量 s 绑定到了一个字符串字面值，该字符串字面值是硬编码到程序代码中的。s 变量从声明的点开始直到当前作用域的结束都是有效的：
+
 ```rust
 {                      // s 在这里无效，它尚未声明
     let s = "hello";   // 从此处起，s 是有效的
@@ -341,10 +385,13 @@ let s = "hello";
     // 使用 s
 }                      // 此作用域已结束，s不再有效
 ```
+
 简而言之，s 从创建伊始就开始有效，然后有效期持续到它离开作用域为止，可以看出，**就作用域来说，Rust 语言跟其他编程语言没有区别**。
 
 ##### 简单介绍 String 类型
+>
 > 这里我大致介绍下大纲：
+>
 > - 了解字符串的硬编码
 > - 了解动态字符串，例如用户输入进去的情况应该如何创建？
 
@@ -361,7 +408,9 @@ let s = "hello";
 ```rust
 let s = String::from("hello");
 ```
+
 `::` 是一种调用操作符，这里表示调用 String 中的 from 方法，因为 String 存储在堆上是动态的，你可以这样修改它：
+
 ```rust
 let mut s = String::from("hello");
 
@@ -369,17 +418,20 @@ s.push_str(", world!"); // push_str() 在字符串后追加字面值
 
 println!("{}", s); // 将打印 `hello, world!`
 ```
+
 言归正传，了解 String 内容后，一起来看看关于所有权的交互。
 
 #### 变量绑定背后的数据交互
 
 ##### 转移所有权
+
 先来看一段代码：
 
 ```rust
 let x = 5;
 let y = x;
 ```
+
 代码背后的逻辑很简单, 将 5 绑定到变量 x；接着拷贝 x 的值赋给 y，最终 x 和 y 都等于 5，因为整数是 Rust 基本数据类型，是固定大小的简单值，因此这两个值都是通过自动拷贝的方式来赋值的，都被存在栈中，完全无需在堆上分配内存。
 
 可能有同学会有疑问：这种拷贝不消耗性能吗？实际上，这种栈上的数据足够简单，而且拷贝非常非常快，只需要复制一个整数大小（i32，4 个字节）的内存即可，因此在这种情况下，拷贝的速度远比在堆上创建内存来得快的多。实际上，上一章我们讲到的 Rust 基本类型都是通过自动拷贝的方式来赋值的，就像上面代码一样。
@@ -390,11 +442,13 @@ let y = x;
 let s1 = String::from("hello");
 let s2 = s1;
 ```
+
 此时，可能某个大聪明(善意昵称)已经想到了：嗯，把 s1 的内容拷贝一份赋值给 s2，实际上，并不是这样。之前也提到了，对于基本类型（存储在栈上），Rust 会自动拷贝，但是 String 不是基本类型，而且是存储在堆上的，因此不能自动拷贝。
 
 实际上， String 类型是一个复杂类型，由存储在栈中的堆指针、字符串长度、字符串容量共同组成，其中堆指针是最重要的，它指向了真实存储字符串内容的堆内存，至于长度和容量，如果你有 Go 语言的经验，这里就很好理解：容量是堆内存分配空间的大小，长度是目前已经使用的大小。
 
 总之 String 类型指向了一个堆上的空间，这里存储着它的真实数据, 下面对上面代码中的 let s2 = s1 分成两种情况讨论：
+
 1. 拷贝 String 和存储在堆上的字节数组 如果该语句是拷贝所有数据(深拷贝)，那么无论是 String 本身还是底层的堆上数据，都会被全部拷贝，这对于性能而言会造成非常大的影响
 2. 只拷贝 String 本身 这样的拷贝非常快，因为在 64 位机器上就拷贝了 8字节的指针、8字节的长度、8字节的容量，总计 24 字节，但是带来了新的问题，还记得我们之前提到的所有权规则吧？其中有一条就是：一个值只允许有一个所有者，而现在这个值（堆上的真实字符串数据）有了两个所有者：s1 和 s2。
 
@@ -412,7 +466,9 @@ let s2 = s1;
 
 println!("{}, world!", s1);
 ```
+
 由于 Rust 禁止你使用无效的引用，你会看到以下的错误：
+
 ```
 error[E0382]: borrow of moved value: `s1`
  --> src/main.rs:5:28
@@ -431,7 +487,9 @@ error[E0382]: borrow of moved value: `s1`
 > 这里我再进一步解释一下：代码会报错，因为在 Rust 中，变量绑定具有所有权 (ownership)。当你将 s1 绑定到新的变量 s2 时，所有权会转移，而 s1 不再有效。这是 Rust 的一个关键特性，它有助于避免内存不安全。错误发生在 println! 行，因为你试图使用已经失效的变量 s1。
 
 🌅另外这段代码可以解决：`1. 克隆 2. 引用`
+
 1. 克隆(clone)：
+
 ```rust
 let s1 = String::from("hello");
 let s2 = s1.clone();
@@ -439,7 +497,9 @@ let s2 = s1.clone();
 println!("{}, world!", s1);
 // 这会创建一个新的 `String` 实例，其内容与 `s1` 相同，并将其绑定到 `s2`。这样，`s1` 和 `s2` 都可以在后续代码中使用。
 ```
+
 2. 引用 (references)：
+
 ```rust
 let s1 = String::from("hello");
 let s2 = &s1;
@@ -449,6 +509,7 @@ println!("{}, world!", s1);
 ```
 
 现在再回头看看之前的规则，相信大家已经有了更深刻的理解：
+>
 > 1. Rust 中每一个值都被一个变量所拥有，该变量被称为值的所有者
 > 2. 一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者
 > 3. 当所有者(变量)离开作用域范围时，这个值将被丢弃(drop)
@@ -458,6 +519,7 @@ println!("{}, world!", s1);
 这样就解决了我们之前的问题，s1 不再指向任何数据，只有 s2 是有效的，当 s2 离开作用域，它就会释放内存。 相信此刻，你应该明白了，为什么 Rust 称呼 let a = b 为变量绑定了吧？
 
 再来看一段代码:
+
 ```rust
 fn main() {
     let x: &str = "hello, world";
@@ -465,6 +527,7 @@ fn main() {
     println!("{},{}",x,y);
 }
 ```
+
 这段代码，大家觉得会否报错？如果参考之前的 String 所有权转移的例子，那这段代码也应该报错才是，但是实际上呢？
 
 这段代码和之前的 String 有一个本质上的区别：在 String 的例子中 s1 持有了通过String::from("hello") 创建的值的所有权，而这个例子中，x 只是引用了存储在二进制中的字符串 "hello, world"，并没有持有所有权。
@@ -472,9 +535,11 @@ fn main() {
 因此 let y = x 中，仅仅是对该引用进行了拷贝，此时 y 和 x 都引用了同一个字符串。如果还不理解也没关系，当学习了下一章节 "引用与借用" 后，大家自然而言就会理解。
 
 ##### 克隆(深拷贝)
+
 首先，Rust 永远也不会自动创建数据的 “深拷贝”。因此，任何自动的复制都不是深拷贝，可以被认为对运行时性能影响较小。
 
 如果我们确实需要深度复制 String 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 clone 的方法。
+
 ```rust
 let s1 = String::from("hello");
 let s2 = s1.clone();
@@ -487,9 +552,11 @@ println!("s1 = {}, s2 = {}", s1, s2);
 如果代码性能无关紧要，例如初始化程序时，或者在某段时间只会执行一次时，你可以使用 clone 来简化编程。但是对于执行较为频繁的代码(热点路径)，使用 clone 会极大的降低程序性能，需要小心使用！
 
 ##### 拷贝(浅拷贝)
+
 浅拷贝只发生在栈上，因此性能很高，在日常编程中，浅拷贝无处不在。
 
 再回到之前看过的例子:
+
 ```rust
 let x = 5;
 let y = x;
@@ -513,7 +580,9 @@ Rust 有一个叫做 Copy 的特征，可以用在类似整型这样在栈中存
 - 不可变引用 &T ，例如转移所有权中的最后一个例子，但是注意: 可变引用 &mut T 是不可以 Copy的
 
 #### 函数传值与返回
+
 将值传递给函数，一样会发生 移动 或者 复制，就跟 let 语句一样，下面的代码展示了所有权、作用域的规则：
+
 ```rust
 fn main() {
     let s = String::from("hello");  // s 进入作用域
@@ -537,7 +606,9 @@ fn makes_copy(some_integer: i32) { // some_integer 进入作用域
     println!("{}", some_integer);
 } // 这里，some_integer 移出作用域。不会有特殊操作
 ```
+
 你可以尝试在 takes_ownership 之后，再使用 s，看看如何报错？例如添加一行 println!("在move进函数后继续使用s: {}",s);。
+
 ```rust
 fn main() {
     let s = String::from("hello");  // s 进入作用域
@@ -590,15 +661,19 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string 进入作用�
     a_string  // 返回 a_string 并移出给调用的函数
 }
 ```
+
 所有权很强大，避免了内存的不安全性，但是也带来了一个新麻烦： 总是把一个值传来传去来使用它。 传入一个函数，很可能还要从该函数传出去，结果就是语言表达变得非常啰嗦，幸运的是，Rust 提供了新功能解决这个问题。
 
 ### 1.3.2 🚌 借用
+
 上节中提到，如果仅仅支持通过转移所有权的方式获取一个值，那会让程序变得复杂。 Rust 能否像其它编程语言一样，使用某个变量的指针或者引用呢？答案是可以。
 
 **Rust 通过 借用(Borrowing) 这个概念来达成上述的目的，获取变量的引用，称之为借用(borrowing)**。正如现实生活中，如果一个人拥有某样东西，你可以从他那里借来，当使用完毕后，也必须要物归原主。
 
 #### 引用与解引用
+
 常规引用是一个指针类型，指向了对象存储的内存地址。在下面代码中，我们创建一个 i32 值的引用 y，然后使用解引用运算符来解出 y 所使用的值:
+
 ```rust
 fn main() {
     let x = 5;
@@ -608,9 +683,11 @@ fn main() {
     assert_eq!(5, *y);
 }
 ```
+
 变量 x 存放了一个 i32 值 5。y 是 x 的一个引用。可以断言 x 等于 5。然而，如果希望对 y 的值做出断言，必须使用 *y 来解出引用所指向的值（也就是解引用）。一旦解引用了 y，就可以访问 y 所指向的整型值并可以与 5 做比较。
 
 相反如果尝试编写 assert_eq!(5, y);，则会得到如下编译错误：
+
 ```
 error[E0277]: can't compare `{integer}` with `&{integer}`
  --> src/main.rs:6:5
@@ -623,6 +700,7 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
 ```
 
 #### 不可变引用
+
 下面的代码，我们用 s1 的引用作为参数传递给 calculate_length 函数，而不是把 s1 的所有权转移给该函数：
 
 ```rust
@@ -638,11 +716,12 @@ fn calculate_length(s: &String) -> usize {
     s.len()
 }
 ```
+
 能注意到两点：
 
 1. 无需像上章一样：先通过函数参数传入所有权，然后再通过函数返回来传出所有权，代码更加简洁
 2. calculate_length 的参数 s 类型从 String 变为 &String
-这里，& 符号即是引用，它们允许你使用值，但是不获取所有权，如图所示： 
+这里，& 符号即是引用，它们允许你使用值，但是不获取所有权，如图所示：
 ![](https://pic1.zhimg.com/80/v2-fc68ea4a1fe2e3fe4c5bb523a0a8247c_1440w.jpg)
 通过 &s1 语法，我们创建了一个指向 s1 的引用，但是并不拥有它。因为并不拥有这个值，当引用离开作用域后，其指向的值也不会被丢弃。
 
@@ -654,6 +733,7 @@ fn calculate_length(s: &String) -> usize { // s 是对 String 的引用
 } // 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
   // 所以什么也不会发生
 ```
+
 很不幸，妹子你没抱到，哦口误，你修改错了：
 
 ```
@@ -662,10 +742,10 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` ref
   |
 7 | fn change(some_string: &String) {
   |                        ------- help: consider changing this to be a mutable reference: `&mut String`
-						   ------- 帮助：考虑将该参数类型修改为可变的引用: `&mut String`
+         ------- 帮助：考虑将该参数类型修改为可变的引用: `&mut String`
 8 |     some_string.push_str(", world");
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable\
-										`some_string`是一个`&`类型的引用，因此它指向的数据无法进行修改
+          `some_string`是一个`&`类型的引用，因此它指向的数据无法进行修改
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `Demo` due to previous error
@@ -674,7 +754,9 @@ error: could not compile `Demo` due to previous error
 正如变量默认不可变一样，引用指向的值默认也是不可变的，没事，来一起看看如何解决这个问题。
 
 #### 可变引用
+
 只需要一个小调整，即可修复上面代码的错误：
+
 ```rust
 fn main() {
     let mut s = String::from("hello");
@@ -690,7 +772,9 @@ fn change(some_string: &mut String) {
 首先，声明 s 是可变类型，其次创建一个可变的引用 &mut s 和接受可变引用参数 some_string: &mut String 的函数。
 
 ##### 可变引用同时只能存在一个
+
 不过可变引用并不是随心所欲、想用就用的，它有一个很大的限制： 同一作用域，特定数据只能有一个可变引用：
+
 ```rust
 let mut s = String::from("hello");
 
@@ -699,9 +783,11 @@ let r2 = &mut s;
 
 println!("{}, {}", r1, r2);
 ```
+
 以上代码会报错：
+
 ```
-	error[E0499]: cannot borrow `s` as mutable more than once at a time 同一时间无法对 `s` 进行两次可变借用
+ error[E0499]: cannot borrow `s` as mutable more than once at a time 同一时间无法对 `s` 进行两次可变借用
  --> src/main.rs:5:10
   |
 4 | let r1 = &mut s;
@@ -715,11 +801,13 @@ println!("{}, {}", r1, r2);
 For more information about this error, try `rustc --explain E0499`.
 error: could not compile `Demo` due to previous error
 ```
+
 这段代码出错的原因在于，第一个可变借用 r1 必须要持续到最后一次使用的位置 println!，在 r1 创建和最后一次使用之间，我们又尝试创建第二个可变借用 r2。
 
 对于新手来说，这个特性绝对是一大拦路虎，也是新人们谈之色变的编译器 borrow checker 特性之一，不过各行各业都一样，限制往往是出于安全的考虑，Rust 也一样。
 
 这种限制的好处就是使 Rust 在编译期就避免数据竞争，数据竞争可由以下行为造成：
+
 - 两个或更多的指针同时访问同一数据
 - 至少有一个指针被用来写入数据
 - 没有同步数据访问的机制
@@ -740,6 +828,7 @@ let r2 = &mut s;
 ```
 
 ##### 可变引用与不可变引用不能同时存在
+
 下面的代码会导致一个错误：
 
 ```rust
@@ -755,6 +844,7 @@ fn main() {
 ```
 
 错误如下：
+
 ```
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
  --> src/main.rs:6:14
@@ -771,6 +861,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `Demo` due to previous error
 ```
+
 其实这个也很好理解，正在借用不可变引用的用户，肯定不希望他借用的东西，被另外一个人莫名其妙改变了。多个不可变借用被允许是因为没有人会去试图修改数据，每个人都只读这一份数据而不做修改，因此不用担心数据被污染。
 > 注意，引用的作用域 s 从创建开始，一直持续到它最后一次使用的地方，这个跟变量的作用域有所不同，变量的作用域从创建持续到某一个花括号 }
 
@@ -790,19 +881,23 @@ fn main() {
 } // 老编译器中，r1、r2、r3作用域在这里结束
   // 新编译器中，r3作用域在这里结束
 ```
+
 在老版本的编译器中（Rust 1.31 前），将会报错，因为 r1 和 r2 的作用域在花括号 } 处结束，那么 r3 的借用就会触发 无法同时借用可变和不可变的规则。
 
 但是在新的编译器中，该代码将顺利通过，因为 引用作用域的结束位置从花括号变成最后一次使用的位置，因此 r1 借用和 r2 借用在 println! 后，就结束了，此时 r3 可以顺利借用到可变引用。
 
 ##### NLL
+
 对于这种编译器优化行为，Rust 专门起了一个名字 —— Non-Lexical Lifetimes(NLL)，专门用于找到某个引用在作用域(})结束前就不再被使用的代码位置。
 
 虽然这种借用错误有的时候会让我们很郁闷，但是你只要想想这是 Rust 提前帮你发现了潜在的 BUG，其实就开心了，虽然减慢了开发速度，但是从长期来看，大幅减少了后续开发和运维成本。
 
 ##### 悬垂引用(Dangling References)
+
 悬垂引用也叫做悬垂指针，意思为指针指向某个值后，这个值被释放掉了，而指针仍然存在，其指向的内存可能不存在任何值或已被其它变量重新使用。在 Rust 中编译器可以确保引用永远也不会变成悬垂状态：当你获取数据的引用后，编译器可以确保数据不会在引用结束前被释放，要想释放数据，必须先停止其引用的使用。
 
 让我们尝试创建一个悬垂引用，Rust 会抛出一个编译时错误：
+
 ```rust
 fn main() {
     let reference_to_nothing = dangle();
@@ -814,7 +909,9 @@ fn dangle() -> &String {
     &s
 }
 ```
+
 这里是错误：
+
 ```
 error[E0106]: missing lifetime specifier
  --> src/main.rs:5:16
@@ -828,8 +925,8 @@ help: consider using the `'static` lifetime
 5 | fn dangle() -> &'static String {
   |                ~~~~~~~~
 ```
-错误信息引用了一个我们还未介绍的功能：生命周期(lifetimes)。不过，即使你不理解生命周期，也可以通过错误信息知道这段代码错误的关键信息：
 
+错误信息引用了一个我们还未介绍的功能：生命周期(lifetimes)。不过，即使你不理解生命周期，也可以通过错误信息知道这段代码错误的关键信息：
 
 this function's return type contains a borrowed value, but there is no value for it to be borrowed from.
 该函数返回了一个借用的值，但是已经找不到它所借用值的来源
@@ -845,9 +942,11 @@ fn dangle() -> &String { // dangle 返回一个字符串的引用
 } // 这里 s 离开作用域并被丢弃。其内存被释放。
   // 危险！
 ```
+
 因为 s 是在 dangle 函数内创建的，当 dangle 的代码执行完毕后，s 将被释放，但是此时我们又尝试去返回它的引用。这意味着这个引用会指向一个无效的 String，这可不对！
 
 其中一个很好的解决方法是直接返回 String：
+
 ```rust
 fn no_dangle() -> String {
     let s = String::from("hello");
@@ -855,10 +954,13 @@ fn no_dangle() -> String {
     s
 }
 ```
+
 这样就没有任何错误了，最终 String 的 所有权被转移给外面的调用者。
 
 #### 借用规则总结
+
 总的来说，借用规则如下：
+
 - 同一时刻，你只能拥有要么一个可变引用, 要么任意多个不可变引用
 - 引用必须总是有效的
 
@@ -867,6 +969,7 @@ fn no_dangle() -> String {
 ## 1.4 🗛 字符串
 
 先试试这段代码的结果是怎样的？
+
 ```rust
 fn main() {
   let my_name = "Pascal";
@@ -877,8 +980,6 @@ fn greet(name: String) {
   println!("Hello, {}!", name);
 }
 ```
-
-
 
 这段代码会报错，因为在调用 greet 函数时，my_name 只是一个字符串切片（&str），而不是一个 String 类型。在 Rust 中，&str 和 String 是两种不同的字符串类型，String 是可变的，而 &str 是不可变的。
 
@@ -911,9 +1012,11 @@ fn greet(name: &str) {
 ```
 
 ### 切片(slice)
+
 下面先写一个Go语言和Python语言的切片，方便渐入佳境
 
 Go语言
+
 ```go
 package main
 
@@ -950,6 +1053,7 @@ func main() {
 ```
 
 Python：
+
 ```python
 # 创建列表
 numbers = [1, 2, 3, 4, 5]
@@ -981,7 +1085,7 @@ print("list1：", list1)
 rust：
 ![](https://pic1.zhimg.com/80/v2-69da917741b2c610732d8526a9cc86f5_1440w.jpg)
 
-```rust 
+```rust
 fn main() {
   let s = String::from("hello world");
 
@@ -991,8 +1095,11 @@ fn main() {
   // hello, world
 }
 ```
+
 当然，你可以横切竖切，想怎么切怎么切：
+
 1. 从0开始切
+
 ```rust
 fn main() {
   let s = String::from("hello world");
@@ -1001,7 +1108,9 @@ fn main() {
   println!("{:?}", tmp); // he
 }
 ```
+
 2. 从某个位置切到尾巴
+
 ```rust
 fn main() {
   let s = String::from("hello world");
@@ -1010,7 +1119,9 @@ fn main() {
   println!("{:?}", tmp); // llo world
 }
 ```
+
 3. 完整切
+
 ```rust
 fn main() {
   let s = String::from("hello world");
@@ -1038,7 +1149,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 注意：使用'RUST_BACKTRACE=1'环境变量运行以显示回溯
 ```
 
-因为我们只取 s 字符串的前两个字节，但是本例中每个汉字占用三个字节，因此没有落在边界处，也就是连 中 字都取不完整，此时程序会直接崩溃退出，如果改成 &s[0..3]，则可以正常通过编译。 
+因为我们只取 s 字符串的前两个字节，但是本例中每个汉字占用三个字节，因此没有落在边界处，也就是连 中 字都取不完整，此时程序会直接崩溃退出，如果改成 &s[0..3]，则可以正常通过编译。
 
 ```
 fn main() {
@@ -1050,6 +1161,7 @@ fn main() {
 
 字符串切片的类型标识是 `&str`
 在这里其实有点混乱，`String`和`&str`有什么区别呢？
+>
 > - String是一个拥有所有权的可变字符串类型。这意味着它可以动态地增加或缩小字符串的长度，因为它在堆上分配内存，并且可以自动地调整大小以适应更改。
 > - &str是一个不可变的字符串切片类型，它是一个指向字符串数据的引用。这意味着它不能动态地改变字符串的长度，因为它只是字符串数据的引用，而不是实际的字符串。因此，&str通常用于不需要修改字符串的情况，例如函数参数，或者在字符串数据不需要拥有所有权时使用。
 
@@ -1070,6 +1182,7 @@ fn main() {
     println!("{}", slice);
 }
 ```
+
 在上面的示例中，我们使用String类型的s变量创建一个可变字符串，并在其末尾添加字符和字符串。然后，我们使用&操作符将String类型的字符串转换为&str类型的字符串切片，并将其赋值给slice变量。最后，我们打印slice变量，它包含完整的"hello world"字符串。
 
 有了这个理解就可以来看比较妙的代码了：
@@ -1090,6 +1203,7 @@ fn first_word(s: &String) -> &str {
 ```
 
 我的理解是：
+
 - `let mut s = String::from("hello world");` 这里是String，拥有所有权的可变字符串类型
 - `let word = first_word(&s);` 返回一个`&str`，不可变的字符串切片类型
 - `s.clear()` 需要一个可变借用，但是现在已经（word）是`&str`，不可变的字符串切片类型
@@ -1115,6 +1229,7 @@ error: could not compile `Demo` due to previous error
 > 注：在Rust中，可以使用&操作符将String类型的字符串转换为&str类型的字符串切片。这种转换并不涉及内存分配或复制，因为&str只是一个指向String类型字符串的不可变引用。但需要注意的是，&str引用的字符串必须在String变量的生命周期内，否则会导致悬垂引用错误。
 
 ### 字符串字面量是切片
+
 之前提到过字符串字面量,但是没有提到它的类型：
 
 ```rust
@@ -1130,20 +1245,22 @@ let s: &str = "Hello, world!";
 该切片指向了程序可执行文件中的某个点，**这也是为什么字符串字面量是不可变的，因为 &str 是一个不可变引用**。
 
 ### 字符串类型
+
 - str 类型是硬编码进可执行文件，也无法被修改
 - String 则是一个可增长、可改变且具有所有权的 UTF-8 编码字符串，当 Rust 用户提到字符串时，往往指的就是 String 类型和 &str 字符串切片类型，这两个类型都是 UTF-8 编码。
 - &str 字符串切片
 
 ### String 与 &str 的转换
- 
+
  &str 类型生成 String 类型的操作：
+
 ```rust
 String::from("hello,world")
 "hello,world".to_string()
 ```
 
  String 类型转为 &str 类型 -- 引用：
- 
+
 ```rust
 fn main() {
     let s = String::from("hello,world!"); // String
@@ -1158,7 +1275,9 @@ fn say_hello(s: &str) {
 ```
 
 ### 字符串索引
+
 在Rust中下面的代码如果使用`a[0]`则无法访问，这是为什么呢？作为一名Java程序员，感觉很蛋疼
+
 ```rust
 fn main() {
     let a = "123";
@@ -1166,7 +1285,9 @@ fn main() {
     println!("{}", &a[..2]); // running!
 }
 ```
+
 报错内容如下：
+
 ```rust
 error[E0277]: the type `str` cannot be indexed by `{integer}`
  --> src/main.rs:3:20
@@ -1185,7 +1306,8 @@ error: could not compile `Demo` due to previous error
 ```
 
 #### 原因分析
-1. Rust 字符串底层数据存储格式是` Vec<u8>`，一个字节数组。对于多字节字符，比如汉字，一个字符可能会占用多个字节，因此字符串长度与字节数并不一定相等。
+
+1. Rust 字符串底层数据存储格式是`Vec<u8>`，一个字节数组。对于多字节字符，比如汉字，一个字符可能会占用多个字节，因此字符串长度与字节数并不一定相等。
 
 ```rust
 let s = String::from("中国人");
@@ -1218,6 +1340,7 @@ println!("{:?}", slice); // 输出 "Hello"
 ### 字符串的一些常用API
 
 #### 追加(push)
+
 首先介绍`push`和`push_str`
 > pub fn push_str(&mut self, string: &str)
 将给定的字符串切片追加到这个 String 的末尾。
@@ -1233,7 +1356,6 @@ assert_eq!("foobar", s);
 > pub fn push(&mut self, ch: char)
 将给定的 char 追加到该 String 的末尾。
 
-
 ```rust
 let mut s = String::from("abc");
 
@@ -1247,6 +1369,7 @@ assert_eq!("abc123", s);
 > 注：目前只要知道区别是：push() 方法只能添加单个字符，如果想要添加一个字符串，需要将字符串转换为字符切片再使用 push_str() 方法。
 
 #### 插入(Insert)
+>
 > pub fn insert(&mut self, idx: usize, ch: char)
 在此 String 的字节位置插入一个字符。这是一个 O(n) 操作，因为它需要复制缓冲区中的每个元素。
 
@@ -1260,7 +1383,6 @@ s.insert(2, 'o');
 assert_eq!("foo", s);
 ```
 
-
 > pub fn insert_str(&mut self, idx: usize, string: &str)
    在此 String 的字节位置处插入字符串切片。这是一个 O(n) 操作，因为它需要复制缓冲区中的每个元素。
 
@@ -1272,19 +1394,18 @@ s.insert_str(0, "foo");
 assert_eq!("foobar", s);
 ```
 
-
-
 #### 替换(Replace)
+>
 > pub fn replace<'a, P>(&'a self, from: P, to: &str) -> String
 > 用另一个字符串替换模式的所有匹配项。
 > replace 创建一个新的 String，并将此字符串切片中的数据复制到其中。 这样做时，它将尝试查找某个模式的匹配项。 如果找到，则将其替换为替换字符串切片。
-
 
 ```rust
 let s = "this is old";
 
 assert_eq!("this is new", s.replace("old", "new"));
 ```
+
 当模式不匹配时：
 
 ```rust
@@ -1292,11 +1413,9 @@ let s = "this is old";
 assert_eq!(s, s.replace("cookie monster", "little lamb"));
 ```
 
-
 > pub fn replacen<'a, P>(&'a self, pat: P, to: &str, count: usize) -> String
 > 用另一个字符串替换模式的前 N 个匹配项。
-	replacen 创建一个新的 String，并将此字符串切片中的数据复制到其中。 这样做时，它将尝试查找某个模式的匹配项。 如果找到任何内容，则最多 count 次将它们替换为替换字符串切片。
-
+ replacen 创建一个新的 String，并将此字符串切片中的数据复制到其中。 这样做时，它将尝试查找某个模式的匹配项。 如果找到任何内容，则最多 count 次将它们替换为替换字符串切片。
 
 ```rust
 let s = "foo foo 123 foo";
@@ -1304,6 +1423,7 @@ assert_eq!("new new 123 foo", s.replacen("foo", "new", 2));
 assert_eq!("faa fao 123 foo", s.replacen('o', "a", 3));
 assert_eq!("foo foo new23 foo", s.replacen(char::is_numeric, "new", 1));
 ```
+
 不匹配时：
 
 ```rust
@@ -1311,11 +1431,8 @@ let s = "this is old";
 assert_eq!(s, s.replacen("cookie monster", "little lamb", 10));
 ```
 
-
-
-> pub fn replace_range`<R>`(&mut self, range: R, replace_with: &str) 
+> pub fn replace_range`<R>`(&mut self, range: R, replace_with: &str)
 >删除字符串中的指定范围，并将其替换为给定的字符串。 给定的字符串不必与范围相同。
-
 
 ```rust
 let mut s = String::from("α is alpha, β is beta");
@@ -1326,12 +1443,11 @@ s.replace_range(..beta_offset, "Α is capital alpha; ");
 assert_eq!(s, "Α is capital alpha; β is beta");
 ```
 
-
 #### 删除
+>
 > pub fn pop(&mut self) -> Option`<char>`
 > 从字符串缓冲区中删除最后一个字符并返回它。
 > 如果 String 为空，则返回 None。
-
 
 ```rust
 let mut s = String::from("foo");
@@ -1347,7 +1463,6 @@ assert_eq!(s.pop(), None);
 >从该 String 的字节位置删除 char 并将其返回。
 >这是 O(n) 操作，因为它需要复制缓冲区中的每个元素。
 
-
 ```rust
 let mut s = String::from("foo");
 
@@ -1361,7 +1476,6 @@ assert_eq!(s.remove(0), 'o');
 > 如果 new_len 大于字符串的当前长度，则无效。
 > 请注意，此方法对字符串的分配容量没有影响
 
-
 ```rust
 let mut s = String::from("hello");
 
@@ -1374,7 +1488,6 @@ assert_eq!("he", s);
 > 截断此 String，删除所有内容。
 > 虽然这意味着 String 的长度为零，但它并未触及其容量。
 
-
 ```rust
 let mut s = String::from("foo");
 
@@ -1384,7 +1497,6 @@ assert!(s.is_empty());
 assert_eq!(0, s.len());
 assert_eq!(3, s.capacity());
 ```
-
 
 #### 连接 (Concatenate)
 
@@ -1398,6 +1510,7 @@ fn main() {
     println!("{}", string_append + string_rust)
 }
 ```
+
 报错如下：
 
 ```
@@ -1413,6 +1526,7 @@ error[E0308]: mismatched types
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `Demo` due to previous error
 ```
+
 查看别人写代码是这样：
 > let result = string_append + &string_rust;
 
@@ -1432,6 +1546,7 @@ fn main() {
     println!("{}", string_append + &string_rust + &string_world);
 }
 ```
+
 总结：String + &str返回一个 String，然后再继续跟一个 &str 进行 + 操作，返回一个 String 类型，不断循环，最终生成一个 s，也是 String 类型。
 
 s1 这个变量通过调用 add() 方法后，所有权被转移到 add() 方法里面， add() 方法调用后就被释放了，同时 s1 也被释放了。再使用 s1 就会发生错误。这里涉及到`所有权转移（Move）`的相关知识。
@@ -1448,6 +1563,7 @@ fn main() {
 ```
 
 ### 操作 UTF-8 字符串
+
 如果你想要以 Unicode 字符的方式遍历字符串，最好的办法是使用 chars 方法，例如：
 
 ```rust
@@ -1469,6 +1585,7 @@ for b in "中国人".bytes() {
 可以考虑尝试下这个库：`utf8_slice`。
 
 ### 字符串深度剖析
+
 那么问题来了，为啥 String 可变，而字符串字面值 str 却不可以？
 
 就字符串字面值来说，我们在编译时就知道其内容，最终字面值文本被直接硬编码进可执行文件中，这使得字符串字面值快速且高效，这主要得益于字符串字面值的不可变性。不幸的是，我们不能为了获得这种性能，而把每一个在编译时大小未知的文本都放进内存中（你也做不到！），因为有的字符串是在程序运行得过程中动态生成的。
@@ -1491,6 +1608,7 @@ for b in "中国人".bytes() {
 }                                  // 此作用域已结束，
                                    // s 不再有效，内存被释放
 ```
+
 与其它系统编程语言的 free 函数相同，Rust 也提供了一个释放内存的函数： drop，但是不同的是，其它语言要手动调用 free 来释放每一个变量占用的内存，而 Rust 则在变量离开作用域时，自动调用 drop 函数: 上面代码中，Rust 在结尾的 } 处自动调用 drop。
 
 > 其实，在 C++ 中，也有这种概念: Resource Acquisition Is Initialization (RAII)。如果你使用过 RAII 模式的话应该对 Rust 的 drop 函数并不陌生。
@@ -1498,6 +1616,7 @@ for b in "中国人".bytes() {
 这个模式对编写 Rust 代码的方式有着深远的影响，在后面章节我们会进行更深入的介绍。
 
 ## 1.5 🥥 元组
+
 不多介绍，直接看示例即可：
 
 ```rust
@@ -1518,8 +1637,8 @@ fn calculate_length(s: String) -> (String, usize) {
 
 ## 1.6 🧇 结构体
 
-
 ### 一般定义
+
 结构体我个人认为，它与Go语言、c/cpp的结构体思想都差不多，那么就先用其他语言渐入佳境
 
 C/C++语言结构体：C/C++语言中的结构体定义使用关键字 struct，并且使用花括号包含成员变量。
@@ -1540,6 +1659,7 @@ int main() {
 ```
 
 Go语言结构体：Go语言中的结构体定义使用关键字 type，并且使用花括号包含成员变量
+
 ```go
 package main
 
@@ -1571,6 +1691,7 @@ fn main() {
 ```
 
 ### 结构体的内存排列
+
 下面可以手打下下面的代码：
 
 ```rust
@@ -1593,6 +1714,7 @@ fn main() {
    println!("{} is {} bytes long", file_name, file_data_len);
 }
 ```
+
 其实这段代码是错误的，在这段代码中，当你使用 let file_name = file.name; 和 let file_data_len = file.data.len(); 时，你将 file 的 name 和 data 字段的所有权移动到了 file_name 和 file_data_len 变量中。因此，当你尝试打印 file 变量时，它已经失去了 name 和 data 字段的所有权，导致编译错误。正好复习一下所有权
 
 只要加上`&`即可，告诉Rust借我用下，用完还你：
@@ -1601,6 +1723,7 @@ fn main() {
 let file_name = &file.name;
 let file_data_len = file.data.len();
 ```
+
 进入正题，上面定义的 File 结构体在内存中的排列如下图所示：
 ![](https://pic3.zhimg.com/80/v2-8cc4ed8cd06d60f974d06ca2199b8df5_1440w.png)
 从图中可以清晰地看出 File 结构体两个字段 name 和 data 分别拥有底层两个 [u8] 数组的所有权(String 类型的底层也是 [u8] 数组)，通过 ptr 指针指向底层数组的内存地址，这里你可以把 ptr 指针理解为 Rust 中的引用类型。
@@ -1630,6 +1753,7 @@ fn main() {
   println!("{} is {} bytes long", file_name, file_data_len);
 }
 ```
+
 果然报错了：
 
 ```
@@ -1649,10 +1773,10 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `Demo` due to previous error
 ```
 
-
-
 ### 元组结构体(Tuple Struct)
+
 看示例即可学习
+
 ```rust
 #![allow(unused)]
 fn main() {
@@ -1665,55 +1789,55 @@ fn main() {
 
 ```
 
-
 ### 单元结构体(Unit-like Struct)
+
 在Rust中，单元结构体（Unit-like Struct）是一种类似于元组结构体的结构体，但它不包含任何字段。具体来说，单元结构体的定义形式为：struct MyUnitStruct;，它不包含任何字段，也不需要任何语句作为结构体定义的主体。它的主要作用是在某些场景下提供一种空类型，用于表示某个操作或状态的存在或者不存在。
 
 单元结构体的定义形式和普通结构体的定义形式非常类似，它也可以使用impl块来为它定义方法。在使用单元结构体时，通常只需要使用它的类型名即可，因为它不包含任何字段。
 
 单元结构体在Rust中的主要作用是提供一种空类型，用于表示某个操作或状态的存在或者不存在，比如在某些函数中，可能需要传入一个参数，但实际上这个参数并不需要使用，这时可以使用单元结构体作为参数类型，表示这个操作需要传入一个参数，但实际上这个参数是没有用的。
+
 ```rust
 
 #![allow(unused)]
 fn main() {
-	struct AlwaysEqual;
-	
-	let subject = AlwaysEqual;
-	
-	// 我们不关心 AlwaysEqual 的字段数据，只关心它的行为，因此将它声明为单元结构体，然后再为它实现某个特征
-	impl SomeTrait for AlwaysEqual {
-	
-	}
+ struct AlwaysEqual;
+ 
+ let subject = AlwaysEqual;
+ 
+ // 我们不关心 AlwaysEqual 的字段数据，只关心它的行为，因此将它声明为单元结构体，然后再为它实现某个特征
+ impl SomeTrait for AlwaysEqual {
+ 
+ }
 }
 
 ```
 
-
 ### 结构体数据的所有权
+
 在之前的 User 结构体的定义中，有一处细节：我们使用了自身拥有所有权的 String 类型而不是基于引用的 &str 字符串切片类型。这是一个有意而为之的选择：因为我们想要这个结构体拥有它所有的数据，而不是从其它地方借用数据。
 你也可以让 User 结构体从其它对象借用数据，不过这么做，就需要引入生命周期(lifetimes)这个新概念（也是一个复杂的概念），简而言之，生命周期能确保结构体的作用范围要比它所借用的数据的作用范围要小。
 
 总之，如果你想在结构体中使用一个引用，就必须加上生命周期，否则就会报错：
 
 ```rust
-	struct User {
-	    username: &str,
-	    email: &str,
-	    sign_in_count: u64,
-	    active: bool,
-	}
-	
-	fn main() {
-	    let user1 = User {
-	        email: "someone@example.com",
-	        username: "someusername123",
-	        active: true,
-	        sign_in_count: 1,
-	    };
-	}
+ struct User {
+     username: &str,
+     email: &str,
+     sign_in_count: u64,
+     active: bool,
+ }
+ 
+ fn main() {
+     let user1 = User {
+         email: "someone@example.com",
+         username: "someusername123",
+         active: true,
+         sign_in_count: 1,
+     };
+ }
 
 ```
-
 
 ```
 error[E0106]: missing lifetime specifier
@@ -1743,8 +1867,8 @@ help: consider introducing a named lifetime parameter
 
 ```
 
-
 ### 使用 #[derive(Debug)] 来打印结构体的信息
+
 在前面的代码中我们使用 #[derive(Debug)] 对结构体进行了标记，这样才能使用 println!("{:?}", s); 的方式对其进行打印输出，如果不加，看看会发生什么:
 
 ```rust
@@ -1764,7 +1888,6 @@ fn main() {
 
 ```
 
-
 ```
 error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
   --> src/main.rs:12:29
@@ -1780,8 +1903,8 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `Demo` due to previous error
 ```
 
+# [derive(Debug)]是一个宏，它可以自动生成实现Debug trait的代码。Debug trait是一个用于调试的trait，它允许我们打印出结构体的内容，以便于调试程序。因此，每次打印结构体时，我们需要在结构体上加上#[derive(Debug)]，以便于使用println!宏打印出结构体的内容。
 
-#[derive(Debug)]是一个宏，它可以自动生成实现Debug trait的代码。Debug trait是一个用于调试的trait，它允许我们打印出结构体的内容，以便于调试程序。因此，每次打印结构体时，我们需要在结构体上加上#[derive(Debug)]，以便于使用println!宏打印出结构体的内容。
 - 定义：`#[derive(Debug)]`
 - 打印需要：`{:?}`
 
@@ -1801,7 +1924,6 @@ fn main() {
     println!("rect1 is {:?}", rect1);
 }
 ```
-
 
 还有一个简单的输出 debug 信息的方法，那就是使用 dbg! 宏，它会拿走表达式的所有权，然后打印出相应的文件名、行号等 debug 信息，当然还有我们需要的表达式的求值结果。除此之外，它最终还会把表达式值的所有权返回！
 > dbg! 输出到标准错误输出 stderr，而 println! 输出到标准输出 stdout。
@@ -1824,9 +1946,8 @@ fn main() {
 }
 ```
 
-
-
 ## 1.7 枚举
+
 #### 枚举的一般写法
 
 ```rust
@@ -1877,6 +1998,7 @@ fn main() {
     println!("{:?}", c2);
 }
 ```
+
 运行以上程序会报错：
 
 ```
@@ -1911,6 +2033,7 @@ help: consider annotating `PokerCard` with `#[derive(Debug)]`
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `Demo` due to 2 previous errors
 ```
+
 这就是理解上出现了错误，需要给每一个结构体加上`#[derive(Debug)]`才行
 
 ```rust
@@ -1947,6 +2070,7 @@ fn main() {
 ```
 
 #### 同一化类型
+
 最后，再用一个实际项目中的简化片段，来结束枚举类型的语法学习。
 
 例如我们有一个 WEB 服务，需要接受用户的长连接，假设连接有两种：TcpStream 和 TlsStream，但是我们希望对这两个连接的处理流程相同，也就是用同一个函数来处理这两个连接，代码如下：
@@ -1971,6 +2095,7 @@ fn new (stream: TcpStream) {
 ```
 
 此时，枚举类型就能帮上大忙：
+
 ```rust
 
 #![allow(unused)]
@@ -1983,9 +2108,8 @@ enum Websocket {
 
 ```
 
-
-
 #### Option 枚举用于处理空值
+
 Option 枚举包含两个成员，一个成员表示含有值：Some(T), 另一个表示没有值：None，定义如下：
 
 ```rust
@@ -1994,6 +2118,7 @@ enum Option<T> {
     None,
 }
 ```
+
 其中 T 是泛型参数，Some(T)表示该枚举成员的数据类型是 T，换句话说，Some 可以包含任何类型的数据。\
 
 ```rust
@@ -2017,9 +2142,10 @@ fn main() {
 
 ```
 
-
 ## 1.8 🔢 数组
+
 rust的数组基本和JavaScript差不多，直接来一个综合例子：
+
 - [0; 3]比较特殊，是[0, 0, 0]
 
 ```rust
@@ -2052,6 +2178,7 @@ fn main() {
   }
 }
 ```
+
 做个总结，数组虽然很简单，但是其实还是存在几个要注意的点：
 
 - 数组类型容易跟数组切片混淆，`[T;n]`描述了一个数组的类型，而[T]描述了切片的类型， 因为切片是运行期的数据结构，它的长度无法在编译期得知，因此不能用`[T;n]`的形式去描述
@@ -2060,10 +2187,12 @@ fn main() {
 至此，关于数据类型部分，我们已经全部学完了，对于 Rust 学习而言，我们也迈出了坚定的第一步，后面将开始更高级特性的学习。未来如果大家有疑惑需要检索知识，一样可以继续回顾过往的章节，因为本书不仅仅是一门 Rust 的教程，还是一本厚重的 Rust 工具书。
 
 ## 1.9 ⭕流程控制
+
 其他都差不多，就这两个比较特殊。
 
 ### for循环
-1.  for item in collection  转移所有权
+
+1. for item in collection  转移所有权
 
 2. for item in &collection 或者 for item in collection.iter()  不可变借用
 
@@ -2080,6 +2209,7 @@ fn main() {
 ```
 
 ## 1.10 💁‍♂️ 模式匹配
+
 先展示一下Java17的Switch，就懂了：
 
 ```java
@@ -2097,18 +2227,19 @@ public class Main {
 }
 
 ```
+
 再来看Rust简单的例子：
 
 ```rust
 fn main() {
     enum Color { Red, Green, Blue }
-	let c = Color::Red;
-	match c {
-		Color::Red => println!("RED"),
-		Color::Green => println!("GREEN"),
-		Color::Blue => println!("BLUE"),
-		_ => println!("UNKNOWN")
-	}
+ let c = Color::Red;
+ match c {
+  Color::Red => println!("RED"),
+  Color::Green => println!("GREEN"),
+  Color::Blue => println!("BLUE"),
+  _ => println!("UNKNOWN")
+ }
 }
 ```
 
@@ -2156,7 +2287,9 @@ public class Main {
 ```
 
 ### _ 通配符
-通过将 _ 其放置于其他分支后，_ 将会匹配所有遗漏的值。() 表示返回单元类型与所有分支返回值的类型相同，所以当匹配到 _ 后，什么也不会发生。
+
+通过将 _其放置于其他分支后，_ 将会匹配所有遗漏的值。() 表示返回单元类型与所有分支返回值的类型相同，所以当匹配到 _ 后，什么也不会发生。
+
 ```rust
 
 #![allow(unused)]
@@ -2173,8 +2306,8 @@ match some_u8_value {
 
 ```
 
-
 ### let if 进行匹配
+
 当你只要匹配一个条件，且忽略其他条件时就用 if let ，否则都用 match。
 
 ```rust
@@ -2188,8 +2321,8 @@ if let Some(3) = v {
 
 ```
 
-
 ### matches!宏
+
 它可以将一个表达式跟模式进行匹配，然后返回匹配的结果 true or false。
 
 ```rust
@@ -2201,8 +2334,8 @@ println!("{}", matches!(foo, 'A'..='Z' | 'a'..='z')); // true
 
 ```
 
-
 ### 变量覆盖
+
 无论是 match 还是 if let，他们都可以在模式匹配时覆盖掉老的值，绑定新的值:
 
 ```rust
@@ -2218,9 +2351,9 @@ fn main() {
 ```
 
 ### 小结
-本章的内容其实有很多被我删减了，而且有些我看的瞌睡都来了，因为我感觉有些内容Java也有，到时候项目用到再说具体可以看大大总结的：
-> https://course.rs/basic/match-pattern/all-patterns.html
 
+本章的内容其实有很多被我删减了，而且有些我看的瞌睡都来了，因为我感觉有些内容Java也有，到时候项目用到再说具体可以看大大总结的：
+> <https://course.rs/basic/match-pattern/all-patterns.html>
 
 ## 1.11 👨‍🔧 方法
 
@@ -2228,6 +2361,7 @@ Rust和其他语言的方法对比：
 ![](https://pica.zhimg.com/80/v2-0d848e960f3279999eab4b1317f6538e_1440w.png)
 
 rust创建方法：
+
 - `impl` 是实现 `implementation` 的缩写
 
 ```rust
@@ -2253,7 +2387,9 @@ fn main() {
 }
 
 ```
+
 其实看到这里是十分疑惑的，尤其是和fn对比起来，下面我来总结下：
+
 - impl块用于定义在特定类型上的方法。它R往往跟结构体、枚举、特征(Trait)一起使用。
 - fn用于定义普通的全局或内部功能。它不依赖于任何特定类型。
 - 简单来说，要实现结构体的函数就要使用impl，它这个实现和Go语言十分类似！
@@ -2270,7 +2406,6 @@ func (p Person) SayHello() {
     fmt.Printf("Hello, my name is %s and I am %d years old.\n", p.Name, p.Age)
 }
 ```
-
 
 函数
 
@@ -2308,18 +2443,20 @@ fn main() {
 }
 ```
 
-
 ### self、&self 和 &mut self
+
 在一个 impl 块内，Self 指代被实现方法的结构体类型，self 指代此类型的实例，换句话说，self 指代的是结构体实例，这样的写法会让我们的代码简洁很多，而且非常便于理解：我们为哪个结构体实现方法，那么 self 就是指代哪个结构体的实例。
 > 从而可以得出 >> 虽然 Rust 和 Python 是不同的编程语言，但它们在某些方面有相似之处。self 关键字在两种语言中都用于表示当前实例，使得我们可以在方法中访问和修改实例的属性和方法。
 
 在Rust中，self是有所有权的概念的
+
 - `self` 表示 结构体 的所有权转移到该方法中，这种形式用的较少
 - `&self` 表示该方法对 结构体 的不可变借用
 - `&mut self` 表示可变借用
 总之，self 的使用就跟函数参数一样，要严格遵守 Rust 的所有权规则。
 
 ### 关联函数
+
 参数中不包含 self 即可。在 impl 中且没有 self 的函数被称之为关联函数： 因为它没有 self，不能用 f.read() 的形式调用，因此它是一个函数而不是方法，它又在 impl 中，与结构体紧密关联，因此称为关联函数。
 
 注意观察下面例子中的new
@@ -2346,11 +2483,13 @@ fn main() {
 }
 
 ```
+
 > Rust 中有一个约定俗成的规则，使用 new 来作为构造器的名称，出于设计上的考虑，Rust 特地没有用 new 作为关键字。
 
 因为是函数，所以不能用 . 的方式来调用，我们需要用 :: 来调用，例如 let sq = Rectangle::new(3, 3);。这个方法位于结构体的命名空间中：:: 语法用于关联函数和模块创建的命名空间。
 
 ### 多个 impl 定义
+
 直接看例子即可
 
 ```rust
@@ -2379,6 +2518,7 @@ impl Rectangle {
 ```
 
 ### 为枚举实现方法
+
 枚举类型之所以强大，不仅仅在于它好用、可以**同一化类型**，还在于，我们可以像结构体一样，为枚举实现方法：
 
 ```rust
@@ -2404,9 +2544,13 @@ fn main() {
 ```
 
 ## 1.121 🦜 泛型
+
 ### 结构体中使用泛型
+
 先上例子体验一下：
+
 - 使用的时候需要在结构体名字后面加入`<T>`
+
 ```rust
 #[derive(Debug)]
 struct Point<T> {
@@ -2423,6 +2567,7 @@ fn main() {
 }
 
 ```
+
 此时的声明是x, y必须是一样的类型，如果要不一样的声明就要两种不同的泛型：
 
 ```rust
@@ -2442,6 +2587,7 @@ fn main() {
 ```
 
 ### 枚举中使用泛型
+
 提到枚举类型，Option 永远是第一个应该被想起来的
 
 ```rust
@@ -2450,9 +2596,11 @@ enum Option<T> {
     None,
 }
 ```
-`Option<T> `是一个拥有泛型 T 的枚举类型，它第一个成员是 Some(T)，存放了一个类型为 T 的值。得益于泛型的引入，我们可以在任何一个需要返回值的函数中，去使用 `Option<T> `枚举类型来做为返回值，用于返回一个任意类型的值 Some(T)，或者没有值 None。
+
+`Option<T>`是一个拥有泛型 T 的枚举类型，它第一个成员是 Some(T)，存放了一个类型为 T 的值。得益于泛型的引入，我们可以在任何一个需要返回值的函数中，去使用 `Option<T>`枚举类型来做为返回值，用于返回一个任意类型的值 Some(T)，或者没有值 None。
 
 ### 方法中使用泛型
+
 - 使用泛型参数前，依然需要提前声明：`impl<T>`
 
 ```rust
@@ -2477,6 +2625,7 @@ fn main() {
 ```
 
 ### 为具体的泛型类型实现方法
+
 不仅能定义基于 T 的方法，还能针对特定的具体类型，进行方法定义，例如f32：
 
 ```rust
@@ -2493,6 +2642,7 @@ impl Point<f32> {
 ```
 
 ### const 泛型（Rust 1.51 版本引入的重要特性）
+
 在之前学过数组打印
 
 ```rust
@@ -2508,7 +2658,9 @@ fn main() {
 }
 
 ```
+
 现在将它改造成泛型
+
 - 需要对 T 加一个限制`std::fmt::Debug`，我的理解是加入后，目前的函数是支持传入可打印的数组
 
 ```rust
@@ -2541,6 +2693,7 @@ fn main() {
 ```
 
 其实阅读到这里我有两个问题：
+
 1. 我是在没读懂作者说的[处理数组长度的问题](https://course.rs/basic/trait/generic.html#const-泛型rust-151-版本引入的重要特性)是什么意思
 2. 仅仅是加入`T: std::fmt::Debug`不就可以了吗，为什么还要加入`const N: usize`。（可能是没理解1）
 
@@ -2562,7 +2715,6 @@ fn main() {
 } 
 ```
 
-
 ```
 error[E0425]: cannot find value `N` in this scope
  --> src/main.rs:1:47
@@ -2571,7 +2723,7 @@ error[E0425]: cannot find value `N` in this scope
   |                                    -          ^ not found in this scope 在此范围内找不到
   |                                    |
   |                                    help: you might be missing a type parameter: `, N`
-									   帮助：您可能缺少类型参数：'， N'
+            帮助：您可能缺少类型参数：'， N'
 
 error[E0282]: type annotations needed
  --> src/main.rs:7:5
@@ -2584,9 +2736,10 @@ For more information about an error, try `rustc --explain E0282`.
 error: could not compile `Demo` due to 2 previous errors
 ```
 
-只能说Rust作者十分贴心，连help都给你写了，省的去Stack Overflow去搜索。这段代码会导致编译时错误，原因是`arr2太大`。` 没有const大小参数，编译器没有关于数组参数大小的信息`。它假定函数可以使用任何大小的数组进行调用。 这在编译时会导致问题，因为Rust中的函数对堆栈大小、线程堆栈大小等有严格限制。非常大的数组参数将超出这些限制。
+只能说Rust作者十分贴心，连help都给你写了，省的去Stack Overflow去搜索。这段代码会导致编译时错误，原因是`arr2太大`。`没有const大小参数，编译器没有关于数组参数大小的信息`。它假定函数可以使用任何大小的数组进行调用。 这在编译时会导致问题，因为Rust中的函数对堆栈大小、线程堆栈大小等有严格限制。非常大的数组参数将超出这些限制。
 
 经过我查询资料，省略size参数可能会导致：
+
 - 非常大的大小的编译时错误。
 - 由于未知大小，运行时出现不安全的内存问题。
 - 有限优化的次优性能。
@@ -2594,6 +2747,7 @@ error: could not compile `Demo` due to 2 previous errors
 总结：要求const N： usize通过允许基于在编译时完全了解参数大小的静态验证和优化代码生成来提供安全性、安全性和效率。
 
 ### 泛型的效率 （单态化）
+
 在 Rust 中泛型是零成本的抽象，意味着你在使用泛型时，完全不用担心性能上的问题。
 
 但是任何选择都是权衡得失的，既然我们获得了性能上的巨大优势，那么又失去了什么呢？Rust 是在编译期为泛型对应的多个类型，生成各自的代码，因此损失了编译速度和增大了最终生成文件的大小。
@@ -2605,6 +2759,7 @@ Rust 通过在编译时进行泛型代码的 **单态化(monomorphization)** 来
 编译器所做的工作正好与我们创建泛型函数的步骤相反，编译器寻找所有泛型代码被调用的位置并针对具体类型生成代码。
 
 在原书中我根本没法跟上作者的单态化的理解，因为这是其他语言没有的理解。经过查阅举例说明：
+
 - 单态化发生在编译时，而不是运行时
 - 避免动态调度
 - Rust安全、快速泛型方法的关键部分
@@ -2616,19 +2771,22 @@ x + y
 }
 
 fn main() {
-	let x = 1; // i32
-	let y = 2; // i32
-	let z = add(x, y); // z is i32
-	let a = 1.0;  // f64 
-	let b = 2.0;  // f64 
-	let c = add(a, b); // c is f64 
+ let x = 1; // i32
+ let y = 2; // i32
+ let z = add(x, y); // z is i32
+ let a = 1.0;  // f64 
+ let b = 2.0;  // f64 
+ let c = add(a, b); // c is f64 
 }
 ```
+
 在编译时，这会产生两个“单态”版本的 add：
+
 ```rust
 fn add_i32(x: i32, y: i32) -> i32 { ... }
 fn add_f64(x: f64, y: f64) -> f64 { ... }
 ```
+
 它的调用结构会变成：
 
 ```rust
@@ -2639,10 +2797,12 @@ let c = add_f64(a, b);
 导致每种具体类型都有自己的泛型函数的专用版本。这意味着在使用泛型时没有运行时开销；当代码运行，它的执行效率就跟好像手写每个具体定义的重复代码一样。这个单态化过程正是 Rust 泛型在运行时极其高效的原因。
 
 ## 1.122 🥒 特征 Trait
+
 特征在Rust中而**可以暂时理解为抽象类（在圣经中作者说是接口，但是我看到默认方法的时候我就觉得是抽象，谁能在接口里实现方法的，见下⬇️）**
 特征定义了一组可以被共享的行为，只要实现了特征，你就能使用这组行为。
 
 例如，我们现在有文章 Post 和微博 Weibo 两种内容载体，而我们想对相应的内容进行总结，也就是无论是文章内容，还是微博内容，都可以在某个时间点进行总结，那么总结这个行为就是共享的，因此可以用特征来定义：
+
 ```rust
 pub trait Summary {
     fn summary(&self) -> String;
@@ -2681,6 +2841,7 @@ fn main() {
 ```
 
 ### 孤儿规则（Orphan Rule）
+
 孤儿规则（Rust中的孤儿规则旨在这个限制的主要目的是避免在不同库之间产生特质实现的冲突。例如，如果两个库都试图为同一个类型实现同一个特质，这将导致不确定性和潜在的错误。孤儿规则通过确保特质实现的唯一性来提高库之间的兼容性）这里，在圣经阅读过程中我认为此处地方讲的太过于混乱，甚至不好理解。下面详细讲解下。
 
 孤儿规则适用于特质实现，具体要求如下：
@@ -2699,7 +2860,6 @@ pub trait Bar {
 }
 ```
 
-
 ```rust
 // my_crate库中
 pub struct MyType;
@@ -2711,6 +2871,7 @@ pub trait MyTrait {
 根据孤儿规则，我们可以在 `my_crate` 中实现以下特质实现：
 
 1. 为 `MyType` 实现 `MyTrait`，因为 `MyType` 和 `MyTrait` 都是在当前 crate（包）定义的。
+
 ```rust
 impl MyTrait for MyType {
     fn do_another_thing(&self) {
@@ -2720,6 +2881,7 @@ impl MyTrait for MyType {
 ```
 
 2. 为 `MyType` 实现 `external_crate` 中定义的 `Bar` 特质，因为 `MyType` 是在当前 crate（包）定义的。
+
 ```rust
 use external_crate::Bar;
 
@@ -2732,6 +2894,7 @@ impl Bar for MyType {
 
 然而，根据孤儿规则，我们不能在 `my_crate` 中实现以下特质实现：
 为 `external_crate` 中定义的 `Foo` 类型实现 `MyTrait` 特质，因为这两个都不是在当前 crate（包）定义的。
+
 ```rust
 // 这将导致编译错误，因为违反了孤儿规则
 use external_crate::Foo;
@@ -2746,7 +2909,9 @@ impl MyTrait for Foo {
 总之，这样理解，在`你的库（my_crate）`中，你可以为当前库中定义的类型实现`其他库（如external_crate）`中定义的特质，也可以为当前库中定义的类型实现当前库中定义的特质。然而，你不能为`其他库（如external_crate）`中定义的类型实现`你的库（my_crate）`中定义的特质。孤儿规则主要关注的是特质实现，以确保库之间的兼容性。
 
 ### 默认方法
+
 在讲述特征的地方修改两处地方即可知道默认方法的效果：
+
 ```rust
 pub trait Summary {
 
@@ -2760,6 +2925,7 @@ impl Summary for Post {
 ```
 
 默认实现允许调用相同特征中的其他方法，哪怕这些方法没有默认实现。所以我一开始说它十分像其他语言的抽象类
+
 ```rust
 pub trait Summary {
 
@@ -2796,14 +2962,17 @@ fn main() {
 ```
 
 ### 使用特征作为函数参数
+
 现在我们来讲下，真正可以让特征大放光彩的地方。
 
 现在，先定义一个函数，使用特征作为函数参数：
+
 ```rust
 pub fn notify(item: &impl Summary) {
     println!("Breaking news! {}", item.summarize());
 }
 ```
+
 impl Summary，只能说想出这个类型的人真的是起名鬼才，简直太贴切了，故名思义，它的意思是 实现了Summary特征 的 item 参数。
 
 这样看来，这个特征确实吊，稍微修改下代码即可：
@@ -2845,12 +3014,15 @@ fn main() {
 ```
 
 ### 特征约束(trait bound)
+
 在简单的场景下 impl Trait 这种语法糖就足够使用
+
 ```rust
 pub fn notify(item1: &impl Summary, item2: &impl Summary) {}
 ```
 
 如果我们想要强制函数的两个参数是同一类型? 可以再用上面的微博的例子举例
+
 ```rust
 pub trait Summary {
     fn summary(&self) -> String {
@@ -2892,8 +3064,10 @@ fn main() {
     notify(&post, &weibo);
 }
 ```
+
 泛型类型 T 说明了 item1 和 item2 必须拥有同样的类型，同时 T: Summary 说明了 T 必须实现 Summary 特征。
 此时我们更换了之后在运行就运行不起来了
+
 ```rust
 pub fn notify<T: Summary>(item: &T, item2: &T) {
     println!("{}", item.summary());
@@ -2914,6 +3088,7 @@ error: could not compile `Demo` due to previous error%%
 ```
 
 再看我在main中修改的和打印的结果就知道必须是同样的类型是什么意思了：
+
 ```rust
 pub fn notify<T: Summary>(item: &T, item2: &T) {
     println!("{}", item.summary());
@@ -2936,25 +3111,29 @@ fn main() {
 // sunface发表了微博好像微博没Tweet好用
 ```
 
-
 ### 多重约束
+
 要了解这个有两个概念需要了解，在原作者的文章中直接举例，但凡是个第一次学Rust的正常人都懵逼
+
 - 导包
+
 ```rust
 use std::fmt;
 ```
+
 - 给Post加入Display特征的实现：
 
 介绍下display：
 > pub trait Display {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error>;
-	}
+ }
 
 空格式的格式 trait，{}。
 Display 与 Debug 类似，但 Display 是面向用户的输出，因此无法导出。
 有关格式化程序的更多信息，请参见 模块级文档。
 
 例子：
+
 ```rust
 use std::fmt;
 
@@ -2975,6 +3154,7 @@ assert_eq!(format!("The origin is: {}", origin), "The origin is: (0, 0)");
 ```
 
 有了上述两个基础，就可以给Post加入Display特征的实现
+
 ```rust
 impl fmt::Display for Post { 
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { 
@@ -2982,6 +3162,7 @@ impl fmt::Display for Post {
     }
 }
 ```
+
 然后就可以给方法加入新的特征约束：
 
 ```rust
@@ -2992,6 +3173,7 @@ pub fn notify(item: &(impl Summary + fmt::Display)) {
 ```
 
 ### where约束
+
 通过上面的学习再看where约束应该不难
 当特征约束变得很多时，函数的签名将变得很复杂：
 > fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {}
@@ -3007,14 +3189,18 @@ fn some_function<T, U>(t: &T, u: &U) -> i32
 ```
 
 ### 使用特征约束有条件地实现方法或特征
+
 感觉作者在写这几章内容的时候应该是失恋了，也有可能作者对于某些知识具备可能没考虑到初学者的感受，在下面的例子中要看懂首先要知道这个特征：
 > Trait std::cmp::PartialOrd  一个可以比较排序顺序的值的 trait。
+
 - Partial 部分存在的
 - Ord 即order，排序
 
 下面的例子就可以看到作者的意思
+
 - `实现new`，创建构造函数
 - `实现cmp_display`，并约束传入的值只能是`Display`（可以打印）`PartialOrd`（可以排序）的。
+
 ```rust
 
 #![allow(unused)]
@@ -3035,7 +3221,7 @@ fn main() {
         }
     }
 
-	// 在这个方法中，首先比较 x 和 y 的大小，然后打印出较大的值。
+ // 在这个方法中，首先比较 x 和 y 的大小，然后打印出较大的值。
     impl<T: Display + PartialOrd> Pair<T> {
         fn cmp_display(&self) {
             if self.x >= self.y {
@@ -3051,8 +3237,8 @@ fn main() {
 
 相信你也和我一样，理解了特征约束是什么意思了。
 
-
 ### 函数返回中的 impl Trait
+
 根据作者的例子进行举一反三：
 
 ```rust
@@ -3077,6 +3263,7 @@ fn main() {
 ```
 
 ### 修复上一节中的 largest 函数
+
 在圣经中作者真是高看我了，我已经对这个函数失忆了，这段作者好像又从失恋中走出来了，感觉鬼斧神工的能力又回来了。
 在源代码中是无法编译通过的：
 
@@ -3105,7 +3292,6 @@ fn main() {
     println!("The largest char is {}", result);
 }
 ```
-
 
 ```
 error[E0369]: binary operation `>` cannot be applied to type `T`
@@ -3175,8 +3361,7 @@ error: could not compile `Demo` due to 2 previous errors
 
 因此，为了让 T 拥有 Copy 特性，我们可以增加特征约束：
 在这之前介绍下copy
-> pub unsafe fn copy`<T>`(src: *const T, dst: *mut T, count: usize) 将 count * size_of::`<T>`() 字节从 src 复制到 dst。源和目标可能会重叠。
-
+> pub unsafe fn copy`<T>`(src: *const T, dst:*mut T, count: usize) 将 count * size_of::`<T>`() 字节从 src 复制到 dst。源和目标可能会重叠。
 
 ```rust
 fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
@@ -3215,11 +3400,10 @@ pub trait Clone {
 }
 ```
 
-
-
 另一种 `largest 的实现方式是返回在 list 中 T 值的引用`。如果我们将函数返回值从 T 改为 &T 并改变函数体使其能够返回一个引用，我们将不需要任何 Clone 或 Copy 的特征约束而且也不会有任何的堆分配。尝试自己实现这种替代解决方式吧！
 
 ### 通过 derive 派生特征
+
 在本书中，形如 #[derive(Debug)] 的代码已经出现了很多次，这种是一种特征派生语法，被 derive 标记的对象会自动实现对应的默认特征代码，继承相应的功能。
 
 例如 Debug 特征，它有一套自动实现的默认代码，当你给一个结构体标记后，就可以使用 println!("{:?}", s) 的形式打印该结构体的对象。
@@ -3229,9 +3413,11 @@ pub trait Clone {
 总之，derive 派生出来的是 Rust 默认给我们提供的特征，在开发过程中极大的简化了自己手动实现相应特征的需求，当然，如果你有特殊的需求，还可以自己手动重载该实现。
 
 ### 调用方法需要引入特征
-在一些场景中，使用` as 关键字`做类型转换会有比较大的限制，因为你想要在类型转换上拥有完全的控制，例如处理转换错误，那么你将需要 `TryInto`：
+
+在一些场景中，使用`as 关键字`做类型转换会有比较大的限制，因为你想要在类型转换上拥有完全的控制，例如处理转换错误，那么你将需要 `TryInto`：
 
 > TryInto：消耗 self 的尝试转换，这可能很昂贵，也可能不昂贵。库作者通常不应直接实现此 trait，而应首选实现 TryFrom trait，它具有更大的灵活性，并免费提供了等效的 TryInto 实现，这要归功于标准库中的全面实现。 有关此的更多信息，请参见 Into 的文档。
+
 ```rust
 pub trait TryInto<T> {
     type Error;
@@ -3240,6 +3426,7 @@ pub trait TryInto<T> {
 ```
 
 例子：
+
 ```rust
 use std::convert::TryInto;
 
@@ -3271,18 +3458,22 @@ fn main() {
     }
 }
 ```
+
 在上面的示例中，我们首先将 i 的值设置为 300，这是一个超出 u8 取值范围的值。然后，我们使用 i.try_into() 方法尝试将 i 转换为 u8 类型，并将结果存储在 result 变量中。由于 i 的值超出了 u8 的取值范围，因此转换失败，result 的值将是一个 Err 枚举变体，其中包含一个错误信息。在 match 表达式中，我们检查 result 的值，并打印出相应的信息。
 
 总之，`std::convert::TryInto` trait 和相关方法提供了一种安全的类型转换方式，可以在转换失败时返回错误信息，避免了不安全的类型转换和潜在的运行时错误。
 
 ### ✨ 特征对象
+
 原圣经中在这块讲的稍微有点混乱，让我来整理下。
 在Rust编程语言中，**特征对象（trait object）** 是一种允许我们在运行时处理不同类型的对象，同时满足某一特征（trait）约束的方法。特征对象可以实现**多态（polymorphism）**，这使得在处理同一特征的不同类型对象时可以更简单地编写代码。
 
 特征对象的使用场景通常是当你希望使用一个指针（如引用或者Box）来指向实现了某个特征的类型，但是在编译时无法确定具体类型的情况。这时，你可以使用**动态分发（dynamic dispatch）** 来处理这些对象。动态分发会在运行时为你调用正确的方法实现，而不是在编译时确定。
 
 要使用特征对象，你需要遵循以下几个步骤：
+
 1. `定义一个特征`。例如，我们定义一个叫做Drawable的特征，包含一个draw方法：
+
 ```rust
 trait Drawable {
     fn draw(&self);
@@ -3339,15 +3530,17 @@ fn main() {
 }
 ```
 
-
 当然在原圣经中使用了集合，现在理解了就可以使用下：
+
 - 创建一个存储
 - 其中存储了一个动态数组`Vec`，里面元素的类型是 Draw 特征对象：`Box<dyn Draw>`，任何实现了 Draw 特征的类型，都可以存放其中。
+
 ```rust
 pub struct Screen {
     pub components: Vec<Box<dyn Drawable>>,
 }
 ```
+
 - 为了让每一个形状都能被打印，给这个Screen实现方法
 
 ```rust
@@ -3359,19 +3552,20 @@ impl Screen {
     }
 }
 ```
+
 - 在main中，定义这些形状加入到集合里
   
 ```rust
 fn main() {
-	let components: Vec<Box<dyn Drawable>> = vec![
-	        Box::new(Circle {
-	            radius: 1.5
-	        }),
-	        Box::new(Rectangle {
-	            width: 2.0,
-	            height: 2.0,
-	        })
-	    ];
+ let components: Vec<Box<dyn Drawable>> = vec![
+         Box::new(Circle {
+             radius: 1.5
+         }),
+         Box::new(Rectangle {
+             width: 2.0,
+             height: 2.0,
+         })
+     ];
 }
 ```
 
@@ -3396,11 +3590,13 @@ fn main() {
     screen.run();
 }
 ```
+
 - 你可能运行的很顺利，但是我运行的相当不顺利，原因出在`let components: Vec<Box<dyn Drawable>>`，Rust在自动推断的时候一直判断它是一个circle，而不是动态的，导致出问题，不信可以删除试试
 
 需要注意的是，使用特征对象时会有一些性能损失，因为Rust需要在运行时查找并调用正确的方法实现。但在许多情况下，这种性能损失是可以接受的，并且特征对象为我们提供了更大的灵活性。
 
 ### 特征对象的动态分发
+
 回忆一下泛型章节我们提到过的，泛型是在编译期完成处理的：编译器会为每一个泛型参数对应的具体类型生成一份代码，这种方式是**静态分发(static dispatch)**，因为是在编译期完成的，对于运行期性能完全没有任何影响。
 
 与静态分发相对应的是**动态分发(dynamic dispatch)**，在这种情况下，直到运行时，才能确定需要调用什么方法。之前代码中的关键字 dyn 正是在强调这一“动态”的特点。
@@ -3413,9 +3609,9 @@ fn main() {
 
 - **特征对象大小不固定**：这是因为，对于特征 Draw，类型 Button 可以实现特征 Draw，类型 SelectBox 也可以实现特征 Draw，因此特征没有固定大小
 - **几乎总是使用特征对象的引用方式**，如 `&dyn Draw、Box<dyn Draw>`
-	- 虽然特征对象没有固定大小，但它的引用类型的大小是固定的，它由两个指针组成（ptr 和 vptr），因此占用两个指针大小
-	- 一个指针 ptr 指向实现了特征 Draw 的具体类型的实例，也就是当作特征 Draw 来用的类型的实例，比如类型 Button 的实例、类型 SelectBox 的实例
-	- 另一个指针 vptr 指向一个虚表 vtable，vtable 中保存了类型 Button 或类型 SelectBox 的实例对于可以调用的实现于特征 Draw 的方法。当调用方法时，直接从 vtable 中找到方法并调用。之所以要使用一个 vtable 来保存各实例的方法，是因为实现了特征 Draw 的类型有多种，这些类型拥有的方法各不相同，当将这些类型的实例都当作特征 Draw 来使用时(此时，它们全都看作是特征 Draw 类型的实例)，有必要区分这些实例各自有哪些方法可调用
+ 	- 虽然特征对象没有固定大小，但它的引用类型的大小是固定的，它由两个指针组成（ptr 和 vptr），因此占用两个指针大小
+ 	- 一个指针 ptr 指向实现了特征 Draw 的具体类型的实例，也就是当作特征 Draw 来用的类型的实例，比如类型 Button 的实例、类型 SelectBox 的实例
+ 	- 另一个指针 vptr 指向一个虚表 vtable，vtable 中保存了类型 Button 或类型 SelectBox 的实例对于可以调用的实现于特征 Draw 的方法。当调用方法时，直接从 vtable 中找到方法并调用。之所以要使用一个 vtable 来保存各实例的方法，是因为实现了特征 Draw 的类型有多种，这些类型拥有的方法各不相同，当将这些类型的实例都当作特征 Draw 来使用时(此时，它们全都看作是特征 Draw 类型的实例)，有必要区分这些实例各自有哪些方法可调用
 简而言之，当类型 Button 实现了特征 Draw 时，类型 Button 的实例对象 btn 可以当作特征 Draw 的特征对象类型来使用，btn 中保存了作为特征对象的数据指针（指向类型 Button 的实例数据）和行为指针（指向 vtable）。
 
 一定要注意，此时的 btn 是 Draw 的特征对象的实例，而不再是具体类型 Button 的实例，而且 btn 的 vtable 只包含了实现自特征 Draw 的那些方法（比如 draw），因此 btn 只能调用实现于特征 Draw 的 draw 方法，而不能调用类型 Button 本身实现的方法和类型 Button 实现于其他特征的方法。也就是说，btn 是哪个特征对象的实例，它的 vtable 中就包含了该特征的方法。
@@ -3423,6 +3619,7 @@ fn main() {
 > 总的来说，泛型是静态分发，而特征对象则是使用动态分发。特征对象的大小不固定，使用特征对象的引用方式来解决，它的引用类型的大小是固定的，由两个指针组成。一个指针指向实现了特征的具体类型的实例，另一个指针则指向虚表，虚表中保存了实现了特征的类型的实例中可以调用的特征方法。因为特征对象的实例不再是具体类型的实例，所以只能调用实现于特征本身的方法，而不能调用具体类型实现的方法和实现于其他特征的方法。
 
 ### Self 与 self
+
 在 Rust 中，有两个self，一个指代当前的实例对象，一个指代特征或者方法类型的别名：
 
 ```rust
@@ -3447,15 +3644,17 @@ fn main() {
 
 上述代码中，self指代的就是当前的实例对象，也就是 button.draw() 中的 button 实例，Self 则指代的是 Button 类型。
 
-
 ### 特征对象的限制
+
 不是所有特征都能拥有特征对象，只有对象安全的特征才行。当一个特征的所有方法都有如下属性时，它的对象才是安全的：
+
 - 方法的返回类型不能是 Self
 - 方法没有任何泛型参数
 
 对象安全对于特征对象是必须的，因为一旦有了特征对象，就不再需要知道实现该特征的具体类型是什么了。
 
 小结：对象安全是指只有特定条件下的特征才能作为特征对象，不是所有特征都能拥有特征对象，只有对象安全的特征才可以。对象安全要求特征方法不能返回 Self 类型且没有泛型参数，因为特征对象的具体类型被抹去了，无法知道放入泛型参数类型是什么。标准库中的 Clone 特征就不符合对象安全的要求，因为它的其中一个方法返回了 Self 类型。如果违反了对象安全的规则，编译器会提示错误。
+
 ```rust
 pub struct Screen {
     pub components: Vec<Box<dyn Clone>>,
@@ -3463,16 +3662,19 @@ pub struct Screen {
 ```
 
 ### 关联类型
+
 在了解这个类型之前我来补全下Iterator
 
 功能：
+
 - Iterator是一个trait，代表一个可以产生一系列元素的迭代器。
 - next方法是Iterator trait的一个方法，返回迭代器的下一个元素。
 
 输入：
+
 - `self`：迭代器类型的可变引用。
 输出：
--` Option<Self::Item>`：一个包含下一个元素的Option枚举。如果没有更多元素了，则返回None。
+-`Option<Self::Item>`：一个包含下一个元素的Option枚举。如果没有更多元素了，则返回None。
 
 ```rust
 pub trait Iterator {
@@ -3516,6 +3718,7 @@ trait Iterator {
     fn next(&mut self) -> Option<Self::Item>;
 }
 ```
+
 在这个例子中，我们定义了一个名为Iterator的trait，它包含一个名为Item的关联类型和一个名为next的方法。next方法的返回类型是Option<Self::Item>，这里的Self::Item就是关联类型的用法，表示实现这个trait时，Item关联类型会被具体的类型替代。
 
 当我们实现这个trait时，需要指定关联类型Item的具体类型。例如，我们可以实现一个简单的整数迭代器：
@@ -3541,6 +3744,7 @@ impl Iterator for Integers {
 }
 
 ```
+
 在这个例子中，我们为Integers结构体实现了Iterator trait，并指定了关联类型Item的具体类型为i32。在next方法中，我们可以直接使用Self::Item来表示i32类型。
 
 通过关联类型，我们可以更灵活地定义和实现trait，使得代码更具有通用性和可复用性。
@@ -3605,6 +3809,7 @@ where
 当然，并非所有情况下关联类型都比泛型更适用。具体选择应根据实际需求和场景进行权衡。实际上，在许多场景中，关联类型和泛型可以一起使用，以实现更灵活、更通用的代码。
 
 ### 默认泛型类型参数
+>
 > 没懂，我看到作者最后写了大部分情况用不到就没看了
 
 当使用泛型类型参数时，可以为其指定一个默认的具体类型，例如标准库中的 std::ops::Add 特征：
@@ -3647,6 +3852,7 @@ fn main() {
 }
 
 ```
+
 上面的代码主要干了一件事，就是为 Point 结构体提供 + 的能力，这就是运算符重载，不过 Rust 并不支持创建自定义运算符，你也无法为所有运算符进行重载，目前来说，只有定义在 std::ops 中的运算符才能进行重载。
 
 跟 + 对应的特征是 std::ops::Add，我们在之前也看过它的定义 trait Add<RHS=Self>，但是上面的例子中并没有为 Point 实现 `Add<RHS>` 特征，而是实现了 Add 特征（没有默认泛型类型参数），这意味着我们使用了 RHS 的默认类型，也就是 Self。换句话说，我们这里定义的是两个相同的 Point 类型相加，因此无需指定 RHS。
@@ -3676,6 +3882,7 @@ impl Add<Meters> for Millimeters {
 这里，是进行 Millimeters + Meters 两种数据类型的 + 操作，因此此时不能再使用默认的 RHS，否则就会变成 Millimeters + Millimeters 的形式。使用 `Add<Meters>` 可以将 RHS 指定为 Meters，那么 fn add(self, rhs: RHS) 自然而言的变成了 Millimeters 和 Meters 的相加。
 
 默认类型参数主要用于两个方面：
+
 1. 减少实现的样板代码
 2. 扩展类型但是无需大幅修改现有的代码
 之前的例子就是第一点，虽然效果也就那样。在 + 左右两边都是同样类型时，只需要 impl Add 即可，否则你需要 impl Add<SOME_TYPE>，嗯，会多写几个字:)
@@ -3685,6 +3892,7 @@ impl Add<Meters> for Millimeters {
 归根到底，默认泛型参数，是有用的，但是大多数情况下，咱们确实用不到，当需要用到时，大家再回头来查阅本章即可，手上有剑，心中不慌。
 
 ### 调用同名的方法
+
 拿下面的例子进行举例说明同名方法：
 
 ```rust
@@ -3787,12 +3995,14 @@ error: could not compile `Demo` due to previous erro
 ```
 
 但是但凡是个正常逻辑都不会这样写代码：
+
 - 有一个狗的结构体，为狗实现一个baby_name的方法，会打印出一个Spot。
 - 有一个Animal特征（在这里可以理解为一个抽象类），狗如果实现了这个抽象类的方法（impl Animal for Dog），那么这个baby_name的方法打印puppy
 
 整理完逻辑后再看这个`println!("A baby dog is called a {}", Animal::baby_name());`代码，这个Animal特征都没有被任何结构体所实现完全就不知道是要打印谁？万一我又添加一个`impl Animal for Cat`。
 
 明白上述问题，Rust就通过完全限定语法来解决，明确这个Animal是谁：as
+
 ```rust
 fn main() {
     println!("A baby dog is called a {}", Dog::baby_name());
@@ -3803,12 +4013,15 @@ fn main() {
 ```
 
 再Rust中完全限定语法的定义为：
+
 ```rust
 <Type as Trait>::function(receiver_if_method, next_arg, ...);
 ```
+
 上面定义中，第一个参数是方法接收器 receiver （三种 self），只有方法才拥有，例如关联函数就没有 receiver。
 
 ### 特征定义中的特征约束
+
 首先来感受一下这是什么东西，直接CV下面的代码：
 
 ```rust
@@ -3868,6 +4081,7 @@ error: could not compile `Demo` due to previous error; 1 warning emitted
 ```
 
 然后把注释取消，就可以运行了：
+
 ```
 (11, 12)
 ************
@@ -3880,6 +4094,7 @@ error: could not compile `Demo` due to previous error; 1 warning emitted
 上面代码为 Point 一开始是没有实现display特征的，但是OutlinePrint实现了display，现在point要实现OutlinePrint的特征（可以实现outline_print），那么就要实现display方法，否则无法使用，所以point才会有（对于 "Point "来说，"std::fmt::Display "这个特性没有实现）报错。简而言之：特征定义中的特征约束，用于让某个特征A使用另一个特征B的功能。如果想实现特征A，则必须先实现特征B。例如，特征OutlinePrint需要实现Display特征后，才能在其方法中调用to_string方法。没有特征约束时编译器会报错，因此需要先满足编译器的要求，为类型实现所需的特征。
 
 ### 在外部类型上实现外部特征 (newtype)
+>
 > 该封装类型是本地的，因此我们可以为此类型实现外部的特征。
 
 newtype 模式，简而言之：就是为一个元组结构体创建新类型。下面这段代码使用了装饰器模式，包装了一个中括号：
@@ -3902,29 +4117,29 @@ fn main() {
 
 // w = [hello, world]
 ```
-其中，`struct Wrapper(Vec<String>) `就是一个元组结构体，它定义了一个新类型 Wrapper
-可以看到在实现fmt的时候内部使用了`self.0.join(", ")`，这就是访问数组里的内容，但是这样很麻烦，所以Rust就提供了一个特征叫 Deref，实现该特征后，可以自动做一层类似类型转换的操作，可以将 Wrapper 变成` Vec<String> `来使用。这样就会像直接使用数组那样去使用 Wrapper，而无需为每一个操作都添加上 self.0。
 
+其中，`struct Wrapper(Vec<String>)`就是一个元组结构体，它定义了一个新类型 Wrapper
+可以看到在实现fmt的时候内部使用了`self.0.join(", ")`，这就是访问数组里的内容，但是这样很麻烦，所以Rust就提供了一个特征叫 Deref，实现该特征后，可以自动做一层类似类型转换的操作，可以将 Wrapper 变成` Vec<String> `来使用。这样就会像直接使用数组那样去使用 Wrapper，而无需为每一个操作都添加上 self.0。
 
 ## 1.13 👨‍👩‍👧‍👦 集合
 
 ### 动态数组 Vector
 
 #### 创建动态数组
+
 使用 Vec::new 创建动态数组是最 rusty 的方式，它调用了 Vec 中的 new 关联函数：
 
 ```rust
 let v: Vec<i32> = Vec::new();
 ```
 
-
 ```rust
 let mut v = Vec::new();
 v.push(1);
 ```
 
-
 #### vec![]
+
 还可以使用宏 vec! 来创建数组
 
 ```rust
@@ -3932,15 +4147,19 @@ let v = vec![1, 2, 3];
 ```
 
 #### 添加元素
+
 ```rust
 let mut v = Vec::new();
 v.push(1);
 ```
 
 #### 读取元素
+
 读取指定位置的元素有两种方式可选：
+
 - 通过下标索引访问。
 - 使用 get 方法。
+
 ```rust
 let v = vec![1, 2, 3, 4, 5];
 
@@ -3956,6 +4175,7 @@ match v.get(2) {
 #### 删除元素
 
 删除某个位置
+
 ```rust
 let mut vec = vec![1, 2, 3, 4, 5];
 let index = vec.iter().position(|&x| x == 3).unwrap(); // 找到元素3的索引位置
@@ -3963,6 +4183,7 @@ vec.remove(index); // 删除元素3
 ```
 
 删除头结点 & 尾节点
+
 ```rust
 let mut vec = vec![1, 2, 3, 4, 5];
 vec.remove(0); // 删除头结点
@@ -4003,9 +4224,10 @@ fn show_addr(ip: IpAddr) {
 
 ```
 
+#### Vector 与其元素共存亡
 
-####  Vector 与其元素共存亡
 跟结构体一样，Vector 类型在超出作用域范围后，会被自动删除：
+
 ```rust
 {
     let v = vec![1, 2, 3];
@@ -4017,6 +4239,7 @@ fn show_addr(ip: IpAddr) {
 当 Vector 被删除后，它内部存储的所有内容也会随之被删除。目前来看，这种解决方案简单直白，但是当 Vector 中的元素被引用后，事情可能会没那么简单。
 
 #### 同时借用多个数组元素
+
 既然涉及到借用数组元素，那么很可能会遇到同时借用多个数组元素的情况，还记得在所有权和借用章节咱们讲过的借用规则嘛？如果记得，就来看看下面的代码 :)
 > 如果有一个不可变引用，则可以假定其引用的数据是不会被修改的，但是同时另外一个可变引用却可以对数据进行修改，这显然是不安全的。因此，Rust编译器会将这种情况视为编译错误，要求开发者更改代码，保证在同一时间内只存在一种类型的借用（可变或不可变），以保证代码的内存安全。
 
@@ -4028,6 +4251,7 @@ fn main() {
     println!("The first element is: {first}");
 }
 ```
+
 先不运行，来推断下结果，首先 first = &v[0] 进行了不可变借用，v.push 进行了可变借用，如果 first 在 v.push 之后不再使用，那么该段代码可以成功编译（原因见引用的作用域）。
 
 可是上面的代码中，first 这个不可变借用在可变借用 v.push 后被使用了，那么妥妥的，编译器就会报错：
@@ -4051,6 +4275,7 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
 
 ```
+
 其实，按理来说，这两个引用不应该互相影响的：一个是查询元素，一个是在数组尾部插入元素，完全不相干的操作，为何编译器要这么严格呢？
 
 **原因在于**：数组的大小是可变的，当旧数组的大小不够用时，Rust 会重新分配一块更大的内存空间，然后把旧数组拷贝过来。这种情况下，之前的引用显然会指向一块无效的内存，这非常 rusty —— 对用户进行严格的教育。
@@ -4058,6 +4283,7 @@ error: could not compile `collections` due to previous error
 其实想想，在长大之后，我们感激人生路上遇到过的严师益友，正是因为他们，我们才在正确的道路上不断前行，虽然在那个时候，并不能理解他们，而 Rust 就如那个良师益友，它不断的在纠正我们不好的编程习惯，直到某一天，你发现自己能写出一次性通过的漂亮代码时，就能明白它的良苦用心。
 
 有两种方法可以解决上述问题：
+
 ```
 // 方法一：将 &v[0] 放在 v.push(6) 语句之后
 let mut v = vec![1, 2, 3, 4, 5];
@@ -4073,6 +4299,7 @@ println!("The first element is: {}", first);
 ```
 
 ### KV 存储 HashMap
+
 #### 用 new 方法创建 & 查询
 
 ``` rust
@@ -4096,11 +4323,12 @@ fn main() {
 }
 ```
 
-在这里会有一个小问题：对于 HashMap，get() 方法返回的是` Option<&V>` 类型，其中 V 是 HashMap 存储的值类型。由于 &V 类型默认没有实现 `std::fmt::Display trait`，所以不能直接使用 {} 进行打印，否则会报错。
+在这里会有一个小问题：对于 HashMap，get() 方法返回的是`Option<&V>` 类型，其中 V 是 HashMap 存储的值类型。由于 &V 类型默认没有实现 `std::fmt::Display trait`，所以不能直接使用 {} 进行打印，否则会报错。
 
-但是，`&V `类型默认实现了` std::fmt::Debug trait，因此可以使用 {:?} 进行打印`，它会自动调用 Debug trait 中的 fmt() 方法来输出可读性较高的调试信息。
+但是，`&V`类型默认实现了`std::fmt::Debug trait，因此可以使用 {:?} 进行打印`，它会自动调用 Debug trait 中的 fmt() 方法来输出可读性较高的调试信息。
 
 小结：
+
 - get 方法返回一个 Option<&i32> 类型：当查询不到时，会返回一个 None，查询到时返回 Some(&i32)
 - &i32 是对 HashMap 中值的借用，如果不使用借用，可能会发生所有权的转移
 
@@ -4123,10 +4351,10 @@ fn main() {
 // {"中国队": 100, "美国队": 10, "日本队": 50}
 ```
 
-
 #### 所有权转移
 
 HashMap 的所有权规则与其它 Rust 类型没有区别：
+
 - 若类型实现 Copy 特征，该类型会被复制进 HashMap，因此无所谓所有权
 - 若没实现 Copy 特征，所有权将被转移给 HashMap 中
 
@@ -4208,17 +4436,20 @@ for word in text.split_whitespace() {
 
 println!("{:?}", map);
 ```
+
 上面代码中，新建一个 map 用于保存词语出现的次数，插入一个词语时会进行判断：若之前没有插入过，则使用该词语作 Key，插入次数 0 作为 Value，若之前插入过则取出之前统计的该词语出现的次数，对其加一。
 
 有两点值得注意：
+
 - or_insert 返回了 &mut v 引用，因此可以通过该可变引用直接修改 map 中对应的值
 - 使用 count 引用时，需要先进行解引用 *count，否则会出现类型不匹配
 
-
 ## 1.14 💱 生命周期
+
 生命周期也是比较重要的概念，在圣经中已经讲的很好了，我也没必要添油加醋，直接[搬运](https://course.rs/basic/lifetime.html#悬垂指针和生命周期)过来方便以后查看。
 
 ### 悬垂指针和生命周期
+
 生命周期的主要作用是避免悬垂引用，它会导致程序引用了本不该引用的数据：
 
 ```rust
@@ -4235,7 +4466,8 @@ println!("{:?}", map);
 ```
 
 这段代码有几点值得注意:
-- `let r; `的声明方式貌似存在使用 `null` 的风险，实际上，当我们不初始化它就使用时，编译器会给予报错
+
+- `let r;`的声明方式貌似存在使用 `null` 的风险，实际上，当我们不初始化它就使用时，编译器会给予报错
 - r 引用了内部花括号中的 x 变量，但是 x 会在内部花括号 } 处被释放，因此回到外部花括号后，r 会引用一个无效的 x
 此处 `r 就是一个悬垂指针`，它引用了提前被释放的变量 x，可以预料到，这段代码会报错：
 
@@ -4252,9 +4484,11 @@ error[E0597]: `x` does not live long enough // `x` 活得不够久
    |                           - borrow later used here // 对 `x` 的借用在此处被使用
 
 ```
+
 在这里 r 拥有更大的作用域，或者说活得更久。如果 Rust 不阻止该悬垂引用的发生，那么当 x 被释放后，r 所引用的值就不再是合法的，会导致我们程序发生异常行为，且该异常行为有时候会很难被发现。
 
 ### 借用检查
+
 为了保证 Rust 的所有权和借用的正确性，Rust 使用了一个借用检查器(Borrow checker)，来检查我们程序的借用正确性：
 
 ```rust
@@ -4273,6 +4507,7 @@ fn main() {
 }
 
 ```
+
 这段代码和之前的一模一样，唯一的区别在于增加了对变量生命周期的注释。这里，==r 变量被赋予了生命周期 'a==，==x 被赋予了生命周期 'b==，从图示上可以明显看出生命周期 'b 比 'a 小很多。
 
 在编译期，Rust 会比较两个变量的生命周期，结果发现 r 明明拥有生命周期 'a，但是却引用了一个小得多的生命周期 'b，在这种情况下，编译器会认为我们的程序存在风险，因此拒绝运行。
@@ -4289,6 +4524,7 @@ fn main() {
                           // --+       |
 }  
 ```
+
 根据之前的结论，我们重新实现了代码，现在 x 的生命周期 'b 大于 r 的生命周期 'a，因此 r 对 x 的引用是安全的。
 
 通过之前的内容，我们了解了何为生命周期，也了解了 Rust 如何利用生命周期来确保引用是合法的，下面来看看函数中的生命周期。
@@ -4299,6 +4535,7 @@ fn main() {
 > 因此，在 Rust 中，生命周期长的变量必须至少包含生命周期短的变量的整个生命周期。这是 Rust 保证内存安全的重要机制之一。
 
 ### 函数中的生命周期
+
 先来考虑一个例子 - 返回两个字符串切片中较长的那个，该函数的参数是两个字符串切片，返回值也是字符串切片：
 
 ```rust
@@ -4336,6 +4573,7 @@ help: consider introducing a named lifetime parameter // 考虑引入一个生�
 9 | fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
   |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
 ```
+
 喔，这真是一个复杂的提示，那感觉就好像是生命周期去非诚勿扰相亲，结果在初印象环节就 23 盏灯全灭。等等，先别急，如果你仔细阅读，就会发现，其实主要是编译器无法知道该函数的返回值到底引用 x 还是 y ，**因为编译器需要知道这些，来确保函数调用后的引用生命周期分析**。
 
 不过说来尴尬，就这个函数而言，我们也不知道返回值到底引用哪个，因为一个分支返回 x，另一个分支返回 y...这可咋办？先来分析下。
@@ -4345,6 +4583,7 @@ help: consider introducing a named lifetime parameter // 考虑引入一个生�
 因此，这时就回到了文章开头说的内容：在存在多个引用时，编译器有时会无法自动推导生命周期，此时就需要我们手动去标注，通过为参数标注合适的生命周期来帮助编译器进行借用检查的分析。
 
 ### 生命周期标注语法
+>
 > 生命周期标注并不会改变任何引用的实际作用域 -- 鲁迅
 
 鲁迅说过的话，总是值得重点标注，当你未来更加理解生命周期时，你才会发现这句话的精髓和重要！现在先简单记住，标记的生命周期只是为了取悦编译器，让编译器不要难为我们，记住了吗？没记住，再回头看一遍，这对未来你遇到生命周期问题时会有很大的帮助！
@@ -4355,16 +4594,18 @@ help: consider introducing a named lifetime parameter // 考虑引入一个生�
 
 生命周期的语法也颇为与众不同，以 ' 开头，名称往往是一个单独的小写字母，大多数人都用 'a 来作为生命周期的名称。 如果是引用类型的参数，那么生命周期会位于引用符号 & 之后，并用一个空格来将生命周期和引用参数分隔开:
 
-
 ```rust
 &i32        // 一个引用
 &'a i32     // 具有显式生命周期的引用
 &'a mut i32 // 具有显式生命周期的可变引用
 ```
+
 一个生命周期标注，它自身并不具有什么意义，因为生命周期的作用就是告诉编译器多个引用之间的关系。例如，有一个函数，它的第一个参数 first 是一个指向 i32 类型的引用，具有生命周期 'a，该函数还有另一个参数 second，它也是指向 i32 类型的引用，并且同样具有生命周期 'a。此处生命周期标注仅仅说明，这两个参数 first 和 second 至少活得和'a 一样久，至于到底活多久或者哪个活得更久，抱歉我们都无法得知：
+
 ```
 fn useless<'a>(first: &'a i32, second: &'a i32) {}
 ```
+
 **函数签名中的生命周期标注**
 继续之前的 longest 函数，从两个字符串切片中返回较长的那个：
 
@@ -4379,6 +4620,7 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 ```
 
 需要注意的点如下：
+
 - 和泛型一样，使用生命周期参数，需要先声明 <'a>
 - x、y 和返回值至少活得和 'a 一样久(因为返回值要么是 x，要么是 y)
 该函数签名表明对于某些生命周期 'a，函数的两个参数都至少跟 'a 活得一样久，同时函数的返回引用也至少跟 'a 活得一样久。实际上，这意味着返回值的生命周期与参数生命周期中的较小值一致：虽然两个参数的生命周期都是标注了 'a，但是实际上这两个参数的真实生命周期可能是不一样的(生命周期 'a 不代表生命周期等于 'a，而是大于等于 'a)。
@@ -4402,6 +4644,7 @@ fn main() {
     }
 }
 ```
+
 在上例中，string1 的作用域直到 main 函数的结束，而 string2 的作用域到内部花括号的结束 }，那么根据之前的理论，'a 是两者中作用域较小的那个，也就是 'a 的生命周期等于 string2 的生命周期，同理，由于函数返回的生命周期也是 'a，可以得出函数返回的生命周期也等于 string2 的生命周期。
 
 现在来验证下上面的结论：result 的生命周期等于参数中生命周期最小的，因此要等于 string2 的生命周期，也就是说，result 要活得和 string2 一样久，观察下代码的实现，可以发现这个结论是正确的！
@@ -4421,6 +4664,7 @@ fn main() {
     println!("The longest string is {}", result);
 }
 ```
+
 Bang，错误冒头了：
 
 ```
@@ -4434,6 +4678,7 @@ error[E0597]: `string2` does not live long enough
 8 |     println!("The longest string is {}", result);
   |                                          ------ borrow later used here
 ```
+
 在上述代码中，result 必须要活到 println!处，因为 result 的生命周期是 'a，因此 'a 必须持续到 println!。
 
 在 longest 函数中，string2 的生命周期也是 'a，由此说明 string2 也必须活到 println! 处，可是 string2 在代码中实际上只能活到内部语句块的花括号处 }，小于它应该具备的生命周期 'a，因此编译出错。
@@ -4452,9 +4697,11 @@ fn longest<'a>(x: &'a str, y: &str) -> &'a str {
     x
 }
 ```
+
 在此例中，y 完全没有被使用，因此 y 的生命周期与 x 和返回值的生命周期没有任何关系，意味着我们也不必再为 y 标注生命周期，只需要标注 x 参数和返回值即可。
 
 函数的返回值如果是一个引用类型，那么它的生命周期只会来源于：
+
 - 函数参数的生命周期
 - 函数体中某个新建引用的生命周期
 若是后者情况，就是典型的悬垂引用场景：
@@ -4465,6 +4712,7 @@ fn longest<'a>(x: &str, y: &str) -> &'a str {
     result.as_str()
 }
 ```
+
 上面的函数的返回值就和参数 x，y 没有任何关系，而是引用了函数体内创建的字符串，那么很显然，该函数会报错：
 
 ```
@@ -4491,9 +4739,11 @@ fn main() {
    let s = longest("not", "important");
 }
 ```
+
 至此，可以对生命周期进行下总结：生命周期语法用来将函数的多个引用参数和返回值的作用域关联到一起，一旦关联到一起后，Rust 就拥有充分的信息来确保我们的操作是内存安全的。
 
 ### 结构体中的生命周期
+
 不仅仅函数具有生命周期，结构体其实也有这个概念，只不过我们之前对结构体的使用都停留在非引用类型字段上。细心的同学应该能回想起来，之前为什么不在结构体中使用字符串字面量或者字符串切片，而是统一使用 String 类型？原因很简单，后者在结构体初始化时，只要转移所有权即可，而前者，抱歉，它们是引用，它们不能为所欲为。
 
 既然之前已经理解了生命周期，那么意味着在结构体中使用引用也变得可能：只要为结构体中的每一个引用标注上生命周期即可：
@@ -4511,6 +4761,7 @@ fn main() {
     };
 }
 ```
+
 ImportantExcerpt 结构体中有一个引用类型的字段 part，因此需要为它标注上生命周期。结构体的生命周期标注语法跟泛型参数语法很像，需要对生命周期参数进行声明 <'a>。该生命周期标注说明，结构体 ImportantExcerpt 所引用的字符串 str 必须比该结构体活得更久。
 
 从 main 函数实现来看，ImportantExcerpt 的生命周期从第 4 行开始，到 main 函数末尾结束，而该结构体引用的字符串从第一行开始，也是到 main 函数末尾结束，可以得出结论结构体引用的字符串活得比结构体久，这符合了编译器对生命周期的要求，因此编译通过。
@@ -4535,6 +4786,7 @@ fn main() {
     println!("{:?}",i);
 }
 ```
+
 观察代码，**可以看出结构体比它引用的字符串活得更久**，引用字符串在内部语句块末尾 } 被释放后，println! 依然在外面使用了该结构体，因此会导致无效的引用，不出所料，编译报错：
 
 ```
@@ -4551,8 +4803,8 @@ error[E0597]: `novel` does not live long enough
 ```
 
 ### 生命周期消除
-实际上，对于编译器来说，每一个引用类型都有一个生命周期，那么为什么我们在使用过程中，很多时候无需标注生命周期？例如：
 
+实际上，对于编译器来说，每一个引用类型都有一个生命周期，那么为什么我们在使用过程中，很多时候无需标注生命周期？例如：
 
 ```
 fn first_word(s: &str) -> &str {
@@ -4571,6 +4823,7 @@ fn first_word(s: &str) -> &str {
 该函数的参数和返回值都是引用类型，尽管我们没有显式的为其标注生命周期，编译依然可以通过。其实原因不复杂，编译器为了简化用户的使用，运用了生命周期消除大法。
 
 对于 first_word 函数，它的返回值是一个引用类型，那么该引用只有两种情况：
+
 - 从参数获取
 - 从函数体内部新创建的变量获取
 如果是后者，就会出现悬垂引用，最终被编译器拒绝，因此只剩一种情况：返回值的引用是获取自参数，这就意味着参数和返回值的生命周期是一样的。道理很简单，我们能看出来，编译器自然也能看出来，因此，就算我们不标注生命周期，也不会产生歧义。
@@ -4580,16 +4833,19 @@ fn first_word(s: &str) -> &str {
 ```
 fn first_word<'a>(s: &'a str) -> &'a str {
 ```
+
 在写了大量的类似代码后，Rust 社区抱怨声四起，包括开发者自己都忍不了了，最终揭锅而起，这才有了我们今日的幸福。
 
 生命周期消除的规则不是一蹴而就，而是伴随着 总结-改善 流程的周而复始，一步一步走到今天，这也意味着，该规则以后可能也会进一步增加，我们需要手动标注生命周期的时候也会越来越少，hooray!
 
 在开始之前有几点需要注意：
+
 - 消除规则不是万能的，若编译器不能确定某件事是正确时，会直接判为不正确，那么你还是需要手动标注生命周期
 - 函数或者方法中，参数的生命周期被称为 输入生命周期，返回值的生命周期被称为 输出生命周期
 
 **三条消除规则**
 编译器使用三条消除规则来确定哪些场景不需要显式地去标注生命周期。其中第一条规则应用在输入生命周期上，第二、三条应用在输出生命周期上。若编译器发现三条规则都不适用时，就会报错，提示你需要手动标注生命周期。
+
 1. 每一个引用参数都会获得独自的生命周期
 例如一个引用参数的函数就有一个生命周期标注: fn foo<'a>(x: &'a i32)，两个引用参数的有两个生命周期标注:fn foo<'a, 'b>(x: &'a i32, y: &'b i32), 依此类推。
 2. 若只有一个输入生命周期(函数参数中只有一个引用类型)，那么该生命周期会被赋给所有的输出生命周期，也就是所有返回值的生命周期都等于该输入生命周期
@@ -4603,20 +4859,17 @@ fn first_word<'a>(s: &'a str) -> &'a str {
 
 **例子 1**
 
-
 ```rust
 fn first_word(s: &str) -> &str { // 实际项目中的手写代码
 ```
 
 首先，我们手写的代码如上所示时，编译器会先应用第一条规则，为每个参数标注一个生命周期：
 
-
 ```rust
 fn first_word<'a>(s: &'a str) -> &str { // 编译器自动为参数添加生命周期
 ```
 
 此时，第二条规则就可以进行应用，因为函数只有一个输入生命周期，因此该生命周期会被赋予所有的输出生命周期：
-
 
 ```rust
 fn first_word<'a>(s: &'a str) -> &'a str { // 编译器自动为返回值添加生命周期
@@ -4626,13 +4879,11 @@ fn first_word<'a>(s: &'a str) -> &'a str { // 编译器自动为返回值添加�
 
 **例子 2 再来看一个例子：**
 
-
 ```rust
 fn longest(x: &str, y: &str) -> &str { // 实际项目中的手写代码
 ```
 
 首先，编译器会应用第一条规则，为每个参数都标注生命周期：
-
 
 ```rust
 fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str {
@@ -4662,6 +4913,7 @@ help: consider using one of the available lifetimes here
 不得不说，Rust 编译器真的很强大，还贴心的给我们提示了该如何修改，虽然。。。好像。。。。它的提示貌似不太准确。这里我们更希望参数和返回值都是 'a 生命周期。
 
 ### 方法中的生命周期
+
 先来回忆下泛型的语法：
 
 ```rust
@@ -4778,9 +5030,11 @@ impl<'a> ImportantExcerpt<'a> {
 总之，实现方法比想象中简单：加一个约束，就能暗示编译器，尽管引用吧，反正我想引用的内容比我活得久，爱咋咋地，我怎么都不会引用到无效的内容！
 
 ### 静态生命周期
+
 在 Rust 中有一个非常特殊的生命周期，那就是 'static，拥有该生命周期的引用可以和整个程序活得一样久。
 
 在之前我们学过字符串字面量，提到过它是被硬编码进 Rust 的二进制文件中，因此这些字符串变量全部具有 'static 的生命周期：
+
 ```rust
 let s: &'static str = "我没啥优点，就是活得久，嘿嘿";
 ```
@@ -4794,10 +5048,12 @@ let s: &'static str = "我没啥优点，就是活得久，嘿嘿";
 但是，话说回来，存在即合理，有时候，'static 确实可以帮助我们解决非常复杂的生命周期问题甚至是无法被手动解决的生命周期问题，那么此时就应该放心大胆的用，只要你确定：你的所有引用的生命周期都是正确的，只是编译器太笨不懂罢了。
 
 总结下：
+
 - 生命周期 'static 意味着能和程序活得一样久，例如字符串字面量和特征对象
 - 实在遇到解决不了的生命周期标注问题，可以尝试 T: 'static，有时候它会给你奇迹
 
 ### 一个复杂例子: 泛型、特征约束
+
 手指已经疲软无力，我好想停止，但是华丽的开场都要有与之匹配的谢幕，那我们就用一个稍微复杂点的例子来结束：
 
 ```rust
@@ -4823,6 +5079,9 @@ where
 依然是熟悉的配方 longest，但是多了一段废话： ann，因为要用格式化 {} 来输出 ann，因此需要它实现 Display 特征。
 
 ## 1.15 ❌ 返回值和错误类型
+
 @todo
+
 ## 1.16 👜 包和模块
+
 @todo

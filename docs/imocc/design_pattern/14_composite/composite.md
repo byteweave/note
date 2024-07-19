@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 组合模式
 
 **定义**：将对象组合成树形结构以表示“部分-整体”的层次结构
@@ -5,7 +8,6 @@
 组合模式使客户端对单个对象和组合对象保持一致的方式处理
 
 **类型**：结构型
-
 
 ## 适用场景
 
@@ -27,7 +29,6 @@
 ## 相关设计模式
 
 - 访问者模式：可以使用访问模式来递归访问组合模式中的树形结构
-
 
 ## 代码
 
@@ -218,6 +219,7 @@ public void print() {
 组合模式的识别：可以通过行为方法来识别，把多个对象组合成一个对象，简化对对象的访问
 
 java.awt.Container
+
 ```java
 // 实现父类
 public class Container extends Component {
@@ -283,6 +285,7 @@ public class MixedSqlNode implements SqlNode {
 SqlNode 这个接口在开源框架中是对组合模式描述得很清楚的一个功能，建议深入研究
 
 ## 学习源码方法之一
+
 通过查看类图：找到接口，然后右键->show implementations 就能显示所有的实现类，选中实现类后就会出现在类图中了
 
 ![](./assets/markdown-img-paste-20181226223417543.png)

@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 单例模式2
 
 ## jad 查看枚举的方法定义
@@ -116,9 +119,10 @@ public abstract class EnumInstance extends Enum
 
 可以看到被挪到静态代码块中了。
 
-
 ## 容器单例模式
+
 适合的场景：在初始化的时候把需要的对象 put ；因为现在这个是线程不安全的
+
 ```java
 public class ContainerSingleton {
     private static Map<String, Object> singletonMap = new HashMap<>();
@@ -191,7 +195,6 @@ Thread-0 ====== cn.mrcode.newstudy.design.pattern.creational.singleton.ThreadLoc
 
 可以看到，在同一个线程中的对象是唯一的。
 
-
 ## 单例模式在其他代码中的应用
 
 java.lang.Runtime#getRuntime 就是一个恶汉式的单例模式
@@ -203,7 +206,9 @@ public class Runtime {
         return currentRuntime;
     }
 ```
+
 java.awt.Desktop#getDesktop
+
 ```java
 public static synchronized Desktop getDesktop(){
     if (GraphicsEnvironment.isHeadless()) throw new HeadlessException();

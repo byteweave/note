@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 装饰者模式
 
 **定义**：在不改变原有对象的基础之上，将功能附加到对象上
@@ -32,9 +35,11 @@
 - 适配器模式：适配器和被适配的类具有不同的接口，有部分是可能重合的。
 
 ## 代码
+
 场景代入：吃早餐，买煎饼，加烤肠、鸡蛋 价格计算是如何的？
 
 ### 不适用模式
+
 ```java
 /**
  * 煎饼
@@ -251,6 +256,7 @@ public class SausageDecorator extends ABattercakeDecorator {
 一般在有额外的功能的时候需要具体的装饰者实现的时候意义才大，这个就要取决于使用场景和需求了，比如，在制作烤肠煎饼的时候，需要额外的动作功能等。
 
 ## 源码解析
+
 spring-session mybatis jdk servlet
 
 java.io.BufferedReader
@@ -273,7 +279,7 @@ org.springframework.cache.transaction.TransactionAwareCacheDecorator
 //实现 Cache ,并持有(组合) Cache
 public class TransactionAwareCacheDecorator implements Cache {
 
-	private final Cache targetCache;
+ private final Cache targetCache;
   public TransactionAwareCacheDecorator(Cache targetCache) {
   Assert.notNull(targetCache, "Target Cache must not be null");
     this.targetCache = targetCache;
@@ -281,6 +287,7 @@ public class TransactionAwareCacheDecorator implements Cache {
 ```
 
 javax.servlet.ServletRequestWrapper
+
 ```java
 // 基本上都是如此，实现/继承被装饰者，并持有它
 public class ServletRequestWrapper implements ServletRequest {
@@ -320,4 +327,5 @@ public class FifoCache implements Cache {
     this.size = 1024;
   }
 ```
+
 ![](./assets/markdown-img-paste-20181224164117293.png)

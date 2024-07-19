@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 概述
 
 ## mysql 用户密码修改

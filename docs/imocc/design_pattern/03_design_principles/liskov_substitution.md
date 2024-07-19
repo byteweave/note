@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 里氏替换原则
 
 Liskov Substitution Principle LSP
@@ -29,7 +32,6 @@ Liskov Substitution Principle LSP
 **定义扩展**：一个软件实体如果适用一个父类的话，那一定适用于其子类，
 所有引用父类的地方必须能透明地适用其子类的对象，子类对象能够替换父类对象，而程序逻辑不变
 
-
 在 java 中来说，只要只继承了某父类，那么就被认定为是其子类型，
 但是对于里氏替换原则来说，就算继承了，但是导致替换后，行为发生了变化，则被认定为是不合法的
 
@@ -40,6 +42,7 @@ Liskov Substitution Principle LSP
 
   对于开闭原则中的例子如下，就有一个含义（含义 2）被破坏了，
   JavaDiscountCourse 在扩展父类功能的时候，改变了 getPrice 的含义
+
   ```java
   public static void main(String[] args) {
          ICourse iCourse = new JavaDiscountCourse(96, "设计模式", 389d);
@@ -57,7 +60,6 @@ Liskov Substitution Principle LSP
 * 含义 3 ：当子类的方法**重载**父类的方法时，方法的前置条件（既方法的入参）要比父类的入参更宽松。
 * 含义 4 ：当子类的方法实现父类的方法时（重写/重载或实现抽象方法）方法的后置条件（及方法的返回值）要比如雷更严格或相等。
 
-
 **优点**：
 
 * 约束继承泛滥，开闭原则的一种体现
@@ -71,6 +73,7 @@ Liskov Substitution Principle LSP
 ## coding
 
 ## 从类层面演示
+
 **场景**：正方形和长方形，我们认为正方形是一种特殊的长方形。
 
 ```java
@@ -234,9 +237,11 @@ public class Square implements Quadrangle {
     }
 }
 ```
+
 那么就会发现，没有办法设置宽度了。对于 resize 场景来说，正方形是不适合该场景的；
 
 所以这里还是只能用于长方形。说明了，长方形和正方形在该场景中不适合里氏替换原则的
+
 ```java
 public static void resize(Quadrangle rectangle) {
     while (rectangle.getWidth() <= rectangle.getLength()) {
@@ -258,6 +263,7 @@ public static void resize(Quadrangle rectangle) {
 如果这个时候，对于 resize 场景不采用里氏替换原则来约束，那么就将产生与预期不一致的行为，导致错误产生
 
 ## 方法入参出参 来说明
+
 * 含义 3 ：当子类的方法**重载**父类的方法时，方法的前置条件（既方法的入参）要比父类的入参更宽松。
 
 ```java
@@ -295,6 +301,7 @@ public class Test {
 ```
 
 当注释掉重写方法时，输出为 `父类被执行`;
+
 ```java
 public class Child extends Base {
     // @Override
@@ -308,6 +315,7 @@ public class Child extends Base {
     }
 }
 ```
+
 这个结果是正确的，那么反过来，将父类替换成
 
 ```java
@@ -340,6 +348,7 @@ public class Test {
 在写这个简单的例子的时候，就很容易被搞懵逼；
 
 ## 后置条件，也就是返回参数
+
 * 含义 4 ：当子类的方法实现父类的方法时（重写/重载或实现抽象方法）方法的后置条件（及方法的返回值）要比如雷更严格或相等。
 
 在 java 中重写适合返回参数无关的，像下面这个例子，在 Idea 中就提示错误了，
@@ -351,7 +360,6 @@ public class Test {
 public Map method() {
 }
 ```
-
 
 实际上看来，这里的例子是在讲，多态，重写，重载，相似的新方法，容易产生逻辑混乱调用，不容易发现问题。 如果遵守里氏替换原则的写法，能减少这样的情况。维护性
 

@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # vuepress 构建自己的项目笔记
 
 偶然发现一个 Markdown 文档生成的利器，也是 vue 官网推荐的一个工具 [vuepress](https://vuepress.vuejs.org/zh/guide/)
@@ -12,7 +15,7 @@
 
 通用的有：部署到 gh-page、在 md 中使用 vue
 
-1.5.x 分支模板：可以直接用来快速创建一个常用的新笔记仓库：https://github.com/zq99299/mq-tutorial/tree/vuepress-tpl
+1.5.x 分支模板：可以直接用来快速创建一个常用的新笔记仓库：<https://github.com/zq99299/mq-tutorial/tree/vuepress-tpl>
 :::
 
 1. 创建一个项目
@@ -33,6 +36,7 @@
         "license": "ISC"
     }
     ```
+
    其实这里都不是罪重要的。最重要的是添加 依赖和设置入口
 
 2. 添加依赖和设置入口
@@ -52,17 +56,20 @@
     }
 
     ```
+
     并使用 `npm install` 命令安装 vuepress 依赖
 
 3. 首页编写
 
     随意写一点内容即可
+
     ```
     目录结构如下：
     | - docs
      |- README.md
     ```
-5. 运行 `npm run docs:dev `
+
+5. 运行 `npm run docs:dev`
 
    这个开发模式，有一个功能就是：会监控 docs 目录下的文档修改，会自动编译（可以想象成 vue 项目中的热更新）；
    但是一般是不需要编写边看生成的站点的，这个看个人爱好，我喜欢用 atom 编写，生成的时候才用 vuepress 来生成站点
@@ -75,7 +82,7 @@
 2. 侧边栏的显示是需要在 config.js 中配置的。
 3. 侧边栏中配置的一个 title 相当于是一个根的侧边栏展示。
 
-   如下面贴出的配置，写了两个 title ，访问 http://localhost:8080/vue-press/ 的时候
+   如下面贴出的配置，写了两个 title ，访问 <http://localhost:8080/vue-press/> 的时候
    侧边栏展示的只是该 vue-press 配置中  children 的所有抓取到的标题。
 
 4. 主页文件中怎么使用图片？
@@ -167,22 +174,25 @@ function genSidebarConfig(title) {
 ```
 
 ### 其他配置参考官网即可
+
 [vuepress](https://vuepress.vuejs.org/zh/guide/) 的文档也是使用 vuepress 编写的，
 
 所以最好的学习方式就是查看他的源码，文档很少，但是配置中有使用 vue 组件的。已经很完善了
 
-> vuepress 项目地址： https://github.com/vuejs/vuepress/tree/master/docs
+> vuepress 项目地址： <https://github.com/vuejs/vuepress/tree/master/docs>
 
 ## 在 md 中使用 vue
 
-> https://vuepress.vuejs.org/zh/guide/using-vue.html
+> <https://vuepress.vuejs.org/zh/guide/using-vue.html>
 
 官网中有详细的介绍，这里简单说明下：
 
 添加依赖
+
 ```
  "vuepress-theme-vue": "~1.1.0"
 ```
+
 docs/.vuepress/components 目录下编写 vue 模板。
 
 ```
@@ -194,7 +204,7 @@ docs/.vuepress/components 目录下编写 vue 模板。
 
 ## 部署到 gh-page
 
-> 官网文档： https://vuepress.vuejs.org/zh/guide/deploy.html#github-pages
+> 官网文档： <https://vuepress.vuejs.org/zh/guide/deploy.html#github-pages>
 
 这里粘贴下我这个项目的 deploy.sh 内容，比较简单，每一步都有中文说明，官网文档可以说是很良心了
 
@@ -225,6 +235,7 @@ git push -f git@github.com:zq99299/note-book.git master:gh-pages
 
 cd -
 ```
+
 (windown 下)在 webstom 或则 gitBase 里面 可以直接运行 deploy.sh 文件。
 最好在 gitBase 里面运行，能显示错误信息。
 
@@ -241,6 +252,7 @@ ssh-keygen -t rsa -C "邮箱地址"
 ```
 
 ## 可以作为基础项目的分支
+
 这个分支可以直接克隆下来 ，稍微修改，就能使用起来了。快速建立新的笔记项目
 
 建议认真看一遍官网文档，vuepress 不仅可以单独用来生成 markdown 的文档站点，还能在已有的 vue 项目中使用，
@@ -257,8 +269,8 @@ ssh-keygen -t rsa -C "邮箱地址"
 
 > 分支地址如下：
 >
-> 0.x 分支 https://github.com/luckmaosh/luckmaosh.github.io/tree/vuepress-demo
+> 0.x 分支 <https://github.com/luckmaosh/luckmaosh.github.io/tree/vuepress-demo>
 
 > 1.5.x 分支模板：可以直接用来快速创建一个常用的新笔记仓库
-> 
-> https://github.com/zq99299/mq-tutorial/tree/vuepress-tpl
+>
+> <https://github.com/zq99299/mq-tutorial/tree/vuepress-tpl>

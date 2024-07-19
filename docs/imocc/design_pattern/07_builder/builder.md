@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 建造者模式
 
 > 关联阅读 [李兴华-生成器模式](/design_pattern/09_builder/builder.md)
@@ -30,11 +33,12 @@
 ## 建造者与工厂模式区别
 
 建造者模式：
-  * 更注重于方法的调用顺序
-  * 粒度：创建复杂的产品，由各种复杂的部件组成
+
+* 更注重于方法的调用顺序
+* 粒度：创建复杂的产品，由各种复杂的部件组成
 工厂模式：
-  * 注重于创建产品
-  * 粒度：创建的都是一种类型的
+* 注重于创建产品
+* 粒度：创建的都是一种类型的
 
 ## coding
 
@@ -261,6 +265,7 @@ public class Test {
 ### guava
 
 `com.google.common.collect.ImmutableSet` 不可变集合
+
 ```java
 com.google.common.collect.ImmutableSet#builder
 
@@ -270,6 +275,7 @@ System.out.println(build);
 ```
 
 `com.google.common.cache.Cache` 缓存
+
 ```java
 
 Cache<Object, Object> cache = CacheBuilder.newBuilder()

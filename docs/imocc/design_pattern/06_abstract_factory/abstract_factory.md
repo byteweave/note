@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 抽象工厂
 
 > 关联阅读 [李兴华-抽象工厂](/design_pattern/08_abstract_factory/abstract_factory.md)
@@ -140,6 +143,7 @@ public interface Statement extends Wrapper, AutoCloseable {
 
     int executeUpdate(String sql) throws SQLException;
 ```
+
 该接口就是一个抽象工厂的影子，返回的都是某一系列产品族的产品，如果引入了 mysql 驱动包，
 就会看到 mysql 实现了该类，返回的肯定都是 mysql 相关的产品
 

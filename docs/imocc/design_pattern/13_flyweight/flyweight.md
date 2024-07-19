@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 享元模式 Flyweight
+
 **定义**：提供了减少对象数量从而改善应用所需的对象结构方式
 
   运用共享技术有效地支持大量细粒度的对象。
@@ -7,7 +11,6 @@
 
 **类型**：结构型
 
-
 ## 适用场景
 
 - 常常应用于系统底层的开发，以便解决系统的性能问题
@@ -15,7 +18,6 @@
   如：JAVA string，有则返回，无则创建 字符串，并放入缓存里
   如：连接池
 - 系统有大量相似对象、需要缓冲池的场景
-
 
 简单说：有大量需要被共享的时候，才有意义使用享元模式，否则就是杀鸡焉用牛刀  
 
@@ -46,6 +48,7 @@
 - 单例模式
 
   容器单例，复用对象
+
 ## 代码
 
 场景：慕课让各个部门经理做报表；
@@ -123,6 +126,7 @@ public class EmployeeFactory {
 
 测试，可以看到当使用次数多，假如创建报告是很费时间的，那么这里就能节省很多时间，
 但是，这里我怎么感觉和缓存一样呢？难道说缓存就是享元模式么
+
 ```java
 // 假设有 4 个部门
 private String[] departments = {"RD", "QA", "BI", "DB"};
@@ -167,6 +171,7 @@ public void fun1() {
 java.lang.Integer#valueOf(int)
 
 在范围内则从缓存中获取，这就是一个享元模式的使用
+
 ```java
 // range -128 to 127
 public static Integer valueOf(int i) {
@@ -285,7 +290,9 @@ public T borrowObject(final long borrowMaxWaitMillis) throws Exception {
         return p.getObject();
     }
 ```
+
 通过各种判断，缓存中，再结合工厂管理生命周期，这个也可以看成是享元模式的一个应用
+
 ```java
 public interface PooledObjectFactory<T> {
 

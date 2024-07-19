@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # OAuth 2.0 实战
 
 - [为什么要学 OAuth 2.0？](./00/)
@@ -18,8 +21,5 @@
   - [各大开放平台是如何使用 OAuth 2.0 的？](./02/07.md)
   - [查漏补缺：OAuth 2.0 常见问题答疑](./02/08.md)
 
-
-
 - [老师的示范代码仓库：](https://github.com/xindongbook/oauth2-code) 纯 servlet
 - [笔者的练习代码仓库：](https://github.com/zq99299/myoath2-demo)由于用久了 spring boot，居然一时间不知道如何部署纯 servlet 的项目了，只好转成 spring boot 项目来练习了。对于练习代码
-

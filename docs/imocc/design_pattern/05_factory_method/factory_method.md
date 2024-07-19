@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 工厂方法模式
 
 > 关联阅读 [李兴华-工厂方法](/design_pattern/07_factory_method/factory_method.md)

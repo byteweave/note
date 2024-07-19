@@ -5,7 +5,10 @@ author: zhiyu1998
 title: Kotlin基础&结合Spring
 category:
   - Kotlin
+
+outline: deep
 ---
+
 
 ## 基础知识
 
@@ -25,8 +28,6 @@ var a:Int = 2
 val b:String = "Hello Kotlin"
 ```
 
-
-
 ### long类型
 
 Java
@@ -42,8 +43,6 @@ Kotlin
 val c = 12345678910l // error
 val d = 12345678910L // fine
 ```
-
-
 
 ### 数值转换
 
@@ -61,15 +60,11 @@ val e:Int = 10
 val f:Long = e.toLong()
 ```
 
-
-
 ### 无符号类型
 
 Java没有，但是kotlin有
 
 ![image-20220809110526087](./images/image-20220809110526087.webp)
-
-
 
 ### 字符串模板
 
@@ -80,8 +75,6 @@ fun main() {
 }
 ```
 
-
-
 ### 比较运算
 
 在Java中==比较引用，`equals()`比较内容，而在Kotlin中===比较的是引用，==比较的是内容
@@ -91,20 +84,14 @@ System.out.println(k==m);
 System.out.println(k.equals(m));
 ```
 
-
-
 ```kotlin
 println(k===m)
 println(k==m)
 ```
 
-
-
 ### 数组
 
 ![image-20220809171520308](./images/image-20220809171520308.webp)
-
-
 
 #### 数组的创建
 
@@ -121,8 +108,6 @@ val c0 = intArrayOf(1,2,3,4,5)
 val c1 = IntArray(5){it + 1} 
 ```
 
-
-
 #### 数组的长度
 
 Java中使用length来计算
@@ -138,8 +123,6 @@ Kotlin则使用size
 val a = IntArray(5)
 println(a.size)
 ```
-
-
 
 #### 数组的遍历
 
@@ -163,8 +146,6 @@ for (element in e) {
 e.forEach { element -> println(element) }
 ```
 
-
-
 #### 数组的包含关系
 
 Java中
@@ -185,8 +166,6 @@ if (1f in e) {
     println("1f exists in variale 'e'")
 }
 ```
-
-
 
 ### 区间
 
@@ -271,8 +250,6 @@ for(i in array.indices) {
 }
 ```
 
-
-
 ### 集合
 
 ![image-20220810163454521](./images/image-20220810163454521.webp)
@@ -302,8 +279,6 @@ val stringList = ArrayList<String>()
 
 ![image-20220810194304356](./images/image-20220810194304356.webp)
 
-
-
 ##### 增加元素/删除元素
 
 Java中的添加元素
@@ -332,8 +307,6 @@ for (i in 1..10) {
 }
 ```
 
-
-
 ##### 读写元素
 
 Java中
@@ -349,8 +322,6 @@ Kotlin
 stringList[5] = "HelloWorld"
 val valueAt5 = stringList[5]
 ```
-
-
 
 #### map
 
@@ -369,8 +340,6 @@ val map = HashMap<String, Int>()
 map["Hello"] = 10
 println(map["Hello"])
 ```
-
-
 
 #### pair
 
@@ -394,15 +363,11 @@ val second = pair.second
 val (x, y) = pair
 ```
 
-
-
 ### 函数
 
 结构如下：
 
 ![image-20220810235032740](./images/image-20220810235032740.webp)
-
-
 
 #### 函数引用
 
@@ -422,8 +387,6 @@ class Foo {
 
 如果要使用它的引用`Foo::bar`
 
-
-
 #### 变长参数
 
 ```kotlin
@@ -436,8 +399,6 @@ fun main() {
 ========================================
 [11, 22, 33]
 ```
-
-
 
 #### 多返回值
 
@@ -455,8 +416,6 @@ fun multiRetureValues(): Triple<Int, Long, Double> {
 val (a, b, c) = multiRetureValues()
 ```
 
-
-
 #### 默认参数
 
 ```kotlin
@@ -470,8 +429,6 @@ fun defaultParameter(x: Int = 5, y: String, z: Long = 0L) {
 ```kotlin
 defaultParameter(y = "Hello")
 ```
-
-
 
 ### 类 & 接口
 
@@ -493,8 +450,6 @@ class SimpleClass{
 }
 ```
 
-
-
 #### 构造方法
 
 Java
@@ -503,7 +458,7 @@ Java
 public class SimpleClass {
     public int x;
     public SimpleClass(int x) {
-    	this.x = x;
+     this.x = x;
     }
     ..
 }
@@ -556,8 +511,6 @@ println(simpleClass.x)
 simpleClass.y()
 ```
 
-
-
 #### 接口
 
 Java中的接口
@@ -575,8 +528,6 @@ interface Simplelnf {
 fun simpleMethod()
 }
 ```
-
-
 
 #### 实现接口
 
@@ -598,8 +549,6 @@ override fun simpleMethod() {
 }
 
 ```
-
-
 
 #### 抽象类定义
 
@@ -623,8 +572,6 @@ abstract class AbsClass {
 }
 ```
 
-
-
 #### 类的继承
 
 Java
@@ -643,8 +590,6 @@ class SimpleClass(var x:Int) : AbsClass(), SimpleInf{
 }
 ```
 
-
-
 #### 属性引用
 
 这个基本和函数引用差不多
@@ -661,8 +606,6 @@ nameRef.set("Andyhuo")
 Andyhuo
 20
 ```
-
-
 
 ### 空类型安全
 
@@ -697,8 +640,6 @@ var length = nullable?.length
 var length = nullable?.length ?: 0
 ```
 
-
-
 ### 父子替换
 
 父类可以替换为子类，但是反过来不行（Number是Int的父类）`小的可以替换大的`
@@ -714,8 +655,6 @@ a=b // Type mismatch
 b=a//OK
 ```
 
-
-
 ### 智能类型转换
 
 例如下面的这段代码：
@@ -723,7 +662,7 @@ b=a//OK
 ```kotlin
 val kotliner: Kotliner = Person("benny", 20)
 if(kotliner is Person){
-	println((kotliner as Person).name)
+ println((kotliner as Person).name)
 }
 ```
 
@@ -732,7 +671,7 @@ Kotlin的智能转换可以换成下面，Kotliner自动转换成Person
 ```kotlin
 val kotliner: Kotliner = Person("benny", 20)
 if(kotliner is Person){
-	println(kotliner.name)
+ println(kotliner.name)
 }
 ```
 
@@ -746,11 +685,9 @@ if(kotliner is Person){
 var value: String? = null
 value = "benny"
 if(value != nulI){ t
-	println(value.length)
+ println(value.length)
 }
 ```
-
-
 
 ### 表达式
 
@@ -769,8 +706,6 @@ Kotlin
 ```java
 c = if (a == 3) 4 else 5
 ```
-
-
 
 ##### switch & when
 
@@ -832,17 +767,15 @@ c = try {
 }
 ```
 
-
-
 #### 中缀表达式
 
 `infix` 定义了Kotlin的简写
 
 infix函数（中缀方法）需要几个条件:
 
-- 只有`一个参数`
-- 在方法前必须加`infix`关键字
-- 必须是`成员方法`或者`扩展方法`
+* 只有`一个参数`
+* 在方法前必须加`infix`关键字
+* 必须是`成员方法`或者`扩展方法`
 
 ```kotlin
 fun main() {
@@ -874,8 +807,6 @@ fun main() {
 }
 ```
 
-
-
 #### Lambda表达式
 
 ##### 匿名函数
@@ -890,8 +821,6 @@ val func = fun() {
 func() // 调用
 ```
 
-
-
 ##### 匿名函数的类型
 
 ```kotlin
@@ -899,8 +828,6 @@ val func: () -> Unit = fun() {
     println("Hello")
 }
 ```
-
-
 
 ##### Lambda表达式
 
@@ -969,8 +896,6 @@ val f1: Function1<Int, Unit> = {
     }
 ```
 
-
-
 #### 自己实现hashcode注意问题
 
 需要注意的是：自己实现hashcode如果某个变量发生了变化要移除是移除不了的，除非定义构造函数的时候使用val而不是var
@@ -1007,8 +932,6 @@ fun main() {
 1
 ```
 
-
-
 ### 高阶函数
 
 #### 内联函数
@@ -1041,8 +964,6 @@ fun main() {
 }
 ```
 
-
-
 #### non-local return
 
 定义
@@ -1059,13 +980,9 @@ nonLocalReturn{
 
 如何禁止？ `crossinline`
 
-
-
 #### 几个有用的高阶函数
 
 ![image-20220919172117338](./images/image-20220919172117338.webp)
-
-
 
 #### 集合遍历
 
@@ -1089,8 +1006,6 @@ Kotlin还可以转换为懒序列
 list.asSequence().filter { it % 2 == 0 }
 ```
 
-
-
 ##### map
 
 Java
@@ -1104,8 +1019,6 @@ Kotlin
 ```kotlin
 list.filter { it * 2 + 1 }
 ```
-
-
 
 ##### flatMap
 
@@ -1131,31 +1044,21 @@ Kotlin
 list.flatMap { 0 until it }.forEach(::print)
 ```
 
-
-
 ##### fold
 
 ![image-20220919175051480](./images/image-20220919175051480.webp)
-
-
-
-
 
 #### SAM转换
 
 Java
 
-- 一个参数类型为只有一个方法的接口的方法调用时可用Lambda表达式做转换作为参数
+* 一个参数类型为只有一个方法的接口的方法调用时可用Lambda表达式做转换作为参数
 
 Kotlin
 
-- 一个参数类型为只有一个方法的Java接口的Java方法调用时可用Lambda表达式做转换作为参数
+* 一个参数类型为只有一个方法的Java接口的Java方法调用时可用Lambda表达式做转换作为参数
 
 ![image-20220920091657937](./images/image-20220920091657937.webp)
-
-
-
-
 
 ### 类的进阶
 
@@ -1168,8 +1071,6 @@ Kotlin
 ```kotlin
 class Person(var age: Int, name: String)
 ```
-
-
 
 #### init块
 
@@ -1188,8 +1089,6 @@ class Person(var age: Int, name: String) {
 }
 ```
 
-
-
 #### 继承及调用副构造器
 
 ```kotlin
@@ -1199,8 +1098,6 @@ class Person(var age: Int, name: String) : Animals() {
     // 再定义构造器都称为副构造器
 }
 ```
-
-
 
 #### 默认构造器
 
@@ -1217,8 +1114,6 @@ class Person
 constructor(var age: Int, var name = "unknown") : Animals()
 ```
 
-
-
 ### 类成员的可见性
 
 #### default & internal
@@ -1228,8 +1123,6 @@ constructor(var age: Int, var name = "unknown") : Animals()
 * default会导致不同抽象层次的类聚集到相同包之下
 * internal可方便处理内外隔离,提升模块代码内聚减少接口暴露
 * internal修饰的Kotlin类或成员在Java当中可直接访问
-
-
 
 ### 延迟初始化
 
@@ -1258,16 +1151,12 @@ if(::nameView.isInitialized) {}
 * 不要在复杂的逻辑中使用lateinit，它只会让你的代码更加脆弱
 * Kotlin 1.2加入的判断lateinit属性是否初始化的API最好不要用
 
-
-
 #### 【推荐】lazy
 
 ```kotlin
 private val nameView by lazy {
 }
 ```
-
-
 
 ### 代理
 
@@ -1276,8 +1165,8 @@ private val nameView by lazy {
 ```kotlin
 interface Api {
     fun a()
-	fun b()
-	fun c()
+ fun b()
+ fun c()
 }
 -------------
 class ApiImpl : Api {
@@ -1299,8 +1188,6 @@ class ApiWrapper(val api: Api)
 }
 ```
 
-
-
 ### 单例模式
 
 饿汉式在Java中是体现在new,类加载时实例化对象`Singleton`
@@ -1316,8 +1203,6 @@ Kotlin
 ```kotlin
 object Singleton {}
 ```
-
-
 
 如何访问object成员呢？
 
@@ -1341,8 +1226,6 @@ Singleton.INSTANCE.setX();
 Singleton.INSTANCE.y();
 ```
 
-
-
 #### 静态成员 @JvmStatic
 
 这样声明之后是静态的，但是还是需要getter/setter
@@ -1363,8 +1246,6 @@ object Singleton {
 }
 ```
 
-
-
 #### 伴生对象
 
 ```kotlin
@@ -1382,8 +1263,6 @@ public class Foo {
     public static void y(){}
 }
 ```
-
-
 
 ### 内部类
 
@@ -1405,8 +1284,6 @@ class Outer {
 }
 ```
 
-
-
 #### 内部object
 
 ```kotlin
@@ -1414,8 +1291,6 @@ object OuterObject{
     object StaticInnerObject
 }
 ```
-
-
 
 #### 匿名内部类
 
@@ -1452,8 +1327,6 @@ object: Cloneable, Runnable{
 }
 ```
 
-
-
 ### 数据类
 
 定义之前加一个`data`
@@ -1475,8 +1348,6 @@ public class Book {
 }
 ```
 
-
-
 #### 数据类解构
 
 ```kotlin
@@ -1494,8 +1365,6 @@ data class Pair<out A, out B> (
 Java Bean & data class
 
 ![image-20220924133546730](./images/image-20220924133546730.webp)
-
-
 
 #### JSON序列化示例
 
@@ -1516,8 +1385,6 @@ fun main() {
     println(Gson().fromJson(str, Person::class.java))
 }
 ```
-
-
 
 ##### Moshi
 
@@ -1544,8 +1411,6 @@ println(jsonAdapter.fromJson(
     """.trimIndent()
 ))
 ```
-
-
 
 ##### Kotlinx
 
@@ -1587,8 +1452,6 @@ fun main() {
 }
 ```
 
-
-
 ### 枚举类
 
 Java
@@ -1611,8 +1474,6 @@ State.Idle.name // Idle
 State.Idle.ordinal // 0
 ```
 
-
-
 #### 定义构造器
 
 ```java
@@ -1633,8 +1494,6 @@ enum class State(val id:Int) {
 }
 ```
 
-
-
 #### 枚举定义扩展
 
 ```kotlin
@@ -1645,8 +1504,6 @@ fun State.next(): State {
     }
 }
 ```
-
-
 
 ### 密封类
 
@@ -1662,13 +1519,9 @@ sealed class PlayerState {
 }
 ```
 
-
-
 #### 密封类&枚举类区别
 
 ![image-20220924135345615](./images/image-20220924135345615.webp)
-
-
 
 ### 内联类
 
@@ -1676,15 +1529,11 @@ sealed class PlayerState {
 * 内联类是类似于Java装箱类型的一种类型
 * 编译器会尽可能使用被包装的类型进行优化
 
-
-
 定义示例：
 
 ```kotlin
 inline class BoxInt(val value: Int)
 ```
-
-
 
 #### 内联类的方法
 
@@ -1696,8 +1545,6 @@ inline class BoxInt(val value: Int) {
 }
 ```
 
-
-
 #### 【错误设想】内联类的属性
 
 这样会`报错`：inline class cannot have properties with backing field
@@ -1708,8 +1555,6 @@ inline class BoxInt(val value: Int) {
 }
 ```
 
-
-
 #### 内联类的继承结构
 
 内联类可以实现接口，但不能继承父类也不能被继承
@@ -1719,8 +1564,6 @@ inline class BoxInt(val value: Int): Comparable<Int> {
     override fun compareTo(other: Int) = value.compareTo(other)
 }
 ```
-
-
 
 #### 编译优化
 
@@ -1747,8 +1590,6 @@ boxInt++
 println(boxInt)
 ```
 
-
-
 #### 使用场景
 
 ##### 无符号类型
@@ -1770,11 +1611,9 @@ inline class State(val ordinal: Int) {
     }
     fun values = arrayOf(Idle, Busy)
     val name: String
-    	get() = ...
+     get() = ...
 }
 ```
-
-
 
 #### 限制
 
@@ -1784,17 +1623,14 @@ inline class State(val ordinal: Int) {
 * 不能继承父类也不能被继承
 * 不能定义为其他类的内部类
 
-
-
 #### 对比typealias
 
 ![image-20220924141434215](./images/image-20220924141434215.webp)
 
-
-
 ### 泛型
 
 以maxOf看一下泛型：
+
 ```kotlin
 public actual fun <T : Comparable<T>> maxOf(a: T, b: T): T {
     return if (a >= b) a else b
@@ -1830,15 +1666,13 @@ R callMax(T a, T b) {
 }
 ```
 
-
-
 多个泛型参数
 
 ```kotlin
 fun <T, R> callMax(a: T,b: T): R
-	where T : Comparable<T>,T:()-> R,
-		R: Number{
-	return if(a> b) a() else b()
+ where T : Comparable<T>,T:()-> R,
+  R: Number{
+ return if(a> b) a() else b()
 }
 ```
 
@@ -1847,8 +1681,6 @@ fun <T, R> callMax(a: T,b: T): R
 ```kotlin
 public interface Map<K, out V>
 ```
-
-
 
 #### 泛型的型变
 
@@ -1866,8 +1698,6 @@ sealed class List<T> {
 }
 val list = List.Cons(1.0, List.Nil)
 ```
-
-
 
 ##### 协变
 
@@ -1893,8 +1723,6 @@ val list = List.Cons(1.0, List.Nil)
 * 存在协变点的类的泛型参数必须声明为协变或不变
 * 当泛型类作为泛型参数类实例的生产者时用协变
 
-
-
 ##### 逆变
 
 in 子类可以替代父类
@@ -1903,7 +1731,7 @@ in 子类可以替代父类
 
 ```kotlin
 public interface Function2<in P1, in P2, out R> : Function<R> {
-	public operator fun invoke(p1: P1, p2: P2): R
+ public operator fun invoke(p1: P1, p2: P2): R
 }
 ```
 
@@ -1911,8 +1739,6 @@ public interface Function2<in P1, in P2, out R> : Function<R> {
 * 消费者`Consumer <Base>`兼容`Consumer<Derived>`
 * 存在逆变点的类的泛型参数必须声明为逆变或不变
 * 当泛型类作为泛型参数类实例的消费者时用逆变
-
-
 
 #### 星投影
 
@@ -1923,19 +1749,13 @@ public interface Function2<in P1, in P2, out R> : Function<R> {
 * `协变`点返回泛型参数`上限`类型
 * `逆变`点接收泛型参数`下限`类型
 
-
-
 #### 泛型实现对比
 
 Java、kotlin使用类型擦除
 
 ![QQ截图20220924192536](./images/QQ%E6%88%AA%E5%9B%BE20220924192536.webp)
 
-
-
 #### 内联特化
-
-
 
 ### 反射
 
@@ -1971,8 +1791,6 @@ Kotlin反射
 
 * 优点:支持访问Kotlin几乎所有特性, API设计更友好
 * 缺点:引入Kotlin反射库(2.5MB ,编译后400KB) ,首次调用慢
-
-
 
 #### Kotlin中两种找到函数的方法
 
@@ -2014,8 +1832,6 @@ UserDTO
 class UserDTO
 ```
 
-
-
 #### 反射参数
 
 通过下面的这个反射可以看到方法`class SubType: SuperType<String>()`的泛型参数为String
@@ -2047,8 +1863,6 @@ kotlin.String
 class java.lang.String
 ```
 
-
-
 #### 深拷贝
 
 前提：
@@ -2058,8 +1872,6 @@ data class Group(val id: Int, val name: String, val location: String)
 
 data class Person2(val id: Int, val name: String, val group: Group)
 ```
-
-
 
 深度拷贝函数：
 
@@ -2093,8 +1905,6 @@ fun <T : Any> T.deepCopy(): T {
     }
 }
 ```
-
-
 
 结果：
 
@@ -2131,8 +1941,6 @@ false
 true
 false
 ```
-
-
 
 #### model映射
 
@@ -2195,8 +2003,6 @@ fun main() {
 UserVO@1046d517
 UserVO@3b7d3a38
 ```
-
-
 
 ### 注解
 

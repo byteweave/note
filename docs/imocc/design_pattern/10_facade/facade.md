@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 外观模式
 
 **定义**：又叫门面模式，提供了一个统一的接口，用来访问子系统中的一群接口
@@ -33,8 +36,8 @@
 
 - 抽象工程：外观类可以通过工厂类获取子系统的实例
 
-
 ## 代码
+
 假设一个场景：慕课网的积分兑换，那么可能的子系统有：
 
 1. 库存校验系统
@@ -113,6 +116,7 @@ public class ShippingService {
 
 三个子系统服务，外部如果要使用，必须知道流程，这个时候就可以封装一个外观服务；
 一个积分礼物兑换的服务暴露，这也符合迪米特法则，即最少知道原则；
+
 ```java
 /**
  * 外观模式服务
@@ -177,6 +181,7 @@ PointsGift{name='iphone8'} 返回的订单号 6666
 对于不经常变化的来说，直接使用实体外观类，如果对于经常变化的，就需要使用抽象外观类了
 
 ## 外观模式源码解析
+
 springjdbc+myabtis+tomcat
 
 org.springframework.jdbc.support.JdbcUtils
@@ -197,11 +202,13 @@ public static void closeConnection(@Nullable Connection con) {
   }
 }
 ```
+
 该类的方法基本上都是对 java.sql 的外观封装，如上面关闭连接
 
 org.apache.ibatis.session.Configuration
 
 该类中 newXX 的方法就是外观方法
+
 ```java
 public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
   ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
@@ -211,6 +218,7 @@ public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Obj
 ```
 
 ### tomcat
+>
 > [源码下载](https://tomcat.apache.org/download-90.cgi) 强选择该页面下的 Source Code Distributions 部分中的 zip。解压之后导入 IDEA 查看。
 
 org.apache.catalina.connector.Request
@@ -242,6 +250,7 @@ public HttpServletRequest getRequest() {
 ```
 
 比较下 外观类 和具体类的方法实现
+
 ```java
 org.apache.catalina.connector.Request#getAttribute
 @Override

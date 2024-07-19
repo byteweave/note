@@ -1,8 +1,9 @@
+---
+outline: deep
+---
 # 使用 ConfigMap 来配置 Redis
 
-本笔记参考：https://kubernetes.io/zh/docs/tutorials/configuration/configure-redis-using-configmap/
-
-
+本笔记参考：<https://kubernetes.io/zh/docs/tutorials/configuration/configure-redis-using-configmap/>
 
 ## 教程目标
 
@@ -24,4 +25,3 @@
 目标就是用编译 yaml 文件，来达成一步创建容器
 
 ## 使用 ConfigMap 来配置 Redis
-

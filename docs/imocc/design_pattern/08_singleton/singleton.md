@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 单例模式
 
 > 关联阅读 [李兴华-单例模式](/design_pattern/06_singleton/singleton.md)
@@ -85,6 +88,7 @@ public class TestDemo {
 ```
 
 ## 多线程 debug 教程
+
 ![](./assets/markdown-img-paste-20180927220918119.png)
 
 先打上断点，然后在断点上右键，即可出现上图中的内容；选择 thread 方式，并设置为默认
@@ -96,7 +100,6 @@ public class TestDemo {
 切换到 线程0 中，可以看到一直阻塞在这里的。这样一来多线程调试就更方便了
 
 ![](./assets/markdown-img-paste-20180927222157927.png)
-
 
 ## 懒汉式 - synchronized
 
@@ -158,6 +161,7 @@ public class LazyDoubleCheckSingleton {
 ![](./assets/markdown-img-paste-2018092722525135.png)
 
 要解决这个问题：
+
 1. volatile 变量：
 
   对于一个 volatile 域的写，happens-before 于任意后续对这个 volatile 的读
@@ -211,6 +215,7 @@ public class StaticInnerClassSingleton {
 ```
 
 执行测试代码
+
 ```java
   StaticInnerClassSingleton instance = StaticInnerClassSingleton.getInstance();
 
@@ -239,7 +244,6 @@ StaticInnerClassSingleton.print();
 在类初始化的时候 jvm 会获取一个初始化锁，保证多个线程对同一个对象的初始化安全问题
 
 这里有一个遗留问题：上面的代码中。没有对单例类私有构造。一定要加深认识
-
 
 ## 饿汉式
 
@@ -390,6 +394,7 @@ private Object readOrdinaryObject(boolean unshared)
 ### 类加载就初始化的单例模式
 
 针对恶汉单例模式来测试，使用反射和正常获取实例的对比是否是同一个实例。
+
 ```java
 @Test
 public void test2() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -407,6 +412,7 @@ public void test2() throws NoSuchMethodException, IllegalAccessException, Invoca
     System.out.println(instance == objectInstance);
 }
 ```
+
 结果很明显，不是同一个。原因：
 
 1. final static 修饰的是在**类加载**的时候完成的初始化
@@ -424,7 +430,9 @@ private HungrySingleton() {
 ```
 
 ### 懒汉式防御解析
+
 首先，结论是，懒汉式没有办法防御反射攻击。原因：使用的时候才会初始化，没有办法保证只初始化一次。
+
 ```java
 public class LazySingleton {
     private static LazySingleton lazySingleton = null;
@@ -451,6 +459,7 @@ private LazySingleton() {
     }
 }
 ```
+
 测试代码
 
 ```java
@@ -487,6 +496,7 @@ private LazySingleton() {
     }
 }
 ```
+
 测试代码可以使用上一次的，这里演示为什么说添加变量的方式也没有办法阻止。
 因为变量也是成员，也可以通过反射的方式修改。下面演示
 
@@ -535,6 +545,7 @@ public enum EnumInstance {
     }
 }
 ```
+
 ### 枚举单例模式序列化攻击测试
 
 ```java
@@ -561,6 +572,7 @@ public void test6() throws IOException, ClassNotFoundException {
     System.out.println(instance.getData() == instanceFromFile.getData());
 }
 ```
+
 这个是为什么呢? 源码会告诉我们答案
 
 ```java
@@ -615,16 +627,18 @@ Enum<?> result = null;
 ```java
 java.lang.NoSuchMethodException: cn.mrcode.newstudy.design.pattern.creational.singleton.EnumInstance.<init>()
 
-	at java.lang.Class.getConstructor0(Class.java:3082)
-	at java.lang.Class.getDeclaredConstructor(Class.java:2178)
-	at cn.mrcode.newstudy.design.pattern.creational.singleton.SingletonTest.test7(SingletonTest.java:135)
+ at java.lang.Class.getConstructor0(Class.java:3082)
+ at java.lang.Class.getDeclaredConstructor(Class.java:2178)
+ at cn.mrcode.newstudy.design.pattern.creational.singleton.SingletonTest.test7(SingletonTest.java:135)
 ```
+
 ## 反编译 - jad 查看 class 文件
+
 需要看下编译后的 class 文件，idea 自带的可以查看，但是我发现并没有编译后的任何迹象，不知道是为什么。
 
-那么使用 http://jd.benow.ca/ （jd-gui) 来查看编译后的 class 文件。会发现和 idea 中查看到的文件内容一模一样
+那么使用 <http://jd.benow.ca/> （jd-gui) 来查看编译后的 class 文件。会发现和 idea 中查看到的文件内容一模一样
 
-https://varaneckas.com/jad/ 使用该 jad ，是一个命令行工具。Windows 版本解压后，就是一个 jad.exe ，配置好环境变量。找到 idea 生成的 class 文件。运行以下命令
+<https://varaneckas.com/jad/> 使用该 jad ，是一个命令行工具。Windows 版本解压后，就是一个 jad.exe ，配置好环境变量。找到 idea 生成的 class 文件。运行以下命令
 
 ```java
 jad EnumInstance.class
@@ -632,6 +646,7 @@ jad EnumInstance.class
 就会生成 EnumInstance.jad 文件。使用记事本等文本编辑器打开即可查看
 在 Windows10 中配置了环境变量，暂时未生效，只能暂时进入该软件的目录中运行了
 ```
+
 生成的文件内容如下
 
 ```java
@@ -700,6 +715,7 @@ public final class EnumInstance extends Enum
 这里就真相了，反射的时候使用无参构造，报错找不到方法。
 
 ## 枚举单例模式续
+
 那么这里使用有参的继续下去；
 
 ```java
@@ -718,11 +734,13 @@ public void test7() throws NoSuchMethodException, IllegalAccessException, Invoca
     System.out.println(instance == enumInstance);
 }
 ```
+
 结果发现还是不行,报错信息明确的说明了 不能通过反射创建枚举对象
+
 ```java
 java.lang.IllegalArgumentException: Cannot reflectively create enum objects
 
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:416)
+ at java.lang.reflect.Constructor.newInstance(Constructor.java:416)
   at cn.mrcode.newstudy.design.pattern.creational.singleton.SingletonTest.test7(SingletonTest.java:137)
 ```
 

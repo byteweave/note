@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 简单工厂
 
 > 关联阅读 [李兴华-简单工厂](/design_pattern/03_simple_factory/simple_factory.md)
@@ -7,7 +10,6 @@
 **类型**：创建型，但不属于 GOF23 种设计模式
 
 抽象工厂和工厂方法模式是由简单工厂一步一步进化的
-
 
 ## 适用场景
 
@@ -24,15 +26,17 @@
 * 职责相对过重
 
   增加新的产品，需要修改工厂类的判断逻辑，违背开闭原则
+
 ## coding
 
-> 维基百科： https://en.wikipedia.org/wiki/Design_Patterns#Patterns_by_Type
+> 维基百科： <https://en.wikipedia.org/wiki/Design_Patterns#Patterns_by_Type>
 
 Creational 中是没有简单工厂模式的。所以不属于 GOF23 种设计模式
 
 场景：生成课程视频，不同的课程生成的视频逻辑不一样
 
 ## 不用模式
+
 ```java
 public abstract class Video {
     public abstract void produce();
@@ -95,7 +99,6 @@ public class Test {
 
 ![](./assets/markdown-img-paste-20180826224429493.png)
 
-
 新增课程的时候，还是需要修改工厂类的判定。我们追求的是对扩展开放，对修改关闭，那么就可以使用工厂方法来演进一下，到时候再对比下简单工厂
 
 这里还可以使用反射里弥补下简单工厂的扩展性
@@ -128,6 +131,7 @@ public class Test {
     }
 }
 ```
+
 ![](./assets/markdown-img-paste-20180826225605689.png)
 
 这个改进在一定成都上满足了开闭原则，对于新增课程，工厂类不需要修改，但是 客户端又依赖了具体的实现类。

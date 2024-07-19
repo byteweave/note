@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 适配器模式
+
 **定义**：将一个类的接口转换成客户期望的另一个接口
 
   使原本接口不兼容的类可以一起工作
@@ -6,6 +10,7 @@
 **类型**：结构型
 
 例如：笔记本电源适配器
+
 ## 适用场景
 
 - 已经存在的类，它的方法和需求不匹配时（方法结果相同或相似）
@@ -36,6 +41,7 @@
 
   - 外观：定义新的接口，提供一个比较方便的统一入口
   - 适配器：复用原有的，使原有的两个接口协同工作
+
 ## 代码
 
 ### 类适配器
@@ -90,7 +96,9 @@ public class Adapter extends Adaptee implements Target {
 }
 
 ```
+
 测试
+
 ```java
 @Test
 public void fun1() {
@@ -117,7 +125,6 @@ public void fun1() {
 类图里面是以继承为主的，所有被称为类适配器
 
 ![](./assets/markdown-img-paste-20181225205246329.png)
-
 
 ### 对象适配器
 
@@ -147,8 +154,8 @@ public class Adapter implements Target {
 
 ![](./assets/markdown-img-paste-2018122520593555.png)
 
-
 ### 场景
+
 充电器，家用电 220V,手机充电器 5V.使用适配器来实现这个场景
 
 ```java
@@ -166,6 +173,7 @@ public class AC220 {
     }
 }
 ```
+
 ```java
 /**
  * 直流电
@@ -218,30 +226,32 @@ xml 相关的序列化和反序列化适配器，使用方法就是实现该接�
 org.springframework.aop.framework.adapter.AdvisorAdapter
 
 Aop 相关的适配器
+
 ```java
 public interface AdvisorAdapter {
 
-	boolean supportsAdvice(Advice advice);
+ boolean supportsAdvice(Advice advice);
 
   // 把 Advisor 适配成 MethodInterceptor，方法拦截器
-	MethodInterceptor getInterceptor(Advisor advisor);
+ MethodInterceptor getInterceptor(Advisor advisor);
 }
 ```
+
 如一个方法执行前的适配器实现类 org.springframework.aop.framework.adapter.MethodBeforeAdviceAdapter
 
 ```java
 class MethodBeforeAdviceAdapter implements AdvisorAdapter, Serializable {
 
-	@Override
-	public boolean supportsAdvice(Advice advice) {
-		return (advice instanceof MethodBeforeAdvice);
-	}
+ @Override
+ public boolean supportsAdvice(Advice advice) {
+  return (advice instanceof MethodBeforeAdvice);
+ }
 
-	@Override
-	public MethodInterceptor getInterceptor(Advisor advisor) {
-		MethodBeforeAdvice advice = (MethodBeforeAdvice) advisor.getAdvice();
-		return new MethodBeforeAdviceInterceptor(advice);
-	}
+ @Override
+ public MethodInterceptor getInterceptor(Advisor advisor) {
+  MethodBeforeAdvice advice = (MethodBeforeAdvice) advisor.getAdvice();
+  return new MethodBeforeAdviceInterceptor(advice);
+ }
 
 }
 ```

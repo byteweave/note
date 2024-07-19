@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # java fx 图形界面开发
+
 本章讲解怎么用 gradle 搭建一个 java fx 开发环境。
 
 使用到的核心技术和包
@@ -19,7 +23,7 @@
 
 - [javafx-gradle-plugin](https://github.com/FibreFoX/javafx-gradle-plugin)：为我们打包成 windows 执行程序
 
-  ​	使用它打成 exe 安装包，还需要本机安装   [innosetup-5.6.1.exe](https://files.jrsoftware.org/is/5/) ，并添加到 path 环境变量中
+  ​ 使用它打成 exe 安装包，还需要本机安装   [innosetup-5.6.1.exe](https://files.jrsoftware.org/is/5/) ，并添加到 path 环境变量中
 
 - gradle 4.8：用于项目的打包依赖
 
@@ -191,7 +195,7 @@ public class Controller {
 
 ![image-20200616113825801](./assets/image-20200616113825801.png)
 
-这个问题的原因是：面板容器的 **初始大小**，与你代码中的 **场景大小** 不匹配； 
+这个问题的原因是：面板容器的 **初始大小**，与你代码中的 **场景大小** 不匹配；
 
 ![image-20200616114000771](./assets/image-20200616114000771.png)
 
@@ -306,8 +310,6 @@ public class Starman extends Application {
 ```
 
 ### 程序最小化到托盘
-
-
 
 ```java
 MinWindow.getInstance().listen(primaryStage);
@@ -695,7 +697,7 @@ logback.xml
 1. 我们把 textArea 包装成一个 PrintStream 流对象，外部通过此流对象写入要输出的日志
 2. 写一个 work 线程，给定一个队列，消费的往 ui 上写入信息
 
-包装一个 PrintStream 
+包装一个 PrintStream
 
 ```java
 import java.io.ByteArrayOutputStream;
@@ -943,7 +945,7 @@ jfx {
     appName = "hello-word"
      // 程序版本, 打包后，会变成主要的 exe 文件名称，比如  hello-word-1.0.exe
     nativeReleaseVersion = "1.0" 
-	// 程序运存时使用哪一个窗口作为入口运行，前面写好的窗口 man 方法类
+ // 程序运存时使用哪一个窗口作为入口运行，前面写好的窗口 man 方法类
     mainClass = 'sample.star.Starman'
     // 这里就是前面说到 spring 的环境在程序运行时怎么传递进去
     // 可以写多个参数
@@ -996,7 +998,7 @@ jfx {
 
 - app 打成的是可运行的 jar 包
 
-  lib 下面是该 jar 包的所有依赖包； 可以通过 `java -jar ` 的方式运行。
+  lib 下面是该 jar 包的所有依赖包； 可以通过 `java -jar` 的方式运行。
 
 - native 下有两种
 
@@ -1016,6 +1018,6 @@ jfx {
 
 这个就需要去仔细研究 ：
 
--  [javafx-gradle-plugin](https://github.com/FibreFoX/javafx-gradle-plugin) 插件
--  [javapackger](https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html#A1324980) 
--  [innosetup-5.6.1.exe](https://files.jrsoftware.org/is/5/) ：打包成 exe 安装程序的软件
+- [javafx-gradle-plugin](https://github.com/FibreFoX/javafx-gradle-plugin) 插件
+- [javapackger](https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/self-contained-packaging.html#A1324980)
+- [innosetup-5.6.1.exe](https://files.jrsoftware.org/is/5/) ：打包成 exe 安装程序的软件

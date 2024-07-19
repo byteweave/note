@@ -1,20 +1,21 @@
+---
+outline: deep
+---
 # note-book 介绍与规约
 
 ::: tip
 旧的笔记 [essay-note](https://github.com/zq99299/essay-note) 将停更,新的笔会用本项目记录。
 :::
 
-
-
 ## 项目目录结构
+
 ::: tip
 建设中...
 :::
 
-
 ## 关于排版
 
-> 中文文案排版指北 https://github.com/zq99299/chinese-copywriting-guidelines
+> 中文文案排版指北 <https://github.com/zq99299/chinese-copywriting-guidelines>
 
 中文文案排版指北，中的示例的确可以让文章整体看起来很舒服。所以尽量遵循该排版规则
 
@@ -47,6 +48,7 @@ GitBook3 以后官网放弃了离线版本的支持，所以就丢掉了离线�
       |- imageB
     |- github.md   
 ```
+
 以上目录存储结构，在使用过程中依赖插件的自动完成，方便和节省更多的写书时间
 
 ## vuepress 构建基础教程
