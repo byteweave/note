@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # dis_max 的 tie_breaker 作用
 
 ```json
@@ -14,6 +17,7 @@ GET /forum/article/_search
     }
 }
 ```
+
 用法如上，那么 tie_breaker 有什么作用呢？
 
 如果你仔细观察使用 tie_breaker 和不使用查询出来的某一条数据的 `_score` 分数就能看出来了，

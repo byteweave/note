@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # match_phrase 短语匹配
+
 [[toc]]
 
 ## 什么是短语匹配和近似匹配？
@@ -6,6 +10,7 @@
 先来看一个搜索例子
 
 添加两条数据
+
 ```json
 PUT /forum/article/6
 {
@@ -36,6 +41,7 @@ GET /forum/article/_search
   }
 }
 ```
+
 会看到这三条数据都返回来了，并且 id=7 的得分要高于 id=6 的。
 
 假如要实现下面需求：
@@ -128,11 +134,11 @@ GET _analyze
 倒排索引中的 position 示例
 
 ```
-hello world, java spark		doc1
-hi, spark java				 doc2
+hello world, java spark  doc1
+hi, spark java     doc2
 
 --- 倒排索引示例，
-hello   doc1(0)		
+hello   doc1(0)  
 wolrd   doc1(1)
 java    doc1(2) doc2(2)
 spark   doc1(3) doc2(1)

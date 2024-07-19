@@ -1,7 +1,12 @@
+---
+outline: deep
+---
 # percentiles 百分比算法、网站访问时延统计
+
 需求：比如有一个网站，记录下了每次请求的访问的耗时，需要统计 tp50，tp90，tp99
 
 什么是 tp n 呢?
+
 - tp50：50% 的请求的耗时最长在多长时间
 - tp90：90% 的请求的耗时最长在多长时间
 - tp99：99% 的请求的耗时最长在多长时间
@@ -9,6 +14,7 @@
 那么可以使用 percentiles 算法
 
 先插入模拟数据
+
 ```json
 PUT /website
 {
@@ -55,6 +61,7 @@ POST /website/logs/_bulk
 { "index": {}}
 { "latency" : 302, "province" : "新疆", "timestamp" : "2016-10-29" }
 ```
+
 percentiles 用法，下面
 
 ```json
@@ -149,6 +156,7 @@ GET /website/logs/_search
   }
 }
 ```
+
 响应结果
 
 ```json

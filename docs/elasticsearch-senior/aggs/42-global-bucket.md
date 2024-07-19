@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # global bucket：单个品牌与所有品牌销量对比
 
 之前说过 aggregation scope：一个聚合操作，必须在 query 的搜索结果范围内执行
@@ -37,6 +40,7 @@ GET /tvs/sales/_search
   }
 }
 ```
+
 global：就是 global bucket，将所有数据纳入聚合的 scope，而不管之前的 query
 
 ```json

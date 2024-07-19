@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # multi_match 语法
 
 例如这样一个查询，使用 dis_max 语法的
@@ -13,7 +16,7 @@ GET /forum/article/_search
             "title": {
               "query": "java beginner",
               "minimum_should_match": "50%",
-	            "boost": 2
+             "boost": 2
             }
           }
         },
@@ -57,4 +60,4 @@ GET /forum/article/_search
 }
 ```
 
-- `title^2`：来表示 boots 
+- `title^2`：来表示 boots

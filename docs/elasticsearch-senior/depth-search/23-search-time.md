@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # `match_phrase_prefix` 实现搜索推荐
 
 ## 什么是搜索推荐（search-time）？

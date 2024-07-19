@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 权重控制 boost
 
 权重是什么意思呢？简单来说就是用数值来给「重要」量化
@@ -12,7 +15,6 @@
 计算 relevance score 时，匹配权重更大的搜索条件的 document，relevance score 会更高，当然也就会优先被返回回来
 
 默认情况下，搜索条件的权重都是一样的，都是 1
-
 
 比如下面这个查询，前面讲到过 should 的的得分计算，
 如果 spark 的 boost=1 那么 "title": "this is java, elasticsearch, hadoop blog" 肯定是得分最高的，

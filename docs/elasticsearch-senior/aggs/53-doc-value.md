@@ -1,8 +1,13 @@
+---
+outline: deep
+---
 # doc value 机制内核级原理深入探秘
+
 对于 doc value，我一直以为就类似于 mysql 表数据一样，基于 id 获取的，
 但是看这章节并不是，所以看完还是懵逼状态
 
 ## doc value原理
+
 - index-time生成
 
   PUT/POST的时候，就会生成doc value数据，也就是正排索引
@@ -16,9 +21,11 @@
   那样会导致一定的 gc 开销和 oom 问题，所以给 jvm 更少的内存，给 os cache 更大的内存
   以 64g 服务器为例，给 jvm 最多 16g，其他的内存给 os cache
   os cache 可以提升 doc value 和倒排索引的缓存和查询效率
+
 ## column 压缩
 
 比如以下数据
+
 ```
 doc1: 550
 doc2: 550

@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # dis_max 实现 best fields 策略多字段搜索
 
 > 增加 content 字段的测试数据
@@ -15,6 +18,7 @@ POST /forum/article/_bulk
 { "update": { "_id": "5"} }
 { "doc" : {"content" : "spark is best big data solution based on scala ,an programming language similar to java"} }
 ```
+
 ## 问题产生
 
 > 搜索 title 或 content 中包含 java 或 solution 的帖子

@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # 基于 doc value 正排索引的聚合内部原理
 
 本章节会开始接待这些疑问：
+
 - 聚合分析的内部原理是什么？
 - 执行一个聚合操作的时候，内部原理是怎样的呢？
 - 用了什么样的数据结构去执行聚合？
@@ -11,18 +15,18 @@
 ```json
 GET /test_index/test_type/_search
 {
-	"query": {
-		"match": {
-			"search_field": "test"
-		}
-	},
-	"aggs": {
-		"group_by_agg_field": {
-			"terms": {
-				"field": "agg_field"
-			}
-		}
-	}
+ "query": {
+  "match": {
+   "search_field": "test"
+  }
+ },
+ "aggs": {
+  "group_by_agg_field": {
+   "terms": {
+    "field": "agg_field"
+   }
+  }
+ }
 }
 ```
 

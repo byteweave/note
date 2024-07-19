@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # multi_match 的 most_fiels 策略
 
 - most-fiels: 在多个 field 查询到关键词的则优先返回该 doc
@@ -121,7 +124,6 @@ GET /forum/article/_search
 ```
 
 如果不使用 `.std` 就会使用分词形式去匹配到两条数据。multi_match 语法如下
-
 
 ```json
 GET /forum/article/_search

@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # rescore 机制优化近似匹配搜索的性能
 
 ## match 和 phrase match（proximity match）的区别
+
 - match
 
     只要简单的匹配到了一个 term，就可以理解将 term 对应的 doc 作为结果返回，扫描倒排索引，扫描到了就 ok

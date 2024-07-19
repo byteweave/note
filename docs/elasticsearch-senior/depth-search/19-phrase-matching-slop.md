@@ -1,7 +1,12 @@
+---
+outline: deep
+---
 # match_phrase 的 slop
+
 [[toc]]
 
 ## 语法
+
 ```json
 GET /forum/article/_search
 {
@@ -15,6 +20,7 @@ GET /forum/article/_search
     }
 }
 ```
+
 ## slop 的含义是什么？
 
 query string 搜索文本中的几个 term，要经过几次移动才能与一个 document 匹配，这个移动的次数，就是 slop

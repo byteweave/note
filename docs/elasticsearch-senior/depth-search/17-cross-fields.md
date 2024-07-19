@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # cross-fields
+
 在 multi_match 中就已经支持了 cross_fields
 
 ```json

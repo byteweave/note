@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # TF&IDF 算法以及向量空间模型算法
 
 [[toc]]
@@ -10,8 +13,8 @@ es 里的得分算法主要是 3 部分
 
 前面两个只是简单的过一下，主要是向量空间模型算法
 
+## boolean model
 
-##  boolean model
 类似 and 这种逻辑操作符，先过滤出包含指定 term 的 doc
 
 > 举个例子
@@ -23,11 +26,13 @@ doc --> 经过条件过滤之后，这些步骤是不打分数 --> 正或反 tru
 ```
 
 ## TF/IDF
+
 详细请参考 [相关度评分 TF&IDF 算法独家解密](/elasticsearch-core/search-engine/55-tf-idf.md)
 
 简单或就是计算单个 term 在 doc 中的分数
 
 比如要查询 content 中查询「hello world」
+
 ```
 doc1: java is my favourite programming language, hello world !!!
 doc2: hello java, you are very good, oh hello world!!!
@@ -53,11 +58,13 @@ hello 对 doc1 的评分
 hello world --> doc1 --> hello 对 doc1的分数，world 对 doc1 的分数 --> 但是最后 hello world query 要对 doc1 有一个总的分数 --> vector space model
 
 ## vector space model
+
 这个是一个数学上的概念，很复杂。这里举例让你明白大概是个什么东西、
 
 计算多个 term 对一个 doc 的总分数
 
 ## query vector
+
 hello world --> es 会根据 hello world 在所有 doc 中的评分情况，计算出一个 query vector，query 向量
 
 - hello 这个 term，给的基于所有 doc 的一个评分就是 2

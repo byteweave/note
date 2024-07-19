@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 多关键词底层原理 term + bool
 
 **普通 match 如何转换为 term + should？**
@@ -23,6 +26,7 @@ bool should，指定多个搜索词，同时使用 term query
 ```
 
 **and match 如何转换为 term + must？**
+
 ```json
 {
     "match": {

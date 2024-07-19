@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 体验如何控制全文检索结果的精准度
+
 [[toc]]
 
 增加测试数据，添加一个 title 字段
@@ -45,9 +49,9 @@ GET /forum/article/_search
     "query": {
         "match": {
             "title": {
-          		"query": "java elasticsearch",
-          		"operator": "and"
-   	        }
+            "query": "java elasticsearch",
+            "operator": "and"
+            }
         }
     }
 }
@@ -63,16 +67,15 @@ GET /forum/article/_search
     "query": {
         "match": {
             "title": {
-          		"query": "java elasticsearch spark hadoop",
-          		"minimum_should_match": "75%"
-   	        }
+            "query": "java elasticsearch spark hadoop",
+            "minimum_should_match": "75%"
+            }
         }
     }
 }
 ```
 
 minimum_should_match：必须至少匹配其中的多少个关键字，才能作为结果返回，默认是一个
-
 
 #### 4、用 bool 组合多个搜索条件，来搜索 title
 
@@ -188,7 +191,7 @@ GET /forum/article/_search
         { "match": { "title": "java" }},
         { "match": { "title": "elasticsearch"   }},
         { "match": { "title": "hadoop"   }},
-	      { "match": { "title": "spark"   }}
+       { "match": { "title": "spark"   }}
       ],
       "minimum_should_match": 3
     }

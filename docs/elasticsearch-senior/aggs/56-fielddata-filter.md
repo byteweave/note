@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # fielddata filter 的细粒度内存加载控制
 
 可以通过 mappings 来定制每个 fielddata 的内存使用
+
 ```json
 POST /test_index/_mapping/my_type
 {
@@ -19,6 +23,7 @@ POST /test_index/_mapping/my_type
   }
 }
 ```
+
 - min：仅仅加载至少在 1% 的 doc 中出现过的 term 对应的 fielddata
 
   比如说总共有 1000 个 doc，hello 这个值必须在 10 个 doc 中出现，那么这个 hello 对应的 fielddata 才会加载到内存中来

@@ -1,5 +1,7 @@
+---
+outline: deep
+---
 # lucene 相关度分数算法
-
 
 之前讲解到 boolean model、TF/IDF、vector space model
 
@@ -78,6 +80,7 @@ Document 3 with hello world java → score: 4.5 * 3 / 3 = 4.5
 把计算出来的总分数 * 匹配上的 term 数量 / 总的 term 数量，让匹配不同 term/query 数量的doc，分数之间拉开差距
 
 ## field level boost
+
 自定义权重
 
 ::: warning

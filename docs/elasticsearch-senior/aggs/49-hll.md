@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # cardinality 算法内存优化、hll 算法
+
 [[toc]]
 
 ## cardinality 算法内存优化
@@ -21,6 +25,7 @@ GET /tvs/sales/_search
     }
 }
 ```
+
 precision_threshold：在多少个 unique value 以内 cardinality 几乎保证 100% 准确，
 默认值为 100，它的配置可以优化准确率和内存开销
 
@@ -28,7 +33,7 @@ precision_threshold：在多少个 unique value 以内 cardinality 几乎保证 
 
 考虑一个场景：brand 去重，如果 brand 的 unique value 在100个以内，比如小米，长虹，三星，TCL，HTL ... 在去重后的结果在 100 个以内
 
-cardinality 算法会占用 precision_threshold * 8 byte 内存消耗，100 * 8 = 800 个字节，
+cardinality 算法会占用 precision_threshold *8 byte 内存消耗，100* 8 = 800 个字节，
 占用内存很小。而且 unique value 如果的确在值以内，那么可以确保 100% 准确
 官方给的一个说法是 100，在数百万的 unique value 内错误率在 5% 以内
 
@@ -42,6 +47,7 @@ precision_threshold 值设置的越大，占用内存越大，1000 * 8 = 8000 / 
 field 去重 count，这时候 unique value 10000，precision_threshold=10000，10000 * 8 = 80000个byte，80KB
 
 ## HyperLogLog++（HLL）算法性能优化
+
 cardinality 底层算法：使用 HLL 算法，优化 HLL 算法的性能即可
 
 HLL 会对所有的 uqniue value 取 hash 值，通过 hash 值近似去求 distcint count，所以有一定误差

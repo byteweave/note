@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # cardinality 去重算法以及每月销售品牌数量统计
+
 cartinality metric 对每个 bucket 中的指定的 field 进行去重，取去重后的 count，类似于 `count(distcint)`
 
 下面尝试不使用 cartinality 来实现每月销售品牌数量统计

@@ -1,7 +1,12 @@
+---
+outline: deep
+---
 # 搜索+聚合：统计指定品牌下每个颜色的销量
+
 实际上来说，我们之前学习的搜索相关的知识，完全可以和聚合组合起来使用
 
 如下一个 sql 的分组统计操作，要搜索品牌名为「长 xx」，并按价格分组
+
 ```
 select count(*) from tvs.sales
 where brand like "%长%"
@@ -32,6 +37,7 @@ GET /tvs/sales/_search
    }
 }
 ```
+
 响应结果
 
 ```json

@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # percentiles rank 以及网站访问时延 SLA 统计
 
 ## SLA
+
 SLA 就是你提供的服务的标准
 
 我们的网站的提供的访问延时的 SLA，确保所有的请求 100% 都必须在 200ms 以内，
@@ -8,6 +12,7 @@ SLA 就是你提供的服务的标准
 代表网站的访问性能和用户体验急剧下降
 
 ## percentiles rank
+
 这个 percentile ranks 其实比 pencentile 还要常用，
 比如按照品牌分组，计算电视机售价在 1000 占比，2000 占比，3000 占比
 
@@ -37,6 +42,7 @@ GET /website/logs/_search
   }
 }
 ```
+
 响应结果
 
 ```json
@@ -96,6 +102,6 @@ GET /website/logs/_search
 - 默认100
 - 越大，占用内存越多，越精准，性能越差
 
-一个节点占用 32 字节，100 * 20 * 32 = 64KB
+一个节点占用 32 字节，100 *20* 32 = 64KB
 
 如果你想要 percentile 算法越精准，compression 可以设置的越大

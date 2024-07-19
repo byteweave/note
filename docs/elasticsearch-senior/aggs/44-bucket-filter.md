@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # bucket filter：统计牌品最近一个月的平均价格
 
 一个简单的语法是这样的

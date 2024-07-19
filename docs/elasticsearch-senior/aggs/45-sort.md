@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # order：按每种颜色的平均销售额升序排序
 
 统计每种颜色的平均销售额？
@@ -22,6 +25,7 @@ GET /tvs/sales/_search
   }
 }
 ```
+
 响应结果
 
 ```json
@@ -96,6 +100,7 @@ GET /tvs/sales/_search
   }
 }
 ```
+
 响应结果
 
 ```json

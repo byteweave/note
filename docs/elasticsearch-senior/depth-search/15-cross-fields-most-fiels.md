@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # most_fields 策略 cross-fields 搜索弊端
+
 cross-fields （跨字段）搜索：一个唯一标识，跨了多个 field。比如一个人，标识，是姓名；
 一个建筑，它的标识是地址。姓名可以散落在多个 field 中，比如 first_name 和 last_name 中，
 地址可以散落在 country、province、city中。
@@ -25,6 +29,7 @@ POST /forum/article/_bulk
 ```
 
 查询
+
 ```json
 GET /forum/article/_search
 {
@@ -127,7 +132,6 @@ GET /forum/article/_search
 
 会发现 id=5 的 `"author_last_name": "Peter Smith"` 居然是排在最后面的，
 我们想要的结果应该就是 id=5 这条数据了，造成这个结果的原因如下：
-
 
 - 只是找到尽可能多的 field 匹配的 doc，而不是某个 field 完全匹配的 doc
 - most_fields 没办法用 minimum_should_match 去掉长尾数据，就是匹配的特别少的结果

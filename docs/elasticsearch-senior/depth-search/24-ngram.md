@@ -1,8 +1,12 @@
+---
+outline: deep
+---
 # ngram  实现搜索推荐
 
 ## 什么是 ngram？
 
 比如一个单词 quick，5 种长度下的 ngram
+
 ```
 ngram length=1，q u i c k
 ngram length=2，qu ui ic ck
@@ -28,7 +32,6 @@ quick
 其实这个形式已经能想到了，这个就是我们搜索的时候进行的推荐那样的效果，类似前缀索引的效果；
 
 在数据写入的时候就将这种情况进行倒排索引，查询的时候和普通 match 一样了，匹配倒排索引，匹配到则 ok，不用扫描所有的倒排索引了
-
 
 ## 实践 ngram
 
@@ -69,8 +72,8 @@ PUT /my_index
 - max_gram：最大
 
     比如：quick ，max_gram = 2，那么只会切分成
-    - q
-    - qu
+  - q
+  - qu
 
     最大 gram 数量为 2
 

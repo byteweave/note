@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # filter+aggs：统计价格大于 1200 的电视平均价格
 
 ```json
