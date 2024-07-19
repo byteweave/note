@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # bucket+metric 统计每种颜色电视平均价格
 
 按照 color 去分 bucket，可以拿到每个 color bucket 中的数量，这个仅仅只是一个 bucket 操作，

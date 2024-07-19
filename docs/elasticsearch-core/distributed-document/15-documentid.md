@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 分布式文档-document id
+
 [[toc]]
 
 1. 手动指定 document id

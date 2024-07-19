@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # Elasticsearch 核心概念
+
 [[toc]]
 
 1. lucene 和 elasticsearch 的前世今生
@@ -18,7 +22,6 @@ elasticsearch 基于 lucene，隐藏复杂性，提供简单易用的 restful ap
 开箱即用，优秀的默认参数，不需要任何额外设置，完全开源
 
 关于 elasticsearch 的一个传说，有一个程序员失业了，陪着自己老婆去英国伦敦学习厨师课程。程序员在失业期间想给老婆写一个菜谱搜索引擎，觉得 lucene 实在太复杂了，就开发了一个封装了 lucene 的开源项目 compass。后来程序员找到了工作，是做分布式的高性能项目的，觉得 compass 不够，就写了 elasticsearch，让 lucene 变成分布式的系统。
-
 
 ## elasticsearch 的核心概念
 
@@ -46,6 +49,7 @@ elasticsearch 基于 lucene，隐藏复杂性，提供简单易用的 restful ap
     一个 index 下的 type 中，都可以去存储多个 document。
 
     一个 document 里面有多个 field，每个field就是一个数据字段。
+
     ```JSON
     product document
 
@@ -57,6 +61,7 @@ elasticsearch 基于 lucene，隐藏复杂性，提供简单易用的 restful ap
       "category_name": "日化用品"
     }
     ```
+
 5. Index 索引
 
     包含一堆有相似结构的文档数据，比如可以有一个客户索引，商品分类索引，订单索引，索引有一个名称。
@@ -118,9 +123,7 @@ elasticsearch 基于 lucene，隐藏复杂性，提供简单易用的 restful ap
 
 ![](./assets/markdown-img-paste-20181231122031193.png)
 
-
 ## 核心概念 vs 数据库核心概念
-
 
 Elasticsearch | 数据库
 --------------|-------

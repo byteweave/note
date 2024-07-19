@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 修改和定制分词器
+
 [[toc]]
 
 ## 默认的分词器
@@ -39,6 +43,7 @@ GET /my_index/_analyze
   "text": "a dog is in the house"
 }
 ````
+
 响应
 
 ```json
@@ -99,6 +104,7 @@ GET /my_index/_analyze
   "text":"a dog is in the house"
 }
 ```
+
 响应
 
 ```json
@@ -123,6 +129,7 @@ GET /my_index/_analyze
 ```
 
 ## 定制自己的分词器
+
 ::: tip
 如果索引已经存在了，再次执行则会报错
 :::
@@ -226,6 +233,7 @@ GET /my_index/_analyze
 ```
 
 ## 为字段指定自定义分词器
+
 要注意,这个在前面已经说过了，只能新增字段设置，不能修改
 
 ```json

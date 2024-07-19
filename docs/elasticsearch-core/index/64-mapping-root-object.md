@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # mapping root object 深入剖析
+
 [[toc]]
 
 本章主要讲解 root object 下的东西 和 一些底层数据字段
@@ -74,6 +78,7 @@ PUT /my_index/_mapping/my_type2
   "_source": {"enabled": false}
 }
 ```
+
 插入一条数据
 
 ```json
@@ -85,6 +90,7 @@ PUT /my_index/my_type2/1
   "author_id": 110
 }
 ```
+
 获取后查看响应的数据
 
 ```json

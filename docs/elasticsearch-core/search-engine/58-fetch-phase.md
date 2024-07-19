@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # 分布式搜索引擎内核解密之 fetch phase
 
 ## 什么是  fetch phase？
+
 就是获取数据阶段，query phase 获取到的只是 id，fetch phase 会批量到各个 shard 上去获取数据
 
 ::: tip 疑问

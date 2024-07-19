@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # CRUD、强制操作
 
 document 的全量替换、强制创建以及图解 lazy delete 机制
@@ -9,7 +12,6 @@ document 的全量替换、强制创建以及图解 lazy delete 机制
 3. document 的删除
 
 ## document 的全量替换
-
 
 1. 语法与创建文档是一样的
 
@@ -26,7 +28,6 @@ document 的全量替换、强制创建以及图解 lazy delete 机制
 ## document 的强制创建
 
 老师讲解的是：
-
 
 1. 创建文档与全量替换的语法是一样的，有时我们只是想新建文档，不想替换文档，如果强制进行创建呢？
 2. `PUT /index/type/id?op_type=create，PUT /index/type/id/_create`
@@ -47,6 +48,7 @@ PUT /test_index/test_type/1?op_type=create
   "test_content3": "test test23"
 }
 ```
+
 ## document 的强制创建（正确的讲解）
 
 我觉得上面讲解得有问题：

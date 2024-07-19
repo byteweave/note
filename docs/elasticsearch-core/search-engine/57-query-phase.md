@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 分布式搜索引擎内核解密之 query phase
+
 [[toc]]
 
 ## query phase

@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 搜索相关参数梳理以及 bouncing results 问题解决方案
 
 本章重点：怎么解决 bouncing results 和 timeout、routing 回顾，其他的不详细解说
@@ -13,10 +16,10 @@
 
 - `_primary`
 - `_primary_first`
-- ` _local`
-- ` _only_node:xyz`
-- ` _prefer_node:xyz`
-- ` _shards:2,3`
+- `_local`
+- `_only_node:xyz`
+- `_prefer_node:xyz`
+- `_shards:2,3`
 
 这里的每个值不解说，在高级课程中才会解说。
 

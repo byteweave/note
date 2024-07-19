@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 2 节点 shard & replica 机制
 
 图解 2个 node 环境下 replica shard 是如何分配的
@@ -7,7 +10,6 @@
 3. 读请求：primary/replica
 
 再启动一个 es 实例后，再次查看：
-
 
 health status 变成了 green； shards 变成了 18
 

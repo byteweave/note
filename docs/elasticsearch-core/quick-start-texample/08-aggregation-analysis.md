@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 快速上手-聚合分析
+
 [[toc]]
 
 嵌套聚合，下钻分析，聚合分析
@@ -203,6 +207,7 @@ GET /ecommerce/product/_search
   "size": 0
 }
 ```
+
 响应
 
 ```json
@@ -289,7 +294,6 @@ GET /ecommerce/product/_search
 2. 讲知识点，用 es restful api，更加方便，快捷，不用每次都写大量的 java 代码，能加快讲课的效率和速度，更加易于同学们关注es本身的知识和功能的学习
 3. 我们通常会讲完 es 知识点后，开始详细讲解 java api，如何用 java api 执行各种操作
 4. 我们每个篇章都会搭配一个项目实战，项目实战是完全基于 java 去开发的真实项目和系统
-
 
 ## 多次嵌套（下钻操作）
 

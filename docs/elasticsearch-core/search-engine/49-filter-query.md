@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # filter 与 query 深入对比解密：相关度、性能
 
 ## filter 与 query 示例

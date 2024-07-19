@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # mget 批量查询 API
+
 [[toc]]
 
 ## 批量查询的好处

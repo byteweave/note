@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # partial update
 
 [[toc]]
@@ -38,6 +41,7 @@ post /index/type/id/_update
 [之前在快速上手里面有讲到过](../quick-start-texample/06-crud.md#修改商品：更新文档)
 
 ### 图解 partial update 实现原理以及其优点
+
 partial update，看起来很方便的操作，实际内部的原理是什么样子的，然后它的优点是什么
 
 ![](./assets/markdown-img-paste-20190106152319579.png)
@@ -78,7 +82,6 @@ POST /test_index/test_type/10/_update
 
 ```
 
-
 ## groovy 语法实现
 
 es，其实是有个内置的脚本支持的，可以基于 groovy 脚本实现各种各样的复杂操作
@@ -88,6 +91,7 @@ es，其实是有个内置的脚本支持的，可以基于 groovy 脚本实现�
 es scripting module，我们会在高手进阶篇去讲解，这里就只是初步讲解一下
 
 ### 内置脚本
+
 什么是内置脚本？ 语法内容通过 api 发送
 
 新增一条数据，通过这条数据的来讲解怎么操作
@@ -161,12 +165,14 @@ POST /test_index/test_type/11/_update
 ::: tip
 外置脚本里面的语法放在内置脚本中的话，结果是不一样的，
 内置中会把数组的 json 串当成字符串操作，如下
+
 ```json
 "_source": {
     "num": 1,
     "tags": "[xx, tag1]tag2"
   }
 ```
+
 :::
 
 ### 用脚本删除文档
@@ -258,7 +264,7 @@ POST /test_index/test_type/11/_update
 
 :::
 
-默认脚本使用的是  `painless` ，这个在 [官方文档中有介绍](https://www.elastic.co/guide/en/elasticsearch/reference/5.5/modules-scripting-painless.html)，该语言的 API 继承了 JAVA 的 **部分类的部分方法**，这个说明在 官方文档 [附录 A 中有说明](https://www.elastic.co/guide/en/elasticsearch/painless/5.5/painless-api-reference.html#painless-api-reference-String) 哪些方法可以使用 
+默认脚本使用的是  `painless` ，这个在 [官方文档中有介绍](https://www.elastic.co/guide/en/elasticsearch/reference/5.5/modules-scripting-painless.html)，该语言的 API 继承了 JAVA 的 **部分类的部分方法**，这个说明在 官方文档 [附录 A 中有说明](https://www.elastic.co/guide/en/elasticsearch/painless/5.5/painless-api-reference.html#painless-api-reference-String) 哪些方法可以使用
 
 比如下面的查询和批量更新中都可以使用该脚本处理
 
@@ -331,8 +337,6 @@ GET /test_index2/test_type2/_search
   }
 }
 ```
-
-
 
 ### 查询中使用 painless script
 
@@ -453,8 +457,6 @@ GET /test_index2/test_type2/_search
 ```
 GET _tasks?detailed=true&actions=*byquery
 ```
-
-
 
 ## 图解乐观锁并发控制原理与操作
 

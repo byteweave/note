@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 内核原理解密
 
 本章会记录原始以下章节内容
@@ -10,8 +13,6 @@
 
 [[toc]]
 
-
-
 倒排索引，是适合用于进行搜索的
 
 ## 倒排索引的结构
@@ -19,11 +20,11 @@
 倒排索引其实并不是像之前说的那样很简单的，结构，但是核心却就是这样。
 
 ```
-word		doc1		doc2
+word  doc1  doc2
 
-dog		  *		      *
-hello		*
-you			*
+dog    *        *
+hello  *
+you   *
 ```
 
 还包括其他的一些数据，可以看出来如下数据基本上都是用来算相关度评分的
@@ -34,8 +35,6 @@ you			*
 - 这个关键词在这个 document 中的次序
 - 每个 document 的长度：length norm
 - 包含这个关键词的所有 document 的平均长度
-
-
 
 ## 倒排索引不可变的好处
 
@@ -140,7 +139,6 @@ PUT /my_index
 
 ![](./assets/markdown-img-paste-20190120155716894.png)
 
-
 > flush 操作
 
 fsync + 清空 translog，就是 flush，默认每隔 30分钟 flush 一次，或者当 translog 过大的时候，也会 flush
@@ -152,6 +150,7 @@ fsync + 清空 translog，就是 flush，默认每隔 30分钟 flush 一次，�
 每隔 5秒 被 fsync 一次到磁盘上。在一次增删改操作之后，当 fsync 在 primary shard 和 replica shard 都成功之后，那次增删改操作才会成功
 
 但是这种在一次增删改时强行 fsync translog 可能会导致部分操作比较耗时，也可以允许部分数据丢失，设置异步 fsync translog
+
 ```json
 PUT /my_index/_settings
 {

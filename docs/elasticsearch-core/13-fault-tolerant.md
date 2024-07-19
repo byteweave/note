@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 容错机制浅析
 
 图解 Elasticsearch 容错机制：master 选举，replica 容错，数据恢复

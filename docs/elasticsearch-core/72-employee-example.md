@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 练习例子-员工管理
+
 本章节会记录原始以下章节
 
 - 72. Java API初步使用_员工管理案例：基于 Java 实现员工信息的增删改查
@@ -6,7 +10,6 @@
 - 74. Java API初步使用_员工管理案例：基于 Java 对员工信息进行聚合分析
 
 [[toc]]
-
 
 强调一下，我们的es讲课的风格
 
@@ -16,12 +19,12 @@
 
 3. es 的学习，首先，你必须学好 restful api，然后才是你自己的熟悉语言的 api，java api。
 
-
 这个《核心知识篇（上半季）》，其实主要还是打基础，包括核心的原理，还有核心的操作，还有部分高级的技术和操作，大量的实验，大量的画图，最后初步讲解怎么使用 java api
 
 《核心知识篇（下半季）》，包括深度讲解搜索这块技术，还有聚合分析这块技术，包括数据建模，包括 java api 的复杂使用，有一个项目实战
 
 ## 示例简介
+
 含有如下信息的属性：
 
 员工信息
@@ -351,9 +354,11 @@ public class EmployeeAggrTest {
 }
 
 ```
+
 可以看到上面的操作，添加一个聚合操作，然后在该聚合操作里面不断下钻
 
 如果运行报错
+
 ```
 java.util.concurrent.ExecutionException: RemoteTransportException[[sEvAlYx][127.0.0.1:9300][indices:data/read/search]]; nested: SearchPhaseExecutionException[all shards failed]; nested: RemoteTransportException[[sEvAlYx][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: IllegalArgumentException[Fielddata is disabled on text fields by default. Set fielddata=true on [country] in order to load fielddata in memory by uninverting the inverted index. Note that this can however use significant memory.];
 ```
@@ -616,6 +621,7 @@ System.out.println();
 > java api 获取的结果
 
 可以看到 java api 来获取结果确实很麻烦
+
 ```
 ==== china
 ===== 2016-01-01T00:00:00.000Z

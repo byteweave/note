@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 快速上手-商品搜索多种方式
+
 [[toc]]
 
 1. query string search
@@ -9,6 +13,7 @@
 6. highlight search  - 真正意义上算不上一种搜索方式
 
 ## query string search
+
 通俗一点来说，就是以 http get 方式去拼接参数的一种方式
 
 ### 查询所有商品
@@ -73,6 +78,7 @@ GET /ecommerce/product/_search
 - hits.hits：包含了匹配搜索的 document 的详细数据
 
 ### 条件查询
+
 搜索名称中带有 “yagao” 的商品，且按价格降序排列：
 
 `GET /ecommerce/product/_search?q=name:yagao&sort=price:desc`
@@ -87,6 +93,7 @@ DSL：Domain Specified Language，特定领域的语言
 http request body：请求体，可以用 json 的格式来构建查询语法，比较方便，可以构建各种复杂的语法，比 query string search 肯定强大多了
 
 ### 查询所有
+
 ```json
 GET /ecommerce/product/_search
 {
@@ -97,6 +104,7 @@ GET /ecommerce/product/_search
 ```
 
 ### 条件查询
+
 搜索名称中带有 “yagao” 的商品，且按价格降序排列：
 
 ```json
@@ -170,9 +178,11 @@ GET /ecommerce/product/_search
   "size": 1
 }
 ```
+
 注意这里的 from：表示是从第几条数据开始，而不是表示 页数
 
 ### 限制返回字段
+
 指定要查询出来商品的名称和价格就可以
 
 ```json
@@ -232,6 +242,7 @@ GET /ecommerce/product/_search
   }
 }
 ```
+
 更加适合生产环境的使用，可以构建复杂的查询
 
 ## query filter
@@ -395,6 +406,7 @@ jiajieshi | 2
 在倒排索引中出现了 2次 ，而其他数据只出现了一次，所以它的评分是最高的
 
 ## phrase search（短语搜索）
+
 跟全文检索相对应，相反，全文检索会将输入的搜索串拆解开来，去倒排索引里面去一一匹配，只要能匹配上任意一个拆解后的单词，就可以作为结果返回
 
 phrase search：要求输入的搜索串，必须在指定的字段文本中，完全包含一模一样的，才可以算匹配，才能作为结果返回

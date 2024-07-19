@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 单节点 shard & replica 机制
+
 [[toc]]
 
 1. shard & replica 机制再次梳理

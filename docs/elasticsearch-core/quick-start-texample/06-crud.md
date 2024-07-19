@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 快速上手-集群健康检查、文档 CRUD
+
 [[toc]]
 
 1. document 数据格式
@@ -7,7 +11,7 @@
 4. 商品的 CRUD 操作（document CRUD 操作）
 
 ::: tip
-快速上手的三章节，只是展示简单的使用 
+快速上手的三章节，只是展示简单的使用
 :::
 
 ## document 数据格式
@@ -61,6 +65,7 @@ employee 对象：里面包含了 Employee 类自己的属性，还有一个 Emp
 - employee_info表：bio，age，interests，3个字段；此外还有一个外键字段，比如employee_id，关联着employee表
 
 而在 es 中的 document
+
 ```json
 {
     "email":      "zhangsan@sina.com",
@@ -78,6 +83,7 @@ employee 对象：里面包含了 Employee 类自己的属性，还有一个 Emp
 我们就明白了 es 的 document 数据格式和数据库的关系型数据格式的区别
 
 ## 电商网站商品管理案例背景介绍
+
 ::: tip
 该实例纯粹是为了演示 es 的 crud 的基本操作
 :::
@@ -93,6 +99,7 @@ employee 对象：里面包含了 Employee 类自己的属性，还有一个 Emp
 ## 简单的集群管理
 
 ### 快速检查集群的健康状况
+
 es 提供了一套api，叫做 cat api，可以查看 es 中各种各样的数据；
 
 ::: tip
@@ -165,6 +172,7 @@ yellow open   .kibana id1SV_oGSjyGosKxeJApww   1   1          1            0    
 ### 简单的索引操作
 
 创建索引 `PUT /test_index?pretty`；创建一个名为 test_index 的索引
+
 ```
 {
   "acknowledged": true,
@@ -189,6 +197,7 @@ yellow open   .kibana    id1SV_oGSjyGosKxeJApww   1   1          1            0 
 ```
 
 ## 商品的 CRUD 操作
+
 ### 新增
 
 这里没有使用中文，由于中文分词需要安装插件，对于数据查询才会准确，所以这里使用拼音
@@ -250,12 +259,12 @@ PUT /ecommerce/product/3
     "tags": [ "qingxin" ]
 }
 ```
+
 es 会自动建立 index 和 type，不需要提前创建，而且 es 默认会对 document 每个 field 都建立倒排索引，让其可以被搜索
 
 ### 查询商品：检索文档
 
 语法：`GET /index/type/id`
-
 
 ```json
 `GET /ecommerce/product/1`
@@ -313,6 +322,7 @@ PUT /ecommerce/product/1
 替换文档：顾名思义，原始 `_id` 中的所有 document 内容被覆盖;
 
 ### 修改商品：更新文档
+
 ```json
 POST /ecommerce/product/1/_update
 {

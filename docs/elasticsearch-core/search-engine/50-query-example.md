@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 常用的各种 query 搜索语法
 
 本章节会记录以下章节的内容:
@@ -20,8 +23,8 @@ GET /_search
 }
 ```
 
-
 ## match
+
 搜索所有 index 中 title 包含 my elasticsearch article 内容。
 
 ```json
@@ -36,6 +39,7 @@ GET /_search
 :::
 
 ## multi match
+
 一个查询文本在多个字段中匹配，其中一个字段中有则返回
 
 ```json
@@ -51,6 +55,7 @@ GET /test_index/test_type/_search
 ```
 
 ## range query
+
 范围
 
 ```json
@@ -92,13 +97,14 @@ GET /_search
 }
 ```
 
-
 ## exist query
+
 ::: tip
 2.x中的查询，现在已经不提供了
 :::
 
 ## bool 中可以放那些语法
+
 bool 中可以放：must，must_not，should，filter
 
 ```json
@@ -165,6 +171,7 @@ GET /company/employee/_search
 ```
 
 ## `_validate` & explain
+
 验证语法是否正确，和查看计划/错误信息
 
 比如以下查询：match 写成了 math
@@ -204,7 +211,6 @@ GET /test_index/test_type/_validate/query?explain
   ]
 }
 ```
-
 
 ::: tip
 explain 参数在验证失败的情况下，会返回错误消息；验证通过的情况下，会返回计划，如在哪个 index 上查询等信息

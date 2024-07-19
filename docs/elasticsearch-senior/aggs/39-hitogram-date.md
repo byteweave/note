@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # date_histogram
 
 实现需求：2016-01-01 ~ 2017-12-31 之间每个月的电视销量
@@ -22,6 +25,7 @@ GET /tvs/sales/_search
    }
 }
 ```
+
 这里就用到了 date_histogram 日期区间分组语法
 
 - min_doc_count：
@@ -32,6 +36,7 @@ GET /tvs/sales/_search
   min，max：划分 bucket 的时候，会限定在这个起始日期，和截止日期内
 
 响应结果
+
 ```json
 {
   "took": 7,

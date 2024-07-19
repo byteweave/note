@@ -1,7 +1,12 @@
+---
+outline: deep
+---
 # 统计哪种颜色电视销量最高&案例介绍
+
 [[toc]]
 
 ## 家电卖场案例背景
+
 以一个家电卖场中的电视销售数据为背景，来对各种品牌，各种颜色的电视的销量和销售额，进行各种各样角度的分析
 
 根据业务进行定制 mappings
@@ -9,24 +14,24 @@
 ```json
 PUT /tvs
 {
-	"mappings": {
-		"sales": {
-			"properties": {
-				"price": {
-					"type": "long"
-				},
-				"color": {
-					"type": "keyword"
-				},
-				"brand": {
-					"type": "keyword"
-				},
-				"sold_date": {
-					"type": "date"
-				}
-			}
-		}
-	}
+ "mappings": {
+  "sales": {
+   "properties": {
+    "price": {
+     "type": "long"
+    },
+    "color": {
+     "type": "keyword"
+    },
+    "brand": {
+     "type": "keyword"
+    },
+    "sold_date": {
+     "type": "date"
+    }
+   }
+  }
+ }
 }
 ```
 

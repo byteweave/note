@@ -1,7 +1,10 @@
+---
+outline: deep
+---
 # 图解写一致性原理以及 quorum 机制深入剖析
 
-
 ## consistency 写一致性
+
 我们在发送任何一个增删改操作的时候，比如说 `put /index/type/id`，
 都可以带上一个 consistency 参数，指明我们想要的写一致性是什么？
 
@@ -61,6 +64,7 @@ green  open   test_index g4RJx2v8TXK95LdwlhRx5A   3   1          8            0 
 green  open   .kibana    id1SV_oGSjyGosKxeJApww   1   1          1            0      6.3kb          3.1kb
 
 ```
+
 :::
 
 ![](./assets/markdown-img-paste-20190106213737933.png)

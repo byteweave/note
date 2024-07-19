@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 快速上机动手实战 Query DSL 搜索语法
 
 [[toc]]
@@ -124,8 +127,6 @@ GET /website/article/_search
 - name 必须包含 tom
 - hired 可能为 true/false 并且 personality 为 good 且 rude 不为 true
 - minimum_should_match ： 只要匹配到一条，但是这个应该是与 should 条件匹配的个数有关，具体是什么规则，没有尝试出来
-
-
 
 总结起来： name 必须包含 tom 则就可以
 

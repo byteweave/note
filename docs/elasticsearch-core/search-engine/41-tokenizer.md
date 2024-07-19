@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 内置分词器和分词器是什么？
+
 [[toc]]
 
 ## 什么是分词器
@@ -15,8 +19,8 @@ recall，召回率：搜索的时候，增加能够搜索到的结果的数量
 
     在一段文本进行分词之前，先进行预处理，比如说最常见的就是，
 
-    - 过滤 html 标签（`<span>hello<span>` --> hello）
-    - & --> and（I&you --> I and you）
+  - 过滤 html 标签（`<span>hello<span>` --> hello）
+  - & --> and（I&you --> I and you）
 - tokenizer：分词
 
     比如：hello you and me --> hello, you, and, me
@@ -24,12 +28,12 @@ recall，召回率：搜索的时候，增加能够搜索到的结果的数量
 
     比如 lowercase，stop word，synonymom，
 
-    - dogs --> dog
-    - liked --> like
-    - Tom --> tom
-    - a/the/an --> 干掉
-    - mother --> mom
-    - small --> little
+  - dogs --> dog
+  - liked --> like
+  - Tom --> tom
+  - a/the/an --> 干掉
+  - mother --> mom
+  - small --> little
 
 一个分词器，很重要，将一段文本进行各种处理，最后处理好的结果才会拿去建立倒排索引
 
@@ -51,6 +55,5 @@ recall，召回率：搜索的时候，增加能够搜索到的结果的数量
 - language analyzer（特定的语言的分词器，比如说，english，英语分词器）
 
     set, shape, semi, transpar, call, set_tran, 5
-
 
 做的处理前面都说过了，大小写、单复数、按照空格或者下划线横线等切分词语；

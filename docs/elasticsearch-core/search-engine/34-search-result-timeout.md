@@ -1,6 +1,9 @@
+---
+outline: deep
+---
 # search 结果深入解析（timeout 机制揭秘）
-[[toc]]
 
+[[toc]]
 
 1. 我们如果发出一个搜索请求的话，会拿到一堆搜索结果，本节课，我们来讲解一下，这个搜索结果里的各种数据，都代表了什么含义
 2. 我们来讲解一下，搜索的 timeout 机制，底层的原理，画图讲解
@@ -59,8 +62,8 @@ GET /_search
 
 - timeout：默认无 timeout
 
-
 ## timeout 机制
+
 默认无 timeout ，可以手动指定 timeout， latency completeness （延迟平衡完整性），
 
 **latency completeness 是什么意思？**

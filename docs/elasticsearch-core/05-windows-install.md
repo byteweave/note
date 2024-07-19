@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # windows 上启动 Elasticsearch
 
 1. 安装 JDK，至少 1.8.0_73 以上版本，java -version
@@ -6,7 +9,8 @@
 
     es本身特点之一就是开箱即用，如果是中小型应用，数据量少，操作不是很复杂，直接启动就可以用了
 
-4. 检查ES是否启动成功：http://localhost:9200/?pretty
+4. 检查ES是否启动成功：<http://localhost:9200/?pretty>
+
     ```json
     name: node名称
     cluster_name: 集群名称（默认的集群名称就是elasticsearch）
@@ -26,6 +30,7 @@
       "tagline" : "You Know, for Search"
     }
     ```
+
 5. 修改集群名称：elasticsearch.yml
 6. 下载和解压缩 Kibana 安装包 kibana-5.2.0-windows-x86.zip
 

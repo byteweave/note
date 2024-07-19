@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # scoll+bulk+ 索引别名实现零停机重建索引
 
 > 零停机重建索引问题
@@ -45,6 +48,7 @@ PUT /my_index/my_type/1
   }
 }
 ```
+
 > 当后期向索引中加入 string 类型的 title 值的时候，就会报错
 
 ```json
@@ -189,7 +193,6 @@ POST /_aliases
 ```json
 GET /goods_index/my_type/_search
 ```
-
 
 这样思路可以再一开始就对索引添加别名使用，真实索引使用版本号来区分
 

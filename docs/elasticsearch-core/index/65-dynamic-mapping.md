@@ -1,7 +1,12 @@
+---
+outline: deep
+---
 # 定制化自己的 dynamic mapping 策略
+
 [[toc]]
 
 ## 定制 dynamic 策略
+
 有如下三种可选
 
 - true：遇到陌生字段，就进行 dynamic mapping
@@ -231,6 +236,7 @@ GET /my_index/_mapping/my_type/
 ```
 
 再插入数据
+
 ```json
 PUT /my_index/my_type/1
 {
@@ -389,7 +395,6 @@ GET /my_index/my_type/_search?q=title_en:is
 - title 没有匹配到任何的 dynamic 模板，默认就是 standard 分词器，不会过滤停用词，is 会进入倒排索引，用 is 来搜索是可以搜索到的
 
 - title_en 匹配到了 dynamic 模板，就是 english 分词器，会过滤停用词，is 这种停用词就会被过滤掉，用 is 来搜索就搜索不到了
-
 
 ## 定制自己的 default mapping template（index level）
 

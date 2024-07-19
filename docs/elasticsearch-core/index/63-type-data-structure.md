@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 内核级知识点：深入探秘 type 底层数据结构
 
 > type
@@ -26,9 +29,9 @@ lucene 是没有 type 的概念的，在 document 中，实际上将 type 作为
                "price": {
                   "type": "double"
                },
-      	       "service_period": {
-      		        "type": "string"
-      	       }			
+              "service_period": {
+                "type": "string"
+              }   
             }
          },
          "fresh_goods": {
@@ -39,9 +42,9 @@ lucene 是没有 type 的概念的，在 document 中，实际上将 type 作为
                "price": {
                   "type": "double"
                },
-      	       "eat_period": {
-      		        "type": "string"
-      	       }
+              "eat_period": {
+                "type": "string"
+              }
             }
          }
       }

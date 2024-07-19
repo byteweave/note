@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # document 增删改内部原理图解揭秘
 
 ![](./assets/markdown-img-paste-2019010621164080.png)

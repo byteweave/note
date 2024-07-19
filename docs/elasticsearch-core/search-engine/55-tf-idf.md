@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 相关度评分 TF&IDF 算法独家解密
+
 [[toc]]
 
 ## 算法介绍
@@ -8,7 +12,6 @@
 Elasticsearch 使用的是 term frequency/inverse document frequency 算法，简称为 **TF/IDF** 算法
 
 TF/IDF 有以下三个组成
-
 
 - Term frequency（词的频率）
 
@@ -27,7 +30,6 @@ TF/IDF 有以下三个组成
 
     doc1：hello world today is very good
     doc2：hello hello world is very good
-
 
 - Field-length norm：
 
@@ -501,7 +503,6 @@ GET /website/article/_search?explain
 ::: tip
 太复杂，只要知道大概是这么个东西就行了
 :::
-
 
 ## 分析一个 document 是如何被匹配上的
 

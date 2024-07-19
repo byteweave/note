@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 什么是 mapping ？
 
 插入几条数据，让 es 自动为我们建立一个索引
@@ -32,16 +35,16 @@ PUT /website/article/3
 
 ```json
 3条结果
-GET /website/article/_search?q=2017		
+GET /website/article/_search?q=2017  
 
 3条结果           
 GET /website/article/_search?q=2017-01-01   
 
-1条结果 	
+1条结果  
 GET /website/article/_search?q=post_date:2017-01-01   
 
 1条结果
-GET /website/article/_search?q=post_date:2017         	
+GET /website/article/_search?q=post_date:2017          
 ```
 
 这里就很奇怪了，仔细看要搜索的东西，前面两个未指定字段的都能搜索出来 3条数据，后面指定字段的，只能搜索出一条数据了。

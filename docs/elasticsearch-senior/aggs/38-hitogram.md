@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # histogram 区间分组
 
 什么是 histogram ？：类似于 terms，也是进行 bucket 分组操作，接收一个 field，

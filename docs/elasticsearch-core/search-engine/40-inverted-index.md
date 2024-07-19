@@ -1,4 +1,8 @@
+---
+outline: deep
+---
 # 倒排索引核心原理快速揭秘
+
 [[toc]]
 
 本节快速告诉你倒排索引的的基本原理
@@ -7,7 +11,6 @@
 
 - doc1：I really liked my small dogs, and I think my mom also liked them.
 - doc2：He never liked any dogs, so I hope that my mom will not expect me to liked him.
-
 
 插入被分词，初步的倒排索引的建立
 
@@ -60,6 +63,7 @@ him    |      | *
 - dog 和 dogs 有区别吗？狗，只不过一个是单数，一个是复数。
 
 ## normalization
+
 **什么是 normalization？**
 
 简单说，建立倒排索引的时候，会执行一个操作，也就是说对拆分出的各个单词进行相应的处理，
@@ -73,7 +77,6 @@ him    |      | *
 - dogs —> dog
 
 重新建立倒排索引，加入 normalization ，再次用 mother liked little dog 搜索，就可以搜索到了
-
 
 | word   | doc1 | doc2 |                  |
 |--------|------|------|------------------|
@@ -103,9 +106,9 @@ him    |      | *
 
 mother like little dog，分词、normalization
 
-- mother	--> mom
-- like	--> like
-- little	--> little
-- dog	--> dog
+- mother --> mom
+- like --> like
+- little --> little
+- dog --> dog
 
 doc1 和 doc2 都会搜索出来

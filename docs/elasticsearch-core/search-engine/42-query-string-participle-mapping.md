@@ -1,6 +1,10 @@
+---
+outline: deep
+---
 # query string & mapping 遗留问题
 
 ## 什么是 query string
+
 简单说：要搜索的文本内容就是 query string
 
 比如我们有一个 document，其中有一个 field，包含的 value 是：hello you and me，建立倒排索引
@@ -26,6 +30,7 @@
 [什么是 mapping ？](./38-mapping.md) 中查询出来的结果让人很分解，这里进行回答解析
 
 ### q=2017
+
 **GET /_search?q=2017**
 
 搜索的是 `_all field`，document 所有的 field 都会拼接成一个大串，进行分词
@@ -53,6 +58,7 @@
 在 `_all` 中搜索 2017，自然会搜索到 3个 docuemnt
 
 ### q=2017-01-01
+
 **GET /_search?q=2017-01-01**
 
 也搜索到了 3个 document，是因为该 query string 被分词成 2017、01、01 ，所以就搜索到了 3个；
@@ -102,6 +108,7 @@
 ```
 
 ### q=post_date:2017-01-01
+
 **GET /_search?q=post_date:2017-01-01**
 
 该字段是 date类型， 会作为 exact value 去建立索引

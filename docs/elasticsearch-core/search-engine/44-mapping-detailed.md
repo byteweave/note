@@ -1,14 +1,15 @@
+---
+outline: deep
+---
 # mapping 的创建以及复杂 mapping 详解
+
 本章会记录 3个 章节的笔记
 
 - 44. 初识搜索引擎_ mapping 的核心数据类型以及 dynamic mapping
 - 45. 初识搜索引擎_手动建立和修改 mapping 以及定制 string 类型数据是否分词
 - 46. 初识搜索引擎_ mapping 复杂数据类型以及 object 类型数据底层结构大揭秘
 
-
 [[toc]]
-
-
 
 ## 核心的数据类型
 
@@ -22,13 +23,14 @@
 
 就是自动识别类型
 
-- true or false	-->	boolean
-- 123		-->	long
-- 123.45		-->	double
-- 2017-01-01	-->	date
-- "hello world"	-->	string/text
+- true or false --> boolean
+- 123  --> long
+- 123.45  --> double
+- 2017-01-01 --> date
+- "hello world" --> string/text
 
 ## 查看 mapping
+
 语法
 
 ```json
@@ -55,6 +57,7 @@ PUT /index
   }
 }
 ```
+
 索引类型有如下值：
 
 - analyzed : 全文 full text
@@ -205,7 +208,6 @@ mapping 复杂数据类型以及 object 类型数据底层结构大揭秘
 ```json
 { "tags": [ "tag1", "tag2" ]}
 ```
-
 
 ## empty field
 

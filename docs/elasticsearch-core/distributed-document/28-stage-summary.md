@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 阶段总结 & 什么是 distributed document store
 
 ## 阶段性总结

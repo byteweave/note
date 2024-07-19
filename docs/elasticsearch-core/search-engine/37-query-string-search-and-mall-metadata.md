@@ -1,9 +1,12 @@
+---
+outline: deep
+---
 # query string search 语法以及 `_all metadata`
+
 [[toc]]
 
 1. query string 基础语法
 2. `_all` metadata 的原理和作用
-
 
 包含 test_field 字段中包含 test 内容
 
@@ -30,6 +33,7 @@ GET /test_index/test_type/_search?q=test_field:test
 }
 }
 ```
+
 ```json
 必须包含，与包含类似
 GET /test_index/test_type/_search?q=+test_field:test
@@ -74,6 +78,6 @@ es中的 `_all` 元数据，在建立索引的时候，我们插入一条 docume
 }
 ```
 
-"jack 26 jack@sina.com guangzhou"，作为这一条 document 的 `_all` field 的值，同时进行分词后建立对应的倒排索引
+"jack 26 <jack@sina.com> guangzhou"，作为这一条 document 的 `_all` field 的值，同时进行分词后建立对应的倒排索引
 
 生产环境不使用

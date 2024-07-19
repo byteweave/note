@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # elasticsearch 核心知识篇
 
 本目录标题是原始视频标题，由于标题太长使用了短标题；

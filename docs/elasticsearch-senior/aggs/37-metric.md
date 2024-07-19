@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 要学更多的 metric
 
 目前已经学习过了两种 metric：count，avg，接下来学习其他的 metric 操作
