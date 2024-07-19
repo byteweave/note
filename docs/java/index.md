@@ -2,6 +2,9 @@
 
 outline: deep
 ---
+
+[[toc]]
+
 # README
 
 ## jdk 性能、有用工具记录

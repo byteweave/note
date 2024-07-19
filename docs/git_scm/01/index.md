@@ -1,4 +1,7 @@
+
 # 起步
+
+[[toc]]
 
 ## 版本控制
 
@@ -106,15 +109,15 @@ Git 中所有数据在存储前都计算校验和，然后以校验和来引用�
 
 采用就近覆盖原则，3 是最近的，将会覆盖 2 中的同名配置
 
-在 Windows 系统中，Git 会查找 $HOME 目录下（一般情况下是 `C:\Users\$USER`）的 `.gitconfig` 文件。 Git 同样也会寻找 `/etc/gitconfig` 文件，不过是在安装 Git 时所选的目标位置
+在 Windows 系统中，Git 会查找 $HOME 目录下（一般情况下是 `C:\Users\$USER`）的`.gitconfig` 文件。 Git 同样也会寻找 `/etc/gitconfig` 文件，不过是在安装 Git 时所选的目标位置
 
 ### 用户信息
 
 当安装完 Git 应该做的第一件事就是设置你的用户名称与邮件地址。 这样做很重要，因为每一个 Git 的提交都会使用这些信息，并且它会写入到你的每一次提交中，不可更改：
 
 ```bash
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
 ```
 
 如果想在每个项目下使用不同的用户名提交，则可以使用不带 `--global` 的命令来设置。
@@ -148,15 +151,15 @@ John Doe
 若你使用 Git 时需要获取帮助，有三种方法可以找到 Git 命令的使用手册：
 
 ```bash
-$ git help <verb>
-$ git <verb> --help
-$ man git-<verb>
+git help <verb>
+git <verb> --help
+man git-<verb>
 ```
 
 例如，要想获得 config 命令的手册，执行
 
 ```
-$ git help config
+git help config
 ```
 
 以上命令都是离线帮助文档
