@@ -5,3 +5,5 @@ docs/.vitepress/.cache
 docs/.vitepress/.temp/.server
 docs/.vitepress/.temp/.vite
 docs/.vitepress/.temp
+docs/.DS_Store
+.DS_Store
