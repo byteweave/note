@@ -18,6 +18,29 @@ export const design_pattern = () => {
           text: "简单工厂",
           link: path + "/03_simple_factory/simple_factory.md",
         },
+        {
+          text: "外观模式",
+          link: path + "/04_facade/facade.md",
+        },
+        {
+          text: "适配器模式",
+          link: path + "/05_adapter/adapter.md",
+        },
+        {
+          text: "单例设计模式",
+          link: path + "/06_singleton/singleton.md",
+        },
+        {
+          text: "工厂方法模式",
+          link: path + "/07_factory_method/factory_method.md",
+        },
+        {
+          text: "抽象工厂模式",
+          link: path + "/08_abstract_factory/abstract_factory.md",
+        },
+        {
+          link: path + "/09_builder/builder.md",
+        },
       ],
     },
   ];
