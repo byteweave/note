@@ -4,6 +4,7 @@ import { back_end_storage } from "../back_end_storage";
 import { cache_pdp } from "../cache_pdp";
 import { git_scm } from "../git_scm";
 import { java } from "../java";
+import { design_pattern } from "../design_pattern";
 import { mysql } from "../mysql";
 import mdItCustomAttrs from "markdown-it-custom-attrs";
 
@@ -48,6 +49,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "java", link: "/java/" },
+      { text: "设计模式", link: "/design_pattern/" },
       { text: "mysql", link: "/mysql/" },
       { text: "git", link: "/git_scm/" },
       { text: "存储实战", link: "/back_end_storage/" },
@@ -57,6 +59,7 @@ export default defineConfig({
 
     sidebar: {
       "/ai/": ai(),
+      "/design_pattern/": design_pattern(),
       "/mysql/": mysql(),
       "/git_scm/": git_scm(),
       "/cache_pdp/": cache_pdp(),
