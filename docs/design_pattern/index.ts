@@ -39,7 +39,24 @@ export const design_pattern = () => {
           link: path + "/08_abstract_factory/abstract_factory.md",
         },
         {
+          text: "生成器模式",
           link: path + "/09_builder/builder.md",
+        },
+        {
+          text: "原型模式",
+          link: path + "/10_prototype/prototype.md",
+        },
+        {
+          text: "中介者模式",
+          link: path + "/11_mediator/mediator.md",
+        },
+        {
+          text: "代理模式",
+          link: path + "/12_proxy/proxy.md",
+        },
+        {
+          text: "观察者模式",
+          link: path + "/13_observer/observer.md",
         },
       ],
     },
